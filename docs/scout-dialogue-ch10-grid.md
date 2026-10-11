@@ -200,6 +200,6 @@
 
 > **Fight for the Future** -- [fightforthefuture.org](https://www.fightforthefuture.org/) -- They led the campaign against Amazon's doorbell-to-police pipeline and organized the coalition that pushed Ring to add the opt-out for law enforcement video requests.
 
-> **Mozilla Foundation** -- [foundation.mozilla.org](https://foundation.mozilla.org/) -- Their "*Privacy Not Included" guide reviews smart devices for privacy and security. It's the Consumer Reports of IoT privacy -- check it before you buy your next smart device.
+> **Mozilla Foundation** -- [mozillafoundation.org](https://www.mozillafoundation.org/) -- Their "*Privacy Not Included" guide reviews smart devices for privacy and security. It's the Consumer Reports of IoT privacy -- check it before you buy your next smart device.
 
 > **iFixit** -- [ifixit.com](https://www.ifixit.com/) -- Right to repair advocates. When you can't open, inspect, or modify a device, you can't verify what it's doing. The right to repair is a privacy right.

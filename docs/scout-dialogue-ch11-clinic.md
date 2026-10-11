@@ -190,7 +190,7 @@
 
 > **Access Now** -- [accessnow.org](https://www.accessnow.org/) -- Global digital rights, including health data protection for vulnerable populations. Their Digital Security Helpline helps people under threat.
 
-> **Patient Privacy Rights** -- [patientprivacyrights.org](https://www.patientprivacyrights.org/) -- Focused specifically on health data privacy. They pushed for stronger FTC enforcement against health apps.
+> **Patient Privacy Rights** -- [pprights.org](https://pprights.org/) -- Focused specifically on health data privacy. They pushed for stronger FTC enforcement against health apps.
 
 > **The Markup** -- [themarkup.org](https://themarkup.org/) -- Their investigation exposed the Facebook pixel on hospital websites, sending patient visit data to Meta. That reporting led to congressional hearings.
 
