@@ -28,7 +28,18 @@ export function loadState(storage = localStorage) {
     const raw = storage.getItem(STORAGE_KEY);
     if (!raw) return createInitialState();
     const parsed = JSON.parse(raw);
-    if (parsed.version !== STATE_VERSION) return createInitialState();
+    if (!parsed || parsed.version !== STATE_VERSION) return createInitialState();
+    // A save with no `accounts` object (an older build, or a corrupted
+    // write) threw "Cannot read properties of undefined (reading 'gmail')"
+    // below, and the catch then replaced the whole save with a new city,
+    // losing every filed mission. Start the account list from the defaults
+    // instead (the loop below fills it), keep the rest of the save as it is,
+    // and report the repair so the corruption still shows up in GlitchTip.
+    // Other fields are left untouched (tests/breaker-phase1/round2.test.js).
+    if (parsed.accounts === null || typeof parsed.accounts !== 'object' || Array.isArray(parsed.accounts)) {
+      captureError(new Error('loadState: save had no accounts object'), { operation: 'loadState', repaired: 'accounts' });
+      parsed.accounts = {};
+    }
     for (const [id, a] of Object.entries(DEFAULT_ACCOUNTS)) {
       if (!parsed.accounts[id]) {
         parsed.accounts[id] = { enabled: true, name: a.name, district: a.district };
