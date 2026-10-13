@@ -116,4 +116,15 @@ describe('MISSIONS', () => {
     const ids = MISSIONS.map((m) => m.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
+
+  // From #7 (AzurePy-0x): a misplaced quote once put `url: "..."` inside a
+  // step's text, so the step showed the raw code and had no link.
+  it('no step text contains a raw url property', () => {
+    for (const m of MISSIONS) {
+      const lists = [m.steps || [], ...Object.values(m.stepsByManager || {}), ...Object.values(m.reportSteps || {})];
+      for (const s of lists.flat()) {
+        expect(s.text, `${m.id}: ${s.text}`).not.toMatch(/\burl\s*:/);
+      }
+    }
+  });
 });
