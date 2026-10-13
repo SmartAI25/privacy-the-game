@@ -105,6 +105,7 @@ export function backdropPods(collective, displayId, slots) {
       label: String(p.label ?? p.id),
       players: p.players,
       height: Math.min(1, Math.log(Math.max(2, p.players)) / maxLog),
+      pct,
       lit: pct === null ? null : Math.min(1, Math.max(0, pct / 100)),
       yours: p === yours,
       text: parts.join(' · '),
