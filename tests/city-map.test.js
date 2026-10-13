@@ -3,13 +3,16 @@ import { readFileSync } from 'node:fs';
 import { renderCityMap, BACKDROP_SLOTS, wideBlockPositions } from '../src/screens/city-map.js';
 import { createInitialState } from '../src/state.js';
 import { setChosenPod } from '../src/utils/pod-pref.js';
+import { MISSIONS, getMissionsForDistrict } from '../src/data/missions.js';
+import { calcDistrictProgress, isCoreMission } from '../src/utils/calc.js';
 
 function memoryStorage() {
   const m = new Map();
   return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: (k) => m.delete(k) };
 }
 
-// Today's map (captured from 08cfee2 before the broader city was added).
+// Today's map (captured from 08cfee2 before the broader city was added; re-captured
+// with the city lights' stylesheet, the only change for a fresh save).
 const TODAY = readFileSync(new URL('./fixtures/city-map-no-data.html', import.meta.url), 'utf8');
 
 const POD = (id, label, players, pct) => ({ id, label, level: 'city', players, ...(pct === undefined ? {} : { fortified: { pct } }) });
@@ -277,5 +280,82 @@ describe('welcome back survives the re-draw when data arrives', () => {
   it('no welcome back when the last visit before this one was recent', () => {
     const html = renderCityMap(played(), { arrival: { before: new Date().toISOString() } });
     expect(html).not.toContain('good to see you');
+  });
+});
+
+describe('city map: the lights', () => {
+  beforeEach(() => { globalThis.localStorage = memoryStorage(); });
+
+  const done = (s, pred) => {
+    for (const m of MISSIONS) if (pred(m)) s.missions[m.id] = { status: 'completed', completedAt: '2026-10-13T00:00:00Z' };
+    return s;
+  };
+  const clusterOf = (html, id) => {
+    const start = html.indexOf(`href="#/district/${id}" data-name`);
+    const open = html.lastIndexOf('<a class="city-cluster', start);
+    return html.slice(open, html.indexOf('</a>', start));
+  };
+
+  it('a fresh save shows no lights at all', () => {
+    const markup = renderCityMap(createInitialState()).replace(/<style>[\s\S]*?<\/style>/g, '');
+    expect(markup).not.toMatch(/lt-/);
+  });
+
+  it('a contested district gets flickering windows, nothing more', () => {
+    const s = createInitialState();
+    const first = getMissionsForDistrict('master-keys').find((m) => isCoreMission(m) && m.phase !== 'survey');
+    done(s, (m) => m === first);
+    const c = clusterOf(renderCityMap(s), 'master-keys');
+    expect(c).toContain('city-cluster is-contested lt-1');
+    expect(c).toContain('lt-window');
+    expect(c).not.toMatch(/lt-halo|lt-ring|lt-beam|lt-fw/);
+  });
+
+  it('a secured district gets the rainbow halo and chasing ring; bonuses add the rest', () => {
+    const mk = new Set(getMissionsForDistrict('master-keys'));
+    const s = done(createInitialState(), (m) => mk.has(m) && isCoreMission(m));
+    const c = clusterOf(renderCityMap(s), 'master-keys');
+    const { bonusTotal } = calcDistrictProgress(s, 'master-keys');
+    expect(bonusTotal).toBeGreaterThan(0);
+    expect(c).toMatch(/city-cluster is-secured lt-2/);
+    expect(c).toContain('lt-halo');
+    expect(c).toContain('lt-ring');
+    expect(c).not.toMatch(/lt-beam|lt-bulb|lt-fw/);
+
+    done(s, (m) => mk.has(m));
+    const all = clusterOf(renderCityMap(s), 'master-keys');
+    expect(all).toMatch(/city-cluster is-secured lt-5/);
+    for (const part of ['lt-halo', 'lt-ring', 'lt-rainbow-beacon', 'lt-beam', 'lt-bulb', 'lt-fw']) expect(all).toContain(part);
+  });
+
+  it('the whole city: stage classes and the plaza fountain, aurora at 100%', () => {
+    const s = done(createInitialState(), () => true);
+    const html = renderCityMap(s);
+    expect(html).toContain('city-map scanlines lt-city-4');
+    for (const part of ['lt-fountain', 'lt-column', 'lt-sky-beam', 'lt-aurora']) expect(html).toContain(part);
+    expect(html).not.toMatch(/undefined|NaN/);
+  });
+
+  it('pods glow with their fortified share; your pod gets a searchlight', () => {
+    setChosenPod('us-il-chicago');
+    const html = renderCityMap(createInitialState(), ready({
+      ...DATA,
+      pods: [POD('us-il-chicago', 'Chicago', 248, 21), POD('us-wa-seattle', 'Seattle', 264, 30), POD('us-rest', 'Rest of United States', 4100, 55), POD('gb', 'United Kingdom', 503)],
+    }));
+    const blocks = Object.fromEntries([...html.matchAll(/<a class="city-block city-pod[^"]*"[^>]*data-pod="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)].map((m) => [m[1], m[0]]));
+    expect(blocks['us-il-chicago']).toMatch(/lt-pod-1/);
+    expect(blocks['us-il-chicago']).toContain('lt-beam');
+    expect(blocks['us-wa-seattle']).toMatch(/lt-pod-2/);
+    expect(blocks['us-wa-seattle']).toContain('lt-ring');
+    expect(blocks['us-wa-seattle']).not.toContain('lt-beam');
+    expect(blocks['us-rest']).toMatch(/lt-pod-3/);
+    expect(blocks['us-rest']).toContain('lt-fw');
+    expect(blocks.gb).not.toMatch(/lt-pod|lt-halo/);
+  });
+
+  it('reduced motion stops the lights on the map and on the wide city', () => {
+    const html = renderCityMap(createInitialState());
+    expect(html).toMatch(/prefers-reduced-motion: reduce\)\s*\{\s*\.city-map \*/);
+    expect(html).toMatch(/prefers-reduced-motion: reduce\)\s*\{\s*\.city-wide \*/);
   });
 });

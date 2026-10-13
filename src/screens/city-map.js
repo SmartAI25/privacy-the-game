@@ -1,6 +1,6 @@
 import { DISTRICTS } from '../data/districts.js';
 import { MISSIONS } from '../data/missions.js';
-import { calcDistrictProgress, isCoreMission } from '../utils/calc.js';
+import { calcDistrictProgress, calcIntegrity, isCoreMission } from '../utils/calc.js';
 import { isMissionDone, isMissionDoneIn, isMissionInPlay } from '../utils/mission-status.js';
 import { currentBurst, isHeldBack, returnPacingLine, PM_BURST_ID } from '../utils/bursts.js';
 import { renderHud } from '../components/hud.js';
@@ -10,6 +10,8 @@ import { isCityComplete, hasGoneGhost } from '../utils/ghost.js';
 import { DISTRICT_DIALOGUE, pick } from '../data/dialogue.js';
 import { backdropPods, displayPodId } from '../utils/collective.js';
 import { feelingForCity } from '../utils/scout-feelings.js';
+import { districtLights, cityLights, podLights } from '../utils/lights.js';
+import { LIGHTS_STYLE, districtLightsMarkup, podLightsMarkup, cityLightsMarkup } from '../components/city-lights.js';
 
 // ---------------------------------------------------------------------------
 // Isometric grid. Classic 2:1 diamond tiles: a tile at (col, row) sits at
@@ -196,7 +198,8 @@ function lotStyle(bc, br) {
   };
 }
 
-function renderCluster(def, district, percent, index) {
+function renderCluster(def, district, progress, index) {
+  const { percent } = progress;
   const status = districtStatus(percent);
   const [bc, br] = def.at;
   const lot = lotStyle(bc, br);
@@ -210,10 +213,14 @@ function renderCluster(def, district, percent, index) {
   const towerP = placed[towerIdx];
   const peak = Math.min(...placed.map((p) => p.top));
   const beaconDelay = (index * 0.55).toFixed(2);
+  const lights = districtLights(progress);
+  const lightsHtml = districtLightsMarkup(lights, {
+    box: { w: 2 * TW, h: 2 * TH }, placed, srcs: specs.map((sp) => sp.src), tower: towerP, peak, index,
+  });
   return `
-    <a class="city-cluster is-${status}" href="#/district/${district.id}" data-name="${district.name.toUpperCase()}"
+    <a class="city-cluster is-${status}${lights.tier ? ` lt-${lights.tier}` : ''}" href="#/district/${district.id}" data-name="${district.name.toUpperCase()}"
        style="${lot.style} --peak: ${(2 * TH - peak + 8).toFixed(0)}px;">
-      <span class="city-lot"></span>
+      <span class="city-lot"></span>${lightsHtml}
       <span class="city-beacon" style="left: ${towerP.cx.toFixed(1)}px; top: ${(towerP.top + 3).toFixed(1)}px; animation-delay: ${beaconDelay}s;"></span>
       ${imgs.join('\n      ')}
     </a>`;
@@ -222,8 +229,7 @@ function renderCluster(def, district, percent, index) {
 function renderDistrictBlocks(state) {
   return BLOCK_DEFS.map((def, i) => {
     const district = DISTRICTS.find((d) => d.id === def.district);
-    const { percent } = calcDistrictProgress(state, district.id);
-    return renderCluster(def, district, percent, i);
+    return renderCluster(def, district, calcDistrictProgress(state, district.id), i);
   }).join('');
 }
 
@@ -231,9 +237,9 @@ function renderDistrictBlocks(state) {
 // backdrop; with it, backdrop positions holding a pod show that pod instead.
 function renderBackdropBlocks(placed) {
   const bySlot = new Map((placed || []).filter((p) => p.slot.layer === 'map').map((p) => [p.slot.key, p]));
-  return BACKDROP_DEFS.map((def) => {
+  return BACKDROP_DEFS.map((def, i) => {
     const pod = bySlot.get(`map-${def.at.join('_')}`);
-    return pod ? renderPodBlock(pod) : renderGenericBlock(def);
+    return pod ? renderPodBlock(pod, i) : renderGenericBlock(def);
   }).join('');
 }
 
@@ -243,7 +249,7 @@ function escAttr(v) {
 
 // One pod of the broader city: the slot's own buildings, taller for more
 // players (log scale), with a share of them lit for the pod's fortified %.
-function renderPodBlock(p) {
+function renderPodBlock(p, index = 0) {
   const slot = p.slot;
   const [bc, br] = slot.at;
   const lot = lotStyle(bc, br);
@@ -261,10 +267,22 @@ function renderPodBlock(p) {
   const label = escAttr(p.text);
   const cls = ['city-block', 'city-pod', `city-pod--${slot.tier}`];
   if (p.yours) cls.push('is-yours');
+  const tier = podLights(p.pct);
+  if (tier) cls.push(`lt-pod-${tier}`);
+  const towerIdx = slot.tiles.findIndex((tile) => tile[2] === 1);
+  const lightsHtml = podLightsMarkup(tier, {
+    box: { w: 2 * TW, h: 2 * TH },
+    placed,
+    litSrcs: placed.map((pl, i) => (i < litCount ? (pl.tower ? 'iso_tower_lib.png' : 'iso_liberated.png') : null)),
+    tower: towerIdx >= 0 ? placed[towerIdx] : null,
+    peak,
+    yours: p.yours,
+    index,
+  });
   return `
     <a class="${cls.join(' ')}" href="#/city-together" data-pod="${escAttr(p.id)}" data-slot="${slot.key}" data-label="${label}" aria-label="${label}"
        style="${lot.style} --peak: ${(2 * TH - peak + 8).toFixed(0)}px;">
-      <span class="city-pod__lot"></span>
+      <span class="city-pod__lot"></span>${lightsHtml}
       ${imgs.join('\n      ')}
     </a>`;
 }
@@ -289,7 +307,7 @@ function renderWideCity(placed) {
 <div class="city-wide">
   <div class="city-wide__ground"></div>
   <div class="city-wide__iso">
-    ${wide.map(renderPodBlock).join('')}
+    ${wide.map((p, i) => renderPodBlock(p, i)).join('')}
   </div>
 </div>`;
 }
@@ -297,14 +315,14 @@ function renderWideCity(placed) {
 
 
 // The empty centre block: a lit plaza the whole city is arranged around.
-function renderPlaza() {
+function renderPlaza(stage) {
   const lot = lotStyle(1, 1);
   const { x, y } = blockCentre(1, 1);
   return `
     <div class="city-plaza" style="${lot.style}"><span class="city-plaza__core"></span></div>
     <span class="city-spark" style="left: ${x - 4}px; top: ${y - 30}px; width: 5px; height: 5px; animation-delay: 0.3s;"></span>
     <span class="city-spark" style="left: ${x + 46}px; top: ${y + 2}px; width: 4px; height: 4px; animation-delay: 1.1s;"></span>
-    <span class="city-spark" style="left: ${x - 54}px; top: ${y + 6}px; width: 3px; height: 3px; animation-delay: 2.2s;"></span>`;
+    <span class="city-spark" style="left: ${x - 54}px; top: ${y + 6}px; width: 3px; height: 3px; animation-delay: 2.2s;"></span>${cityLightsMarkup(stage, { x, y }).iso}`;
 }
 
 // Iso tile grid on the ground plane, aligned to the tile lattice (tile (0,0)'s
@@ -779,10 +797,11 @@ export function renderCityMap(state, { collective, whoami, arrival } = {}) {
   const hazeMagenta = (0.22 * (1 - avg)).toFixed(3);
   const hazeCyan = (0.05 + 0.2 * avg).toFixed(3);
   const plaza = blockCentre(1, 1);
+  const stage = cityLights(calcIntegrity(state));
   return `${hasPods ? renderWideCity(placed) : ''}
-<div class="city-map scanlines">
-  ${STYLE}${hasPods ? POD_STYLE : ''}
-  <div class="city-stars"></div>
+<div class="city-map scanlines${stage ? ` lt-city-${stage}` : ''}">
+  ${STYLE}${LIGHTS_STYLE}${hasPods ? POD_STYLE : ''}
+  <div class="city-stars"></div>${cityLightsMarkup(stage, plaza).sky}
   <div class="city-circuit"></div>
   <div class="city-haze" style="background:
     radial-gradient(circle at 50% 118px, rgba(255,45,155,${hazeMagenta}) 0px, rgba(255,45,155,${(hazeMagenta * 0.45).toFixed(3)}) 90px, transparent 190px),
@@ -808,7 +827,7 @@ export function renderCityMap(state, { collective, whoami, arrival } = {}) {
     <div class="city-iso">
       <div class="city-ground"></div>
       ${renderBackdropBlocks(placed)}
-      ${renderPlaza()}
+      ${renderPlaza(stage)}
       ${renderDistrictBlocks(state)}
     </div>
   </div>
