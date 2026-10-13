@@ -228,6 +228,7 @@ describe('password manager recon', () => {
     ['dashlane', /Password Health/],
     ['dashlane', /Dark Web Monitoring/],
     ['lastpass', /Security Dashboard/],
+    ['google', /chrome:\/\/password-manager\/checkup/],
     ['firefox', /about:logins/],
     ['edge', /Password Monitor/],
     ['other', /Security, Health, Watchtower or Checkup report/],
