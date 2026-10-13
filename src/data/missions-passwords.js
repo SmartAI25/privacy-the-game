@@ -87,6 +87,8 @@ const PM_STEPS = {
   google: [
     { text: 'Open Google Password Checkup', url: 'https://passwords.google.com/checkup' },
     { text: 'Run the check (sign in if asked)' },
+    // A web page can't link to chrome:// pages, so this one is typed.
+    { text: 'In Chrome, also type chrome://password-manager/checkup in the address bar: it checks passwords saved only on this device too' },
     NOTE_STEP,
   ],
   '1password': [
