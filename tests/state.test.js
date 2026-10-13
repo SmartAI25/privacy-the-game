@@ -74,15 +74,19 @@ describe('loadState / saveState', () => {
     expect(state.accounts.gmail).toEqual({ enabled: true, name: 'Gmail', district: 'master-keys' });
   });
 
-  it('does not throw when a stored state is missing missions/vehicles/streak', () => {
-    store['reclaim-city-state'] = JSON.stringify({ version: STATE_VERSION, accounts: { gmail: { enabled: true } } });
-    expect(() => loadState(mockStorage)).not.toThrow();
+  it('reports the repaired accounts instead of hiding it, and leaves a healthy save unreported', () => {
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    store['reclaim-city-state'] = JSON.stringify({ version: STATE_VERSION, accounts: null, missions: {} });
     const state = loadState(mockStorage);
-    expect(state.missions).toEqual({});
-    expect(state.vehicles).toEqual([]);
-    expect(state.streak).toEqual({ current: 0, best: 0, lastDate: null });
-    // updateStreak must work on the normalized state.
-    expect(() => updateStreak(state)).not.toThrow();
+    expect(state.accounts.gmail).toEqual({ enabled: true, name: 'Gmail', district: 'master-keys' });
+    expect(err).toHaveBeenCalledTimes(1);
+    expect(String(err.mock.calls[0][0].message)).toBe('loadState: save had no accounts object');
+
+    err.mockClear();
+    saveState(createInitialState(), mockStorage);
+    loadState(mockStorage);
+    expect(err).not.toHaveBeenCalled();
+    err.mockRestore();
   });
 
   it('returns initial state for a stored value that parses to null', () => {
