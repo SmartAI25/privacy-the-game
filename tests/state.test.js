@@ -57,6 +57,42 @@ describe('loadState / saveState', () => {
     const loaded = loadState(mockStorage);
     expect(loaded.missions['gmail-recon-breach'].status).toBe('completed');
   });
+
+  it('does not throw when a stored state is missing the accounts object', () => {
+    // Regression: a save truncated/corrupted mid-write (or written by an older
+    // build) can lack `accounts`. loadState used to throw
+    // "Cannot read properties of undefined (reading 'gmail')" (the first
+    // account id in the default map) — GlitchTip mvee/190, GitHub #119.
+    store['reclaim-city-state'] = JSON.stringify({
+      version: STATE_VERSION,
+      missions: { 'gmail-recon-breach': { status: 'completed' } },
+    });
+    expect(() => loadState(mockStorage)).not.toThrow();
+    const state = loadState(mockStorage);
+    // Existing data survives and defaults fill the gap.
+    expect(state.missions['gmail-recon-breach'].status).toBe('completed');
+    expect(state.accounts.gmail).toEqual({ enabled: true, name: 'Gmail', district: 'master-keys' });
+  });
+
+  it('reports the repaired accounts instead of hiding it, and leaves a healthy save unreported', () => {
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    store['reclaim-city-state'] = JSON.stringify({ version: STATE_VERSION, accounts: null, missions: {} });
+    const state = loadState(mockStorage);
+    expect(state.accounts.gmail).toEqual({ enabled: true, name: 'Gmail', district: 'master-keys' });
+    expect(err).toHaveBeenCalledTimes(1);
+    expect(String(err.mock.calls[0][0].message)).toBe('loadState: save had no accounts object');
+
+    err.mockClear();
+    saveState(createInitialState(), mockStorage);
+    loadState(mockStorage);
+    expect(err).not.toHaveBeenCalled();
+    err.mockRestore();
+  });
+
+  it('returns initial state for a stored value that parses to null', () => {
+    store['reclaim-city-state'] = 'null';
+    expect(loadState(mockStorage).version).toBe(STATE_VERSION);
+  });
 });
 
 describe('hasSavedState', () => {

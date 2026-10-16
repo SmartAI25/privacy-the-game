@@ -23,7 +23,10 @@ export function renderHud(state) {
         <span class="stat-value" style="color: var(--amber); text-shadow: 0 0 8px rgba(255,159,0,0.3);">${streak}d</span>
         <span class="stat-label" style="color: rgba(255,159,0,0.5);">STREAK</span>
       </div>
-      <a href="https://themultiverse.school/support" target="_blank" rel="noopener" style="font-family: var(--font-display); font-size: 8px; font-weight: 600; letter-spacing: 1px; color: var(--lime); text-decoration: none; padding: 4px 10px; border: 1px solid rgba(198,255,0,0.3); background: rgba(198,255,0,0.06);">SUPPORT THE SCHOOL</a>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <a href="https://buy.stripe.com/6oU8wOa387If097aKl6c00o" target="_blank" rel="noopener" style="font-family: var(--font-display); font-size: 8px; font-weight: 600; letter-spacing: 1px; color: var(--lime); text-decoration: none; padding: 4px 10px; border: 1px solid rgba(198,255,0,0.3); background: rgba(198,255,0,0.06); white-space: nowrap;">SUPPORT $20+</a>
+        <a href="https://www.patreon.com/lizthedeveloper" target="_blank" rel="noopener" style="font-family: var(--font-mono); font-size: 7px; letter-spacing: 1px; color: rgba(198,255,0,0.5); text-decoration: none; white-space: nowrap;">or any amount on Patreon</a>
+      </div>
     </div>
   </div>`;
 }

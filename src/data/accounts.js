@@ -31,7 +31,7 @@ const BASE_ACCOUNTS = {
     district: 'master-keys',
     building: 'assets/buildings/icloud.png',
     buildingDark: 'assets/buildings/icloud_dark.png',
-    securityUrl: 'https://account.apple.com/account/manage',
+    securityUrl: 'https://account.apple.com',
     riskLevel: 'high',
   },
   yahoo: {
@@ -55,7 +55,7 @@ const BASE_ACCOUNTS = {
     district: 'master-keys',
     building: 'assets/buildings/apple_id.png',
     buildingDark: 'assets/buildings/apple_id_dark.png',
-    securityUrl: 'https://account.apple.com/account/manage',
+    securityUrl: 'https://account.apple.com',
     riskLevel: 'high',
   },
   google: {
@@ -102,6 +102,7 @@ const BASE_ACCOUNTS = {
     district: 'vault',
     building: 'assets/buildings/paypal.png',
     buildingDark: 'assets/buildings/paypal_dark.png',
+    securityUrl: 'https://www.paypal.com/myaccount/settings/security',
     riskLevel: 'high',
   },
   venmo: {
@@ -109,6 +110,7 @@ const BASE_ACCOUNTS = {
     district: 'vault',
     building: 'assets/buildings/venmo.png',
     buildingDark: 'assets/buildings/venmo_dark.png',
+    securityUrl: 'https://account.venmo.com/settings/security',
     riskLevel: 'medium',
   },
   cashapp: {

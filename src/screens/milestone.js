@@ -1,9 +1,9 @@
 import { DISTRICTS } from '../data/districts.js';
 import { ACCOUNTS } from '../data/accounts.js';
-import { getMissionsForDistrict } from '../data/missions.js';
-import { calcIntegrity, getBuildingState } from '../utils/calc.js';
+import { calcIntegrity, getBuildingState, districtBreachedAddresses } from '../utils/calc.js';
 import { renderHud } from '../components/hud.js';
 import { renderBuilding } from '../components/building.js';
+import { scoutSprite } from '../components/scout.js';
 
 export function renderMilestone(state, districtId) {
   const district = DISTRICTS.find((d) => d.id === districtId);
@@ -28,10 +28,8 @@ export function renderMilestone(state, districtId) {
     .map(([id]) => id);
   const enabledAccounts = districtAccountIds.filter((id) => state.accounts[id]?.enabled);
   const accountsSecured = enabledAccounts.length;
-  const breachesFixed = getMissionsForDistrict(districtId).filter((m) => {
-    const s = state.missions[m.id];
-    return s?.status === 'completed' && s.finding && s.finding !== 'no-breaches';
-  }).length;
+  // Addresses found in a breach (Master Keys only): what was found, not fixed.
+  const addressesBreached = districtBreachedAddresses(state, districtId);
   const integrity = calcIntegrity(state);
   const nextDistrict = DISTRICTS.find((d) => d.chapter === district.chapter + 1);
   const continueLink = nextDistrict
@@ -43,6 +41,7 @@ export function renderMilestone(state, districtId) {
     ${renderHud(state)}
     <div style="position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, rgba(198,255,0,0.03) 40%, transparent 70%); pointer-events: none;"></div>
     <div style="position: relative; text-align: center; padding-top: 44px;">
+      <div style="margin-bottom: 12px;">${scoutSprite('hug', { size: 64, style: 'filter: drop-shadow(0 0 6px rgba(0,229,255,0.3));' })}</div>
       <div style="font-family: var(--font-display); font-size: 10px; font-weight: 600; color: var(--lime); letter-spacing: 4px; text-shadow: 0 0 12px rgba(198,255,0,0.4);">CHAPTER ${district.chapter} COMPLETE</div>
     </div>
     <div style="position: relative; text-align: center; margin-top: 16px;">
@@ -59,10 +58,10 @@ export function renderMilestone(state, districtId) {
         <div style="font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--lime); text-shadow: 0 0 15px rgba(198,255,0,0.3);">${accountsSecured}</div>
         <div style="font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(198,255,0,0.6); margin-top: 6px;">ACCOUNTS SECURED</div>
       </div>
-      <div style="min-width: 150px; padding: 20px 28px; text-align: center; background: rgba(255,159,0,0.06); border: 1px solid rgba(255,159,0,0.25);">
-        <div style="font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--amber); text-shadow: 0 0 15px rgba(255,159,0,0.3);">${breachesFixed}</div>
-        <div style="font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,159,0,0.6); margin-top: 6px;">BREACHES FIXED</div>
-      </div>
+      ${addressesBreached === null ? '' : `<div style="min-width: 150px; padding: 20px 28px; text-align: center; background: rgba(255,159,0,0.06); border: 1px solid rgba(255,159,0,0.25);">
+        <div style="font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--amber); text-shadow: 0 0 15px rgba(255,159,0,0.3);">${addressesBreached}</div>
+        <div style="font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(255,159,0,0.6); margin-top: 6px;">${addressesBreached === 1 ? 'ADDRESS' : 'ADDRESSES'} FOUND IN A BREACH</div>
+      </div>`}
       <div style="min-width: 150px; padding: 20px 28px; text-align: center; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.25);">
         <div style="font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--cyan); text-shadow: 0 0 15px rgba(0,229,255,0.3);">${integrity}<span style="font-size: 18px; color: rgba(237,239,243,0.3);">%</span></div>
         <div style="font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 2px; color: rgba(0,229,255,0.6); margin-top: 6px;">CITY INTEGRITY</div>
