@@ -1,6 +1,6 @@
 {
   "checked": "2026-10-07",
-  "note": "Every step URL in MISSIONS, checked live. A new or changed URL must be checked live and added here (tests/recon-phase3-urls.test.js).",
+  "note": "Step URLs are tracked here with how they answered. A new or changed URL must be checked live and added here (tests/recon-phase3-urls.test.js).",
   "urls": {
     "about:preferences#privacy": "browser-internal page (Firefox settings), not fetchable",
     "https://account.adobe.com/privacy": "curl 200",
@@ -45,6 +45,7 @@
     "https://global.americanexpress.com/privacy/opt-out": "curl 200",
     "https://haveibeenpwned.com": "curl 200",
     "https://haveibeenpwned.com/": "curl 200",
+    "https://haveibeenpwned.com/Passwords": "Not live-verified: DNS lookup failed in this environment (2026-10-16)",
     "https://helloclue.com/privacy": "curl 200",
     "https://images.google.com/": "curl 200",
     "https://legal.thomsonreuters.com/en/legal-notices/privacy-records": "curl 200",

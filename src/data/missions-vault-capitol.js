@@ -3,6 +3,8 @@ import { PASSWORD_EXPOSED_QUESTION, TWO_FA_METHOD_DEBRIEF } from './missions-pas
 // Uses the same debrief schemas as missions.js -- redefined here for standalone use,
 // merged by the integration code.
 
+import { PWNED_PASSWORD_STEP } from './pwned-passwords-step.js';
+
 const BREACH_DEBRIEF = [
   {
     id: 'finding',
@@ -140,6 +142,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: 'Enter the email address you used to register your bank account' },
       { text: 'Note the results -- if breached, that password is already in automated attack scripts' },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -234,6 +237,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: "Enter the email associated with your credit card account" },
       { text: "Note any breaches -- especially from retail or financial services" },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -304,6 +308,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: "Enter your PayPal email address" },
       { text: "Note any breaches -- PayPal's own 2022 incident was credential stuffing, not a server breach" },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -352,6 +357,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: "Enter the email or phone number tied to your Venmo" },
       { text: "Note any breaches" },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -422,6 +428,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: 'Enter the email or phone number tied to Cash App' },
       { text: 'Note any breaches' },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -469,6 +476,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: "Enter the email tied to your crypto exchange account" },
       { text: "Note any breaches -- crypto accounts are the highest-value targets in The Vault" },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -517,6 +525,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: "Enter the email tied to your brokerage (Fidelity, Schwab, Vanguard, Robinhood, etc.)" },
       { text: "Note any breaches" },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -741,6 +750,7 @@ export const VAULT_CAPITOL_MISSIONS = [
       { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
       { text: 'Enter the email you use for Healthcare.gov, your insurer, or patient portals like MyChart' },
       { text: 'Note breaches -- healthcare breaches often include SSN and insurance details' },
+      PWNED_PASSWORD_STEP,
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
