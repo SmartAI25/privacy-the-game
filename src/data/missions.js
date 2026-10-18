@@ -1,6 +1,7 @@
 import { ACCOUNTS } from './accounts.js';
 import { VAULT_CAPITOL_MISSIONS } from './missions-vault-capitol.js';
 import { MISSIONS_SQUARE_ARCHIVES_MARKETPLACE } from './missions-square-archives-marketplace.js';
+import { MARKETPLACE_CHEAP_ACCOUNTS_MISSIONS } from './missions-marketplace-cheap.js';
 import { PERIMETER_MISSIONS } from './missions-perimeter.js';
 import { RECLAMATION_MISSIONS } from './missions-reclamation.js';
 import { FREEWAY_MISSIONS } from './missions-freeway.js';
@@ -1227,6 +1228,7 @@ export const MISSIONS = withReplacements([
   ...CHAPTER_1_MISSIONS,
   ...VAULT_CAPITOL_MISSIONS,
   ...MISSIONS_SQUARE_ARCHIVES_MARKETPLACE,
+  ...MARKETPLACE_CHEAP_ACCOUNTS_MISSIONS,
   ...PERIMETER_MISSIONS,
   ...RECLAMATION_MISSIONS,
   ...FREEWAY_MISSIONS,

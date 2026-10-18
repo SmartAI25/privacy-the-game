@@ -20,7 +20,7 @@
 const SKIP = { value: 'skip', text: 'Couldn’t check right now', severity: 'skip' };
 
 // Q-PW. Pre-filled from the password manager report when it's filed.
-function pwQuestion(service) {
+export function pwQuestion(service) {
   return {
     id: 'pw_status',
     prefill: 'pm-report',
@@ -37,7 +37,7 @@ function pwQuestion(service) {
 }
 
 // Q-ACT, with a label written for the account.
-function activityQuestion(label) {
+export function activityQuestion(label) {
   return {
     id: 'activity',
     label,
@@ -77,7 +77,7 @@ function changedSinceQuestion(service, since) {
   };
 }
 
-const pmStep = (what) => ({ text: `Open your password manager’s security report and search for ${what}. Note whether it says leaked, compromised or reused.` });
+export const pmStep = (what) => ({ text: `Open your password manager’s security report and search for ${what}. Note whether it says leaked, compromised or reused.` });
 
 // Scout, in his understated voice. Every line is true whatever else the
 // player answered: the line shown is the most severe answer's (scoutBySeverity).
@@ -95,13 +95,13 @@ const ACTIVITY_LINES = {
 };
 
 const CARD_CALL = 'Call the number on the back of your card and tell them what you didn’t do. Then change the password.';
-const reportInApp = (name) => `Report it to ${name} from inside its app or its own website, not through a link or number from an email or text. Then change the password.`;
+export const reportInApp = (name) => `Report it to ${name} from inside its app or its own website, not through a link or number from an email or text. Then change the password.`;
 
-function scout(briefing, extra = {}) {
+export function scout(briefing, extra = {}) {
   return { briefing, debrief: { ...PW_LINES, ...ACTIVITY_LINES, ...extra } };
 }
 
-function recon(fields) {
+export function recon(fields) {
   return { phase: 'recon', scoutBySeverity: true, estimatedMinutes: 5, ...fields };
 }
 
