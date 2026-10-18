@@ -183,7 +183,7 @@ export const CLINIC_MISSIONS = [
       { text: 'Make a list of every therapy or mental-health app you’ve used' },
       { text: 'For each one, search “<app> FTC” and “<app> data breach”' },
       { text: 'In each app you still use, request a copy of your data. Delete the account for any you’ve stopped using' },
-      { text: 'BetterHelp customers: the FTC sent refunds automatically in 2024 and 2025. There was no claim form', url: 'https://www.ftc.gov/enforcement/refunds/betterhelp-refunds' },
+      { text: 'BetterHelp customers: the FTC sent refunds automatically in 2024 and 2025. There was no claim form. (The FTC refund page has since been removed.)' },
     ],
     debriefQs: THERAPY_APPS_DEBRIEF,
     scoutDialog: {
