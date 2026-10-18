@@ -86,4 +86,21 @@ export const ACCOUNTS_SAM_ADDITIONS = {
     securityUrl: 'https://account.uber.com/safety-security',
     riskLevel: 'medium',
   },
+  // The cheap-goods apps: the data is part of the price (missions-marketplace-cheap.js).
+  temu: {
+    name: 'Temu',
+    district: 'marketplace',
+    building: 'assets/buildings/iso_occupied.png',
+    buildingDark: 'assets/buildings/iso_occupied.png',
+    buildingLib: 'assets/buildings/iso_liberated.png',
+    riskLevel: 'medium',
+  },
+  shein: {
+    name: 'Shein',
+    district: 'marketplace',
+    building: 'assets/buildings/iso_occupied.png',
+    buildingDark: 'assets/buildings/iso_occupied.png',
+    buildingLib: 'assets/buildings/iso_liberated.png',
+    riskLevel: 'medium',
+  },
 };

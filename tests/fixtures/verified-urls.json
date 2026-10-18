@@ -186,7 +186,11 @@
     "https://x.com/settings/your_twitter_data/account": "curl 200",
     "https://yandex.com/images/": "curl 200",
     "https://on.quad9.net/": "curl 200, 2026-10-08 (Quad9 test page: says whether you are using Quad9)",
-    "https://dns.quad9.net/dns-query": "Quad9 DNS-over-HTTPS endpoint, listed on quad9.net/service/service-addresses-and-features; RFC 8484 GET returned 200, 2026-10-08"
+    "https://dns.quad9.net/dns-query": "Quad9 DNS-over-HTTPS endpoint, listed on quad9.net/service/service-addresses-and-features; RFC 8484 GET returned 200, 2026-10-08",
+    "https://www.temu.com/bgp_personalized_advertising.html": "curl 200 (2026-10-18): Temu personalized advertising page with the \"Allow Temu to share my data to personalize my ad experience\" toggle",
+    "https://www.temu.com/privacy-and-cookie-policy.html": "curl 200 (2026-10-18): Temu | Privacy Policy",
+    "https://us.shein.com/user/privacy-center": "curl 200 (2026-10-18; redirects to sign-in, then the Privacy Center)",
+    "https://us.shein.com/Consumer-Privacy-Notice-s-101.html": "curl 200 (2026-10-18): SHEIN PRIVACY NOTICE | SHEIN USA"
   },
   "dns": {
     "checked": "2026-10-08",
