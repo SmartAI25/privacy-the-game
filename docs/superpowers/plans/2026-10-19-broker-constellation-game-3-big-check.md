@@ -27,11 +27,16 @@
   - added to `docs/scout-dialogue-ch8-reclamation.md` as well
 - Opt-out links follow Plan 2's rule: only `verified` URLs are links.
 - Every PR bumps the version.
+- Decisions (Liz, 2026-10-19):
+  - NAI/DAA member lists are their own source kind (`member-list`). They are used only for the halo and for new `ad-network` records of members the registries don't list. They never back a drawn or published link.
+  - The Big Check also lists brokers from missions the player hasn't done. Those rows link to the mission instead of offering a tick box. Ticks are only for brokers no mission covers.
+  - Big Check rows link only to checker-confirmed (`verified`) opt-out pages.
+  - `none` brokers (Radaris among them since PR #145) never appear in the Big Check and can't be ticked.
 
 ## Review Focus
 
 1. **A Big Check tick on a broker that a later dataset release puts in a mission.** Expected: the tick stays recorded and the star stays lit, and the row shows the mission instead of a tick box. Pinned by Task 2's `a ticked broker that gains a mission stays lit`.
-2. **About 700 rows on a phone, filtered to nothing.** Expected: `No brokers match`, and clearing the filter restores the groups. Pinned by Task 2's `filtering to nothing says so`.
+2. **About 750 rows on a phone (903 brokers, less buyers, `none` routes and anything lit), filtered to nothing.** Expected: `No brokers match`, and clearing the filter restores the groups. Pinned by Task 2's `filtering to nothing says so`.
 3. **Scout's one-time lines after a reload.** Expected: each line shows once per save, never twice. Pinned by Task 3's `each map line shows once`.
 4. **A member list naming a company under a different spelling** (`Criteo SA` vs. the record `criteo`). Expected: one record, matched by legal name; a match on brand alone is never made. Pinned by Task 1's `members match records by legal name only`.
 5. **Ticks reaching progress or the collective.** Expected: `calcDistrictProgress`, `calcIntegrity` and `restoreEvents` are identical with and without `bigCheck`. Pinned by Task 2's `Big Check ticks count for nothing but the map`.
@@ -195,8 +200,3 @@ it('every line is documented in the chapter 8 dialogue doc', () => {
   - Screenshot each state.
 - [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version`.
 - [ ] **Step 4: Commit by explicit paths, push, and open a PR** with the screenshots. Merge once the full suite is green.
-
-## Open questions for Liz (the plan uses the default shown until she answers)
-
-1. **NAI/DAA member lists are the organisations' own statements.** The first dataset release published tier A evidence only. Default: add them as a separate `member-list` kind that can never back a published link. It's used only for the halo, plus new `ad-network` records for members the registries don't list. Say if you'd rather they wait for the tier B review, which would mean no halo until then.
-2. **Big Check scope.** The spec says "every broker not covered by a mission or sweep the player has done". Default: brokers in a mission the player hasn't done are listed too, with a link to that mission instead of a tick box. Ticks are kept for brokers no mission covers.

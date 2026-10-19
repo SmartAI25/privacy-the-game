@@ -19,12 +19,16 @@
 - **Broker ids, the selected star, residency and ticks never go in the URL.** The map's route is exactly `#/reclamation/map`. `app.js` sends `location.href` as every pageview.
 - No new `track()` calls. The existing pageview (title `broker-map`) is the funnel signal.
 - Every opt-out URL shown is one the dataset's checker marked `verified` (`optOut.status === 'verified'` with a `verifiedAt`). Every other URL shown is a source's `archived` Wayback copy, or one of the complaint URLs already in `tests/fixtures/verified-urls.json`.
-- Colours: lime `#C6FF00` you filed; amber `#FF9F00` re-check due; magenta `#FF2D9B` ✕ no opt-out exists; dim `#3a4256` not yet. The NAI/DAA halo is never lime.
+- Colours: lime `#C6FF00` you filed; dimmed amber `#FF9F00` at `RECHECK_OPACITY` (0.55) re-check due, which still counts toward FIELD COVERED (Liz, 2026-10-19); magenta `#FF2D9B` ✕ no opt-out exists; dim `#3a4256` not yet. The NAI/DAA halo is never lime.
 - Header: `FIELD COVERED: n% · HUBS LIT n/12`, with the sub-line `estimated share of the field your opt-outs reach`.
 - Hubs (top 12 by reach) carry permanent labels. Other stars are labelled when tapped.
-- Phone: 16px gutters, no horizontal scroll, readable at 375px. The test is 839 stars on a mid-range phone.
+- Phone: 16px gutters, no horizontal scroll, readable at 375px. The test is 903 stars on a mid-range phone (the dataset with Vermont, `asOf` 2026-10-19).
 - Motion respects `prefers-reduced-motion` (colours stay, motion stops), as `city-lights.js` does.
 - Every PR bumps the version.
+- Decisions (Liz, 2026-10-19):
+  - Star cards and the Big Check link only to checker-confirmed (`verified`) opt-out pages. Every other status gets the "couldn't confirm" note. This follows the spec's Phase 1 rule ("URL checking at this scale"): the dataset's checker, not `verified-urls.json`, vouches for broker URLs. The two complaint forms come from `verified-urls.json`.
+  - A site-only line lights no star (Plan 1), so a company's card never shows as filed because one of its other sites was.
+  - Radaris (method `none` since PR #145) is a magenta ✕ like any other `none` star.
 
 ## Review Focus
 
@@ -146,9 +150,10 @@ it('the service worker caches the data files', () => {
 - Consumes: `Lighting` and `isBuyer` (Plan 1, `src/utils/broker-lighting.js`).
 - Produces:
   - `shortName(name: string) → string`. It strips a trailing comma or legal suffix (`Inc.`, `Inc`, `LLC`, `L.L.C.`, `Ltd`, `plc`, `PLC`, `Corp`, `Corporation`, `Company`, `Co.`), once. `Experian plc` gives `Experian`; `TransUnion Risk and Alternative Data Solutions, Inc.` gives `TransUnion Risk and Alternative Data Solutions`.
+  - `RECHECK_OPACITY = 0.55`: the fill opacity of an amber (re-check due) star. A freshly lit star draws at full opacity.
   - `constellationSvg({ map, layout, lighting, selectedId = null, newlyLit = new Set(), view = { x: 0, y: 0, w: 1000 } }) → string`. It returns `<svg class="constellation" viewBox="x y w w" role="img" aria-label="Map of data brokers: …">`, with these layers in order:
     - **Links:** `<line class="link">`, opacity `min(0.6, 0.15 × (1 + sources.length))`; tier C gets `stroke-dasharray` (none ship yet).
-    - **Stars:** `<circle class="star star--lit|star--amber|star--dim">`. A `no-opt-out` star is a magenta ✕ `<path class="star-x">`. A buyer is a hollow diamond `<rect class="buyer">` stroked `#8a93a6`.
+    - **Stars:** `<circle class="star star--lit|star--amber|star--dim">`. An amber star carries `fill-opacity="${RECHECK_OPACITY}"`, and its bloom and glow are off. A `no-opt-out` star is a magenta ✕ `<path class="star-x">`. A buyer is a hollow diamond `<rect class="buyer">` stroked `#8a93a6`.
     - **Rings and halos:** a frozen star gets `<circle class="ring-frozen">` (cyan, dashed) at `r + 3`. A halo star gets `<circle class="halo">` at `r + 4`, filled `#EDEFF3` at opacity 0.12.
     - **Effects:** a newly lit star gets class `star--new`, with an `animation-delay` of `(i % 20) × 60ms` in id order. The selected star gets `<circle class="selected">`.
     - **Labels:** `<text class="hub-label">${shortName(name)}</text>` for hubs.
@@ -161,6 +166,10 @@ it('the service worker caches the data files', () => {
 ```js
 it('draws one mark per laid-out broker', ...);           // circles + ✕ + diamonds === 12
 it('lit, amber and dim stars get their class', ...);
+it('a re-check-due star draws dimmer than a freshly filed one', () => {
+  // spokeo amber, acxiom lit: spokeo's circle has class star--amber and fill-opacity="0.55"; acxiom's has star--lit and no fill-opacity
+  expect(RECHECK_OPACITY).toBe(0.55);
+});
 it('a no-opt-out star is a magenta ✕', ...);
 it('a buyer is a diamond', ...);
 it('a frozen star gets the frozen ring', ...);
@@ -169,7 +178,7 @@ it('newly lit stars bloom', ...);
 it('stars missing from the layout or the map are skipped', ...);
 it('hub labels use the short name', ...);
 it('the SVG carries no links and no broker ids', () => { expect(svg).not.toMatch(/href=|<a\b/); expect(svg).not.toMatch(/spokeo/); });
-it('renders the real map in under 200ms in node', ...);  // 839 stars; a guard against accidental quadratic work
+it('renders the real map in under 200ms in node', ...);  // 903 stars; a guard against accidental quadratic work
 ```
 
 - [ ] **Step 2: Run `npx vitest run tests/broker-game/constellation.test.js` and confirm it fails.**
@@ -211,6 +220,7 @@ it('renders the real map in under 200ms in node', ...);  // 839 stars; a guard a
 
 ```js
 it('a new player sees 0% and 0/12', () => expect(html).toContain('FIELD COVERED: 0% · HUBS LIT 0/12'));
+it('the legend shows re-check due as dimmed amber', ...);   // the legend swatch uses RECHECK_OPACITY
 it('labels the number as an estimate', () => expect(html).toContain('estimated share of the field your opt-outs reach'));
 it('asks residency once, with three answers', ...);
 it('an answered residency shows the answer and CHANGE', ...);
@@ -297,8 +307,3 @@ it('a card lists its links and their archived sources', ...);    // e.g. 'avast'
   - Screenshot each state, plus a seeded save with legacy filings and DROP lit.
 - [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version`.
 - [ ] **Step 4: Commit by explicit paths, push, and open a PR** with the screenshots. Merge once the full suite is green.
-
-## Open questions for Liz (the plan uses the default shown until she answers)
-
-1. **Opt-out pages the checker couldn't confirm.** 75 records are `blocked` (usually bot protection, not a dead page), 15 are `suspect` and 20 are `dead`. Default: only `verified` URLs are shown as links. The others say `We couldn't confirm their opt-out page when we last checked`, which keeps the v5.0 rule that every URL shown was live-checked. The alternative is to also link `blocked` pages, labelled as unconfirmed.
-2. **The spec's Tests section says card URLs must be in `tests/fixtures/verified-urls.json`.** Its Phase 1 section ("URL checking at this scale") says the dataset's own checker replaces that file for broker URLs. Default: follow Phase 1 (`optOut.status === 'verified'`). Only the two complaint forms, which missions already use, come from `verified-urls.json`.
