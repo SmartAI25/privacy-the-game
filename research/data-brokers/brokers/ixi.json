@@ -4,7 +4,7 @@
   "aliases": [
     "IXI CORPORATION"
   ],
-  "parent": null,
+  "parent": "equifax",
   "kind": [],
   "registries": {
     "CA": "2026",
@@ -26,7 +26,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-efx-10k-2025-ex21"
   ],
   "website": "https://equifax.com"
 }

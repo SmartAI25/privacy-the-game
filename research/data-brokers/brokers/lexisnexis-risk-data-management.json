@@ -1,0 +1,17 @@
+{
+  "id": "lexisnexis-risk-data-management",
+  "name": "LexisNexis Risk Data Management, LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-relx-annual-report-2025"
+  ]
+}

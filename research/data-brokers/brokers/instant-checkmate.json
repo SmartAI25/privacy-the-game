@@ -4,17 +4,23 @@
   "aliases": [
     "Instant Checkmate",
     "INSTANT CHECKMATE LLC",
-    "InstantCheckmate.com"
+    "InstantCheckmate.com",
+    "Instant Checkmate, LLC"
   ],
-  "parent": null,
-  "kind": [],
+  "parent": "pubrec",
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": null,
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "background reports",
+    "people search and background reports"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.instantcheckmate.com/privacy-center",
@@ -27,7 +33,11 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "enf-ftc-truthfinder-complaint-2023",
+    "enf-ftc-truthfinder-order-2023",
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy"
   ],
   "website": "https://www.instantcheckmate.com"
 }

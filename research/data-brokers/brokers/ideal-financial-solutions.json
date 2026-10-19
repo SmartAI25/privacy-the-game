@@ -1,0 +1,20 @@
+{
+  "id": "ideal-financial-solutions",
+  "name": "Ideal Financial Solutions",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-leaplab-complaint-2014",
+    "enf-ftc-sequoia-one-complaint-2015"
+  ]
+}

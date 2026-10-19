@@ -1,0 +1,31 @@
+{
+  "id": "safegraph",
+  "name": "SafeGraph",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "data-marketplace"
+  ],
+  "registries": {},
+  "sells": [
+    "datasets about physical places (points of interest)",
+    "aggregates data, including geolocation, licensed from data suppliers (none named)"
+  ],
+  "optOut": {
+    "method": "email",
+    "url": "https://www.safegraph.com/privacy-policy/",
+    "notes": "Privacy rights requests to privacy@safegraph.com (the address is listed in the policy). SafeGraph says it does not collect data directly from people to build its products."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-safegraph-privacy",
+    "jour-markup-life360-2021"
+  ],
+  "missions": [
+    "location_brokers-fortify-optout"
+  ]
+}

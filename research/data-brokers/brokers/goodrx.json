@@ -1,0 +1,21 @@
+{
+  "id": "goodrx",
+  "name": "GoodRx",
+  "aliases": [
+    "GoodRx Holdings, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "health"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-goodrx-complaint-2023"
+  ]
+}

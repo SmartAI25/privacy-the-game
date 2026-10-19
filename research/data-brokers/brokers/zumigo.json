@@ -1,0 +1,21 @@
+{
+  "id": "zumigo",
+  "name": "Zumigo",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [
+    "carrier location data aggregation"
+  ],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-vice-bounty-hunter-2019"
+  ]
+}

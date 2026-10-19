@@ -1,0 +1,20 @@
+{
+  "id": "pubrec",
+  "name": "PubRec",
+  "aliases": [
+    "PubRec, LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-truthfinder-complaint-2023",
+    "enf-ftc-truthfinder-order-2023"
+  ]
+}

@@ -2,11 +2,13 @@
   "id": "general-motors",
   "name": "General Motors LLC",
   "aliases": [
-    "GENERAL MOTORS LLC"
+    "GENERAL MOTORS LLC",
+    "GM"
   ],
-  "parent": null,
+  "parent": "general-motors-company",
   "kind": [
-    "location"
+    "location",
+    "automotive"
   ],
   "registries": {
     "CA": "2026",
@@ -14,7 +16,10 @@
     "TX": null,
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "connected-vehicle precise geolocation data",
+    "OnStar Smart Driver driving behavior data"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.gm.com/consumer-privacy",
@@ -27,7 +32,8 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "enf-ftc-gm-complaint-2026"
   ],
   "website": "https://www.gm.com"
 }

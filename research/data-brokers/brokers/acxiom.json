@@ -2,11 +2,15 @@
   "id": "acxiom",
   "name": "Acxiom LLC",
   "aliases": [
-    "ACXIOM LLC"
+    "ACXIOM LLC",
+    "Acxiom, LLC",
+    "Acxiom"
   ],
-  "parent": null,
+  "parent": "omnicom",
   "kind": [
-    "location"
+    "location",
+    "marketing",
+    "identity-resolution"
   ],
   "registries": {
     "CA": "2026",
@@ -14,10 +18,13 @@
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "consumer marketing data products"
+  ],
   "optOut": {
     "method": "web-form",
-    "url": "https://www.acxiom.com/privacy",
+    "url": "https://www.acxiom.com/optout/",
+    "notes": "US opt-out form is hosted on omnicom-privacy.my.onetrust.com; needs a valid email to confirm; phone 1-877-774-2094; mail Acxiom LLC, P.O. Box 2000. Processed within two weeks of confirmation; does not reach data already provided to marketers.",
     "status": "verified",
     "verifiedAt": "2026-10-18"
   },
@@ -28,7 +35,15 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-omc-10k-2025",
+    "sec-omc-10k-2025-ex21",
+    "pol-acxiom-optout",
+    "jour-markup-xandr-segments-2023",
+    "jour-propublica-facebook-brokers-2016"
   ],
-  "website": "https://www.acxiom.com"
+  "website": "https://www.acxiom.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

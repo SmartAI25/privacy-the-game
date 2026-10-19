@@ -3,31 +3,63 @@
   "name": "LiveRamp Holdings, Inc.",
   "aliases": [
     "LiveRamp Holdings Inc.",
-    "LIVERAMP HOLDINGS INC"
+    "LIVERAMP HOLDINGS INC",
+    "LiveRamp"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "identity-resolution",
+    "data-marketplace",
+    "marketing"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "deterministic identity resolution (RampID)",
+    "Data Marketplace for third-party data",
+    "data onboarding",
+    "clean-room data collaboration",
+    "online identifiers that map customer records to cookies, mobile IDs and platform IDs",
+    "data appends, data hygiene and modeled audiences for advertisers",
+    "sale of identifiers and online activity data to unaffiliated third parties for interest-based advertising (per its service privacy notice)"
+  ],
   "optOut": {
     "method": "web-form",
-    "url": "https://www.liveramp.com",
+    "url": "https://liveramp.com/privacy/my-privacy-choices/",
+    "notes": "Opt-out open to all US residents; first+last name and email give an opt-out across all linked identifiers; separate device (mobile ID) and browser (cookie) opt-outs; phone (844) 678-0045. Policy names no specific source or recipient companies.",
     "status": "verified",
     "verifiedAt": "2026-10-18"
   },
   "size": {
-    "known": false,
-    "signals": []
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 (year ended March 31, 2026) total revenues $812.9 million",
+        "source": "sec-ramp-10k-fy2026"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 Marketplace and Other revenue $198.5 million",
+        "source": "sec-ramp-10k-fy2026"
+      }
+    ]
   },
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-ramp-10k-fy2026",
+    "enf-ftc-avast-complaint-2024",
+    "pol-liveramp-privacy-choices",
+    "pol-liveramp-service-privacy"
   ],
-  "website": "https://www.liveramp.com"
+  "website": "https://www.liveramp.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

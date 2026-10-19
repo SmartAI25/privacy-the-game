@@ -2,10 +2,14 @@
   "id": "consumerbase",
   "name": "Consumerbase, LLC",
   "aliases": [
-    "Exact Data"
+    "Exact Data",
+    "Consumer Base",
+    "Consumer Base LLC dba Exact Data"
   ],
-  "parent": null,
-  "kind": [],
+  "parent": "data-axle",
+  "kind": [
+    "marketing"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
@@ -24,7 +28,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "pol-dataaxle-privacy"
   ],
   "website": "https://www.exactdata.com"
 }
