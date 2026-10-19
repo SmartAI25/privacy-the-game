@@ -14,5 +14,6 @@
   "lexisnexis-risk-data-management": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
   "lexisnexis-special-services": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
   "lexisnexis-coplogic-solutions": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "lnrs-data-services": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" }
+  "lnrs-data-services": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "idverse": { "parent": null, "replaces": { "parent": "lexisnexis-risk-solutions" }, "reason": "fact-check: RELX Annual Report 2025 note 28 lists IDVerse Pty Ltd as held indirectly by RELX PLC; the acquiring business named is the LexisNexis Risk Solutions business area, not the legal entity, and no direct parent is stated" }
 }

@@ -10,13 +10,13 @@
       "from": "general-motors",
       "to": "verisk",
       "type": "supplies",
-      "reason": "rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> insurance-services-office, which names the recipient"
+      "reason": "rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> insurance-services-office, which names the recipient"
     },
     {
       "from": "general-motors",
       "to": "lexisnexis-risk-solutions",
       "type": "supplies",
-      "reason": "rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> lexisnexis-risk-solutions"
+      "reason": "rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> lexisnexis-risk-solutions (complaint para 39)"
     }
   ],
   "unpublish": [
@@ -67,6 +67,85 @@
       "type": "supplies",
       "newFrom": "general-motors",
       "reason": "FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one"
+    },
+    {
+      "from": "lexisnexis-risk-solutions",
+      "to": "idverse",
+      "type": "owns",
+      "newFrom": "relx-plc",
+      "reason": "fact-check: RELX Annual Report 2025 (Risk business review) says the LexisNexis Risk Solutions business, not the legal entity LexisNexis Risk Solutions Inc., closed the IDVerse acquisition; note 28 lists IDVerse Pty Ltd (AUS) as held indirectly by RELX PLC"
+    }
+  ],
+  "reclaim": [
+    {
+      "from": "equifax",
+      "to": "appriss-insights",
+      "type": "owns",
+      "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says proceeds of its August 2021 issue of 2.35% Senior Notes due 2031 helped fund acquisitions, including the Company's acquisition of Appriss Insights.",
+      "reason": "fact-check: 10-K debt note says the 2031 Notes were issued August 11, 2021 and remaining proceeds funded acquisitions including Appriss Insights; \"2021 note\" read as the notes due 2021"
+    },
+    {
+      "from": "transunion",
+      "to": "tloxp",
+      "type": "owns",
+      "claim": "TransUnion's FY2025 Form 10-K lists TLOxp among its own products: its TruLookup investigative solution line \"includes TLOxp® as a platform for delivery.\" TLOxp is a TransUnion product platform, not a separately listed legal entity.",
+      "reason": "fact-check: 10-K Item 1 solution list, TruLookup bullet; TLOxp is not in Exhibit 21, so the owns link rests on it being TransUnion's product"
+    },
+    {
+      "from": "relx-plc",
+      "to": "idverse",
+      "type": "owns",
+      "claim": "RELX's Annual Report 2025 says its LexisNexis Risk Solutions business closed the acquisition of IDVerse, a provider of AI-powered automated document authentication and fraud detection, in Q1 2025; note 28 lists IDVerse Pty Ltd (Australia) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+      "reason": "fact-check: Risk business review (\"In Q1 2025, LexisNexis Risk Solutions closed the acquisition of IDVerse\") plus note 28 related undertakings (IDVerse Pty Ltd, AUS, no percentage stated)"
+    },
+    {
+      "from": "publicis-groupe",
+      "to": "epsilon-data-management",
+      "type": "owns",
+      "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 says Publicis acquired Epsilon, \"a technology company specializing in data and marketing activities\", in 2019.",
+      "reason": "fact-check: URD section 1.3.2 says \"the acquisition in 2019 of Epsilon\"; it mentions Epsilon's identity graph separately, not as the thing acquired"
+    },
+    {
+      "from": "gravy-analytics",
+      "to": "venntel",
+      "type": "owns",
+      "claim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+      "reason": "fact-check: complaint para 2 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source"
+    },
+    {
+      "from": "gravy-analytics",
+      "to": "venntel",
+      "type": "supplies",
+      "claim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+      "reason": "fact-check: complaint para 18 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source"
+    },
+    {
+      "from": "jumpshot",
+      "to": "liveramp",
+      "type": "matches-identity",
+      "claim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies.",
+      "reason": "fact-check: complaint para 24; the earlier claim said the complaint \"describes\" the agreement and did not mark it as an allegation"
+    },
+    {
+      "from": "omnicom",
+      "to": "neustar",
+      "type": "matches-identity",
+      "claim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so.",
+      "reason": "fact-check: complaint para 26 describes what the contract permitted, as an allegation; it names no Omnicom-Neustar agreement and no completed matching"
+    },
+    {
+      "from": "transunion-rental-screening-solutions",
+      "to": "lexisnexis-risk-and-information-analytics-group",
+      "type": "buys",
+      "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations.",
+      "reason": "fact-check: complaint para 37; stipulated order para 3 (\"Defendants neither admit nor deny any of the allegations\"); the earlier claim omitted the non-admission"
+    },
+    {
+      "from": "leaplab",
+      "to": "ideal-financial-solutions",
+      "type": "supplies",
+      "claim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+      "reason": "fact-check: complaint para 24 and summary say \"Defendants\" sold, and the defendants are the four parties named in the caption, not LeapLab alone"
     }
   ]
 }

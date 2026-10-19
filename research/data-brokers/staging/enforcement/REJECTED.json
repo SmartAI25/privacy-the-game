@@ -48,5 +48,53 @@
       "newFrom": "general-motors"
     },
     "reason": "link general-motors-company|jacobs-engineering-group|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|owns",
+      "claim": "The FTC's December 2024 complaint against Gravy Analytics and Venntel states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+      "newClaim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics."
+    },
+    "reason": "link gravy-analytics|venntel|owns: claim replaced by link-overrides.json reclaim (fact-check: complaint para 2 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source)"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|supplies",
+      "claim": "The FTC alleged in its December 2024 complaint that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+      "newClaim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors."
+    },
+    "reason": "link gravy-analytics|venntel|supplies: claim replaced by link-overrides.json reclaim (fact-check: complaint para 18 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source)"
+  },
+  {
+    "item": {
+      "link": "jumpshot|liveramp|matches-identity",
+      "claim": "The FTC's 2024 Avast complaint describes a Jumpshot-LiveRamp agreement for 'ID Syncing Services' matching Jumpshot's persistent identifiers to LiveRamp's identifiers.",
+      "newClaim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies."
+    },
+    "reason": "link jumpshot|liveramp|matches-identity: claim replaced by link-overrides.json reclaim (fact-check: complaint para 24; the earlier claim said the complaint \"describes\" the agreement and did not mark it as an allegation)"
+  },
+  {
+    "item": {
+      "link": "omnicom|neustar|matches-identity",
+      "claim": "The FTC's 2024 Avast complaint states the Jumpshot-Omnicom contract allowed Omnicom to translate Jumpshot GUIDs into Neustar IDs (and to match with LiveRamp).",
+      "newClaim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so."
+    },
+    "reason": "link omnicom|neustar|matches-identity: claim replaced by link-overrides.json reclaim (fact-check: complaint para 26 describes what the contract permitted, as an allegation; it names no Omnicom-Neustar agreement and no completed matching)"
+  },
+  {
+    "item": {
+      "link": "transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys",
+      "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order.",
+      "newClaim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations."
+    },
+    "reason": "link transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys: claim replaced by link-overrides.json reclaim (fact-check: complaint para 37; stipulated order para 3 (\"Defendants neither admit nor deny any of the allegations\"); the earlier claim omitted the non-admission)"
+  },
+  {
+    "item": {
+      "link": "leaplab|ideal-financial-solutions|supplies",
+      "claim": "The FTC alleged in its December 2014 complaint that LeapLab sold consumer payday loan applications or information from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+      "newClaim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits."
+    },
+    "reason": "link leaplab|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check: complaint para 24 and summary say \"Defendants\" sold, and the defendants are the four parties named in the caption, not LeapLab alone)"
   }
 ]

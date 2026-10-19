@@ -4,7 +4,7 @@
   "aliases": [
     "IDVerse"
   ],
-  "parent": "lexisnexis-risk-solutions",
+  "parent": null,
   "kind": [
     "risk-identity"
   ],

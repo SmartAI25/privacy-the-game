@@ -380,6 +380,36 @@ describe('mergeStaging', () => {
     expect((await readB('c')).sells).toEqual(['moved']);
     expect((await readB('c')).sources).toEqual([]);
     expect((await readB('d')).parent).toBe(null);
+    expect(r.rejected.some((x) => /d: record-overrides parent "later" not in dataset yet; deferred/.test(x.reason))).toBe(true);
+  });
+
+  it('link-overrides.json reclaim narrows the claim of any link, after reassign, and logs it', async () => {
+    await setup({
+      config: { 'link-overrides.json': {
+        reassign: [{ from: 'q', to: 'c', type: 'owns', newFrom: 'p', reason: 'the source names p' }],
+        reclaim: [
+          { from: 'p', to: 'c', type: 'owns', claim: 'narrow staged', reason: 'source says less' },
+          { from: 'a', to: 'c', type: 'buys', claim: 'narrow existing', reason: 'source says less' },
+          { from: 'x', to: 'y', type: 'owns', claim: 'none', reason: 'link not present' },
+        ],
+      } },
+      brokers: [broker('p', 'P'), broker('c', 'C'), broker('q', 'Q'), broker('a', 'A')],
+      links: [{ ...link('a', 'c', { type: 'buys', sources: ['reg'] }), published: true }],
+      staged: { sources: { s1: src() }, links: [link('q', 'c', { claim: 'broad' })] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readLinks()).map((l) => [l.from, l.to, l.claim, l.published])).toEqual([
+      ['a', 'c', 'narrow existing', true],
+      ['p', 'c', 'narrow staged', true],
+    ]);
+    expect(r.rejected.filter((x) => /claim replaced by link-overrides\.json reclaim/.test(x.reason))).toHaveLength(2);
+    expect(r.rejected.some((x) => /x\|y\|owns: reclaim has no matching link yet/.test(x.reason))).toBe(true);
+  });
+
+  it('link-overrides.json reclaim entries need a claim and a reason', async () => {
+    await setup({ config: { 'link-overrides.json': { reclaim: [{ from: 'a', to: 'b', type: 'owns', claim: 'x' }] } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/reclaim/);
   });
 
   it('optOut: a staged form on a registry-listed DBA domain replaces a generic primary; later ones become alternates', async () => {

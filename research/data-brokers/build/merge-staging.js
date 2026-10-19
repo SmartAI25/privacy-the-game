@@ -3,8 +3,10 @@
 //   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
 //   alias-blocklist.json { brokerId: [{ alias, reason }] }
-//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}] }
-//     drop and reassign act on staged links (keys after id resolution); unpublish on every link.
+//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
+//                         reclaim: [{from,to,type,claim,reason}] }
+//     drop and reassign act on staged links (keys after id resolution); unpublish and reclaim on every
+//     link (reclaim keys are final, i.e. after reassign). reclaim sets the narrower claim a fact-check found.
 //   record-overrides.json { brokerId: { name?, parent?, sells?, source?, dropSources?, replaces?: {field: value}, reason } }
 //     An override never silently replaces a different non-empty value: it applies only when the
 //     current value is empty or equals replaces[field]; otherwise it is reported as a conflict.
@@ -104,6 +106,10 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const dropOv = new Map((linkOv.drop ?? []).map((o) => [ovKey(o), o]));
   const unpubOv = new Map((linkOv.unpublish ?? []).map((o) => [ovKey(o), o]));
   const reassignOv = new Map((linkOv.reassign ?? []).map((o) => [ovKey(o), o]));
+  for (const o of linkOv.reclaim ?? []) {
+    if (!isObj(o) || !isStr(o.from) || !isStr(o.to) || !isStr(o.type) || !isStr(o.claim) || !isStr(o.reason)) throw new Error(`link-overrides.json reclaim entries need from, to, type, claim and reason: ${JSON.stringify(o)}`);
+  }
+  const reclaimOv = new Map((linkOv.reclaim ?? []).map((o) => [ovKey(o), o]));
   for (const [id, list] of Object.entries(aliasBlock)) {
     if (!Array.isArray(list) || !list.every((x) => isObj(x) && isStr(x.alias) && isStr(x.reason))) throw new Error(`alias-blocklist.json ${id}: entries must be { alias, reason }`);
   }
@@ -306,13 +312,23 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   }
 
   for (const l of finalLinks) if (unpubOv.has(`${l.from}|${l.to}|${l.type}`)) l.published = false;
+  for (const [k, o] of reclaimOv) {
+    const l = idx.has(k) ? finalLinks[idx.get(k)] : null;
+    if (!l) { reject({ link: k, reclaim: o.claim }, `link ${k}: reclaim has no matching link yet; not applied`); continue; }
+    if (l.claim === o.claim) continue;
+    reject({ link: k, claim: l.claim, newClaim: o.claim }, `link ${k}: claim replaced by link-overrides.json reclaim (${o.reason})`);
+    l.claim = o.claim;
+  }
 
   // ---- record overrides and alias blocklist (config, applied to every record every run)
   const empty = (v) => v === null || v === undefined || (Array.isArray(v) && v.length === 0);
   for (const [id, ov] of Object.entries(recordOv)) {
     const w = work.get(id);
     if (!w) continue;
-    if (ov.parent && !work.has(ov.parent)) continue; // parent record arrives with a later family
+    if (ov.parent && !work.has(ov.parent)) { // parent record arrives with a later family
+      reject({ broker: id, override: ov }, `${id}: record-overrides parent "${ov.parent}" not in dataset yet; deferred, nothing applied`);
+      continue;
+    }
     if (ov.source !== undefined && !mergedSources[ov.source]) { reject({ broker: id, override: ov }, `${id}: record-overrides cites unknown source ${ov.source}; not applied`); continue; }
     const before = JSON.stringify(w);
     for (const f of ['name', 'parent', 'sells']) {

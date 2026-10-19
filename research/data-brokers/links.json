@@ -16,7 +16,7 @@
     "to": "appriss-insights",
     "type": "owns",
     "tier": "A",
-    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says 2021 note proceeds funded the Company's acquisition of Appriss Insights.",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says proceeds of its August 2021 issue of 2.35% Senior Notes due 2031 helped fund acquisitions, including the Company's acquisition of Appriss Insights.",
     "sources": [
       "sec-efx-10k-2025-ex21",
       "sec-efx-10k-2025"
@@ -106,7 +106,7 @@
     "to": "tloxp",
     "type": "owns",
     "tier": "A",
-    "claim": "TransUnion's FY2025 Form 10-K describes TLOxp as the delivery platform for its TruLookup investigative products.",
+    "claim": "TransUnion's FY2025 Form 10-K lists TLOxp among its own products: its TruLookup investigative solution line \"includes TLOxp® as a platform for delivery.\" TLOxp is a TransUnion product platform, not a separately listed legal entity.",
     "sources": [
       "sec-tru-10k-2025"
     ],
@@ -378,11 +378,11 @@
     "published": true
   },
   {
-    "from": "lexisnexis-risk-solutions",
+    "from": "relx-plc",
     "to": "idverse",
     "type": "owns",
     "tier": "A",
-    "claim": "RELX's Annual Report 2025 says LexisNexis Risk Solutions closed the acquisition of IDVerse, a provider of automated document authentication and fraud detection, in Q1 2025.",
+    "claim": "RELX's Annual Report 2025 says its LexisNexis Risk Solutions business closed the acquisition of IDVerse, a provider of AI-powered automated document authentication and fraud detection, in Q1 2025; note 28 lists IDVerse Pty Ltd (Australia) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
     "sources": [
       "sec-relx-annual-report-2025"
     ],
@@ -416,7 +416,7 @@
     "to": "epsilon-data-management",
     "type": "owns",
     "tier": "A",
-    "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 describes Epsilon's identity graph as acquired in 2019.",
+    "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 says Publicis acquired Epsilon, \"a technology company specializing in data and marketing activities\", in 2019.",
     "sources": [
       "sec-publicis-urd-2025-note36",
       "sec-publicis-urd-2025-activities"
@@ -495,7 +495,7 @@
     "to": "venntel",
     "type": "owns",
     "tier": "A",
-    "claim": "The FTC's December 2024 complaint against Gravy Analytics and Venntel states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+    "claim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
     "sources": [
       "enf-ftc-gravy-complaint-2024"
     ],
@@ -506,7 +506,7 @@
     "to": "venntel",
     "type": "supplies",
     "tier": "A",
-    "claim": "The FTC alleged in its December 2024 complaint that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+    "claim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
     "sources": [
       "enf-ftc-gravy-complaint-2024"
     ],
@@ -608,7 +608,7 @@
     "to": "liveramp",
     "type": "matches-identity",
     "tier": "A",
-    "claim": "The FTC's 2024 Avast complaint describes a Jumpshot-LiveRamp agreement for 'ID Syncing Services' matching Jumpshot's persistent identifiers to LiveRamp's identifiers.",
+    "claim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies.",
     "sources": [
       "enf-ftc-avast-complaint-2024"
     ],
@@ -641,7 +641,7 @@
     "to": "neustar",
     "type": "matches-identity",
     "tier": "A",
-    "claim": "The FTC's 2024 Avast complaint states the Jumpshot-Omnicom contract allowed Omnicom to translate Jumpshot GUIDs into Neustar IDs (and to match with LiveRamp).",
+    "claim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so.",
     "sources": [
       "enf-ftc-avast-complaint-2024"
     ],
@@ -685,7 +685,7 @@
     "to": "lexisnexis-risk-and-information-analytics-group",
     "type": "buys",
     "tier": "A",
-    "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order.",
+    "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations.",
     "sources": [
       "enf-cfpb-turss-complaint-2023",
       "enf-cfpb-turss-order-2023"
@@ -697,7 +697,7 @@
     "to": "ideal-financial-solutions",
     "type": "supplies",
     "tier": "A",
-    "claim": "The FTC alleged in its December 2014 complaint that LeapLab sold consumer payday loan applications or information from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+    "claim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
     "sources": [
       "enf-ftc-leaplab-complaint-2014"
     ],

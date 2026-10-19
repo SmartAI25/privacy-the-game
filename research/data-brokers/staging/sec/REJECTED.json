@@ -1,6 +1,13 @@
 [
   {
     "item": {
+      "link": "lexisnexis-risk-solutions|idverse|owns",
+      "newFrom": "relx-plc"
+    },
+    "reason": "link lexisnexis-risk-solutions|idverse|owns: reassigned to from=relx-plc by link-overrides.json (fact-check: RELX Annual Report 2025 (Risk business review) says the LexisNexis Risk Solutions business, not the legal entity LexisNexis Risk Solutions Inc., closed the IDVerse acquisition; note 28 lists IDVerse Pty Ltd (AUS) as held indirectly by RELX PLC)"
+  },
+  {
+    "item": {
       "from": "general-motors",
       "to": "verisk",
       "type": "supplies",
@@ -10,7 +17,7 @@
         "sec-vrsk-10k-2025"
       ]
     },
-    "reason": "link general-motors|verisk|supplies: dropped by link-overrides.json (rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> insurance-services-office, which names the recipient)"
+    "reason": "link general-motors|verisk|supplies: dropped by link-overrides.json (rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> insurance-services-office, which names the recipient)"
   },
   {
     "item": {
@@ -23,7 +30,99 @@
         "sec-vrsk-10k-2025"
       ]
     },
-    "reason": "link general-motors|lexisnexis-risk-solutions|supplies: dropped by link-overrides.json (rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> lexisnexis-risk-solutions)"
+    "reason": "link general-motors|lexisnexis-risk-solutions|supplies: dropped by link-overrides.json (rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> lexisnexis-risk-solutions (complaint para 39))"
+  },
+  {
+    "item": {
+      "link": "equifax|appriss-insights|owns",
+      "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says 2021 note proceeds funded the Company's acquisition of Appriss Insights.",
+      "newClaim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says proceeds of its August 2021 issue of 2.35% Senior Notes due 2031 helped fund acquisitions, including the Company's acquisition of Appriss Insights."
+    },
+    "reason": "link equifax|appriss-insights|owns: claim replaced by link-overrides.json reclaim (fact-check: 10-K debt note says the 2031 Notes were issued August 11, 2021 and remaining proceeds funded acquisitions including Appriss Insights; \"2021 note\" read as the notes due 2021)"
+  },
+  {
+    "item": {
+      "link": "transunion|tloxp|owns",
+      "claim": "TransUnion's FY2025 Form 10-K describes TLOxp as the delivery platform for its TruLookup investigative products.",
+      "newClaim": "TransUnion's FY2025 Form 10-K lists TLOxp among its own products: its TruLookup investigative solution line \"includes TLOxp® as a platform for delivery.\" TLOxp is a TransUnion product platform, not a separately listed legal entity."
+    },
+    "reason": "link transunion|tloxp|owns: claim replaced by link-overrides.json reclaim (fact-check: 10-K Item 1 solution list, TruLookup bullet; TLOxp is not in Exhibit 21, so the owns link rests on it being TransUnion's product)"
+  },
+  {
+    "item": {
+      "link": "relx-plc|idverse|owns",
+      "claim": "RELX's Annual Report 2025 says LexisNexis Risk Solutions closed the acquisition of IDVerse, a provider of automated document authentication and fraud detection, in Q1 2025.",
+      "newClaim": "RELX's Annual Report 2025 says its LexisNexis Risk Solutions business closed the acquisition of IDVerse, a provider of AI-powered automated document authentication and fraud detection, in Q1 2025; note 28 lists IDVerse Pty Ltd (Australia) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise."
+    },
+    "reason": "link relx-plc|idverse|owns: claim replaced by link-overrides.json reclaim (fact-check: Risk business review (\"In Q1 2025, LexisNexis Risk Solutions closed the acquisition of IDVerse\") plus note 28 related undertakings (IDVerse Pty Ltd, AUS, no percentage stated))"
+  },
+  {
+    "item": {
+      "link": "publicis-groupe|epsilon-data-management|owns",
+      "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 describes Epsilon's identity graph as acquired in 2019.",
+      "newClaim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 says Publicis acquired Epsilon, \"a technology company specializing in data and marketing activities\", in 2019."
+    },
+    "reason": "link publicis-groupe|epsilon-data-management|owns: claim replaced by link-overrides.json reclaim (fact-check: URD section 1.3.2 says \"the acquisition in 2019 of Epsilon\"; it mentions Epsilon's identity graph separately, not as the thing acquired)"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|owns",
+      "reclaim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics."
+    },
+    "reason": "link gravy-analytics|venntel|owns: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|supplies",
+      "reclaim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors."
+    },
+    "reason": "link gravy-analytics|venntel|supplies: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "link": "jumpshot|liveramp|matches-identity",
+      "reclaim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies."
+    },
+    "reason": "link jumpshot|liveramp|matches-identity: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "link": "omnicom|neustar|matches-identity",
+      "reclaim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so."
+    },
+    "reason": "link omnicom|neustar|matches-identity: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "link": "transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys",
+      "reclaim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations."
+    },
+    "reason": "link transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "link": "leaplab|ideal-financial-solutions|supplies",
+      "reclaim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits."
+    },
+    "reason": "link leaplab|ideal-financial-solutions|supplies: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "broker": "general-motors",
+      "override": {
+        "parent": "general-motors-company",
+        "source": "enf-ftc-gm-complaint-2026",
+        "sells": [
+          "connected-vehicle precise geolocation data",
+          "OnStar Smart Driver driving behavior data"
+        ],
+        "dropSources": [
+          "sec-vrsk-10k-2025"
+        ],
+        "reason": "FTC C-4828: GM LLC is a respondent and a wholly owned subsidiary of General Motors Company; the sells come from the respondents' conduct. The Verisk 10-K supported only the dropped allegation links."
+      }
+    },
+    "reason": "general-motors: record-overrides parent \"general-motors-company\" not in dataset yet; deferred, nothing applied"
   },
   {
     "item": {

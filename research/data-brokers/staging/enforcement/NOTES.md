@@ -50,3 +50,5 @@ All 24 sources have a Wayback capture. Two needed extra steps:
 - `enf-ftc-avast-complaint-2024`: the availability API returned nothing and /save/ returned HTTP 520. I found a 2024-02-22 capture (status 200) through the CDX API and used it.
 
 Captures were not opened and re-read one by one. The text was read from the ftc.gov or consumerfinance.gov originals, and some files from the Wayback raw (id_) copies.
+
+- Erratum (merge), 2026-10-18: General Motors Company is not a C-4828 respondent. The respondents are General Motors LLC, General Motors Holdings LLC and OnStar, LLC (complaint caption and paras 1-3). The supplies links (to Insurance Services Office, LexisNexis Risk Solutions, Wejo and Jacobs) sit on `general-motors` (GM LLC); `general-motors-company` keeps only `owns -> onstar`.
