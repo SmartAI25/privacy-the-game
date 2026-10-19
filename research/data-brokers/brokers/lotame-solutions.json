@@ -12,9 +12,14 @@
   ],
   "registries": {},
   "sells": [
-    "data and digital identity solutions"
+    "data and digital identity solutions",
+    "audience data and Panorama ID identity for advertisers and publishers"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.lotame.com/privacy/information-privacy-choices-services",
+    "notes": "Page describes Lotame's Browser Opt-Out Tool (lotame-optout.com, which returned 403 to an automated fetch on 2026-10-18), industry opt-outs (DAA, NAI), and privacy-rights requests. Lotame says it handles all opt-outs by deleting the relevant data. The mission URL (lotames-products-services-privacy-policy) redirects to lotame.com/privacy/?tab=2."
+  },
   "size": {
     "known": false,
     "signals": []
@@ -22,6 +27,8 @@
   "sources": [
     "sec-publicis-urd-2025-note3",
     "sec-publicis-urd-2025-note36",
-    "enf-ftc-avast-complaint-2024"
+    "enf-ftc-avast-complaint-2024",
+    "pol-lotame-privacy-choices",
+    "pol-lotame-publicis-article"
   ]
 }

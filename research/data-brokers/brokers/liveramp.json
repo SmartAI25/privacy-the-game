@@ -9,7 +9,8 @@
   "parent": null,
   "kind": [
     "identity-resolution",
-    "data-marketplace"
+    "data-marketplace",
+    "marketing"
   ],
   "registries": {
     "CA": "2026",
@@ -21,7 +22,10 @@
     "deterministic identity resolution (RampID)",
     "Data Marketplace for third-party data",
     "data onboarding",
-    "clean-room data collaboration"
+    "clean-room data collaboration",
+    "online identifiers that map customer records to cookies, mobile IDs and platform IDs",
+    "data appends, data hygiene and modeled audiences for advertisers",
+    "sale of identifiers and online activity data to unaffiliated third parties for interest-based advertising (per its service privacy notice)"
   ],
   "optOut": {
     "method": "web-form",
@@ -49,7 +53,9 @@
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18",
     "sec-ramp-10k-fy2026",
-    "enf-ftc-avast-complaint-2024"
+    "enf-ftc-avast-complaint-2024",
+    "pol-liveramp-privacy-choices",
+    "pol-liveramp-service-privacy"
   ],
   "website": "https://www.liveramp.com"
 }

@@ -18,7 +18,8 @@
   },
   "sells": [
     "employment and income verification (The Work Number)",
-    "incarceration, justice and people-based risk intelligence data (Verification Services)"
+    "incarceration, justice and people-based risk intelligence data (Verification Services)",
+    "employment and income verification records furnished by participating employers"
   ],
   "optOut": {
     "method": "web-form",
@@ -44,7 +45,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "sec-efx-10k-2025",
-    "sec-efx-10k-2025-ex21"
+    "sec-efx-10k-2025-ex21",
+    "pol-twn-employment-data-report"
   ],
   "website": "https://www.theworknumber.com"
 }

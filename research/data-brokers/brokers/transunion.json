@@ -15,9 +15,15 @@
     "investigative products (TruLookup, delivered via TLOxp)",
     "identity data enrichment and audience targeting (TruAudience)",
     "device risk and IP intelligence (TruValidate)",
-    "direct-to-consumer credit and identity products"
+    "direct-to-consumer credit and identity products",
+    "consumer credit reports",
+    "data products subject to state privacy-law opt-out, access and deletion requests"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "portal",
+    "url": "https://www.transunion.com/consumer-privacy",
+    "notes": "Data privacy requests (opt out, limit, access, correct, delete) via a TransUnion Service Center account, or as a guest with results by mail. Live page returned HTTP 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-01 Wayback capture. The mission adds that TLO is included."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -35,6 +41,7 @@
   },
   "sources": [
     "sec-tru-10k-2025",
-    "sec-tru-10k-2025-ex21"
+    "sec-tru-10k-2025-ex21",
+    "pol-transunion-consumer-privacy"
   ]
 }

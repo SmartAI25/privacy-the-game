@@ -15,9 +15,15 @@
     "consumer and commercial credit reports and scores",
     "employment and income verification (The Work Number)",
     "financial marketing data for targeting and segmentation",
-    "consumer credit information sold to resellers"
+    "consumer credit information sold to resellers",
+    "consumer credit reports",
+    "employment and income data (The Work Number)"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "portal",
+    "url": "https://myprivacy.equifax.com/opt-in-opt-out/personal-info",
+    "notes": "Linked as 'Your Privacy Choices' from The Work Number and Equifax pages; returned HTTP 200 (JavaScript app) on 2026-10-18, contents not machine-readable. Credit freezes are separate (equifax.com credit-freeze page)."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -40,6 +46,8 @@
   },
   "sources": [
     "sec-efx-10k-2025",
-    "sec-efx-10k-2025-ex21"
+    "sec-efx-10k-2025-ex21",
+    "pol-equifax-privacy-statement",
+    "pol-twn-employment-data-report"
   ]
 }

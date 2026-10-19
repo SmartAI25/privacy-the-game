@@ -766,5 +766,118 @@
       "enf-ftc-goodrx-complaint-2023"
     ],
     "published": true
+  },
+  {
+    "from": "fis",
+    "to": "chex-systems",
+    "type": "owns",
+    "tier": "B",
+    "claim": "ChexSystems' website (accessed 2026-10-18) states that 'Chex Systems, Inc. is a consumer reporting agency and an indirect wholly owned subsidiary of FIS.'",
+    "sources": [
+      "pol-chexsystems-home"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "consumerbase",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists Consumer Base LLC dba Exact Data among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "donorbase",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists DonorBase, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "infousa",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists infoUSA Inc. and infoUSA Marketing, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "lake-group-media",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists Lake Group Media, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "intelius",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents Intelius among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists Intelius's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "truthfinder",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents TruthFinder among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists TruthFinder's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "instant-checkmate",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents Instant Checkmate among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists Instant Checkmate's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "quicklocate",
+    "to": "quickpeopletrace",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Quick People Trace's site footer (accessed 2026-10-18) gives the operator as 'QuickLocate LLC, Mechanicsville, VA'.",
+    "sources": [
+      "pol-quickpeopletrace-home"
+    ],
+    "published": false
+  },
+  {
+    "from": "quicklocate",
+    "to": "usatrace",
+    "type": "owns",
+    "tier": "B",
+    "claim": "USATrace's site footer (accessed 2026-10-18) gives the operator as 'QuickLocate LLC, Mechanicsville, VA'.",
+    "sources": [
+      "pol-usatrace-home"
+    ],
+    "published": false
   }
 ]

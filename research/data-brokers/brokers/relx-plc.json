@@ -5,9 +5,13 @@
     "RELX"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "risk-identity"
+  ],
   "registries": {},
-  "sells": [],
+  "sells": [
+    "parent of LexisNexis Risk Solutions"
+  ],
   "optOut": null,
   "size": {
     "known": true,
@@ -21,6 +25,7 @@
   },
   "sources": [
     "sec-relx-20f-2025",
-    "sec-relx-annual-report-2025"
+    "sec-relx-annual-report-2025",
+    "pol-lexisnexis-risk-about"
   ]
 }

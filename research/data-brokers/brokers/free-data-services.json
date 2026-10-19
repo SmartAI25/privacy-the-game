@@ -3,17 +3,22 @@
   "name": "Free Data Services, LLC",
   "aliases": [
     "TruePeopleSearch.com",
-    "FREE DATA SERVICES LLC"
+    "FREE DATA SERVICES LLC",
+    "TruePeopleSearch"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "free people-search records"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.truepeoplesearch.com/privacy",
@@ -27,7 +32,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "pol-truepeoplesearch-removal"
   ],
   "website": "https://truepeoplesearch.com"
 }

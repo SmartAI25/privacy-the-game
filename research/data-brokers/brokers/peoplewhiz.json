@@ -1,16 +1,22 @@
 {
   "id": "peoplewhiz",
   "name": "Peoplewhiz, Inc",
-  "aliases": [],
+  "aliases": [
+    "PeopleWhiz"
+  ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": null,
     "OR": null
   },
-  "sells": [],
+  "sells": [
+    "people search across PeopleWhiz mirror sites"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.peoplewhiz.com",
@@ -22,7 +28,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "pol-peoplewhiz-remove"
   ],
   "website": "https://www.peoplewhiz.com"
 }

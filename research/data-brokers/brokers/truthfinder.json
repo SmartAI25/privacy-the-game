@@ -16,7 +16,8 @@
     "OR": "2026"
   },
   "sells": [
-    "background reports"
+    "background reports",
+    "people search and background reports"
   ],
   "optOut": {
     "method": "web-form",
@@ -32,7 +33,9 @@
     "registry-ca-2026-10-18",
     "registry-or-2026-10-18",
     "enf-ftc-truthfinder-complaint-2023",
-    "enf-ftc-truthfinder-order-2023"
+    "enf-ftc-truthfinder-order-2023",
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy"
   ],
   "website": "https://www.truthfinder.com"
 }

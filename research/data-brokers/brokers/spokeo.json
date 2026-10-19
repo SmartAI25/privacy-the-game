@@ -10,7 +10,9 @@
     "Family.me",
     "Spokeo Inc",
     "Freepeopledirectory, Thatsthem, peoplewin.",
-    "Spokeo"
+    "Spokeo",
+    "AnyWho",
+    "ThatsThem"
   ],
   "parent": null,
   "kind": [
@@ -23,7 +25,10 @@
     "OR": "2026"
   },
   "sells": [
-    "consumer profiles assembled from online and offline sources"
+    "consumer profiles assembled from online and offline sources",
+    "phone and people lookup",
+    "people-search profiles built from phone books, social networks, marketing surveys, real estate listings and other public sources (no companies named)",
+    "people search by name, address, phone and email"
   ],
   "optOut": {
     "method": "web-form",
@@ -40,7 +45,10 @@
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18",
     "enf-ftc-spokeo-complaint-2012",
-    "enf-ftc-spokeo-order-2012"
+    "enf-ftc-spokeo-order-2012",
+    "pol-spokeo-optout",
+    "pol-spokeo-privacy",
+    "pol-thatsthem-optout"
   ],
   "website": "https://www.spokeo.com"
 }

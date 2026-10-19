@@ -3,7 +3,8 @@
   "name": "Thomson Reuters Corporation",
   "aliases": [
     "Thomson Reuters",
-    "CLEAR"
+    "CLEAR",
+    "Thomson Reuters CLEAR"
   ],
   "parent": null,
   "kind": [
@@ -11,9 +12,15 @@
   ],
   "registries": {},
   "sells": [
-    "US public records platform (CLEAR) for authorized businesses and government agencies"
+    "US public records platform (CLEAR) for authorized businesses and government agencies",
+    "CLEAR public- and proprietary-records platform licensed to law enforcement, welfare agencies, financial institutions, law firms and other authorized businesses and agencies",
+    "records sourced from 'third-party business partners (including private data providers and data brokers)', consumer reporting agencies, government entities and third-party websites (no companies named)"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "email",
+    "url": "https://legal.thomsonreuters.com/en/legal-notices/privacy-records",
+    "notes": "Do-not-sell/share via the page's OneTrust link or privacy.issues@thomsonreuters.com; public-records requests to westlaw.privacypolicy@thomsonreuters.com. Thomson Reuters says it typically suppresses records only for judges, public officials, law enforcement, or people with evidence of risk of physical harm (e.g., police reports, court orders)."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -25,6 +32,7 @@
     ]
   },
   "sources": [
-    "sec-tri-40f-2025-annual-report"
+    "sec-tri-40f-2025-annual-report",
+    "pol-tr-privacy-records"
   ]
 }

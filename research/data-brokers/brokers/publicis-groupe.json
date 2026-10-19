@@ -2,14 +2,17 @@
   "id": "publicis-groupe",
   "name": "Publicis Groupe SA",
   "aliases": [
-    "Publicis"
+    "Publicis",
+    "Publicis Groupe"
   ],
   "parent": null,
   "kind": [
     "marketing"
   ],
   "registries": {},
-  "sells": [],
+  "sells": [
+    "parent of Lotame (per Lotame)"
+  ],
   "optOut": null,
   "size": {
     "known": true,
@@ -24,6 +27,7 @@
   "sources": [
     "sec-publicis-urd-2025-note36",
     "sec-publicis-urd-2025-note3",
-    "sec-publicis-urd-2025-keyfigures"
+    "sec-publicis-urd-2025-keyfigures",
+    "pol-lotame-publicis-article"
   ]
 }

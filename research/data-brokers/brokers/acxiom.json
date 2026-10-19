@@ -9,7 +9,8 @@
   "parent": "omnicom",
   "kind": [
     "location",
-    "marketing"
+    "marketing",
+    "identity-resolution"
   ],
   "registries": {
     "CA": "2026",
@@ -17,7 +18,9 @@
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "consumer marketing data products"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.acxiom.com/privacy",
@@ -33,7 +36,8 @@
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18",
     "sec-omc-10k-2025",
-    "sec-omc-10k-2025-ex21"
+    "sec-omc-10k-2025-ex21",
+    "pol-acxiom-optout"
   ],
   "website": "https://www.acxiom.com"
 }

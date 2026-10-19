@@ -11,9 +11,15 @@
   "sells": [
     "precise geolocation data tied to mobile advertising IDs",
     "App Graph app-usage data",
-    "audience segments (via the Kochava Collective)"
+    "audience segments (via the Kochava Collective)",
+    "mobile app measurement and attribution",
+    "data, analytics and ETL services"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "email",
+    "url": "https://www.kochava.com/privacy/support-privacy/",
+    "notes": "kochava.com/opt-out/ only gives device-level instructions (disable interest-based ads, reset the advertising ID, opt out inside the app). Privacy contact privacy@kochava.com is on the support-privacy page."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -27,6 +33,8 @@
   "sources": [
     "enf-ftc-kochava-complaint-2022",
     "enf-ftc-kochava-sac-2024",
-    "enf-ftc-kochava-order-2026"
+    "enf-ftc-kochava-order-2026",
+    "pol-kochava-optout",
+    "pol-kochava-support-privacy"
   ]
 }

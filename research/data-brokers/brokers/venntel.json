@@ -16,7 +16,8 @@
     "OR": "2026"
   },
   "sells": [
-    "location data and analysis tools to public sector customers, such as government contractors (per FTC)"
+    "location data and analysis tools to public sector customers, such as government contractors (per FTC)",
+    "geolocation intelligence for defense, civilian government, risk and OSINT customers"
   ],
   "optOut": {
     "method": "web-form",
@@ -33,7 +34,9 @@
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18",
     "enf-ftc-gravy-complaint-2024",
-    "enf-ftc-gravy-order-2025"
+    "enf-ftc-gravy-order-2025",
+    "pol-venntel-privacy",
+    "pol-venntel-optout"
   ],
   "website": "https://www.venntel.com"
 }

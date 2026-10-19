@@ -19,7 +19,8 @@
     "OR": "2026"
   },
   "sells": [
-    "identity graph and marketing data"
+    "identity graph and marketing data",
+    "consumer marketing databases supplied to clients as contacts for marketing programs"
   ],
   "optOut": {
     "method": "web-form",
@@ -35,7 +36,8 @@
     "registry-ca-2026-10-18",
     "registry-or-2026-10-18",
     "sec-publicis-urd-2025-note36",
-    "sec-publicis-urd-2025-activities"
+    "sec-publicis-urd-2025-activities",
+    "pol-epsilon-consumer-info"
   ],
   "website": "https://www.epsilon.com"
 }

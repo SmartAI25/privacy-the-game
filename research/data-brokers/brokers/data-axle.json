@@ -7,14 +7,22 @@
     "Data Axle, Donorbase, Inc."
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "marketing",
+    "data-marketplace"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "consumer and business data, data segments and audiences",
+    "donor-data co-ops (Apogee & DonorBase)",
+    "sells data to business and data partners and direct customers (per its privacy policy)",
+    "data received from consumer-facing companies, apps and services, data compilers and suppliers, and public records (no source companies named)"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.data-axle.com",
@@ -28,7 +36,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "pol-dataaxle-privacy",
+    "pol-dataaxle-rights-request"
   ],
   "website": "https://www.data-axle.com"
 }

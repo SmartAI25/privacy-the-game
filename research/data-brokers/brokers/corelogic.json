@@ -2,19 +2,28 @@
   "id": "corelogic",
   "name": "CoreLogic, Inc.",
   "aliases": [
-    "CoreLogic"
+    "CoreLogic",
+    "Cotality",
+    "CoreLogic, Inc. d/b/a Cotality"
   ],
   "parent": null,
   "kind": [
-    "financial"
+    "financial",
+    "risk-identity"
   ],
   "registries": {},
   "sells": [
     "property information",
     "mortgage information",
-    "consumer information"
+    "consumer information",
+    "property, parcel, mortgage and insurance data and analytics",
+    "product data obtained from 'third-party data licensors and data providers' (no companies named)"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.cotality.com/legal/privacy",
+    "notes": "Requests to know/delete/correct/opt out of sale or sharing go through an 'Online Privacy Portal' (a Ketch pop-up on this page) or 1-866-221-9291 (California); privacy@cotality.com. The legal entity is 'CoreLogic, Inc. d/b/a Cotality'; corelogic.com/privacy/ now redirects to cotality.com and returned 404."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -27,6 +36,8 @@
   },
   "sources": [
     "sec-clgx-10k-2020",
-    "sec-clgx-8k-2021-merger"
+    "sec-clgx-8k-2021-merger",
+    "pol-cotality-privacy",
+    "pol-cotality-product-privacy"
   ]
 }

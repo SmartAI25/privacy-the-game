@@ -1,0 +1,25 @@
+{
+  "id": "sift",
+  "name": "Sift",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "registries": {},
+  "sells": [
+    "fraud scores and account-defense services built from data that customer sites send about end users"
+  ],
+  "optOut": {
+    "method": "email",
+    "url": "https://sift.com/legal-and-compliance/service-privacy-notice/",
+    "notes": "Access, correction and deletion requests by email to privacy@sift.com (DPO: dpo@sift.com)."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-sift-service-privacy"
+  ]
+}

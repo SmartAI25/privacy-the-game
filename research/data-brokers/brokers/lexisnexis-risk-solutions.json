@@ -11,7 +11,8 @@
   "kind": [
     "risk-identity",
     "financial",
-    "automotive"
+    "automotive",
+    "marketing"
   ],
   "registries": {},
   "sells": [
@@ -19,9 +20,16 @@
     "vehicle and behaviour-centric data for insurers",
     "investigative tools (Accurint)",
     "digital identity network (ThreatMetrix)",
-    "consumer reports built from driving data (per FTC)"
+    "consumer reports built from driving data (per FTC)",
+    "identity, fraud, due-diligence and public-records products for credentialed commercial and government customers",
+    "FCRA prescreen lists for firm offers of credit and insurance",
+    "direct marketing services (LexisNexis Risk Solutions FL Inc.)"
   ],
-  "optOut": null,
+  "optOut": {
+    "method": "web-form",
+    "url": "https://consumer.risk.lexisnexis.com/opt",
+    "notes": "optout.lexisnexis.com redirects here. Covers direct-marketing opt-out, FCRA prescreen opt-out, and suppression for personal-safety threat (public officials, judges, law enforcement, at-risk individuals, Daniel's Law); online form, PDF mail form, or phone 1-888-497-0011."
+  },
   "size": {
     "known": true,
     "signals": [
@@ -35,6 +43,8 @@
   "sources": [
     "sec-relx-annual-report-2025",
     "sec-relx-20f-2025",
-    "enf-ftc-gm-complaint-2026"
+    "enf-ftc-gm-complaint-2026",
+    "pol-lexisnexis-risk-optout",
+    "pol-lexisnexis-risk-about"
   ]
 }

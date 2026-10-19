@@ -1,0 +1,28 @@
+{
+  "id": "placer-ai",
+  "name": "Placer.ai",
+  "aliases": [
+    "Placer Labs, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [
+    "foot-traffic and location analytics",
+    "data from 'third-party mobile apps that have integrated our technology' (no apps named)"
+  ],
+  "optOut": {
+    "method": "email",
+    "url": "https://www.placer.ai/privacy-policy/consumer-privacy-policy",
+    "notes": "Access/correction/deletion by email to privacy@placer.ai, phone +1 (800) 288-5834, or mail (Placer Labs Inc., Covina, CA). The footer 'Do not sell/share' link points to '#'. Placer says it is 'very unlikely' it can find your data because it does not collect user identifiers. Policy updated April 15, 2026."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-placer-consumer-privacy"
+  ]
+}

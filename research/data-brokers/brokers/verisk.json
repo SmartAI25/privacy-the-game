@@ -12,7 +12,8 @@
   "registries": {},
   "sells": [
     "insurance underwriting and claims data and analytics from proprietary and contributory data",
-    "consumer reports built from driving data (per FTC)"
+    "consumer reports built from driving data (per FTC)",
+    "insurance data and analytics incl. ISO ClaimSearch"
   ],
   "optOut": null,
   "size": {
@@ -27,6 +28,7 @@
   },
   "sources": [
     "sec-vrsk-10k-2025",
-    "enf-ftc-gm-complaint-2026"
+    "enf-ftc-gm-complaint-2026",
+    "pol-verisk-privacy-policies"
   ]
 }
