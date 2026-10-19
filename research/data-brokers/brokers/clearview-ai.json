@@ -1,7 +1,10 @@
 {
   "id": "clearview-ai",
   "name": "Clearview AI, Inc.",
-  "aliases": [],
+  "aliases": [
+    "Clearview AI",
+    "CLEARVIEW AI, INC."
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -23,7 +26,13 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "proc-usasp-70cmsd21p00000127",
+    "proc-usasp-15f06723p0001356",
+    "proc-usasp-70b03c25p00000321",
+    "proc-usasp-15m10224pa4700107",
+    "proc-usasp-2023h226p00217",
+    "proc-usasp-w9124725pa010"
   ],
   "website": "https://www.clearview.ai"
 }

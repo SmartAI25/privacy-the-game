@@ -3,7 +3,10 @@
   "name": "Equifax Workforce Solutions LLC",
   "aliases": [
     "The Work Number",
-    "Workforce Solutions"
+    "Workforce Solutions",
+    "Equifax Workforce Solutions",
+    "EQUIFAX WORKFORCE SOLUTIONS LLC",
+    "TALX"
   ],
   "parent": "equifax",
   "kind": [
@@ -53,6 +56,8 @@
     "registry-ca-2026-10-18",
     "sec-efx-10k-2025",
     "sec-efx-10k-2025-ex21",
+    "proc-usasp-15f06721f0001429",
+    "proc-usasp-hs002123f0047",
     "pol-twn-employment-data-report"
   ],
   "website": "https://www.theworknumber.com",

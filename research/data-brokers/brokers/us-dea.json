@@ -1,0 +1,25 @@
+{
+  "id": "us-dea",
+  "name": "Drug Enforcement Administration",
+  "aliases": [
+    "DEA"
+  ],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-15ddst18p00000052",
+    "proc-usasp-15ddhq20f00001467",
+    "proc-usasp-15ddh022p00000051",
+    "proc-usasp-15ddse18p00000061",
+    "proc-usasp-djd12hqg0018"
+  ]
+}

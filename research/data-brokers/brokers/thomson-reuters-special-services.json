@@ -1,0 +1,23 @@
+{
+  "id": "thomson-reuters-special-services",
+  "name": "Thomson Reuters Special Services",
+  "aliases": [
+    "THOMSON REUTERS SPECIAL SERVICES LLC",
+    "TRSS"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70cmsd21c00000002",
+    "proc-usasp-hsbp1015p00702",
+    "proc-usasp-15f06726f0001553",
+    "proc-usasp-w911nf25pa015"
+  ]
+}

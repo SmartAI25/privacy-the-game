@@ -24,7 +24,7 @@
     "url": "https://www.venntel.com/opt-out",
     "notes": "'Opt Out & Delete Request' page (Venntel, Inc.). Its privacy policy uses the same template as Gravy/Unacast's but names no parent.",
     "status": "verified",
-    "verifiedAt": "2026-10-18"
+    "verifiedAt": "2026-10-19"
   },
   "size": {
     "known": false,
@@ -36,6 +36,9 @@
     "registry-or-2026-10-18",
     "enf-ftc-gravy-complaint-2024",
     "enf-ftc-gravy-order-2025",
+    "proc-usasp-70cmsd18p00000127",
+    "proc-usasp-70b02c20p00000521",
+    "proc-usasp-15ddst18p00000052",
     "pol-venntel-privacy",
     "pol-venntel-optout",
     "jour-eff-fog-data-science-2022",

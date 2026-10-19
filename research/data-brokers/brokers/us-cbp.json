@@ -1,0 +1,25 @@
+{
+  "id": "us-cbp",
+  "name": "U.S. Customs and Border Protection",
+  "aliases": [
+    "CBP"
+  ],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70b02c20p00000521",
+    "proc-usasp-hsbp1015p00702",
+    "proc-usasp-hsbp1014j00318",
+    "proc-usasp-hsbp1014p00718",
+    "proc-usasp-70b03c25p00000321"
+  ]
+}

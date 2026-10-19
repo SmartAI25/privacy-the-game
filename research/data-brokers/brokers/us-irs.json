@@ -1,0 +1,25 @@
+{
+  "id": "us-irs",
+  "name": "Internal Revenue Service",
+  "aliases": [
+    "IRS"
+  ],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-2032h821c00039",
+    "proc-usasp-2032h821f00127",
+    "proc-usasp-tirno15z000080004",
+    "proc-usasp-2032h519f00092",
+    "proc-usasp-2023h226p00217"
+  ]
+}

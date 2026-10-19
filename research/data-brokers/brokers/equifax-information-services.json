@@ -2,7 +2,8 @@
   "id": "equifax-information-services",
   "name": "Equifax Information Services LLC",
   "aliases": [
-    "EQUIFAX INFORMATION SERVICES LLC"
+    "EQUIFAX INFORMATION SERVICES LLC",
+    "Equifax Information Services"
   ],
   "parent": null,
   "kind": [],
@@ -26,7 +27,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "proc-usasp-tirno15z000080004",
+    "proc-usasp-hsceeh09f00025"
   ],
   "website": "https://www.equifax.com"
 }

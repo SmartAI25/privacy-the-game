@@ -1,0 +1,24 @@
+{
+  "id": "us-usss",
+  "name": "U.S. Secret Service",
+  "aliases": [
+    "Secret Service",
+    "USSS"
+  ],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-hsss0115c0040",
+    "proc-usasp-70us0921c70090081",
+    "proc-usasp-70us0921c70090014"
+  ]
+}
