@@ -7,6 +7,10 @@ export const LINK_TYPES = Object.freeze(['owns', 'supplies', 'buys', 'matches-id
 export const TIERS = Object.freeze(['A', 'B', 'C']);
 export const OPT_OUT_STATUSES = Object.freeze(['verified', 'suspect', 'dead', 'blocked', 'unchecked']);
 export const REGISTRY_KEYS = Object.freeze(['CA', 'VT', 'TX', 'OR']);
+// Source kinds that count as tier-A evidence (README "Evidence tiers"): regulator and court documents,
+// SEC filings, statutory annual reports filed with non-US regulators, and US federal procurement records.
+// A published link must cite at least one source of one of these kinds.
+export const TIER_A_SOURCE_KINDS = Object.freeze(['sec-10k', 'sec-8k', 'sec-20f', 'sec-40f', 'annual-report', 'ftc-complaint', 'ftc-order', 'cfpb-order', 'court', 'procurement']);
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const isStr = (x) => typeof x === 'string' && x.trim() !== '';
@@ -38,6 +42,7 @@ function validateOptOut(o, p, sourceIds) {
   } else if (o.method === 'email') {
     if (!isStr(o.url) && !isStr(o.email)) errs.push(`${p}: optOut needs url (mailto:) or email for email method`);
   }
+  if (o.email !== undefined && !(isStr(o.email) && /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(o.email))) errs.push(`${p}: optOut.email must be an email address`);
   if (o.status !== undefined && !OPT_OUT_STATUSES.includes(o.status)) errs.push(`${p}: optOut.status must be one of ${OPT_OUT_STATUSES.join('|')}`);
   if (o.verifiedAt !== undefined && o.verifiedAt !== null && !(isStr(o.verifiedAt) && DATE.test(o.verifiedAt))) errs.push(`${p}: optOut.verifiedAt must be YYYY-MM-DD`);
   // Other opt-out routes a source documents (a DBA site's own form, a newer page) beside the main one.
@@ -94,12 +99,14 @@ export function validateBroker(b, { sourceIds = new Set() } = {}) {
   return errs;
 }
 
-export function validateLink(l, { brokerIds = new Set(), sourceIds = new Set() } = {}) {
+// sourceKinds (optional Map id -> kind): when given, a published link must cite a TIER_A_SOURCE_KINDS source.
+export function validateLink(l, { brokerIds = new Set(), sourceIds = new Set(), sourceKinds } = {}) {
   if (!isObj(l)) return ['link: must be an object'];
   const p = `link ${l.from}->${l.to}`;
   const errs = [];
   if (!brokerIds.has(l.from)) errs.push(`${p}: unknown from broker "${l.from}"`);
   if (!brokerIds.has(l.to)) errs.push(`${p}: unknown to broker "${l.to}"`);
+  if (l.from === l.to) errs.push(`${p}: a link cannot point from a record to itself`);
   if (!LINK_TYPES.includes(l.type)) errs.push(`${p}: type must be one of ${LINK_TYPES.join('|')}`);
   if (!TIERS.includes(l.tier)) errs.push(`${p}: tier must be one of ${TIERS.join('|')}`);
   if (!isStr(l.claim)) errs.push(`${p}: claim is required`);
@@ -107,6 +114,9 @@ export function validateLink(l, { brokerIds = new Set(), sourceIds = new Set() }
   else for (const s of l.sources) if (!sourceIds.has(s)) errs.push(`${p}: source "${s}" not in sources.json`);
   if (l.published !== undefined && typeof l.published !== 'boolean') errs.push(`${p}: published must be boolean`);
   if (l.published === true && l.tier !== 'A') errs.push(`${p}: only tier A may be published`);
+  if (l.published === true && sourceKinds && Array.isArray(l.sources) && !l.sources.some((s) => TIER_A_SOURCE_KINDS.includes(sourceKinds.get(s)))) {
+    errs.push(`${p}: a published link must cite at least one tier-A source (${TIER_A_SOURCE_KINDS.join('|')})`);
+  }
   return errs;
 }
 
@@ -129,8 +139,9 @@ export async function validateDataset(dir) {
   const sources = await readJson(join(dir, 'sources.json'), errors, {});
   const links = await readJson(join(dir, 'links.json'), errors, []);
   const sourceIds = new Set();
+  const sourceKinds = new Map();
   if (!isObj(sources)) errors.push('sources.json: must be an object');
-  else for (const [id, s] of Object.entries(sources)) { sourceIds.add(id); errors.push(...validateSource(id, s)); }
+  else for (const [id, s] of Object.entries(sources)) { sourceIds.add(id); sourceKinds.set(id, s?.kind); errors.push(...validateSource(id, s)); }
   if (!Array.isArray(links)) errors.push('links.json: must be an array');
 
   let files = [];
@@ -153,7 +164,13 @@ export async function validateDataset(dir) {
     if (isStr(b.parent) && !brokerIds.has(b.parent)) errors.push(`broker ${b.id}: parent "${b.parent}" does not exist`);
   }
   const linkList = Array.isArray(links) ? links : [];
-  for (const l of linkList) errors.push(...validateLink(l, { brokerIds, sourceIds }));
+  const linkKeys = new Set();
+  for (const l of linkList) {
+    errors.push(...validateLink(l, { brokerIds, sourceIds, sourceKinds }));
+    const k = `${l?.from}|${l?.to}|${l?.type}`;
+    if (linkKeys.has(k)) errors.push(`link ${l?.from}->${l?.to}: duplicate (from, to, type) ${k}`);
+    linkKeys.add(k);
+  }
 
   return {
     errors,

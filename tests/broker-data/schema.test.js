@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   validateBroker, validateLink, validateSource, validateDataset,
-  KINDS, OPT_OUT_METHODS, LINK_TYPES, TIERS,
+  KINDS, OPT_OUT_METHODS, LINK_TYPES, TIERS, TIER_A_SOURCE_KINDS,
 } from '../../research/data-brokers/build/schema.js';
 
 const sourceIds = new Set(['s1']);
@@ -68,6 +68,13 @@ describe('validateBroker', () => {
     expect(v(broker({ size: { known: true, signals: [{ kind: 'x', value: '1', source: 'nope' }] } })).length).toBeGreaterThan(0));
 });
 
+describe('optOut.email', () => {
+  it('must look like an email address when present', () => {
+    expect(validateBroker(broker({ optOut: { method: 'email', email: 'privacy@acme.example' } }))).toEqual([]);
+    expect(validateBroker(broker({ optOut: { method: 'email', email: 'see notes' } })).some((e) => /optOut.email/.test(e))).toBe(true);
+  });
+});
+
 describe('validateLink', () => {
   const v = (l) => validateLink(l, { brokerIds: new Set(['a', 'b']), sourceIds });
   it('valid link passes', () => expect(v(link())).toEqual([]));
@@ -78,6 +85,19 @@ describe('validateLink', () => {
     expect(v(link({ tier: 'B', published: true })).length).toBeGreaterThan(0);
     expect(v(link({ tier: 'B', published: false }))).toEqual([]);
     expect(v(link({ tier: 'B', published: undefined }))).toEqual([]);
+  });
+  it('a self link fails', () => expect(validateLink(link({ to: 'a' }), { brokerIds: new Set(['a']), sourceIds }).some((e) => /itself/.test(e))).toBe(true));
+  it('a published link must cite a tier-A kind source when kinds are known', () => {
+    const ids = new Set(['s1', 'pp']);
+    const kinds = new Map([['s1', 'sec-10k'], ['pp', 'privacy-policy']]);
+    const vk = (l) => validateLink(l, { brokerIds: new Set(['a', 'b']), sourceIds: ids, sourceKinds: kinds });
+    expect(vk(link({ sources: ['pp'] })).some((e) => /tier-A source/.test(e))).toBe(true);
+    expect(vk(link({ sources: ['pp', 's1'] }))).toEqual([]);
+    expect(vk(link({ sources: ['pp'], published: false }))).toEqual([]);
+  });
+  it('tier-A source kinds match the README tier A: regulator, court, SEC, annual report, procurement', () => {
+    for (const k of ['sec-10k', 'sec-8k', 'sec-20f', 'annual-report', 'ftc-complaint', 'ftc-order', 'cfpb-order', 'court', 'procurement']) expect(TIER_A_SOURCE_KINDS).toContain(k);
+    for (const k of ['privacy-policy', 'press-release', 'journalism', 'other', 'registry']) expect(TIER_A_SOURCE_KINDS).not.toContain(k);
   });
 });
 
@@ -116,5 +136,18 @@ describe('validateDataset', () => {
     const r = await validateDataset(dir);
     expect(r.counts).toMatchObject({ brokers: 2, links: 2, published: 1 });
     expect(r.errors.length).toBe(1);
+  });
+  it('a published link citing only non-tier-A kinds fails', async () => {
+    const pp = { ...src, kind: 'privacy-policy' };
+    const r = await validateDataset(tmpDataset({ brokers: [['acme.json', broker()], ['b.json', broker({ id: 'b' })]], links: [link({ from: 'acme', to: 'b' })], sources: { s1: pp } }));
+    expect(r.errors.some((e) => /tier-A source/.test(e))).toBe(true);
+  });
+  it('duplicate (from, to, type) links fail', async () => {
+    const r = await validateDataset(tmpDataset({ brokers: [['acme.json', broker()], ['b.json', broker({ id: 'b' })]], links: [link({ from: 'acme', to: 'b' }), link({ from: 'acme', to: 'b', claim: 'other', published: false })] }));
+    expect(r.errors.some((e) => /duplicate \(from, to, type\)/.test(e))).toBe(true);
+  });
+  it('the same pair with a different type is not a duplicate', async () => {
+    const r = await validateDataset(tmpDataset({ brokers: [['acme.json', broker()], ['b.json', broker({ id: 'b' })]], links: [link({ from: 'acme', to: 'b' }), link({ from: 'acme', to: 'b', type: 'owns' })] }));
+    expect(r.errors).toEqual([]);
   });
 });
