@@ -455,6 +455,60 @@ describe('mergeStaging', () => {
     expect(r.rejected.some((x) => /d\|c\|owns: duplicate reclaim key/.test(x.reason))).toBe(true);
   });
 
+  it('link-overrides.json drop entries may name the staged family; the key alone decides', async () => {
+    await setup({
+      config: { 'link-overrides.json': { drop: [{ from: 'p', to: 'c', type: 'supplies', family: 'other-family', reason: 'succession' }] } },
+      brokers: [broker('p', 'P'), broker('c', 'C')],
+      staged: { sources: { s1: src() }, links: [link('p', 'c', { type: 'supplies' })] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(await readLinks()).toEqual([]);
+    expect(r.rejected.filter((x) => /dropped by link-overrides/.test(x.reason))).toHaveLength(1);
+  });
+
+  it('link-overrides.json drop entries need a reason, and family must be a string', async () => {
+    await setup({ config: { 'link-overrides.json': { drop: [{ from: 'a', to: 'b', type: 'owns' }] } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/drop/);
+    await setup({ config: { 'link-overrides.json': { drop: [{ from: 'a', to: 'b', type: 'owns', family: 3, reason: 'r' }] } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/drop family/);
+  });
+
+  it('warns when two existing records share a legal key, and flags a legal-name match onto one of them', async () => {
+    await setup({
+      brokers: [broker('gm-co', 'General Motors Company'), broker('gm-llc', 'General Motors LLC'), broker('solo', 'Solo Inc')],
+      staged: { sources: { s1: src() }, brokers: [{ id: 'gm', name: 'General Motors, LLC', sells: ['x'], sources: ['s1'] }, { id: 'solo2', name: 'Solo LLC', sells: ['y'], sources: ['s1'] }] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.warnings.some((w) => /shared by existing records gm-co, gm-llc/.test(w))).toBe(true);
+    expect(r.warnings.some((w) => /^gm: matched gm-co by legalKey/.test(w))).toBe(true);
+    expect(r.warnings.some((w) => /solo/.test(w))).toBe(false);
+    expect(r.matches.find((m) => m.stagedId === 'gm')).toMatchObject({ existingId: 'gm-co', ambiguous: ['gm-co', 'gm-llc'] });
+    expect(r.matches.find((m) => m.stagedId === 'solo2')).not.toHaveProperty('ambiguous');
+  });
+
+  it('record-overrides.json sets optOut.email inside an existing optOut, never overwriting a different one', async () => {
+    const oo = (extra = {}) => ({ method: 'email', url: 'https://k.example/privacy', ...extra });
+    await setup({
+      config: { 'record-overrides.json': {
+        k: { optOut: { email: 'privacy@k.example' }, source: 's1', reason: 'policy lists it' },
+        m: { optOut: { email: 'new@m.example' }, source: 's1', reason: 'r' },
+        x: { optOut: { email: 'a@x.example' }, source: 's1', reason: 'r' },
+      } },
+      brokers: [broker('k', 'K', { optOut: oo() }), broker('m', 'M', { optOut: oo({ email: 'old@m.example' }) }), broker('x', 'X')],
+      staged: { sources: { s1: src() } },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    const k = await readB('k');
+    expect(k.optOut).toEqual(oo({ email: 'privacy@k.example' }));
+    expect(k.sources).toContain('s1');
+    expect((await readB('m')).optOut.email).toBe('old@m.example');
+    expect(r.rejected.some((x) => /m: record-overrides optOut.email would overwrite/.test(x.reason))).toBe(true);
+    expect(r.rejected.some((x) => /x: record-overrides optOut needs an existing optOut/.test(x.reason))).toBe(true);
+  });
+
   it('link-overrides.json reclaim entries need a claim and a reason', async () => {
     await setup({ config: { 'link-overrides.json': { reclaim: [{ from: 'a', to: 'b', type: 'owns', claim: 'x' }] } } });
     await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/reclaim/);

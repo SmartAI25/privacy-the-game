@@ -3,12 +3,14 @@
 //   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
 //   alias-blocklist.json { brokerId: [{ alias, reason }] }
-//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
+//   link-overrides.json { drop: [{from,to,type,family?,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
 //                         reclaim: [{from,to,type,claim,replaces?,reason}] }
-//     drop and reassign act on staged links (keys after id resolution); unpublish and reclaim on every
+//     drop and reassign act on staged links (keys after id resolution); a drop's optional `family` names the
+//     staging family whose link it targets (documentation only: the key alone decides what is dropped); unpublish and reclaim on every
 //     link (reclaim keys are final, i.e. after reassign). reclaim sets the narrower claim a fact-check found;
 //     with `replaces` (the old claim) it applies only when the current claim equals it, else logs a conflict.
-//   record-overrides.json { brokerId: { name?, parent?, sells?, kind?, source?, dropSources?, replaces?: {field: value}, reason } }
+//   record-overrides.json { brokerId: { name?, parent?, sells?, kind?, optOut?: { email? }, source?, dropSources?, replaces?: {field: value}, reason } }
+//     optOut fields are set inside an existing optOut (replaces: { optOut: { email } } to confirm a change).
 //     An override never silently replaces a different non-empty value: it applies only when the
 //     current value is empty or equals replaces[field]; otherwise it is reported as a conflict.
 // Same-tier claim conflicts go to the claim with the stronger source kind (sourceRank).
@@ -105,6 +107,10 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const linkOv = await cfg('link-overrides.json', {});
   const recordOv = await cfg('record-overrides.json', {});
   const ovKey = (o) => `${o.from}|${o.to}|${o.type}`;
+  for (const o of linkOv.drop ?? []) {
+    if (!isObj(o) || !isStr(o.from) || !isStr(o.to) || !isStr(o.type) || !isStr(o.reason)) throw new Error(`link-overrides.json drop entries need from, to, type and reason: ${JSON.stringify(o)}`);
+    if (o.family !== undefined && !isStr(o.family)) throw new Error(`link-overrides.json drop family must be a staging family name: ${JSON.stringify(o)}`);
+  }
   const dropOv = new Map((linkOv.drop ?? []).map((o) => [ovKey(o), o]));
   const unpubOv = new Map((linkOv.unpublish ?? []).map((o) => [ovKey(o), o]));
   const reassignOv = new Map((linkOv.reassign ?? []).map((o) => [ovKey(o), o]));
@@ -144,7 +150,15 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const work = new Map(existingBrokers.map((b) => [b.id, structuredClone(b)]));
   const isNew = new Set();
   const byKey = new Map();
-  for (const b of existingBrokers) if (!byKey.has(legalKey(b.name))) byKey.set(legalKey(b.name), b.id);
+  const keyIds = new Map();
+  for (const b of existingBrokers) {
+    const k = legalKey(b.name);
+    if (!byKey.has(k)) byKey.set(k, b.id);
+    keyIds.set(k, [...(keyIds.get(k) ?? []), b.id]);
+  }
+  // Two existing records with the same legal key: a legal-name match can only go to the first one.
+  const warnings = [];
+  for (const [k, ids] of keyIds) if (ids.length > 1) warnings.push(`legalKey "${k}" is shared by existing records ${ids.join(', ')}; a staged record matched by legal name goes to ${byKey.get(k)}`);
   const mapId = (id) => idMap[id] ?? id;
   const resolved = new Map(); // staged id -> canonical id
   const matches = []; // [canonicalId, stagedRecord]
@@ -167,7 +181,12 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       if (target) resolved.set(sb.id, target);
       continue;
     }
-    if (target && !isNew.has(target)) matchLog.push({ stagedId: sb.id, existingId: target, matchedBy });
+    if (target && !isNew.has(target)) {
+      const k = matchedBy === 'legalKey' ? legalKey(sb.name) : matchedBy === 'alias' ? (sb.aliases ?? []).map((a) => (isStr(a) ? legalKey(a) : null)).find((x) => byKey.get(x) === target) : null;
+      const ambiguous = k != null && (keyIds.get(k)?.length ?? 0) > 1;
+      if (ambiguous) warnings.push(`${sb.id}: matched ${target} by ${matchedBy}, but legalKey "${k}" is shared by ${keyIds.get(k).join(', ')}; check the match or pin it in id-map.json`);
+      matchLog.push({ stagedId: sb.id, existingId: target, matchedBy, ...(ambiguous ? { ambiguous: keyIds.get(k) } : {}) });
+    }
     if (!target) {
       target = mapped;
       if (!work.has(target)) { work.set(target, newBroker(target, sb.name)); isNew.add(target); if (!byKey.has(legalKey(sb.name))) byKey.set(legalKey(sb.name), target); }
@@ -346,6 +365,16 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       if (f === 'name') w.aliases = union(w.aliases, [w.name]);
       w[f] = ov[f];
     }
+    if (isObj(ov.optOut)) {
+      if (!isObj(w.optOut)) reject({ broker: id, field: 'optOut', override: ov.optOut }, `${id}: record-overrides optOut needs an existing optOut; not applied`);
+      else for (const [f, v] of Object.entries(ov.optOut)) {
+        if (f !== 'email') { reject({ broker: id, field: `optOut.${f}`, override: v }, `${id}: record-overrides optOut.${f} is not supported; not applied`); continue; }
+        if (same(w.optOut[f], v)) continue;
+        const ok = empty(w.optOut[f]) || (isObj(ov.replaces?.optOut) && same(ov.replaces.optOut[f], w.optOut[f]));
+        if (!ok) { reject({ broker: id, field: `optOut.${f}`, existing: w.optOut[f], override: v }, `${id}: record-overrides optOut.${f} would overwrite ${JSON.stringify(w.optOut[f])}; not applied (confirm it in "replaces")`); continue; }
+        w.optOut = { ...w.optOut, [f]: v };
+      }
+    }
     if (ov.source) w.sources = union(w.sources, [ov.source]);
     if (Array.isArray(ov.dropSources)) w.sources = w.sources.filter((x) => !ov.dropSources.includes(srcId(x)));
     w.aliases = w.aliases.filter((a) => a !== w.name);
@@ -369,7 +398,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     errors = (await validateDataset(scratch)).errors;
   } finally { await rm(scratch, { recursive: true, force: true }); }
 
-  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, matches: matchLog, errors, written: false };
+  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, matches: matchLog, warnings, errors, written: false };
   if (errors.length || dryRun) return result;
 
   await mkdir(join(datasetDir, 'brokers'), { recursive: true });
@@ -393,7 +422,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.error(`${r.errors.length} validation error(s); nothing written`);
     process.exit(1);
   }
-  console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, rejected: r.rejected.length }));
+  for (const w of r.warnings) console.warn(`warning: ${w}`);
+  console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, rejected: r.rejected.length, warnings: r.warnings.length }));
   if (dryRun) { if (r.rejected.length) console.log(JSON.stringify(r.rejected, null, 2)); }
   else {
     const { writeFile, mkdir } = await import('node:fs/promises');
