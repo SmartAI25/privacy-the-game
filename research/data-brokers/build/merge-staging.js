@@ -1,0 +1,240 @@
+// Folds research/data-brokers/staging/<family>/ into the dataset.
+// Rules: match by id then legalKey(name); never overwrite a non-null scalar (conflicts go to
+// `rejected`); arrays union; links dedupe on from|to|type; published is always tier === 'A'.
+// Usage: node research/data-brokers/build/merge-staging.js <family> [--dry-run]
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
+import { legalKey } from './import-registry.js';
+import { validateDataset, validateSource } from './schema.js';
+
+const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
+const isStr = (x) => typeof x === 'string' && x.trim() !== '';
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const TIER_RANK = { A: 3, B: 2, C: 1 };
+const fmt = (x) => `${JSON.stringify(x, null, 2)}\n`;
+const srcId = (s) => (typeof s === 'string' ? s : s?.id);
+
+async function readJson(path, fallback) {
+  const { readFile } = await import('node:fs/promises');
+  try { return JSON.parse(await readFile(path, 'utf8')); }
+  catch (e) { if (e.code === 'ENOENT') return fallback; throw new Error(`${path}: ${e.message}`); }
+}
+
+async function readBrokers(dir) {
+  const { readdir } = await import('node:fs/promises');
+  let files = [];
+  try { files = (await readdir(dir)).filter((f) => f.endsWith('.json')).sort(); }
+  catch (e) { if (e.code !== 'ENOENT') throw e; }
+  const out = [];
+  for (const f of files) out.push(await readJson(join(dir, f), null));
+  return out.filter(Boolean);
+}
+
+const union = (a = [], b = []) => {
+  const seen = new Set(); const out = [];
+  for (const x of [...a, ...b]) { const k = typeof x === 'string' ? x : JSON.stringify(x); if (!seen.has(k)) { seen.add(k); out.push(x); } }
+  return out;
+};
+
+const newBroker = (id, name) => ({
+  id, name, aliases: [], parent: null, kind: [], registries: {}, sells: [], optOut: null,
+  size: { known: false, signals: [] }, sources: [],
+});
+
+export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) {
+  const { writeFile, mkdtemp, mkdir, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const stDir = join(datasetDir, 'staging', family);
+  const rejected = [];
+  const reject = (item, reason) => rejected.push({ item, reason });
+
+  const existingBrokers = await readBrokers(join(datasetDir, 'brokers'));
+  const links = await readJson(join(datasetDir, 'links.json'), []);
+  const sources = await readJson(join(datasetDir, 'sources.json'), {});
+  const idMap = await readJson(join(datasetDir, 'build', 'id-map.json'), {});
+  const stBrokers = await readBrokers(join(stDir, 'brokers'));
+  const stLinks = await readJson(join(stDir, 'links.json'), []);
+  const stSources = await readJson(join(stDir, 'sources.json'), {});
+
+  // ---- sources
+  const mergedSources = { ...sources };
+  const usable = new Set(Object.keys(sources));
+  const badSources = new Set();
+  let sourcesAdded = 0;
+  for (const [id, s] of Object.entries(stSources)) {
+    const errs = validateSource(id, s);
+    if (errs.length) { badSources.add(id); reject({ source: id }, `source ${id} rejected: ${errs.join('; ')}`); continue; }
+    if (sources[id]) {
+      if (sources[id].url !== s.url) { badSources.add(id); reject({ source: id }, `source ${id} rejected: id already used by a different url`); }
+      continue;
+    }
+    mergedSources[id] = s; usable.add(id); sourcesAdded++;
+  }
+  const okSource = (id) => usable.has(id) && !badSources.has(id);
+
+  // ---- broker identity resolution
+  const work = new Map(existingBrokers.map((b) => [b.id, structuredClone(b)]));
+  const isNew = new Set();
+  const byKey = new Map();
+  for (const b of existingBrokers) if (!byKey.has(legalKey(b.name))) byKey.set(legalKey(b.name), b.id);
+  const mapId = (id) => idMap[id] ?? id;
+  const resolved = new Map(); // staged id -> canonical id
+  const candidates = new Map(); // canonical new id -> list of staged records
+  const matches = []; // [canonicalId, stagedRecord]
+  for (const sb of stBrokers) {
+    if (!isStr(sb.id) || !isStr(sb.name)) { reject(sb, 'staged broker needs id and name'); continue; }
+    const mapped = mapId(sb.id);
+    let target = work.has(mapped) ? mapped : byKey.get(legalKey(sb.name));
+    if (!target) for (const a of sb.aliases ?? []) { if (isStr(a) && byKey.has(legalKey(a))) { target = byKey.get(legalKey(a)); break; } }
+    if (!target) {
+      target = mapped;
+      if (!work.has(target)) { work.set(target, newBroker(target, sb.name)); isNew.add(target); byKey.set(legalKey(sb.name), target); }
+    }
+    resolved.set(sb.id, target);
+    matches.push([target, sb]);
+  }
+  const res = (id) => resolved.get(id) ?? mapId(id);
+
+  // ---- links (first pass: sources + endpoints), then new-broker acceptance to a fixpoint
+  const stagedFor = (id) => matches.filter(([t]) => t === id).map(([, sb]) => sb);
+  let cand = [];
+  for (const l of stLinks) {
+    const nl = { ...l, from: res(l.from), to: res(l.to) };
+    const good = (l.sources ?? []).filter(okSource);
+    if (!good.length) { reject(l, `link ${l.from}->${l.to} rejected: no usable (archived) source`); continue; }
+    nl.sources = good;
+    cand.push(nl);
+  }
+  const brokerSourceOk = (id) => stagedFor(id).some((sb) => (sb.sources ?? []).some((s) => okSource(srcId(s))));
+  const droppedNew = new Set();
+  for (let changed = true; changed;) {
+    changed = false;
+    const live = cand.filter((l) => work.has(l.from) && work.has(l.to) && !droppedNew.has(l.from) && !droppedNew.has(l.to));
+    const endpoints = new Set(live.flatMap((l) => [l.from, l.to]));
+    for (const id of isNew) {
+      if (droppedNew.has(id)) continue;
+      const hasKind = stagedFor(id).some((sb) => Array.isArray(sb.kind) && sb.kind.length);
+      let why = null;
+      if (!brokerSourceOk(id)) why = 'new broker needs at least one usable source';
+      else if (!hasKind && !endpoints.has(id)) why = 'new broker needs a kind (or must be an endpoint of an accepted link)';
+      if (why) { droppedNew.add(id); changed = true; for (const sb of stagedFor(id)) reject(sb, `${sb.id}: ${why}`); }
+    }
+  }
+  for (const id of droppedNew) { work.delete(id); isNew.delete(id); }
+
+  // ---- merge broker fields
+  const touched = new Set();
+  const added = new Set();
+  const updated = new Set();
+  const SKIP = new Set(['id', 'name', 'aliases', 'parent', 'kind', 'sells', 'missions', 'sources', 'size', 'registries', 'optOut']);
+  for (const [id, sb] of matches) {
+    const w = work.get(id);
+    if (!w) continue;
+    const before = JSON.stringify(w);
+    const conflict = (field, existing, staged) => reject({ broker: id, field, existing, staged }, `${id}: ${field} conflicts with existing value; existing kept`);
+    if (sb.name !== w.name && isStr(sb.name)) w.aliases = union(w.aliases, [sb.name]);
+    w.aliases = union(w.aliases, (sb.aliases ?? []).filter(isStr)).filter((a) => a !== w.name);
+    for (const f of ['kind', 'sells', 'missions']) if (Array.isArray(sb[f])) w[f] = union(w[f] ?? [], sb[f]);
+    w.sources = union(w.sources, (sb.sources ?? []).map(srcId).filter(okSource));
+    if (sb.parent !== undefined && sb.parent !== null) {
+      const p = res(sb.parent);
+      if (!work.has(p) || droppedNew.has(p)) reject({ broker: id, field: 'parent', staged: sb.parent }, `${id}: parent "${sb.parent}" not in dataset`);
+      else if (w.parent === null || w.parent === undefined) w.parent = p;
+      else if (w.parent !== p) conflict('parent', w.parent, p);
+    }
+    if (isObj(sb.registries)) for (const [k, v] of Object.entries(sb.registries)) {
+      if (v === null || v === undefined) { if (!(k in w.registries)) w.registries[k] = null; continue; }
+      if (w.registries[k] === null || w.registries[k] === undefined) w.registries[k] = v;
+      else if (w.registries[k] !== v) conflict(`registries.${k}`, w.registries[k], v);
+    }
+    if (isObj(sb.optOut)) {
+      if (w.optOut === null || w.optOut === undefined) w.optOut = sb.optOut;
+      else if (!Object.entries(sb.optOut).every(([k, v]) => same(w.optOut[k], v))) conflict('optOut', w.optOut, sb.optOut);
+    }
+    if (isObj(sb.size) && Array.isArray(sb.size.signals)) {
+      const keep = [];
+      for (const s of sb.size.signals) {
+        if (okSource(s?.source)) keep.push(s);
+        else reject({ broker: id, signal: s }, `${id}: size signal cites rejected or unknown source ${s?.source}`);
+      }
+      w.size.signals = union(w.size.signals, keep);
+      w.size.known = w.size.known || w.size.signals.length > 0;
+    }
+    for (const [k, v] of Object.entries(sb)) {
+      if (SKIP.has(k) || v === null || v === undefined) continue;
+      if (w[k] === null || w[k] === undefined) w[k] = v;
+      else if (!same(w[k], v)) conflict(k, w[k], v);
+    }
+    if (isNew.has(id)) { added.add(id); touched.add(id); }
+    else if (JSON.stringify(w) !== before) { updated.add(id); touched.add(id); }
+  }
+
+  // ---- merge links
+  const finalLinks = links.map((l) => ({ ...l }));
+  const idx = new Map(finalLinks.map((l, i) => [`${l.from}|${l.to}|${l.type}`, i]));
+  let linksAdded = 0; let linksUpdated = 0;
+  for (const l of cand) {
+    if (!work.has(l.from) || !work.has(l.to)) {
+      reject(l, `link ${l.from}->${l.to} rejected: endpoint not in dataset or rejected`);
+      continue;
+    }
+    const key = `${l.from}|${l.to}|${l.type}`;
+    const clean = { from: l.from, to: l.to, type: l.type, tier: l.tier, claim: l.claim, sources: l.sources };
+    if (!idx.has(key)) {
+      finalLinks.push({ ...clean, published: clean.tier === 'A' });
+      idx.set(key, finalLinks.length - 1); linksAdded++;
+      continue;
+    }
+    const cur = finalLinks[idx.get(key)];
+    const stronger = (TIER_RANK[l.tier] ?? 0) > (TIER_RANK[cur.tier] ?? 0);
+    if (!stronger && l.claim !== cur.claim) {
+      reject(l, `link ${key}: claim differs from existing at the same or stronger tier; existing kept`);
+      continue;
+    }
+    if (stronger) { cur.tier = l.tier; cur.claim = l.claim; }
+    cur.sources = union(cur.sources, l.sources);
+    cur.published = cur.tier === 'A';
+    linksUpdated++;
+  }
+
+  // ---- validate in a scratch copy, then write
+  const scratch = await mkdtemp(join(tmpdir(), 'merge-staging-validate-'));
+  let errors = [];
+  try {
+    await mkdir(join(scratch, 'brokers'));
+    for (const [id, b] of work) await writeFile(join(scratch, 'brokers', `${id}.json`), fmt(b));
+    await writeFile(join(scratch, 'links.json'), fmt(finalLinks));
+    await writeFile(join(scratch, 'sources.json'), fmt(mergedSources));
+    errors = (await validateDataset(scratch)).errors;
+  } finally { await rm(scratch, { recursive: true, force: true }); }
+
+  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, errors, written: false };
+  if (errors.length || dryRun) return result;
+
+  await mkdir(join(datasetDir, 'brokers'), { recursive: true });
+  for (const id of touched) await writeFile(join(datasetDir, 'brokers', `${id}.json`), fmt(work.get(id)));
+  await writeFile(join(datasetDir, 'links.json'), fmt(finalLinks));
+  await writeFile(join(datasetDir, 'sources.json'), fmt(mergedSources));
+  result.written = true;
+  return result;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const args = process.argv.slice(2);
+  const dryRun = args.includes('--dry-run');
+  const family = args.find((a) => !a.startsWith('--'));
+  if (!family) { console.error('usage: merge-staging.js <family> [--dry-run]'); process.exit(2); }
+  const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+  const r = await mergeStaging(root, family, { dryRun });
+  if (r.errors.length) {
+    for (const e of r.errors) console.error(e);
+    console.error(`${r.errors.length} validation error(s); nothing written`);
+    process.exit(1);
+  }
+  console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, rejected: r.rejected.length }));
+  if (dryRun) { if (r.rejected.length) console.log(JSON.stringify(r.rejected, null, 2)); }
+  else {
+    const { writeFile } = await import('node:fs/promises');
+    await writeFile(join(root, 'staging', family, 'REJECTED.json'), fmt(r.rejected));
+  }
+}
