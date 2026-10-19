@@ -110,6 +110,9 @@ describe('verified step URLs', () => {
       'equifax.com/personal/help/workforce-solutions-contact', 'legalsolutions.thomsonreuters.com', 'nuwber.com', 'clustrmaps.com',
       'merlindata.com', 'tracersinfo.com', 'xmode.io', 'gravyanalytics.com', 'data.com/consumer-access', 'oracle.com/legal',
       'photos.google.com/map', 'strava.com/athlete/heatmap', 'allyourbases', 'ya_manage_login_and_security', 'advancedpeoplesearch',
+      // 2026-10-19: radaris.com transferred by court order; findpeoplesearch.com parked;
+      // privateeye.com's removal path is a 404 inside a referral-only site.
+      'radaris.com', 'findpeoplesearch.com', 'privateeye.com',
     ];
     const urls = [...stepUrls().keys()].map((u) => `${u}"`);
     for (const d of dead) expect(urls.filter((u) => u.includes(d)), d).toEqual([]);
