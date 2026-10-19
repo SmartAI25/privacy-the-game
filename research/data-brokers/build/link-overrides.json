@@ -4,18 +4,21 @@
       "from": "x-mode-social",
       "to": "outlogic",
       "type": "supplies",
+      "family": "enforcement",
       "reason": "the FTC complaint describes a business and asset transfer to a successor, not a data flow"
     },
     {
       "from": "general-motors",
       "to": "verisk",
       "type": "supplies",
+      "family": "sec",
       "reason": "rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> insurance-services-office, which names the recipient"
     },
     {
       "from": "general-motors",
       "to": "lexisnexis-risk-solutions",
       "type": "supplies",
+      "family": "sec",
       "reason": "rests on the Verisk 10-K summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors (GM LLC, a respondent) -> lexisnexis-risk-solutions (complaint para 39)"
     }
   ],
@@ -103,6 +106,12 @@
       "to": "transunion-risk-and-alternative-data-solutions",
       "type": "buys",
       "reason": "procurement fact-check fix: USAspending award M6700117P1192 is \"ONLINE INVESTIGATIVE SUBSCRIPTION\" in all 7 transactions (base through P00006), PSC D317 web-based subscription, NAICS 561611; TLO is never named and nothing says data or a database, so a data purchase is not shown"
+    },
+    {
+      "from": "jumpshot",
+      "to": "liveramp",
+      "type": "matches-identity",
+      "reason": "final review ruling R31, same standard as omnicom -> neustar (R21): the 2024 Avast complaint para 24 describes contract terms (the agreement \"stated that Jumpshot would use\" LiveRamp's ID Syncing Services; its \"provisions permit\" matching of identifiers), not that matching occurred"
     }
   ],
   "reassign": [

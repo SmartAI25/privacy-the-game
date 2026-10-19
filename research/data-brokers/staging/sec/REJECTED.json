@@ -158,5 +158,18 @@
       }
     },
     "reason": "transunion-rental-screening-solutions: record-overrides cites unknown source enf-cfpb-turss-complaint-2023; not applied"
+  },
+  {
+    "item": {
+      "broker": "thomson-reuters",
+      "override": {
+        "optOut": {
+          "email": "westlaw.privacypolicy@thomsonreuters.com"
+        },
+        "source": "pol-tr-privacy-records",
+        "reason": "the email opt-out's address was only in notes; the privacy-records page sends public-records requests (the records Thomson Reuters sells) to westlaw.privacypolicy@thomsonreuters.com; the do-not-sell address privacy.issues@thomsonreuters.com stays in notes"
+      }
+    },
+    "reason": "thomson-reuters: record-overrides cites unknown source pol-tr-privacy-records; not applied"
   }
 ]

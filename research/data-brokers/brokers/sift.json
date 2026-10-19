@@ -13,7 +13,10 @@
   "optOut": {
     "method": "email",
     "url": "https://sift.com/legal-and-compliance/service-privacy-notice/",
-    "notes": "Access, correction and deletion requests by email to privacy@sift.com (DPO: dpo@sift.com)."
+    "notes": "Access, correction and deletion requests by email to privacy@sift.com (DPO: dpo@sift.com).",
+    "email": "privacy@sift.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
   },
   "size": {
     "known": false,

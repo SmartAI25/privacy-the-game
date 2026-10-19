@@ -1,4 +1,5 @@
 {
+  "formatVersion": 1,
   "asOf": "2026-10-18",
   "brokers": [
     {
@@ -14,6 +15,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.01advertising.com/legal/dsar/",
@@ -35,6 +37,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.33mileradius.com",
@@ -56,6 +59,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.33across.com",
@@ -77,6 +81,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://360mediadirect.com/privacy-policy/",
@@ -98,6 +103,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://365datasolutions.com/privacy",
@@ -121,6 +127,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.5x5data.com/5x5/opt-out",
@@ -142,6 +149,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://6sense.com/privacy-policy/",
@@ -163,6 +171,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bookyourdata.com",
@@ -184,6 +193,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.abovedata.io/opt-out/",
@@ -205,6 +215,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://deepsync.com/accudata/",
@@ -226,6 +237,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://accurateappend.com/privacy-policy/",
@@ -247,6 +259,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.achcoop.com/",
@@ -268,6 +281,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.acres.com/",
@@ -291,6 +305,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://Acronymix.com",
@@ -312,6 +327,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://activimpact.ai/privacy-policy",
@@ -337,6 +353,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "consumer marketing data products"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.acxiom.com/optout/",
@@ -361,6 +380,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.propensity.com/",
@@ -382,6 +402,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.achcoop.com/privacy-policy",
@@ -403,6 +424,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.adept-id.com/opt-out-preferences/",
@@ -424,6 +446,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.adprime.com/privacy-policy",
@@ -447,6 +470,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://adsquare.com/",
@@ -468,6 +492,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.adstradata.com/privacy-policy/",
@@ -489,6 +514,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.adswizz.com",
@@ -512,6 +538,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://adttribution.com/privacy-policy.php",
@@ -533,6 +560,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://4legalleads.com/removal/",
@@ -554,6 +582,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.finsum.com/what-we-do/your-privacy-choices",
@@ -572,6 +601,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -588,6 +618,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.affinityanswers.com/your-privacy-choices/",
@@ -609,6 +640,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://affinitysolutions-privacy.my.onetrust.com/webform/a564cfa1-53bf-4c10-bf95-cd907432d7e8/7e4e6bf3-6562-454e-8c73-6a7bd1f4b336",
@@ -630,6 +662,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.aggknowledge.ai/privacypolicy",
@@ -651,6 +684,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://agile-ed.com/california-privacy-rights/",
@@ -672,6 +706,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.agrmarketingsolutions.com",
@@ -693,6 +728,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.aidentified.com/privacy--policy",
@@ -714,6 +750,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www2.arccorp.com/site-privacy-policy/",
@@ -735,6 +772,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.alikeaudience.com/",
@@ -756,6 +794,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://attribits.com",
@@ -777,6 +816,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://awl.com/privacy/",
@@ -798,6 +838,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://allantgroup.com/privacy-policy",
@@ -819,6 +860,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://alliantinsight.com/alliant-privacy-policy/",
@@ -840,6 +882,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://alphonso.tv/privacy/consumer",
@@ -861,6 +904,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.altairdata.com/consumer-info",
@@ -882,6 +926,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://altrata.com/privacy-policy",
@@ -903,6 +948,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.gatewaydata.io/privacy/privacy-policy",
@@ -924,6 +970,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.americanspiritcorp.com/do-not-sell-my-personal-information--out-out-request-form.html",
@@ -945,6 +992,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.americantreasurytaxsolutions.com/",
@@ -966,6 +1014,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -982,6 +1031,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://analytics-iq.com/privacy-policy/",
@@ -1003,6 +1053,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.analyzecorp.com/privacy-policy/",
@@ -1024,6 +1075,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "http://www.anchorcomputer.com/",
@@ -1045,6 +1097,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://salesassistiq.ai/about",
@@ -1066,6 +1119,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://info.missionwired.com/coop-optout",
@@ -1082,6 +1136,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -1098,6 +1153,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://anteriad.com/",
@@ -1119,6 +1175,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.apollointeractive.com/privacy-policy.php",
@@ -1140,6 +1197,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.appscience.ai/",
@@ -1161,6 +1219,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://legal.applovin.com/privacy/",
@@ -1179,6 +1238,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "VINE (a registered trademark of Appriss Insights, per the Equifax page)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -1190,6 +1252,7 @@
       "parent": "transunion",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -1206,6 +1269,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.aristotle.com/privacy/addendum-for-california-residents/",
@@ -1225,6 +1289,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -1241,6 +1306,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://deepsync.com",
@@ -1262,6 +1328,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://deepsync.com/privacy-policy/",
@@ -1283,6 +1350,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.issgovernance.com/privacy-legal/ccpa/",
@@ -1304,6 +1372,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://astoriacompany.com",
@@ -1325,6 +1394,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://astoriacompany.com/privacy-policy/",
@@ -1348,6 +1418,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "email intelligence data"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.atdata.com",
@@ -1369,6 +1442,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://atmospherik.ai/privacy-choices",
@@ -1390,6 +1464,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.attomdata.com/privacy/",
@@ -1411,6 +1486,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.attribits.com/privacy-policy",
@@ -1432,6 +1508,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://audienceacuity.com/",
@@ -1455,6 +1532,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.audiencemix.net/do-no-sell-or-share-my-personal-informat",
@@ -1476,6 +1554,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.equifax.com/personal/my-privacy/",
@@ -1497,6 +1576,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.jdpower.com/privacy/california",
@@ -1520,6 +1600,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.autoweb.com",
@@ -1536,6 +1617,9 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [
+        "browsing data (via former subsidiary Jumpshot, per FTC)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 6,
@@ -1552,6 +1636,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal-eu.onetrust.com/webform/031dc37f-2093-4055-9d04-22f83329fe9f/a4fb8ed6-8389-4a17-a3be-ca808c6b300e",
@@ -1576,6 +1661,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.hybridtheory.com/privacy-notice/",
@@ -1600,6 +1686,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "location and audience intelligence; acts as a demand-side platform in real-time bidding auctions",
+        "collects personal information from ad exchanges (bid requests), pixels, and 'trusted third-party sources, such as data brokers' (none named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://azira.com/privacy-policy",
@@ -1630,6 +1720,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.babelstreet.com/privacy",
@@ -1653,6 +1744,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.aviato.co/legal/privacy",
@@ -1674,6 +1766,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://legal.cameo.com/privacypolicy",
@@ -1695,6 +1788,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bbdirect.com/about/privacy-compliance.html",
@@ -1716,6 +1810,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bdex.com/privacy-policy/",
@@ -1737,6 +1832,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bdo.com",
@@ -1758,6 +1854,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.beaconterritory.com/texas-privacy-rights/",
@@ -1781,6 +1878,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.becausal.com/personal-information",
@@ -1804,6 +1902,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "people search and background reports"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.beenverified.com/svc/optout/search/optouts",
@@ -1828,6 +1929,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.beenverified.com/svc/optout/search/comprehensive_optouts",
@@ -1853,6 +1955,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.beeswax.com",
@@ -1874,6 +1977,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://belardiwong.com/",
@@ -1895,6 +1999,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://belardiwong.com/privacy-policy/",
@@ -1916,6 +2021,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bestpickreports.com",
@@ -1937,6 +2043,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://usmarketinggrp.com/privacy-policy",
@@ -1958,6 +2065,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://optout.bigdbm.com/",
@@ -1979,6 +2087,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.biointelli.com",
@@ -2000,6 +2109,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.biscred.com/do-not-sell-my-information",
@@ -2021,6 +2131,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.blackpearl.com/your-privacy-choices",
@@ -2042,6 +2153,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.blackbaud.com/",
@@ -2065,6 +2177,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.blis.com",
@@ -2086,6 +2199,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://blis.com/privacy-centre/",
@@ -2107,6 +2221,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://blueaction.io/do-not-sell/",
@@ -2128,6 +2243,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://bluedatalead.com/privacy-policy",
@@ -2149,6 +2265,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.liftbasedata.com/request-to-know/",
@@ -2170,6 +2287,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://blueprintaudiences.com",
@@ -2191,6 +2309,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bombora.com",
@@ -2212,6 +2331,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bridg.com/privacy-policy",
@@ -2233,6 +2353,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.quotefinders.com/privacy",
@@ -2254,6 +2375,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.brooksim.com/privacy-policy",
@@ -2275,6 +2397,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://buildertrend.com/privacy-notice/",
@@ -2296,6 +2419,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://growbots.com",
@@ -2317,6 +2441,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://businessregistry.com/privacy-policy/",
@@ -2340,6 +2465,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.buxtonco.com/privacy",
@@ -2363,6 +2489,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.buyerlink.co",
@@ -2384,6 +2511,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.experience.com/privacy-notice",
@@ -2405,6 +2533,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://big-village.com/privacy-policy/",
@@ -2428,6 +2557,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cadent.tv",
@@ -2449,6 +2579,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.captifytechnologies.com/data-subject-rights-request/",
@@ -2470,6 +2601,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://captiv8.io/policy/",
@@ -2491,6 +2623,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datagrail.cardlytics.com/",
@@ -2512,6 +2645,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -2528,6 +2662,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://preferences.hightouch.com",
@@ -2551,6 +2686,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.catalina.com",
@@ -2572,6 +2708,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://catalist.us/privacy-policy",
@@ -2593,6 +2730,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://catchlight.ai/privacy",
@@ -2614,6 +2752,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cbinsights.com/privacy-policy",
@@ -2635,6 +2774,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://cdkglobal.com",
@@ -2656,6 +2796,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.censia.com",
@@ -2677,6 +2818,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://loopme.ai/chartboost/",
@@ -2700,6 +2842,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://checkpeople.com/privacy-rights",
@@ -2713,15 +2856,20 @@
     {
       "id": "chex-systems",
       "name": "ChexSystems",
-      "parent": "fis",
+      "parent": null,
       "kind": [
         "financial"
       ],
       "registries": {},
+      "sells": [
+        "consumer reports on deposit-account history"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.chexsystems.com/security-freeze/information",
-        "notes": "No general opt-out found; this is the security-freeze route (online, phone, mail to PO Box 583399, or email chexsystems.cr@fisglobal.com). A freeze limits access to the ChexSystems report only."
+        "notes": "No general opt-out found; this is the security-freeze route (online, phone, mail to PO Box 583399, or email chexsystems.cr@fisglobal.com). A freeze limits access to the ChexSystems report only.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 1,
@@ -2741,6 +2889,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.choreograph.com",
@@ -2762,6 +2911,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.circana.com/the-circana-group-global-privacy-policy-and-notice",
@@ -2783,6 +2933,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://portals.dporganizer.com/fa778b0e-817f-4c96-b13d-e2b614470033",
@@ -2804,6 +2955,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://portals.dporganizer.com/fa778b0e-817f-4c96-b13d-e2b614470033",
@@ -2827,6 +2979,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.citydata.ai/privacy",
@@ -2848,6 +3001,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.civicelement.com/privacy-policy",
@@ -2871,6 +3025,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.searchpublicrecords.com/help-center/privacy",
@@ -2892,6 +3047,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.civisanalytics.com/legal-pages/supplemental-privacy-notice",
@@ -2913,6 +3069,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.claritas.com",
@@ -2929,6 +3086,7 @@
       "parent": "experian",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -2945,6 +3103,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/7636e208-dda4-4218-8026-e1bc155873fc/draft/8651c266-68d4-43a8-b7ca-7bd8398843d6",
@@ -2966,6 +3125,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/7636e208-dda4-4218-8026-e1bc155873fc/0927a3fa-add0-4dc4-8bb0-20d6e374b7cc",
@@ -2987,6 +3147,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.clay.com/policies",
@@ -3008,6 +3169,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.clearcompany.com/privacy-policy/",
@@ -3029,6 +3191,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.clearview.ai/privacy-and-requests",
@@ -3050,6 +3213,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.clickagy.com/privacy-center/",
@@ -3073,6 +3237,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://coasttechnology.com/",
@@ -3094,6 +3259,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cognism.com",
@@ -3117,6 +3283,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "data broker business transferred from Kochava (per FTC)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://collectivedata.io",
@@ -3138,6 +3307,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fanalyticsiq.com/privacy-policy",
@@ -3159,6 +3329,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://persistent.id/privacy-policy",
@@ -3180,6 +3351,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.commercesignals.com",
@@ -3201,6 +3373,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.crexi.com/privacy",
@@ -3222,6 +3395,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.commonroom.io/remove-my-info",
@@ -3243,6 +3417,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.deepsync.com",
@@ -3264,6 +3439,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://completemailinglists.com/do-not-sell-my-information",
@@ -3285,6 +3461,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.completemedicallists.com/privacy.php",
@@ -3306,6 +3483,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.comscore.com/About/Privacy-Policy",
@@ -3327,6 +3505,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.jwx.com",
@@ -3348,6 +3527,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://connectedinvestors.com/privacy-policy",
@@ -3369,6 +3549,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://Connectionholdings.com",
@@ -3392,6 +3573,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.consumercanvas.net/privacy/",
@@ -3405,7 +3587,7 @@
     {
       "id": "consumerbase",
       "name": "Consumerbase, LLC",
-      "parent": "data-axle",
+      "parent": null,
       "kind": [
         "marketing"
       ],
@@ -3415,6 +3597,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.exactdata.com",
@@ -3436,6 +3619,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://contactout.com/privacy_data_subjects",
@@ -3457,6 +3641,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.convergemarketing.com/privacy/",
@@ -3473,6 +3658,7 @@
       "parent": "publicis-groupe",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -3489,6 +3675,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.convex.com",
@@ -3508,10 +3695,19 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "property information",
+        "mortgage information",
+        "consumer information",
+        "property, parcel, mortgage and insurance data and analytics",
+        "product data obtained from 'third-party data licensors and data providers' (no companies named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cotality.com/legal/privacy",
-        "notes": "Requests to know/delete/correct/opt out of sale or sharing go through an 'Online Privacy Portal' (a Ketch pop-up on this page) or 1-866-221-9291 (California); privacy@cotality.com. The legal entity is 'CoreLogic, Inc. d/b/a Cotality'; corelogic.com/privacy/ now redirects to cotality.com and returned 404."
+        "notes": "Requests to know/delete/correct/opt out of sale or sharing go through an 'Online Privacy Portal' (a Ketch pop-up on this page) or 1-866-221-9291 (California); privacy@cotality.com. The legal entity is 'CoreLogic, Inc. d/b/a Cotality'; corelogic.com/privacy/ now redirects to cotality.com and returned 404.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-fortify-property"
@@ -3530,6 +3726,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cotality.com/legal/privacy-policy",
@@ -3553,6 +3750,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.costar.com/about/privacy-notice",
@@ -3576,6 +3774,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.coxautoinc.com/privacy-statement/",
@@ -3597,6 +3796,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://portals.dporganizer.com/fa778b0e-817f-4c96-b13d-e2b614470033",
@@ -3618,6 +3818,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.crisil.com/content/crisilcom/en/home/crisil-privacy-notice.html",
@@ -3641,6 +3842,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.criteo.com/privacy/",
@@ -3662,6 +3864,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.crsspxl.com/",
@@ -3683,6 +3886,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://about.crunchbase.com/terms-of-service/privacy-policy",
@@ -3704,6 +3908,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.smartmove.us/company/privacy",
@@ -3722,6 +3927,7 @@
         "location"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -3740,6 +3946,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://cuebiq.com/privacy-request/",
@@ -3761,6 +3968,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://trustsuperset.com/dsrs?orgId=275d6c62-eb0f-4f8a-80c2-b72573902714",
@@ -3784,6 +3992,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://cybba.com",
@@ -3805,6 +4014,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.dcsinfosys.com",
@@ -3829,6 +4039,12 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "consumer and business data, data segments and audiences",
+        "donor-data co-ops (Apogee & DonorBase)",
+        "sells data to business and data partners and direct customers (per its privacy policy)",
+        "data received from consumer-facing companies, apps and services, data compilers and suppliers, and public records (no source companies named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.data-axle.com/privacy-rights-request/",
@@ -3853,6 +4069,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datadecisionsgroup.com/privacy-policy/",
@@ -3874,6 +4091,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datapartners.com/donotsellmyinformation/",
@@ -3895,6 +4113,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datatowin.com/privacy-requests",
@@ -3918,6 +4137,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datadelivers.com",
@@ -3939,6 +4159,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datadesk.io/help/do-not-sell-my-personal-info",
@@ -3960,6 +4181,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -3978,6 +4200,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datafy.com/opt-out",
@@ -3999,6 +4222,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datalinedata.com/privacy-portal/",
@@ -4020,6 +4244,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -4033,11 +4258,12 @@
     {
       "id": "datalogix",
       "name": "Datalogix",
-      "parent": "oracle-advertising",
+      "parent": null,
       "kind": [
         "marketing"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -4054,6 +4280,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datamangroup.com/privacy/",
@@ -4075,6 +4302,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.porchgroupmedia.com",
@@ -4096,6 +4324,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datanyze.com/privacy-center",
@@ -4117,6 +4346,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datarate.ai/my-privacy-choicesDE",
@@ -4138,6 +4368,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datasys.com/privacy-policy",
@@ -4154,6 +4385,7 @@
       "parent": "equifax",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -4170,6 +4402,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.date-detective.app/agreements/privacy-policy",
@@ -4191,6 +4424,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datonics.com/",
@@ -4212,6 +4446,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://partech.com/dbsubllc",
@@ -4233,6 +4468,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.forddirectprivacy.com",
@@ -4254,6 +4490,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://dealersocket.com/privacy-policy/",
@@ -4275,6 +4512,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://dealerx.com/privacy-options/",
@@ -4296,6 +4534,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.leadfeeder.com/privacy/privacy-notice/",
@@ -4317,6 +4556,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.leadfeeder.com/privacy/privacy-notice/",
@@ -4338,6 +4578,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyrequest.dealmachine.com/remove",
@@ -4361,6 +4602,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://decide.co/privacy",
@@ -4382,6 +4624,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.decisionlinks.com/legal-pages/your-privacy-choices",
@@ -4403,6 +4646,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://deeprootanalytics.com",
@@ -4424,6 +4668,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.definitivehc.com/privacy-center",
@@ -4445,6 +4690,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.deimos-signals.com/privacy-center",
@@ -4466,6 +4712,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datasubject.deloitte.com/",
@@ -4487,6 +4734,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://datasubject.deloitte.com",
@@ -4508,6 +4756,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://demandscience.com/",
@@ -4529,6 +4778,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.demandbase.com/privacy-center.html?ketch_preferences_tab=rightsTab",
@@ -4550,6 +4800,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.dice.com/about/ccpa",
@@ -4566,6 +4817,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -4582,6 +4834,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://dmsunsub.io",
@@ -4605,6 +4858,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.spyfly.com/help-center/privacy",
@@ -4626,6 +4880,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.digitalsegment.com/about/opt-out/",
@@ -4649,6 +4904,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.digitalvikingmedia.com/privacy-policy",
@@ -4670,6 +4926,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://disconetwork.com",
@@ -4691,6 +4948,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.termly.io/policy-viewer/policy.html?policyUUID=e1b589c9-c7f6-47c3-a7b4-e57e3c79f883",
@@ -4714,6 +4972,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.Disqus.com",
@@ -4735,6 +4994,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://dmsunsub.io",
@@ -4748,7 +5008,7 @@
     {
       "id": "donorbase",
       "name": "DonorBase, Inc.",
-      "parent": "data-axle",
+      "parent": null,
       "kind": [
         "marketing"
       ],
@@ -4758,6 +5018,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://donorbase.com",
@@ -4779,6 +5040,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://donorbureau.com/california-privacy-rights-for-california-residents-only/",
@@ -4800,6 +5062,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/7636e208-dda4-4218-8026-e1bc155873fc/draft/c3eedb35-4568-4772-87fb-4d8ae17ac233",
@@ -4821,6 +5084,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.draup.com",
@@ -4842,6 +5106,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "http://dresdendirect.com",
@@ -4863,6 +5128,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -4884,6 +5150,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.dspolitical.com/privacy-policy/",
@@ -4905,6 +5172,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://dstillery.com",
@@ -4926,6 +5194,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://thedatatrust.com/do-not-sell-my-personal-information/",
@@ -4949,6 +5218,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.dtn.com",
@@ -4970,6 +5240,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.dnb.com/en-us/why-dnb/data-transparency.html",
@@ -4988,6 +5259,10 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "B2B commercial data",
+        "B2B and business-to-consumer identity graph and audience targeting data"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 3,
@@ -5004,6 +5279,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://eab.com/privacy-policy/",
@@ -5025,6 +5301,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/0f61f895-d08d-410f-b96d-ecfd34fd42e3/8d4dfe0d-998d-4c1d-ab6d-4357670fa8e9",
@@ -5048,6 +5325,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.complementics.com/optout-donotsell",
@@ -5069,6 +5347,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.edvisors.com/your-privacy-choices/",
@@ -5090,6 +5369,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.socialgist.ai/privacy-and-terms",
@@ -5113,6 +5393,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://eltoro.com/your-privacy-choices/",
@@ -5134,6 +5415,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.telephonelists.biz/privacy-notice-for-residents-of-california",
@@ -5155,6 +5437,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://getelevar.com",
@@ -5176,6 +5459,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.elocal.com",
@@ -5197,6 +5481,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.emerges.com/Government-Record-Opt-Out_ep_51-1.html",
@@ -5218,6 +5503,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://docs.endgame.io/trust/privacy",
@@ -5241,6 +5527,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.enformion.com/privacy-policy/",
@@ -5262,6 +5549,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://enigma.com/company/privacy-policy",
@@ -5283,6 +5571,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://enlyft.com/tech/check-email",
@@ -5304,6 +5593,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -5324,6 +5614,10 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "identity graph and marketing data",
+        "consumer marketing databases supplied to clients as contacts for marketing programs"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://legal.epsilon.com/dsr/",
@@ -5354,6 +5648,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://finthrive.com/texas-data-broker-disclosure-equation-consulting?hs_preview=jhDXCUDm-205479481866",
@@ -5374,10 +5669,20 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "consumer and commercial credit reports and scores",
+        "employment and income verification (The Work Number)",
+        "financial marketing data for targeting and segmentation",
+        "consumer credit information sold to resellers",
+        "consumer credit reports",
+        "employment and income data (The Work Number)"
+      ],
       "optOut": {
         "method": "portal",
         "url": "https://myprivacy.equifax.com/opt-in-opt-out/personal-info",
-        "notes": "Linked as 'Your Privacy Choices' from The Work Number and Equifax pages; returned HTTP 200 (JavaScript app) on 2026-10-18, contents not machine-readable. Credit freezes are separate (equifax.com credit-freeze page)."
+        "notes": "Linked as 'Your Privacy Choices' from The Work Number and Equifax pages; returned HTTP 200 (JavaScript app) on 2026-10-18, contents not machine-readable. Credit freezes are separate (equifax.com credit-freeze page).",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 9,
@@ -5394,6 +5699,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.equifax.com/personal/my-privacy/",
@@ -5418,6 +5724,11 @@
         "TX": null,
         "OR": null
       },
+      "sells": [
+        "employment and income verification (The Work Number)",
+        "incarceration, justice and people-based risk intelligence data (Verification Services)",
+        "employment and income verification records furnished by participating employers"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.equifax.com/personal/my-privacy/",
@@ -5449,6 +5760,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.batchleads.io",
@@ -5470,6 +5782,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://erepublic.my.salesforce-sites.com/PrivacyRequest/",
@@ -5493,6 +5806,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.evertrue.com/privacy-policy/",
@@ -5514,6 +5828,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://evorra.com/privacy-data-policies/product-privacy-policy/",
@@ -5535,6 +5850,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://exa.ai",
@@ -5556,6 +5872,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://exactmatchmarketing.com/privacy-policy",
@@ -5577,6 +5894,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.exactcustomer.com",
@@ -5598,6 +5916,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.nielsen.com",
@@ -5619,6 +5938,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.exlservice.com/privacy-policy",
@@ -5642,6 +5962,13 @@
         "health"
       ],
       "registries": {},
+      "sells": [
+        "credit bureau data",
+        "marketing services and digital identity linkage",
+        "automotive and health data services",
+        "email intelligence (AtData)",
+        "direct-to-consumer credit and marketplace services"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 16,
@@ -5653,6 +5980,7 @@
       "parent": "experian",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -5669,6 +5997,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.experian.com/privacy/us-consumer-data-privacy-policy",
@@ -5690,6 +6019,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.experian.com/privacy/us-consumer-data-privacy-policy",
@@ -5713,6 +6043,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "consumer marketing data and audiences for retail, financial services, telecom, insurance, travel, media and agencies",
+        "data drawn from tax assessor and deed files, consumer surveys, telephone directories, publications/subscriptions, US Census data, inferences, online and mobile sites/apps/ads, and 'other authorized data providers' (no companies named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://consumerprivacy.experian.com",
@@ -5734,6 +6068,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.explorium.ai/do-not-sell-my-personal-info/",
@@ -5752,6 +6087,7 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -5768,6 +6104,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.eyeota.com/",
@@ -5789,6 +6126,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.facteus.com",
@@ -5810,6 +6148,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://factori.ai/privacy-policy/",
@@ -5826,6 +6165,7 @@
       "parent": "transunion",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -5842,6 +6182,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.familytreenow.com/privacy",
@@ -5863,6 +6204,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.famousbirthdays.com/privacy/",
@@ -5884,6 +6226,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://faraday.ai/privacy-options",
@@ -5907,6 +6250,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fetch.com/privacy-policy",
@@ -5928,6 +6272,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fi-navigator.com/remove/",
@@ -5949,6 +6294,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.fideo.ai/your-privacy-choices",
@@ -5970,6 +6316,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fifty.io/privacy-policy",
@@ -5991,6 +6338,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.findem.ai/privacy-policy-platform",
@@ -6012,6 +6360,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://finthrive.com/privacy-policy-overview",
@@ -6033,6 +6382,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://firmable.ai/privacy-policy",
@@ -6054,6 +6404,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://compliance.firstdirectmarketing.com/",
@@ -6075,6 +6426,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fmadata.com/",
@@ -6096,6 +6448,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.firstorion.com",
@@ -6114,6 +6467,9 @@
         "financial"
       ],
       "registries": {},
+      "sells": [
+        "parent of Chex Systems, Inc."
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -6130,6 +6486,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.focus-usa.com/your-privacy-choices/",
@@ -6153,6 +6510,9 @@
         "TX": null,
         "OR": null
       },
+      "sells": [
+        "device location search for law enforcement"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fogdatascience.com/opt-out",
@@ -6174,6 +6534,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.instantly.ai/privacy/info",
@@ -6195,6 +6556,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.forager.ai/privacy",
@@ -6216,6 +6578,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -6232,6 +6595,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://forian.com/privacy-notice/",
@@ -6253,6 +6617,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fourcornerhome.com/data-privacy-form/",
@@ -6274,6 +6639,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fourleafdata.com/",
@@ -6297,6 +6663,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://foursquare.com",
@@ -6320,6 +6687,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fourthwall.tv/privacy-fourthwall",
@@ -6341,6 +6709,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fraiser.org",
@@ -6364,6 +6733,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "free people-search records"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.truepeoplesearch.com/removal",
@@ -6391,6 +6763,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://freepeoplesearch.com/privacy-rights/",
@@ -6414,6 +6787,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.freewheel.com",
@@ -6435,6 +6809,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fullenrich.com/optout",
@@ -6456,6 +6831,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fusable.com",
@@ -6477,6 +6853,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fushiamedia.com/request-delete",
@@ -6498,6 +6875,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.gatheranalytics.co/privacy",
@@ -6522,6 +6900,10 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "connected-vehicle precise geolocation data",
+        "OnStar Smart Driver driving behavior data"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.gm.com/consumer-privacy",
@@ -6540,6 +6922,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -6556,6 +6939,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.retention.com",
@@ -6577,6 +6961,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vector.co/opt-out",
@@ -6598,6 +6983,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.giantpartners.com",
@@ -6619,6 +7005,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://boam.ai/",
@@ -6642,6 +7029,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://gsdsi.com/privacy",
@@ -6663,6 +7051,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://recordsfinder.com/optout/",
@@ -6681,6 +7070,7 @@
         "health"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 5,
@@ -6694,6 +7084,7 @@
         "ad-network"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -6710,6 +7101,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://graph8.com/terms/#privacy-policy",
@@ -6731,6 +7123,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.grassrootsanalytics.com/california-consumer-privacy-act-ccpa",
@@ -6750,10 +7143,19 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "location data tied to MAIDs and IP addresses",
+        "geofenced lists of devices",
+        "mobile device location data (lat/long tied to advertising IDs) and foot-traffic data",
+        "data received from mobile app owners and data aggregators who collect it through SDKs (none named)",
+        "identity linking of MAIDs to hashed emails and IPs (Unacast 'Data Linkages')"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://gravyanalytics.com/opt-out-do-not-sell?hsLang=en",
-        "notes": "'Opt Out & Do Not Sell' page; privacy contact privacy@gravyanalytics.com, 703-840-8850. Unacast's own policy names the entity as 'Gravy Analytics, Inc. dba Unacast', with its opt-out at unacast.com/opt-out. gravyanalytics.com now serves Unacast's site. The older gravyanalytics.com/opt-out page is a stale 2019 page."
+        "notes": "'Opt Out & Do Not Sell' page; privacy contact privacy@gravyanalytics.com, 703-840-8850. Unacast's own policy names the entity as 'Gravy Analytics, Inc. dba Unacast', with its opt-out at unacast.com/opt-out. gravyanalytics.com now serves Unacast's site. The older gravyanalytics.com/opt-out page is a stale 2019 page.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 3,
@@ -6770,6 +7172,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://grayhairsoftware.com/privacy-policy/",
@@ -6791,6 +7194,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.graze.social/privacy-policy",
@@ -6812,6 +7216,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://greatlakeslists.com/privacy-policy",
@@ -6833,6 +7238,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.atxteaparty.com/privacy",
@@ -6854,6 +7260,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.growinglibraries.com",
@@ -6875,6 +7282,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://growthcode.io/do-not-sell-or-share-my-personal-information",
@@ -6896,6 +7304,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.carneydirect.com/privacy-policy/",
@@ -6917,6 +7326,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.h1.co",
@@ -6938,6 +7348,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/c402d2db-7536-4212-a23d-ed4a33c1b3b2/e3aec736-7c0a-4313-a3e7-132ff601397a",
@@ -6961,6 +7372,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.healthcare.com/privacy-policy",
@@ -6982,6 +7394,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://healthlinkdimensions.com/consumerprivacyrights",
@@ -7005,6 +7418,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.healthwisedata.com",
@@ -7026,6 +7440,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://heartbeat.ai/policy",
@@ -7047,6 +7462,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.helixcampaigns.com/privacy",
@@ -7068,6 +7484,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.tripwiredata.com/texas-data-broker-notice",
@@ -7089,6 +7506,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.hireez.com/ownyourdata",
@@ -7112,6 +7530,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.perion.com",
@@ -7133,6 +7552,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fivestarrated.com",
@@ -7151,6 +7571,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7167,6 +7588,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://legal.hubspot.com/privacy-policy",
@@ -7188,6 +7610,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://trustandwill.com/security/privacy-policy",
@@ -7209,6 +7632,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.huntclub.com/privacy",
@@ -7230,6 +7654,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://hunter.io/dashboard",
@@ -7248,6 +7673,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7261,6 +7687,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7277,6 +7704,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.i-360.com/ccpa",
@@ -7293,6 +7721,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7309,6 +7738,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://id5.io",
@@ -7327,6 +7757,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7345,6 +7776,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://idmap.ai/privacy-policy.html",
@@ -7363,6 +7795,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "automated document authentication and fraud detection"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7379,6 +7814,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://ileads.com/submitrequest/",
@@ -7400,6 +7836,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://illumin.com/legalcenter/",
@@ -7421,6 +7858,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://inboundinsight.com/ccpa",
@@ -7444,6 +7882,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.indexexchange.com/privacy/exchange-platform-privacy-policy/",
@@ -7465,6 +7904,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/7665c53e-aae8-4a03-9dd3-66fb6bce8f55/22033015-0970-44c0-b5a5-8b180f7e4ef1",
@@ -7486,6 +7926,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://mailinglists.com/about/privacy-policy",
@@ -7507,6 +7948,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mailinglists.com",
@@ -7528,6 +7970,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privatereports.com",
@@ -7549,6 +7992,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.infopay.com/privacy",
@@ -7570,6 +8014,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.informa.com/policies/en/",
@@ -7593,6 +8038,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.publicinfoservices.com/help-center/privacy",
@@ -7616,6 +8062,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://information.com/privacy-rights/",
@@ -7629,11 +8076,12 @@
     {
       "id": "infousa",
       "name": "infoUSA",
-      "parent": "data-axle",
+      "parent": null,
       "kind": [
         "marketing"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -7650,6 +8098,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.inmar.com/about/privacy-policy",
@@ -7671,6 +8120,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.inmar.com/about/privacy-policy/owneriq",
@@ -7695,6 +8145,10 @@
         "TX": null,
         "OR": null
       },
+      "sells": [
+        "location-based advertising audiences",
+        "targeted mobile advertising"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://preferences.inmarket.com",
@@ -7716,6 +8170,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.proxima.ai",
@@ -7737,6 +8192,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://specialistsmarketingsolutions.com/privacy-notice/",
@@ -7758,6 +8214,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://idatabasesolutions.com/personal-information-request-all-other-states/",
@@ -7776,10 +8233,15 @@
         "financial"
       ],
       "registries": {},
+      "sells": [
+        "consumer reports sold to customers and to resellers who pass them on to their own customers"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.innovis.com/personal/optOutOptIn",
-        "notes": "Prescreen (firm offers of credit/insurance) opt-out is done at www.optoutprescreen.com. Innovis says it does no direct-to-consumer marketing, so it cannot process marketing opt-outs. Security freeze at innovis.com/personal/securityFreeze; phone 1-800-540-2505."
+        "notes": "Prescreen (firm offers of credit/insurance) opt-out is done at www.optoutprescreen.com. Innovis says it does no direct-to-consumer marketing, so it cannot process marketing opt-outs. Security freeze at innovis.com/personal/securityFreeze; phone 1-800-540-2505.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 1,
@@ -7796,6 +8258,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://idatabasesolutions.com/do-not-sell-my-personal-info/",
@@ -7817,6 +8280,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mylife.com",
@@ -7840,6 +8304,10 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "background reports",
+        "people search and background reports"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.instantcheckmate.com/privacy-center",
@@ -7861,6 +8329,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://policeconduct.org/legal-notice/privacy",
@@ -7882,6 +8351,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.issgovernance.com/privacy-legal/ccpa/",
@@ -7900,6 +8370,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "consumer reports built from driving data (per FTC)"
+      ],
       "optOut": null,
       "missions": [
         "enterprise_data-reclaim-deep-layer"
@@ -7918,6 +8391,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://kalibrate.com/data-subject-access-request-form/",
@@ -7939,6 +8413,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.idm.us.com/do-not-sell-my-personal-information/",
@@ -7952,7 +8427,7 @@
     {
       "id": "intelius",
       "name": "Intelius, LLC",
-      "parent": "peopleconnect",
+      "parent": null,
       "kind": [
         "people-search"
       ],
@@ -7962,6 +8437,9 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "people search and background reports"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.intelius.com/privacy-center",
@@ -7988,6 +8466,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.intentiq.com/opt-out/",
@@ -8009,6 +8488,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://intentsify.io/privacy-policy/consumer-data-privacy-policy/",
@@ -8030,6 +8510,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.ididata.com/idis-privacy-statement/",
@@ -8051,6 +8532,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://staterecords.org/optout",
@@ -8072,6 +8554,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -8093,6 +8576,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/07e8dc4d-6686-403e-9b11-39fe7347d2f4/2f999bd2-c826-498c-a504-894eaf543b6f",
@@ -8114,6 +8598,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://irys.us/do-not-sell-ccpa",
@@ -8137,6 +8622,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.ispot.tv/privacy",
@@ -8158,6 +8644,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://kindsight.io/privacy-policy/#iwave",
@@ -8179,6 +8666,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.equifax.com/personal/my-privacy/",
@@ -8200,6 +8688,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.campaigner.com/legal/privacy-policy",
@@ -8221,6 +8710,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://platform.fullcontact.com/your-privacy-choices",
@@ -8237,6 +8727,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -8253,6 +8744,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.jdpower.com/privacy/california",
@@ -8274,6 +8766,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.jdpower.com",
@@ -8295,6 +8788,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://jdmlistservices.com/privacy-policy",
@@ -8316,6 +8810,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://communityimpact.com/consumer-rights",
@@ -8337,6 +8832,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://ciprinting.com/privacy/",
@@ -8358,6 +8854,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://jmr-media.com/privacy-notice",
@@ -8379,6 +8876,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://juicebox.ai/",
@@ -8398,6 +8896,9 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "clickstream/browsing data feeds (All Clicks Feed, Search Plus Click Feed, Transaction Feed, etc.)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 5,
@@ -8414,6 +8915,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://jungroup.com",
@@ -8435,6 +8937,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://kargo.com",
@@ -8456,6 +8959,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://hiy.ywv.mybluehost.me/website_8088244e/privacy-policy-ccpa-do-not-sell-my-information/",
@@ -8477,6 +8981,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://keymarketingadvantage.com/do_not_use_my_personal_information",
@@ -8498,6 +9003,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://keywordconnects.com/",
@@ -8519,6 +9025,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://kindskiptracing.com",
@@ -8540,6 +9047,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://klarifi.io/privacy-center",
@@ -8561,6 +9069,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://ipapi.co/donotsell/",
@@ -8582,6 +9091,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.equifax.com/personal/my-privacy/",
@@ -8601,10 +9111,20 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "precise geolocation data tied to mobile advertising IDs",
+        "App Graph app-usage data",
+        "audience segments (via the Kochava Collective)",
+        "mobile app measurement and attribution",
+        "data, analytics and ETL services"
+      ],
       "optOut": {
         "method": "email",
         "url": "https://www.kochava.com/privacy/support-privacy/",
-        "notes": "kochava.com/opt-out/ only gives device-level instructions (disable interest-based ads, reset the advertising ID, opt out inside the app). Privacy contact privacy@kochava.com is on the support-privacy page."
+        "notes": "kochava.com/opt-out/ only gives device-level instructions (disable interest-based ads, reset the advertising ID, opt out inside the app). Privacy contact privacy@kochava.com is on the support-privacy page.",
+        "email": "privacy@kochava.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 2,
@@ -8621,6 +9141,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://koddi.com",
@@ -8642,6 +9163,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.komodohealth.com/",
@@ -8663,6 +9185,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.kontextdata.com",
@@ -8681,6 +9204,7 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -8699,6 +9223,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.l2-data.com/wp-content/uploads/2025/08/L2-Privacy-Notice-19Aug25v3.pdf",
@@ -8712,11 +9237,12 @@
     {
       "id": "lake-group-media",
       "name": "Lake Group Media",
-      "parent": "data-axle",
+      "parent": null,
       "kind": [
         "marketing"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -8733,6 +9259,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://agents.farmers.com/tx/houston/jose-lara/?SourceID=AMPALFGMAG&utm_medium=Local&utm_source=GMB",
@@ -8754,6 +9281,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://bathroom-remodel-today.com/privacy/",
@@ -8775,6 +9303,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://infutor.com/privacy-center/",
@@ -8798,6 +9327,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://leadmemedia.com",
@@ -8819,6 +9349,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lead411.com/your-privacy-choices/",
@@ -8840,6 +9371,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://getrev.ai",
@@ -8861,6 +9393,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://leadiq.com/privacy-center",
@@ -8882,6 +9415,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://leadpost.com/privacy-policy/",
@@ -8903,6 +9437,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.leadspace.com/do-not-sell-form",
@@ -8924,6 +9459,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.leadspace.com/do-not-sell-form",
@@ -8942,6 +9478,9 @@
         "financial"
       ],
       "registries": {},
+      "sells": [
+        "payday loan applications (per FTC)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -8960,6 +9499,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://learnmore.com/privacy-rights/",
@@ -8981,6 +9521,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.leidosiq.com",
@@ -9002,9 +9543,11 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "email",
-        "email": "privacy@lemlist.com"
+        "email": "privacy@lemlist.com",
+        "status": "unchecked"
       },
       "missions": [],
       "reach": 1,
@@ -9021,6 +9564,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://leveragedigital.ai/privacy-policy/",
@@ -9042,6 +9586,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lexisnexis.com/en-us/terms/us-privacy-notice.page",
@@ -9058,6 +9603,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9071,6 +9617,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "eviction proceeding records (per CFPB/FTC complaint)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -9082,6 +9631,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9098,10 +9648,22 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "risk, fraud and identity analytics from public, contributory and proprietary data",
+        "vehicle and behaviour-centric data for insurers",
+        "investigative tools (Accurint)",
+        "digital identity network (ThreatMetrix)",
+        "consumer reports built from driving data (per FTC)",
+        "identity, fraud, due-diligence and public-records products for credentialed commercial and government customers",
+        "FCRA prescreen lists for firm offers of credit and insurance",
+        "direct marketing services (LexisNexis Risk Solutions FL Inc.)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://consumer.risk.lexisnexis.com/opt",
-        "notes": "optout.lexisnexis.com redirects here. Covers direct-marketing opt-out, FCRA prescreen opt-out, and suppression for personal-safety threat (public officials, judges, law enforcement, at-risk individuals, Daniel's Law); online form, PDF mail form, or phone 1-888-497-0011."
+        "notes": "optout.lexisnexis.com redirects here. Covers direct-marketing opt-out, FCRA prescreen opt-out, and suppression for personal-safety threat (public officials, judges, law enforcement, at-risk individuals, Daniel's Law); online form, PDF mail form, or phone 1-888-497-0011.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-fortify-lexisnexis",
@@ -9123,6 +9685,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://risk.lexisnexis.com/state-privacy-act-notice",
@@ -9142,6 +9705,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9155,6 +9719,9 @@
         "location"
       ],
       "registries": {},
+      "sells": [
+        "app location data"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9171,6 +9738,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lightboxre.com/lightbox-individual-data-rights-request/",
@@ -9192,6 +9760,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/0f61f895-d08d-410f-b96d-ecfd34fd42e3/8d4dfe0d-998d-4c1d-ab6d-4357670fa8e9",
@@ -9213,6 +9782,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lionsharemarketing.com",
@@ -9234,6 +9804,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.listkit.io/privacy",
@@ -9255,6 +9826,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.everleads.com/privacy",
@@ -9276,6 +9848,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.livedatatechnologies.com/opt-out",
@@ -9299,6 +9872,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.liveintent.com/privacy-policy/",
@@ -9324,6 +9898,15 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "deterministic identity resolution (RampID)",
+        "Data Marketplace for third-party data",
+        "data onboarding",
+        "clean-room data collaboration",
+        "online identifiers that map customer records to cookies, mobile IDs and platform IDs",
+        "data appends, data hygiene and modeled audiences for advertisers",
+        "sale of identifiers and online activity data to unaffiliated third parties for interest-based advertising (per its service privacy notice)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://liveramp.com/privacy/my-privacy-choices/",
@@ -9348,6 +9931,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://lizdev.com/privacy-policy/",
@@ -9364,6 +9948,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9380,6 +9965,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lob.com/privacy",
@@ -9401,6 +9987,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.data247.com/privacy",
@@ -9422,6 +10009,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://lookify.io/privacy-policy",
@@ -9443,6 +10031,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://lookify.io/ccpa-privacy-statement",
@@ -9466,6 +10055,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://loopme.com",
@@ -9486,10 +10076,16 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "data and digital identity solutions",
+        "audience data and Panorama ID identity for advertisers and publishers"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lotame.com/privacy/information-privacy-choices-services",
-        "notes": "Page describes Lotame's Browser Opt-Out Tool (lotame-optout.com, which returned 403 to an automated fetch on 2026-10-18), industry opt-outs (DAA, NAI), and privacy-rights requests. Lotame says it handles all opt-outs by deleting the relevant data. The mission URL (lotames-products-services-privacy-policy) redirects to lotame.com/privacy/?tab=2."
+        "notes": "Page describes Lotame's Browser Opt-Out Tool (lotame-optout.com, which returned 403 to an automated fetch on 2026-10-18), industry opt-outs (DAA, NAI), and privacy-rights requests. Lotame says it handles all opt-outs by deleting the relevant data. The mission URL (lotames-products-services-privacy-policy) redirects to lotame.com/privacy/?tab=2.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "ad_trackers-reclaim-individual"
@@ -9508,6 +10104,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.lpbrokering.com/",
@@ -9529,6 +10126,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lsmapps.com/ccpa",
@@ -9545,6 +10143,7 @@
       "parent": "transunion",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9561,6 +10160,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lusha.com/legal/privacy-notice/",
@@ -9582,6 +10182,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mrss.com",
@@ -9605,6 +10206,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://m1-data.com/unsubscribe/",
@@ -9628,6 +10230,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.madhive.com/legal/privacy-policy",
@@ -9651,6 +10254,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.magnite.com/legal/user-choice-portal/",
@@ -9672,6 +10276,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.malvernmedia.com/privacy-policy",
@@ -9693,6 +10298,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.marketingarchitects.com/privacy-policy-ProductAndService",
@@ -9714,6 +10320,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://marketops.com/privacy-options/",
@@ -9735,6 +10342,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -9758,6 +10366,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.marriott.com/about/privacy.mi",
@@ -9781,6 +10390,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.matchbookdata.com/privacy-policy/",
@@ -9802,6 +10412,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.maxmind.com/en/privacy-policy",
@@ -9823,6 +10434,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://mrgstaging.com/policy/mrgprivacy.html",
@@ -9844,6 +10456,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.media.net/privacy-policy/",
@@ -9865,6 +10478,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mediawallah.com",
@@ -9886,6 +10500,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -9902,6 +10517,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.medprosystems.com/privacy-policy/",
@@ -9923,6 +10539,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.melissa.com/privacy",
@@ -9944,6 +10561,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.melissa.com/state-law-privacy-notice",
@@ -9965,6 +10583,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://meltwater.com/privacy",
@@ -9986,6 +10605,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.merkle.com/en/privacy-policy.html",
@@ -10007,6 +10627,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://messagedigital.com/my-data",
@@ -10026,6 +10647,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10042,6 +10664,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.internetbrands.com",
@@ -10061,6 +10684,9 @@
         "location"
       ],
       "registries": {},
+      "sells": [
+        "mobile phone tracking product"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10077,6 +10703,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.milestonemarketingsolutions.com/privacy-policy",
@@ -10098,6 +10725,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://preferences.minerva.io/",
@@ -10121,6 +10749,12 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "people search and background records",
+        "free people-search records",
+        "free people search",
+        "reverse phone and people search"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fastpeoplesearch.com/removal",
@@ -10166,6 +10800,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.onspotdata.com/privacy-policy/",
@@ -10187,6 +10822,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://mobilefuse.com",
@@ -10211,6 +10847,9 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "audience segments derived from location data"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mobilewalla.com/global-opt-out-request",
@@ -10234,6 +10873,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://modfxlabs.com/privacy",
@@ -10255,6 +10895,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://modigie.com/privacy-policy/",
@@ -10276,6 +10917,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com/consumer-privacy",
@@ -10297,6 +10939,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://account.monocl.com",
@@ -10318,6 +10961,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
@@ -10339,6 +10983,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
@@ -10360,6 +11005,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.multimedialists.com",
@@ -10378,6 +11024,7 @@
         "location"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10394,6 +11041,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.cinqdi.com/privacy-policy/#section-rights",
@@ -10415,6 +11063,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://meadleybrothers.com/privacy#texas",
@@ -10433,10 +11082,16 @@
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "people-search profiles and public 'Reputation Profile' scores",
+        "data from public databases, marketing and contracting partners, social media and data aggregators (no companies named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mylife.com/ccpa/index.pubview",
-        "notes": "'Opt out of sale of personal information' form requests opt-out and deletion and removes any matching Reputation Profile. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-02-02 Wayback capture."
+        "notes": "'Opt out of sale of personal information' form requests opt-out and deletion and removes any matching Reputation Profile. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-02-02 Wayback capture.",
+        "status": "blocked",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-reclaim-stragglers"
@@ -10457,6 +11112,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://getliminal.com/privacypolicy",
@@ -10478,6 +11134,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://corp.narvar.com/legal/privacy-policy",
@@ -10496,6 +11153,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "utility and telecom account header data"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10514,6 +11174,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://publicdatacheck.com",
@@ -10535,6 +11196,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://nationalopinioninstitute.com/ca-privacy",
@@ -10553,6 +11215,7 @@
         "location"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10569,6 +11232,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://neptuneaii.com/legal/privacy-policy",
@@ -10590,6 +11254,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "http://www.countshark.net/grid_privacy/",
@@ -10613,6 +11278,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.netwisedata.com",
@@ -10634,6 +11300,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.networx.com/privacy",
@@ -10650,6 +11317,7 @@
       "parent": "experian",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -10668,6 +11336,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com/privacy/neustar",
@@ -10691,6 +11360,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -10712,6 +11382,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -10733,6 +11404,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://newmexicodatainsights.com",
@@ -10754,6 +11426,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://agedleadstore.com",
@@ -10775,6 +11448,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.nextroll.com/privacy",
@@ -10796,6 +11470,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.nexxagroup.com/corporate-overview/consumer-opt-out/",
@@ -10817,6 +11492,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://nexxen.com",
@@ -10840,6 +11516,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.n-focus.com/privacy-policy/",
@@ -10861,6 +11538,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.nordicdataresources.com/netprivacypolicy",
@@ -10882,6 +11560,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.numlookup.com/privacy-policy",
@@ -10903,6 +11582,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://nuwber.com/policy",
@@ -10926,6 +11606,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://nyne.ai/privacy-choices/",
@@ -10947,6 +11628,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.occulytics.com/dnspd",
@@ -10968,6 +11650,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.ocean.io/",
@@ -10989,6 +11672,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.ogury.com/",
@@ -11007,6 +11691,9 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "identity and data management capabilities (Omni platform, including Acxiom)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -11023,6 +11710,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://onaudience.com/do-not-sell-my-personal-info/",
@@ -11046,6 +11734,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://adagio.io",
@@ -11067,6 +11756,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://oan.pl/do-not-sell-my-personal-info/",
@@ -11088,6 +11778,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.omginc.xyz",
@@ -11106,6 +11797,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -11122,6 +11814,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://opensend.com/privacy-polic",
@@ -11145,6 +11838,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.openx.com/privacy-center/",
@@ -11166,6 +11860,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://terms.optable.co/privacy/privacy-policies/products-and-services",
@@ -11185,10 +11880,15 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "(discontinued) Oracle Marketing Cloud Data Management Platform, data append/enrichment, Digital Audiences (incl. OnRamp), offline targeting/direct mail, cross-device services, Moat"
+      ],
       "optOut": {
         "method": "none",
         "url": "https://www.oracle.com/a/ocom/docs/oracle-advertising-end-of-life-faqs.pdf",
-        "notes": "Shut down: Oracle's EOL FAQ (v3.0, Aug 12 2024) says Oracle will End-of-Life all Oracle Advertising products and support effective September 30, 2024. The old advertising privacy policy URL now redirects to oracle.com/contracts/data-services/. Nothing left to opt out of."
+        "notes": "Shut down: Oracle's EOL FAQ (v3.0, Aug 12 2024) says Oracle will End-of-Life all Oracle Advertising products and support effective September 30, 2024. The old advertising privacy policy URL now redirects to oracle.com/contracts/data-services/. Nothing left to opt out of.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 1,
@@ -11205,6 +11905,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://theorg.com/do-not-sell",
@@ -11226,6 +11927,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://outkeep.com/legal/",
@@ -11249,6 +11951,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "location data (successor to X-Mode business)",
+        "geolocation data from 'local publisher partners' via its publisher toolkit"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://outlogic.io/opt-out-form/",
@@ -11270,6 +11976,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://outwardmedia.com/privacypolicy",
@@ -11291,6 +11998,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.thebridgecorp.com/our-approach-to-data-privacy/",
@@ -11312,6 +12020,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://my.monitorbase.com/privacypolicy",
@@ -11333,6 +12042,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.pacificeast.com",
@@ -11356,6 +12066,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://infillion.com/privacy-policy/",
@@ -11377,6 +12088,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.paramountdirectmarketing.com/privacy-policy.php",
@@ -11398,6 +12110,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal-cdn.onetrust.com/dsarwebform/2de26f06-de6f-45a7-8e1d-7d1148a3f301/draft/7a5dc7d1-cc7e-43a8-9f24-702807deb65b.html",
@@ -11419,6 +12132,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal-cdn.onetrust.com/dsarwebform/f3224586-fa40-4b58-822e-e86fec4761ed/39d1f47c-b268-42dc-8009-25d1fd37d305.html",
@@ -11440,6 +12154,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.peekyou.com/",
@@ -11463,6 +12178,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.penlink.com/privacy-policy/",
@@ -11484,6 +12200,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.peopledatalabs.com/policies?name=privacy-policy",
@@ -11502,10 +12219,15 @@
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "people-search brands Intelius, TruthFinder, Instant Checkmate and US Search; Classmates"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://suppression.peopleconnect.us/login",
-        "notes": "'PeopleConnect - Suppression Center' returned HTTP 200 on 2026-10-18 (JavaScript app; only its title is machine-readable). Third-party guides say one suppression covers Intelius, TruthFinder, Instant Checkmate and US Search; that coverage is not confirmed from PeopleConnect's own text."
+        "notes": "'PeopleConnect - Suppression Center' returned HTTP 200 on 2026-10-18 (JavaScript app; only its title is machine-readable). Third-party guides say one suppression covers Intelius, TruthFinder, Instant Checkmate and US Search; that coverage is not confirmed from PeopleConnect's own text.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [],
       "reach": 1,
@@ -11522,6 +12244,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.peoplefinders.com/about/privacy",
@@ -11543,6 +12266,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.peoplefindersdaas.com",
@@ -11566,6 +12290,9 @@
         "TX": null,
         "OR": null
       },
+      "sells": [
+        "people search across PeopleWhiz mirror sites"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.peoplewhiz.com/remove-my-info",
@@ -11590,6 +12317,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://pipl.com",
@@ -11611,6 +12339,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://pitchbook.com/privacy-policy",
@@ -11634,6 +12363,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.placeexchange.com/privacy",
@@ -11657,6 +12387,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.precisely.com/legal/placeiq-california-notice-at-collection-and-privacy-notice",
@@ -11675,10 +12406,17 @@
         "location"
       ],
       "registries": {},
+      "sells": [
+        "foot-traffic and location analytics",
+        "data from 'third-party mobile apps that have integrated our technology' (no apps named)"
+      ],
       "optOut": {
         "method": "email",
         "url": "https://www.placer.ai/privacy-policy/consumer-privacy-policy",
-        "notes": "Access/correction/deletion by email to privacy@placer.ai, phone +1 (800) 288-5834, or mail (Placer Labs Inc., Covina, CA). The footer 'Do not sell/share' link points to '#'. Placer says it is 'very unlikely' it can find your data because it does not collect user identifiers. Policy updated April 15, 2026."
+        "notes": "Access/correction/deletion by email to privacy@placer.ai, phone +1 (800) 288-5834, or mail (Placer Labs Inc., Covina, CA). The footer 'Do not sell/share' link points to '#'. Placer says it is 'very unlikely' it can find your data because it does not collect user identifiers. Policy updated April 15, 2026.",
+        "email": "privacy@placer.ai",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "location_brokers-fortify-optout"
@@ -11697,6 +12435,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://cashmereai.com",
@@ -11718,6 +12457,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.plug-industries.com",
@@ -11739,6 +12479,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.plug-industries.com",
@@ -11760,6 +12501,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.plungedigital.com",
@@ -11781,6 +12523,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.pmg.com",
@@ -11802,6 +12545,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://podscribe.com/privacy",
@@ -11823,6 +12567,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://popacta.com/privacy-policy/",
@@ -11844,6 +12589,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.definitivehc.com",
@@ -11865,6 +12611,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.possiblenow.com/privacy-statement-california",
@@ -11886,6 +12633,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.postalytics.com/legal/privacy-policy/",
@@ -11907,6 +12655,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://postie.com/your-privacy-choices/",
@@ -11928,6 +12677,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.postpilot.com/privacy-policy",
@@ -11951,6 +12701,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.precisely.com/legal/california-notice-at-collection-and-privacy-notice",
@@ -11972,6 +12723,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.predactiv.cm",
@@ -11990,6 +12742,7 @@
         "location"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -12006,6 +12759,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://audigent.com/privacy-center",
@@ -12027,6 +12781,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.preqin.com",
@@ -12048,6 +12803,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.privaterecords.net",
@@ -12069,6 +12825,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.privco.com/privacy-policy",
@@ -12090,6 +12847,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -12106,6 +12864,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.affinity.co/legal/privacy-policy",
@@ -12127,6 +12886,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://propbotusa.com/consumer-rights",
@@ -12148,6 +12908,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.propertyreach.com/privacy",
@@ -12171,6 +12932,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.propertyradar.com/privacy-policy",
@@ -12192,6 +12954,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.prospectbase.com",
@@ -12210,6 +12973,9 @@
         "marketing"
       ],
       "registries": {},
+      "sells": [
+        "parent of Lotame (per Lotame)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 4,
@@ -12226,6 +12992,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://bigdbm.com/privacy-policy/",
@@ -12249,6 +13016,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://publicrecord.com/privacy-rights/",
@@ -12272,6 +13040,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://pubmatic.com/",
@@ -12288,6 +13057,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 3,
@@ -12304,6 +13074,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.pulsepoint.com/legal/platform-privacy-policy",
@@ -12325,6 +13096,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.quad.com/legal/privacy-policy",
@@ -12348,6 +13120,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.quadrant.io/manage-my-data",
@@ -12369,6 +13142,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.qualfon.com/privacy-policy/consumer-privacy-choices/",
@@ -12387,6 +13161,9 @@
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "operator of Quick People Trace and USATrace (per site footers)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -12395,11 +13172,14 @@
     {
       "id": "quickpeopletrace",
       "name": "Quick People Trace",
-      "parent": "quicklocate",
+      "parent": null,
       "kind": [
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "people search, background checks, reverse phone"
+      ],
       "optOut": null,
       "missions": [
         "people_search-fortify-extended-sweep-2"
@@ -12420,6 +13200,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://quorum.inc/privacy",
@@ -12441,6 +13222,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://supplier.io/privacy-policy",
@@ -12459,10 +13241,15 @@
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "people-search profiles (domain since seized)"
+      ],
       "optOut": {
         "method": "none",
         "url": "https://radaris.com/control/privacy",
-        "notes": "radaris.com now shows a notice that the domain 'has been transferred by court order' to Atlas Data Privacy Corporation after the NJ Superior Court (Middlesex, MID-L-000847-24) entered a final default judgment on Aug 27, 2026 against Radaris.com, Rehold.com and Trustoria.com under Daniel's Law. No opt-out remains on this domain. The notice is Atlas's; get the judgment itself (tier A) from the court/enforcement family."
+        "notes": "radaris.com now shows a notice that the domain 'has been transferred by court order' to Atlas Data Privacy Corporation after the NJ Superior Court (Middlesex, MID-L-000847-24) entered a final default judgment on Aug 27, 2026 against Radaris.com, Rehold.com and Trustoria.com under Daniel's Law. No opt-out remains on this domain. The notice is Atlas's; this record does not cite the judgment itself.",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-privacy-portals"
@@ -12483,6 +13270,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.rbarrel.com/opt-out",
@@ -12504,6 +13292,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://basic.rampedup.io/app/donotsell",
@@ -12525,6 +13314,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://fusable.com/legal/website-terms-and-privacy-notice/",
@@ -12546,6 +13336,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.rayinsights.com",
@@ -12567,6 +13358,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.realintent.co/privacy-policy",
@@ -12588,6 +13380,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.realeflow.com",
@@ -12609,6 +13402,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.rgrmarketing.com/",
@@ -12630,6 +13424,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.realsourcedata.com/privacy-policy",
@@ -12648,6 +13443,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -12664,6 +13460,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://recruitbot.com/ccpa/",
@@ -12685,6 +13482,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.redidata.com/privacy-policy/",
@@ -12706,6 +13504,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://redmob.io/",
@@ -12727,6 +13526,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.redmob.io/privacy-policy",
@@ -12748,6 +13548,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.reklaimyours.com/privacy-policy",
@@ -12769,6 +13570,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://relpro.com/privacy-policy",
@@ -12790,6 +13592,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.lexisnexis.com/global/privacy/en/privacy-center-us.page",
@@ -12808,6 +13611,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "parent of LexisNexis Risk Solutions"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 14,
@@ -12824,6 +13630,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://remodeling.com",
@@ -12845,6 +13652,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.resonate.com/privacy-policy/",
@@ -12866,6 +13674,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.resonate.com/privacy-policy/",
@@ -12887,6 +13696,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://responseamerica.net/privacy_dec.html",
@@ -12908,6 +13718,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://responseamerica.net/privacy_dec.html",
@@ -12929,6 +13740,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.revcontent.com/policy/privacy-policy#your-privacy-rights-and-choices",
@@ -12952,6 +13764,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://revealmobile.com/privacy/",
@@ -12973,6 +13786,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.reveliolabs.com/privacy/",
@@ -12996,6 +13810,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://meettie.com",
@@ -13017,6 +13832,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://revenuebase.ai/privacy-policy",
@@ -13038,6 +13854,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://revoptimal.com/privacy/",
@@ -13059,6 +13876,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://richmediallc.com/privacy-policy/",
@@ -13080,6 +13898,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datamasters.org/opt-out/",
@@ -13101,6 +13920,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.ripple-roi.com/privacy-policy",
@@ -13122,6 +13942,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.mobiityglobal.com",
@@ -13145,6 +13966,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "professional contact data (emails, phones)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://rocketreach.co/remove-profile",
@@ -13169,6 +13993,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.roq.ad/white-papers/#optout",
@@ -13190,6 +14015,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://rorpartners.com/privacy-policy",
@@ -13211,6 +14037,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.roundsky.com/supplemental-privacy-notice/",
@@ -13232,6 +14059,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://rushmorelabs.com/california-privacy-notice",
@@ -13255,6 +14083,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.spglobal.com/en",
@@ -13276,6 +14105,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sabioctv.com/",
@@ -13295,10 +14125,17 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "datasets about physical places (points of interest)",
+        "aggregates data, including geolocation, licensed from data suppliers (none named)"
+      ],
       "optOut": {
         "method": "email",
         "url": "https://www.safegraph.com/privacy-policy/",
-        "notes": "Privacy rights requests to privacy@safegraph.com (the address is listed in the policy). SafeGraph says it does not collect data directly from people to build its products."
+        "notes": "Privacy rights requests to privacy@safegraph.com (the address is listed in the policy). SafeGraph says it does not collect data directly from people to build its products.",
+        "email": "privacy@safegraph.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "location_brokers-fortify-optout"
@@ -13314,6 +14151,7 @@
         "location"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -13330,6 +14168,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -13346,6 +14185,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.salesintel.io",
@@ -13367,6 +14207,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://salutarydata.com",
@@ -13388,6 +14229,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.samba.tv/users/privacy-policy?lang=en",
@@ -13409,6 +14251,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sbfe.org/connect/ccpa",
@@ -13432,6 +14275,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.kidslivesafe.com/help-center/privacy",
@@ -13453,6 +14297,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://scileads.com/privacy-policy/",
@@ -13474,6 +14319,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://store.scoutdata.com/privacy-rights",
@@ -13495,6 +14341,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://preferences.seamless.ai/",
@@ -13516,6 +14363,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://semantiqhealth.com/privacy-policy",
@@ -13537,6 +14385,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.semasio.com/legal/privacy-choices",
@@ -13558,6 +14407,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.semasio.com/legal/semasio-privacy-policy",
@@ -13581,6 +14431,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacychoice.com/",
@@ -13599,6 +14450,9 @@
         "financial"
       ],
       "registries": {},
+      "sells": [
+        "payday loan applications (per FTC)"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 2,
@@ -13615,6 +14469,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sharelocalmedia.com/privacy-policy",
@@ -13638,6 +14493,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sharethrough.com/",
@@ -13659,6 +14515,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sharethrough.com",
@@ -13680,6 +14537,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sheerid.com/global-privacy-policy/",
@@ -13698,6 +14556,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -13711,10 +14570,16 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "fraud scores and account-defense services built from data that customer sites send about end users"
+      ],
       "optOut": {
         "method": "email",
         "url": "https://sift.com/legal-and-compliance/service-privacy-notice/",
-        "notes": "Access, correction and deletion requests by email to privacy@sift.com (DPO: dpo@sift.com)."
+        "notes": "Access, correction and deletion requests by email to privacy@sift.com (DPO: dpo@sift.com).",
+        "email": "privacy@sift.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-reclaim-deep-layer"
@@ -13728,6 +14593,7 @@
       "parent": "transunion",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -13744,6 +14610,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://similarweb.com/",
@@ -13765,6 +14632,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://simiocloud.com/simiocloud-products-services-privacy-policy/",
@@ -13786,6 +14654,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.siteimpact.com/privacypolicy.php",
@@ -13807,6 +14676,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://skydeo.com",
@@ -13828,6 +14698,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://slashdotmedia.com/privacy-statement/",
@@ -13846,6 +14717,7 @@
         "ad-network"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -13862,6 +14734,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.smarte.pro",
@@ -13883,6 +14756,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://snov.io/do-not-sell-my-personal-information",
@@ -13904,6 +14778,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://socialcatfish.com",
@@ -13925,6 +14800,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sojern.com/privacy/privacy-policy",
@@ -13946,6 +14822,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.bluefireleads.com/privacy-policy.php",
@@ -13967,6 +14844,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sourcepathdigital.com",
@@ -13988,6 +14866,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://app.sovra.ai/privacy-policy",
@@ -14009,6 +14888,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sovrn.com/privacy-policy/policy-center/",
@@ -14030,6 +14910,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sms-inc.com/privacy-notice/",
@@ -14051,6 +14932,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.speedeondata.com",
@@ -14074,6 +14956,12 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "consumer profiles assembled from online and offline sources",
+        "phone and people lookup",
+        "people-search profiles built from phone books, social networks, marketing surveys, real estate listings and other public sources (no companies named)",
+        "people search by name, address, phone and email"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.spokeo.com/optout",
@@ -14108,6 +14996,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.sportsilab.com/privacy-choices",
@@ -14129,6 +15018,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sproutsocial.com/legal/privacy-policy/",
@@ -14152,6 +15042,9 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "reverse phone lookup"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.spydialer.com/consumers/",
@@ -14178,6 +15071,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://spycloud.com/legal/privacy-policy/",
@@ -14202,6 +15096,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://stackadapt.com",
@@ -14223,6 +15118,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://statara.com/privacy/",
@@ -14244,6 +15140,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.statsocial.com/privacy-policy",
@@ -14265,6 +15162,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.steppingblocks.com/privacy-ccpa",
@@ -14286,6 +15184,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sterling.ai",
@@ -14307,6 +15206,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.stirista.com/privacy-policy/",
@@ -14328,6 +15228,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.strategicdataintelligence.com",
@@ -14349,6 +15250,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://360-media-direct.privacy.saymine.io/360_Media_Direct",
@@ -14370,6 +15272,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://subgraph.tech/privacy-rights",
@@ -14391,6 +15294,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://clientcommand.com/client-command-privacy-notice/",
@@ -14412,6 +15316,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://you.com/privacy-requests",
@@ -14433,6 +15338,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.theswarm.com/privacy",
@@ -14454,6 +15360,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.swipejobs.com/privacy-center",
@@ -14475,6 +15382,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://swoop.com/your-privacy-choices/",
@@ -14496,6 +15404,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://swordfish.ai/policy",
@@ -14517,6 +15426,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sync.me/unsubscribe/",
@@ -14535,6 +15445,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -14553,6 +15464,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.t-mobile.com/advertising-solutions",
@@ -14574,6 +15486,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.taboola.com/",
@@ -14595,6 +15508,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://portal.usepylon.com/amplemarket/forms/privacy-request-form",
@@ -14616,6 +15530,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://tapad.com/global-privacy-notice",
@@ -14637,6 +15552,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.targetsmart.com/",
@@ -14658,6 +15574,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.datalane.com",
@@ -14679,6 +15596,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.tauxbe.com/privacy-policy",
@@ -14700,6 +15618,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy-policy.teads.com",
@@ -14721,6 +15640,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.outbrain.com/privacy/user-policy",
@@ -14742,6 +15662,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://techtarget.zendesk.com/hc/en-us/requests/new?ticket_form_id=360004852434",
@@ -14763,6 +15684,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.telesign.com/privacy-requests",
@@ -14779,6 +15701,7 @@
       "parent": "equifax",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -14790,6 +15713,7 @@
       "parent": "experian",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -14806,6 +15730,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.alescodata.com",
@@ -14827,6 +15752,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://thedatagroup.com/california-consumer-privacy-act/",
@@ -14848,6 +15774,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://Www.tl1mkt.com",
@@ -14869,6 +15796,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.nielsen.com",
@@ -14890,6 +15818,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "http://peopesearcher.cm",
@@ -14911,6 +15840,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://sg360.com/do-not-sell-my-info/",
@@ -14932,6 +15862,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://thinkdatagroup.com",
@@ -14950,10 +15881,19 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "US public records platform (CLEAR) for authorized businesses and government agencies",
+        "CLEAR public- and proprietary-records platform licensed to law enforcement, welfare agencies, financial institutions, law firms and other authorized businesses and agencies",
+        "records sourced from 'third-party business partners (including private data providers and data brokers)', consumer reporting agencies, government entities and third-party websites (no companies named)",
+        "CLEAR investigation database"
+      ],
       "optOut": {
         "method": "email",
         "url": "https://legal.thomsonreuters.com/en/legal-notices/privacy-records",
-        "notes": "Do-not-sell/share via the page's OneTrust link or privacy.issues@thomsonreuters.com; public-records requests to westlaw.privacypolicy@thomsonreuters.com. Thomson Reuters says it typically suppresses records only for judges, public officials, law enforcement, or people with evidence of risk of physical harm (e.g., police reports, court orders)."
+        "notes": "Do-not-sell/share via the page's OneTrust link or privacy.issues@thomsonreuters.com; public-records requests to westlaw.privacypolicy@thomsonreuters.com. Thomson Reuters says it typically suppresses records only for judges, public officials, law enforcement, or people with evidence of risk of physical harm (e.g., police reports, court orders).",
+        "email": "westlaw.privacypolicy@thomsonreuters.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-fortify-thomson",
@@ -14970,6 +15910,7 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 5,
@@ -14986,6 +15927,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.throtle.io",
@@ -15007,6 +15949,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://secondchanceapartments.com/privacy-policy/",
@@ -15025,6 +15968,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "investigative products for due diligence and issue resolution (TruLookup)"
+      ],
       "optOut": null,
       "missions": [
         "enterprise_data-fortify-property"
@@ -15043,6 +15989,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.traackr.com/legal/privacy-policy",
@@ -15064,6 +16011,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.tracerfy.com/privacy-choices",
@@ -15088,6 +16036,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "consumer credit reports",
+        "data products subject to state privacy-law opt-out, access and deletion requests"
+      ],
       "optOut": {
         "method": "portal",
         "url": "https://www.transunion.com/consumer-privacy",
@@ -15112,6 +16064,13 @@
         "identity-resolution"
       ],
       "registries": {},
+      "sells": [
+        "credit reports and scores",
+        "investigative products (TruLookup, delivered via TLOxp)",
+        "identity data enrichment and audience targeting (TruAudience)",
+        "device risk and IP intelligence (TruValidate)",
+        "direct-to-consumer credit and identity products"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 18,
@@ -15128,6 +16087,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -15149,6 +16109,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -15167,6 +16128,9 @@
         "risk-identity"
       ],
       "registries": {},
+      "sells": [
+        "tenant and employment background screening reports"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15183,6 +16147,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -15204,6 +16169,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://trelize.com/data-rights",
@@ -15225,6 +16191,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.creatorwizard.com/",
@@ -15246,6 +16213,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://trestleiq.com/privacy-policy/",
@@ -15269,6 +16237,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://triplelift.com/user-rights-policy-and-opt-out/",
@@ -15285,6 +16254,7 @@
       "parent": "transunion",
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15301,6 +16271,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://trueblueanalytics.org/",
@@ -15322,6 +16293,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.truedata.co/wp-content/uploads/2026/01/TD-Privacy-Policy-effective-16-Jan-2026.pdf",
@@ -15343,6 +16315,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.transunion.com",
@@ -15364,6 +16337,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://checksecrets.com",
@@ -15385,6 +16359,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.truthed.com/optout",
@@ -15408,6 +16383,10 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [
+        "background reports",
+        "people search and background reports"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.truthfinder.com/privacy-center/",
@@ -15429,6 +16408,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.finthrive.com",
@@ -15450,6 +16430,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://tunnldata.com",
@@ -15466,6 +16447,7 @@
       "parent": null,
       "kind": [],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15484,6 +16466,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.unacast.com/privacy-policy",
@@ -15505,6 +16488,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.unearthcampaigns.com/privacy-policy/#ca",
@@ -15526,6 +16510,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacy.unifygtm.com",
@@ -15549,6 +16534,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://unmask.com/privacy-rights/",
@@ -15570,6 +16556,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.upcell.io/data-claim",
@@ -15591,6 +16578,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.uplead.com/opt-out/",
@@ -15612,6 +16600,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://upscapital.com",
@@ -15633,6 +16622,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.urbanscience.com/privacy/",
@@ -15651,6 +16641,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15664,6 +16655,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15677,6 +16669,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15693,6 +16686,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.usdatacorporation.com/do-not-sell-my-info/?utm_source=google_ads&utm_medium=ppc&utm_term=us&gclid=undefined",
@@ -15711,6 +16705,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15724,6 +16719,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15737,6 +16733,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15750,6 +16747,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15763,6 +16761,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15776,6 +16775,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15789,6 +16789,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15802,6 +16803,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15815,6 +16817,7 @@
         "buyer"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -15831,6 +16834,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.usadata.com/ccpa",
@@ -15844,11 +16848,14 @@
     {
       "id": "usatrace",
       "name": "USATrace",
-      "parent": "quicklocate",
+      "parent": null,
       "kind": [
         "people-search"
       ],
       "registries": {},
+      "sells": [
+        "people search"
+      ],
       "optOut": null,
       "missions": [
         "people_search-fortify-extended-sweep-2"
@@ -15869,6 +16876,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://uspeoplesearch.com/privacy-rights/",
@@ -15890,6 +16898,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://valpakintelligence.com/privacy-policy",
@@ -15913,6 +16922,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.rrd.com/privacy-policy/valassis",
@@ -15934,6 +16944,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.rrd.com/privacy-policy/valassis",
@@ -15955,6 +16966,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://electhq.net/privacy.html",
@@ -15976,6 +16988,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://veeva.com/privacy",
@@ -15997,6 +17010,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://vendelux.com/privacy-center/",
@@ -16020,6 +17034,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "location data and analysis tools to public sector customers, such as government contractors (per FTC)",
+        "geolocation intelligence for defense, civilian government, risk and OSINT customers"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.venntel.com/opt-out",
@@ -16042,6 +17060,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.venpath.net/legal/privacy-notice",
@@ -16063,6 +17082,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://ventiveiq.com",
@@ -16086,6 +17106,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.veraset.com/legal/do-not-sell-request#consumer-opt-out-do-not-sell-request",
@@ -16105,6 +17126,11 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [
+        "insurance underwriting and claims data and analytics from proprietary and contributory data",
+        "insurance data and analytics incl. ISO ClaimSearch",
+        "Driving Behavior Data History Reports"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -16121,6 +17147,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://versium.com/california-privacy-policy/",
@@ -16142,6 +17169,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://versium.com/ccpa-opt-out",
@@ -16163,6 +17191,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://enrichlayer.com/privacy-policy",
@@ -16187,6 +17216,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vi.co",
@@ -16210,6 +17240,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.viantinc.com",
@@ -16231,6 +17262,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.victorywaves.com/legal/privacy-choices",
@@ -16254,6 +17286,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.videoamp.com",
@@ -16275,6 +17308,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vintory.com/privacy-policy/",
@@ -16298,6 +17332,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.fusion92.com/privacy-policy",
@@ -16321,6 +17356,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://visitiq.io/opt-out/",
@@ -16344,6 +17380,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vistarmedia.com",
@@ -16365,6 +17402,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vistaview.ai/privacy/consumer-rights",
@@ -16386,6 +17424,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.visualvisitor.com/legal-agreements/",
@@ -16407,6 +17446,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal-cdn.onetrust.com/dsarwebform/41aebd10-58ee-4c98-9dd5-aa66c9be664a/0099df9c-c0aa-4bf7-bd5f-7f4ff46768f6.html",
@@ -16428,6 +17468,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.benutech.com",
@@ -16451,6 +17492,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.vrtcal.com/docs/PrivacyPolicy-Advertising.pdf",
@@ -16472,6 +17514,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://consumerdataprotect.com",
@@ -16493,6 +17536,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.warmly.ai/p/privacy-policy",
@@ -16514,6 +17558,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.waypointmetrics.com",
@@ -16535,6 +17580,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.weinform.org",
@@ -16556,6 +17602,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.wealthfeed.com",
@@ -16577,6 +17624,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://webbula.com/privacy-center/",
@@ -16598,6 +17646,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://wednes.day/privacy/texas",
@@ -16616,6 +17665,7 @@
         "automotive"
       ],
       "registries": {},
+      "sells": [],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -16632,6 +17682,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.thomsonreuters.com/en/privacy-statement",
@@ -16656,6 +17707,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.thomsonreuters.com/en/privacy-statement.html",
@@ -16682,6 +17734,10 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [
+        "people search, reverse phone and property data; Pro API contact and property data",
+        "data from data licensors, public records, affiliated entities, marketing companies and surveys (no companies named)"
+      ],
       "optOut": {
         "method": "web-form",
         "url": "https://www.whitepages.com/suppression-requests",
@@ -16707,6 +17763,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://wiland.com/privacy-choices/",
@@ -16728,6 +17785,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.windfall.com/your-privacy-choices",
@@ -16749,6 +17807,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.winrdata.com/privacy-policy-us/",
@@ -16770,6 +17829,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.winrdata.com/privacy-policy-us/",
@@ -16791,6 +17851,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.winrdata.com/privacy-policy-us/",
@@ -16812,6 +17873,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.wiza.co",
@@ -16833,6 +17895,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://worldwideinformation.com/privacy-rights/",
@@ -16854,6 +17917,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.wunderkind.co/privacy/",
@@ -16875,6 +17939,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.wurl.com/",
@@ -16893,6 +17958,11 @@
         "location"
       ],
       "registries": {},
+      "sells": [
+        "raw location data tied to persistent identifiers",
+        "location-based audience segments",
+        "app location data"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -16911,6 +17981,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.groundtruth.com/privacy-policy/",
@@ -16930,6 +18001,9 @@
         "data-marketplace"
       ],
       "registries": {},
+      "sells": [
+        "audience segment marketplace"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -16946,6 +18020,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://xcelerated.com",
@@ -16967,6 +18042,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://yieldmo.com",
@@ -16988,6 +18064,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.yobi.ai/opt-out",
@@ -17009,6 +18086,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.zeeto.io/consumer-privacy-policy",
@@ -17030,6 +18108,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://zeil.com/privacy",
@@ -17051,6 +18130,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.apollo.io/",
@@ -17074,6 +18154,7 @@
         "TX": null,
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.zerotoone.ai/privacy-policy",
@@ -17097,6 +18178,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.zetaglobal.com",
@@ -17121,6 +18203,7 @@
         "TX": "2026",
         "OR": null
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.ziffdavis.com",
@@ -17142,6 +18225,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.seekout.com/privacy/choices",
@@ -17163,6 +18247,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://privacyportal.onetrust.com/webform/65962359-ef0d-4399-9db4-572d06de08aa/f277f9f7-bfee-4233-815e-80e290139bc2",
@@ -17184,6 +18269,7 @@
         "TX": "2026",
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.zoominfo.com/trust-center/your-privacy",
@@ -17205,6 +18291,7 @@
         "TX": null,
         "OR": "2026"
       },
+      "sells": [],
       "optOut": {
         "method": "web-form",
         "url": "https://www.zs.com",
@@ -17223,6 +18310,9 @@
         "location"
       ],
       "registries": {},
+      "sells": [
+        "carrier location data aggregation"
+      ],
       "optOut": null,
       "missions": [],
       "reach": 1,
@@ -17650,19 +18740,6 @@
         {
           "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf",
           "archived": "https://web.archive.org/web/20260915174435/https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf"
-        }
-      ]
-    },
-    {
-      "from": "jumpshot",
-      "to": "liveramp",
-      "type": "matches-identity",
-      "tier": "A",
-      "claim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies.",
-      "sources": [
-        {
-          "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf",
-          "archived": "https://web.archive.org/web/20240222194152/https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf"
         }
       ]
     },

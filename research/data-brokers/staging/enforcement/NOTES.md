@@ -30,7 +30,7 @@ Researcher: enforcement family (FTC/CFPB). Accessed 2026-10-18. All links are ti
 - **lexisnexis-risk-solutions** (GM case) and **lexisnexis-risk-and-information-analytics-group** (TURSS case) are separate legal entities as named. I did not guess a parent; RELX ownership needs an SEC/annual-report source.
 - **trans-union** is "Trans Union LLC", as named in the CFPB complaint. Its relation to TransUnion (NYSE: TRU) is not stated in these documents.
 - **meta**: the GoodRx complaint says "Facebook" throughout. The id is `meta` with alias "Facebook". The claim text keeps "Facebook".
-- **general-motors** is General Motors Company. GM LLC and GM Holdings LLC are aliases, since the complaint treats them as a common enterprise. Only OnStar has a separate record.
+- [superseded — see Erratum below] **general-motors** is General Motors Company. GM LLC and GM Holdings LLC are aliases, since the complaint treats them as a common enterprise. Only OnStar has a separate record.
 - **digital-envoy**, **jacobs-engineering-group**, **pubrec** and **twilio** have no `kind`, because the documents don't support a category.
 - Size signals are only quantities the documents state (Kochava, X-Mode, InMarket, Mobilewalla, Jumpshot). Nothing is estimated.
 
