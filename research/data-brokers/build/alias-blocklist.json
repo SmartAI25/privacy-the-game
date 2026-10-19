@@ -66,5 +66,17 @@
       "alias": "LexisNexis Risk Solutions",
       "reason": "the legal name of LexisNexis Risk Solutions Inc. (its own record, lexisnexis-risk-solutions); this record is LexisNexis Risk Solutions FL Inc."
     }
+  ],
+  "transunion-risk-and-alternative-data-solutions": [
+    {
+      "alias": "TransUnion TLO",
+      "reason": "not in any cited source; the USAspending recipient name is TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. and TLO is named only as a product"
+    }
+  ],
+  "equifax-workforce-solutions": [
+    {
+      "alias": "TALX",
+      "reason": "not in any cited source; the USAspending recipient name is EQUIFAX WORKFORCE SOLUTIONS LLC"
+    }
   ]
 }

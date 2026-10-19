@@ -97,6 +97,12 @@
       "to": "clearview-ai",
       "type": "buys",
       "reason": "procurement fact-check: USAspending award 2023H226P00217 (API record) description \"INVESTIGATOR TOOL WEB SUBSCRIPTION\", PSC DE10 end user as a service (help desk, productivity tools); unlike the CBP and USMS awards it does not mention the cloud database; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-navy",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "reason": "procurement fact-check fix: USAspending award M6700117P1192 is \"ONLINE INVESTIGATIVE SUBSCRIPTION\" in all 7 transactions (base through P00006), PSC D317 web-based subscription, NAICS 561611; TLO is never named and nothing says data or a database, so a data purchase is not shown"
     }
   ],
   "reassign": [
@@ -232,6 +238,14 @@
       "claim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
       "replaces": "The FTC alleged in its August 2015 complaint that Sequoia One and Gen X Marketing Group sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
       "reason": "fact-check fix: complaint para 14 says \"Defendants sold this information to at least one non-lender, Ideal Financial Solutions\"; the caption names the two LLCs and four individuals"
+    },
+    {
+      "from": "us-air-force",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated); modification P00004 (2018-12-18) describes it as \"LEXISNEXIS ACCURINT FOR LAW ENFORCEMENT WEB-BASED DATABASE INVESTIGATIVE SEARCH TOOL\".",
+      "replaces": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+      "reason": "procurement fact-check fix: the award description shows only the latest transaction (\"LEXISNEXIS ACCURINT\"); the award transaction history, modification P00004 dated 2018-12-18, names the web-based database investigative search tool"
     }
   ]
 }

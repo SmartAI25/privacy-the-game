@@ -1078,7 +1078,7 @@
     },
     {
       "id": "anomaly-six",
-      "name": "Anomaly Six",
+      "name": "Anomaly 6 LLC",
       "parent": null,
       "kind": [],
       "registries": {},
@@ -15114,7 +15114,7 @@
       "registries": {},
       "optOut": null,
       "missions": [],
-      "reach": 19,
+      "reach": 18,
       "hub": true
     },
     {
@@ -15190,7 +15190,7 @@
         "verifiedAt": "2026-10-18"
       },
       "missions": [],
-      "reach": 8,
+      "reach": 7,
       "hub": true
     },
     {
@@ -18111,7 +18111,7 @@
       "to": "lexisnexis-risk-solutions",
       "type": "buys",
       "tier": "A",
-      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated); modification P00004 (2018-12-18) describes it as \"LEXISNEXIS ACCURINT FOR LAW ENFORCEMENT WEB-BASED DATABASE INVESTIGATIVE SEARCH TOOL\".",
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-",
@@ -18545,19 +18545,6 @@
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-",
           "archived": "https://web.archive.org/web/20261019075930/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-/"
-        }
-      ]
-    },
-    {
-      "from": "us-navy",
-      "to": "transunion-risk-and-alternative-data-solutions",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Department of the Navy award M6700117P1192 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2017-07-19 to 2020-09-22, FY2017–FY2020; $10,136.57 obligated), described in the award record as \"ONLINE INVESTIGATIVE SUBSCRIPTION\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019080747/https://api.usaspending.gov/api/v2/awards/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-/"
         }
       ]
     },

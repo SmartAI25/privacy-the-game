@@ -1071,7 +1071,7 @@
     "to": "lexisnexis-risk-solutions",
     "type": "buys",
     "tier": "A",
-    "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+    "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated); modification P00004 (2018-12-18) describes it as \"LEXISNEXIS ACCURINT FOR LAW ENFORCEMENT WEB-BASED DATABASE INVESTIGATIVE SEARCH TOOL\".",
     "sources": [
       "proc-usasp-fa701417p3000"
     ],
@@ -1163,7 +1163,7 @@
     "sources": [
       "proc-usasp-m6700117p1192"
     ],
-    "published": true
+    "published": false
   },
   {
     "from": "us-fbi",

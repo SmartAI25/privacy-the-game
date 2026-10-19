@@ -112,5 +112,12 @@
       "newClaim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender."
     },
     "reason": "link sequoia-one|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check fix: complaint para 14 says \"Defendants sold this information to at least one non-lender, Ideal Financial Solutions\"; the caption names the two LLCs and four individuals)"
+  },
+  {
+    "item": {
+      "link": "us-air-force|lexisnexis-risk-solutions|buys",
+      "reclaim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated); modification P00004 (2018-12-18) describes it as \"LEXISNEXIS ACCURINT FOR LAW ENFORCEMENT WEB-BASED DATABASE INVESTIGATIVE SEARCH TOOL\"."
+    },
+    "reason": "link us-air-force|lexisnexis-risk-solutions|buys: reclaim has no matching link yet; not applied"
   }
 ]
