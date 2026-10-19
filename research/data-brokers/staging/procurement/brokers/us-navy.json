@@ -1,0 +1,20 @@
+{
+  "id": "us-navy",
+  "name": "Department of the Navy",
+  "aliases": [
+    "US Navy"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-n0018909fz076",
+    "proc-usasp-n6311622p0525",
+    "proc-usasp-m6700117p1192",
+    "proc-usasp-n0018923fz089"
+  ]
+}

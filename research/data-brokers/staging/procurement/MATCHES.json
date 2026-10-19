@@ -1,0 +1,52 @@
+[
+  {
+    "stagedId": "babel-street",
+    "existingId": "babel-street",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "clearview-ai",
+    "existingId": "clearview-ai",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "equifax-information-services",
+    "existingId": "equifax-information-services",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "equifax-workforce-solutions",
+    "existingId": "equifax-workforce-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "experian-information-solutions",
+    "existingId": "experian-information-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "fog-data-science",
+    "existingId": "fog-data-science",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "lexisnexis-risk-solutions",
+    "existingId": "lexisnexis-risk-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "transunion-risk-and-alternative-data-solutions",
+    "existingId": "transunion-risk-and-alternative-data-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "venntel",
+    "existingId": "venntel",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "west-publishing",
+    "existingId": "west-publishing",
+    "matchedBy": "id"
+  }
+]

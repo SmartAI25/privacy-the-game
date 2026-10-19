@@ -1,0 +1,18 @@
+{
+  "id": "us-dcsa",
+  "name": "Defense Counterintelligence and Security Agency",
+  "aliases": [
+    "DCSA"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-hs002123f0058",
+    "proc-usasp-hs002123f0047"
+  ]
+}

@@ -1,0 +1,532 @@
+[
+  {
+    "from": "us-ice",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD18P00000127 to VENNTEL INC (period of performance 2018-08-07 to 2019-09-29, FY2018–FY2019; $190,000.00 obligated), described in the award record as \"DATA SERVICES SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-70cmsd18p00000127"
+    ]
+  },
+  {
+    "from": "us-cbp",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B02C20P00000521 to VENNTEL INC (period of performance 2020-09-10 to 2021-09-09, FY2020–FY2021; $20,000.00 obligated), described in the award record as \"PURCHASE OF PORTAL (LICENSE) SEAT\".",
+    "sources": [
+      "proc-usasp-70b02c20p00000521"
+    ]
+  },
+  {
+    "from": "us-dea",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDST18P00000052 to VENNTEL INC (period of performance 2018-04-11 to 2019-04-11, FY2018–FY2019; $25,000.00 obligated), described in the award record as \"SOFTWARE LICENSE\".",
+    "sources": [
+      "proc-usasp-15ddst18p00000052"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "fog-data-science",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10318PA4100281 to FOG DATA SCIENCE LLC (period of performance 2018-09-21 to 2020-09-27, FY2018–FY2020; $120,000.00 obligated), described in the award record as \"2018 TOG FOG DATA LES (LAW ENFORCEMENT SENSITIVE) $60K\".",
+    "sources": [
+      "proc-usasp-15m10318pa4100281"
+    ]
+  },
+  {
+    "from": "us-socom",
+    "to": "anomaly-six",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Special Operations Command award H9227620P0070 to ANOMALY 6 LLC (period of performance 2020-09-18 to 2021-09-17, FY2020–FY2021; $589,500.00 obligated), described in the award record as \"COMMERCIAL TELEMETRY FEED\".",
+    "sources": [
+      "proc-usasp-h9227620p0070"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD19FC0000052 to BABEL STREET, INC. (period of performance 2019-09-12 to 2024-09-29, FY2019–FY2024; $3,681,061.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICES\".",
+    "sources": [
+      "proc-usasp-70cmsd19fc0000052"
+    ]
+  },
+  {
+    "from": "us-usss",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award HSSS0115C0040 to BABEL STREET, INC. (period of performance 2015-09-28 to 2018-11-27, FY2015–FY2019; $2,073,260.68 obligated), described in the award record as \"OPEN SOURCE INTELLIGENCE MONITORING SYSTEM\".",
+    "sources": [
+      "proc-usasp-hsss0115c0040"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJM16A32P0045 to BABEL STREET, INC. (period of performance 2016-09-09 to 2017-06-28, FY2016–FY2017; $33,181.46 obligated), described in the award record as \"BABEL ANNUAL SUBSCRIPTION (1 USER) BABEL X DATA PACKAGE (30M DOCUMENTS) INITIAL OSINT&PLATFORM TRAINING 3 DAYS BABEL X READ ONLY ACCOUNTS (5)\".",
+    "sources": [
+      "proc-usasp-djm16a32p0045"
+    ]
+  },
+  {
+    "from": "us-dea",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDHQ20F00001467 to BABEL STREET, INC. (period of performance 2020-09-30 to 2021-09-29, FY2020–FY2021; $220,000.00 obligated), described in the award record as \"DATA COLLECTION\".",
+    "sources": [
+      "proc-usasp-15ddhq20f00001467"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF141200P0013007 to BABEL STREET, INC. (period of performance 2014-09-24 to 2014-10-31, FY2014–FY2015; $36,600.00 obligated), described in the award record as \"BABEL STREET PACIFIC LICENSE, MULTILINGUAL OPEN SOURCE DATA COLLECTION, ANALYSIS AND REPORTING.\".",
+    "sources": [
+      "proc-usasp-djf141200p0013007"
+    ]
+  },
+  {
+    "from": "us-irs",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H821C00039 to BABEL STREET, INC. (period of performance 2021-09-30 to 2021-10-29, FY2021–FY2022; $19,340.00 obligated), described in the award record as \"THIRD-PARTY MEDIA RESEARCH SOLUTION USED TO RECOGNIZE, COLLECT AND ARCHIVE CONTENT FROM PUBLIC FACING MEDIA PLATFORMS TO HELP EXPEDITE IRS CASE RESOLUTION FOR EXISTING TAX COMPLIANCE CASES.\".",
+    "sources": [
+      "proc-usasp-2032h821c00039"
+    ]
+  },
+  {
+    "from": "us-air-force",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA489017P0017 to BABEL STREET, INC. (period of performance 2017-07-28 to 2018-06-02, FY2017–FY2018; $333,214.00 obligated), described in the award record as \"BABEL X SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-fa489017p0017"
+    ]
+  },
+  {
+    "from": "us-army",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W90BRJ15P0015 to BABEL STREET, INC. (period of performance 2015-04-05 to 2016-04-05, FY2015–FY2016; $246,000.00 obligated), described in the award record as \"BABEL SENTRY GLOBAL\".",
+    "sources": [
+      "proc-usasp-w90brj15p0015"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000002 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2021-05-28 to 2026-11-30, FY2021–FY2027; $25,218,959.64 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS), TASKS 2/2A\".",
+    "sources": [
+      "proc-usasp-70cmsd21c00000002"
+    ]
+  },
+  {
+    "from": "us-cbp",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1015P00702 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2015-09-28 to 2018-09-27, FY2015–FY2018; $687,493.30 obligated), described in the award record as \"THOMSON REUTERS DATABASE ACCESS SUBSCRIPTION FOR THE WASHINGTON, DC LOCATION.\".",
+    "sources": [
+      "proc-usasp-hsbp1015p00702"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06726F0001553 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2026-09-16 to 2027-09-15, FY2026–FY2027; $4,105,534.56 obligated), described in the award record as \"PUBLIC SOURCE DATA EFFORT-PSP\".",
+    "sources": [
+      "proc-usasp-15f06726f0001553"
+    ]
+  },
+  {
+    "from": "us-army",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W911NF25PA015 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2025-09-15 to 2026-09-14, FY2025–FY2026; $13,565.91 obligated), described in the award record as \"THOMPOSON REUTERS CLEAR LICENSE: CLEAR FOR GOVERNMENT FRAUD, CLEAR WORLD-CHECK ADDON, CLEAR ADVERSE MEDIA WITH SANCTIONS, BATCH DOCUMENT SEARCH ADVERSE FILINGS (3,000 ANNUAL INPUTS). UP TO 2 LICENSED USERS\".",
+    "sources": [
+      "proc-usasp-w911nf25pa015"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEMD17F00008 to WEST PUBLISHING CORPORATION (period of performance 2017-01-19 to 2021-02-28, FY2017–FY2021; $20,632,465.71 obligated), described in the award record as \"CONSOLIDATED LEAD EVALUATION AND REPORTING (CLEAR) SYSTEM ACCESS/SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-hscemd17f00008"
+    ]
+  },
+  {
+    "from": "us-cbp",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014J00318 to WEST PUBLISHING CORPORATION (period of performance 2014-06-18 to 2015-03-31, FY2014–FY2015; $1,623,324.09 obligated), described in the award record as \"ACCESS TO CLEAR DATABASE - WEST PUBLISHING VERBAL AUTHORIZATION GIVEN BY DHS WCF FEDLINK TO CONTINUE SERVICES - DELIVERY ORDER COVERS DATES OF SERVICE COVERED BY AUTHORIZATION\".",
+    "sources": [
+      "proc-usasp-hsbp1014j00318"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000753 to WEST PUBLISHING CORPORATION (period of performance 2014-11-19 to 2017-09-30, FY2015–FY2017; $21,240,732.15 obligated), described in the award record as \"THE THOMSON REUTERS SERVICES CLEAR, CAIT, AND WESTLAW. CLEAR IS A PERSON SEARCH TOOL ALLOWING USERS TO LOCATE INDIVIDUALS. CAIT ASSISTS INVESTIGATORS WITH CHILD ABDUCTION CASES. WESTLAW IS A LEGAL RESEARCH TOOL USED…\".",
+    "sources": [
+      "proc-usasp-djf151200g0000753"
+    ]
+  },
+  {
+    "from": "us-navy",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N0018909FZ076 to WEST PUBLISHING CORPORATION (period of performance 2009-01-01 to 2013-12-31, FY2009–FY2014; $600,000.00 obligated), described in the award record as \"CHOICEPOINT CLEAR ACCESS\".",
+    "sources": [
+      "proc-usasp-n0018909fz076"
+    ]
+  },
+  {
+    "from": "us-dcsa",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0058 to WEST PUBLISHING CORPORATION (period of performance 2023-08-01 to 2026-07-31, FY2023–FY2026; $495,050.76 obligated), described in the award record as \"CLEAR PRO PART NUMBER 41447595 ISD\".",
+    "sources": [
+      "proc-usasp-hs002123f0058"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10226PA4700366 to WEST PUBLISHING CORPORATION (period of performance 2026-09-01 to 2027-08-31, FY2026–FY2027; $230,664.00 obligated), described in the award record as \"MISSION CRITICAL - APPREHENDING FUGITIVES FY26-IOD: VIGILANT-CRIMETRACER CF: APC-FY26-000319\".",
+    "sources": [
+      "proc-usasp-15m10226pa4700366"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000001 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-02-25 to 2026-08-31, FY2021–FY2026; $24,509,116.00 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS)\".",
+    "sources": [
+      "proc-usasp-70cmsd21c00000001"
+    ]
+  },
+  {
+    "from": "us-irs",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H821F00127 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-05-27 to 2022-11-30, FY2021–FY2023; $2,246,999.76 obligated), described in the award record as \"ASSET LOCATOR SERVICES\".",
+    "sources": [
+      "proc-usasp-2032h821f00127"
+    ]
+  },
+  {
+    "from": "us-usss",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090081 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-09-30 to 2023-09-29, FY2021–FY2023; $1,052,828.00 obligated), described in the award record as \"DATABASE INFORMATION AND SUPPORT\".",
+    "sources": [
+      "proc-usasp-70us0921c70090081"
+    ]
+  },
+  {
+    "from": "us-dea",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDH022P00000051 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-10-01 to 2023-09-30, FY2023; $14,035.68 obligated), described in the award record as \"LEXIS NEXIS ACCURANT LE PLUS IDS WITH PHONE PLUS ACCOUNT #1357965 POP: 10/01/22-09/30/23. SUBJECT TO AVAILABILITY OF FY 2022/2023 FUNDS\".",
+    "sources": [
+      "proc-usasp-15ddh022p00000051"
+    ]
+  },
+  {
+    "from": "us-army",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W15QKN19C0063 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2019-09-03 to 2023-09-02, FY2019–FY2023; $1,095,552.00 obligated), described in the award record as \"THIS CONTRACT IS ESTABLISHED TO PROCURE ACCESS FOR 288 USERS TO A WEB BASED PUBLIC DATA SITE.\".",
+    "sources": [
+      "proc-usasp-w15qkn19c0063"
+    ]
+  },
+  {
+    "from": "us-air-force",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+    "sources": [
+      "proc-usasp-fa701417p3000"
+    ]
+  },
+  {
+    "from": "us-navy",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N6311622P0525 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-08-16 to 2023-08-15, FY2022–FY2023; $89,370.00 obligated), described in the award record as \"EMAIL AND POST ADDRESS UPDATES FOR 270K\".",
+    "sources": [
+      "proc-usasp-n6311622p0525"
+    ]
+  },
+  {
+    "from": "us-usss",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090014 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2021-02-03 to 2026-02-22, FY2021–FY2026; $261,080.00 obligated), described in the award record as \"PURCHASE OF TLO DATABASE\".",
+    "sources": [
+      "proc-usasp-70us0921c70090014"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJM17D61P0001 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2016-09-27 to 2017-09-30, FY2016–FY2017; $4,684.52 obligated), described in the award record as \"FY2017 TLO INVESTIGATIVE SERVICES\".",
+    "sources": [
+      "proc-usasp-djm17d61p0001"
+    ]
+  },
+  {
+    "from": "us-cbp",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014P00718 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-10-01 to 2015-09-30, FY2015; $10,800.00 obligated), described in the award record as \"SUBSCRIPTION FOR TLO- ONLINE INVESTIGATION SYSTEM\".",
+    "sources": [
+      "proc-usasp-hsbp1014p00718"
+    ]
+  },
+  {
+    "from": "us-dea",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDSE18P00000061 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2018-09-07 to 2019-09-30, FY2018–FY2019; $14,217.70 obligated), described in the award record as \"SEATTLE HIDTA/TRANSUNION/DATABASE/RURR\".",
+    "sources": [
+      "proc-usasp-15ddse18p00000061"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD20P00000155 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2020-09-01 to 2021-08-31, FY2020–FY2021; $19,200.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICE\".",
+    "sources": [
+      "proc-usasp-70cmsd20p00000155"
+    ]
+  },
+  {
+    "from": "us-air-force",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA701414P3005 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-01-01 to 2016-12-31, FY2014–FY2017; $39,900.00 obligated), described in the award record as \"LAW ENFORCEMENT DATABASE ACCESS\".",
+    "sources": [
+      "proc-usasp-fa701414p3005"
+    ]
+  },
+  {
+    "from": "us-navy",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award M6700117P1192 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2017-07-19 to 2020-09-22, FY2017–FY2020; $10,136.57 obligated), described in the award record as \"ONLINE INVESTIGATIVE SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-m6700117p1192"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "equifax-workforce-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06721F0001429 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2021-06-10 to 2022-07-07, FY2021–FY2022; $23,241.55 obligated), described in the award record as \"THE WORK NUMBER ONLINE EMPLOYMENT VERIFICATION SERVICE\".",
+    "sources": [
+      "proc-usasp-15f06721f0001429"
+    ]
+  },
+  {
+    "from": "us-dcsa",
+    "to": "equifax-workforce-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0047 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2023-06-21 to 2027-05-31, FY2023–FY2027; $6,312,163.20 obligated), described in the award record as \"EMPLOYMENT VERIFICATION SERVICES\".",
+    "sources": [
+      "proc-usasp-hs002123f0047"
+    ]
+  },
+  {
+    "from": "us-irs",
+    "to": "equifax-information-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award TIRNO15Z000080004 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2016-02-01 to 2017-08-25, FY2016–FY2017; $4,965,435.80 obligated), described in the award record as \"FOR CRITICAL FUNCTIONS - EQUIFAX TRANSACTIONS FOR IDENTITY VERIFICATION\".",
+    "sources": [
+      "proc-usasp-tirno15z000080004"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "equifax-information-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEEH09F00025 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2009-09-25 to 2014-12-24, FY2009–FY2015; $111,930.04 obligated), described in the award record as \"PRE-EMPLOYMENT CREDIT INQUIRIES\".",
+    "sources": [
+      "proc-usasp-hsceeh09f00025"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000693 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2014-11-17 to 2017-09-30, FY2015–FY2017; $1,725,000.00 obligated), described in the award record as \"EXPERIAN PROVIDES A FILLE WITH MORE THAN 300 MILLION RECORDS WITH NAMES, ADDRESSES, AND PHONE NUMBERS IN A FORMAT COMPATIBLE WITH FBI AND FTTTF SYSTEMS.\".",
+    "sources": [
+      "proc-usasp-djf151200g0000693"
+    ]
+  },
+  {
+    "from": "us-irs",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H519F00092 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2018-11-28 to 2019-08-27, FY2019; $1,237,595.13 obligated), described in the award record as \"EXPERIAN THIRD PARTY IDENTITY VERIFICATION ORDER\".",
+    "sources": [
+      "proc-usasp-2032h519f00092"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJMS12M0043 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-10-01 to 2013-09-30, FY2012–FY2013; $33,167.75 obligated), described in the award record as \"AFD: VEHICLE HISTORY REPORTS\".",
+    "sources": [
+      "proc-usasp-djms12m0043"
+    ]
+  },
+  {
+    "from": "us-army",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W911SD21F0187 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2021-09-01 to 2024-08-31, FY2021–FY2024; $322,500.00 obligated), described in the award record as \"HISTORICAL CREDIT REPORT DATABASE\".",
+    "sources": [
+      "proc-usasp-w911sd21f0187"
+    ]
+  },
+  {
+    "from": "us-navy",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N0018923FZ089 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2022-12-06 to 2026-12-05, FY2023–FY2027; $55,600.00 obligated), described in the award record as \"CREDIT REPORTING SERVICES, CREDIT CHECKS FOR NAVY RECRUITING COMMAND (NRC)\".",
+    "sources": [
+      "proc-usasp-n0018923fz089"
+    ]
+  },
+  {
+    "from": "us-dea",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award DJD12HQG0018 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-11-01 to 2012-10-21, FY2012–FY2013; $3,332.80 obligated), described in the award record as \"CREDIT REPORTING SERVICES\".",
+    "sources": [
+      "proc-usasp-djd12hqg0018"
+    ]
+  },
+  {
+    "from": "us-ice",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21P00000127 to CLEARVIEW AI, INC. (period of performance 2021-09-03 to 2024-09-03, FY2021–FY2024; $2,287,500.00 obligated), described in the award record as \"CLEARVIEW FACIAL RECOGNITION ENTERPRISE LICENSES\".",
+    "sources": [
+      "proc-usasp-70cmsd21p00000127"
+    ]
+  },
+  {
+    "from": "us-fbi",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06723P0001356 to CLEARVIEW AI, INC. (period of performance 2023-01-26 to 2026-01-25, FY2023–FY2026; $359,000.00 obligated), described in the award record as \"CLEARVIEW ACTS AS A SEARCH ENGINE OF PUBLICLY AVAILABLE IMAGES ON THE INTERNET. ITS AN INVESTIGATIVE TOOL DESIGNED TO BE USED IN WAYS THAT ULTIMATELY REDUCE CRIME, FRAUD, AND RISK IN ORDER TO MAKE COMMUNITIES SAFER.…\".",
+    "sources": [
+      "proc-usasp-15f06723p0001356"
+    ]
+  },
+  {
+    "from": "us-cbp",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B03C25P00000321 to CLEARVIEW AI, INC. (period of performance 2025-06-25 to 2026-06-24, FY2025–FY2026; $30,000.00 obligated), described in the award record as \"FEDERAL INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSES IN SUPPORT OF THE USBP SPOKANE SECTOR\".",
+    "sources": [
+      "proc-usasp-70b03c25p00000321"
+    ]
+  },
+  {
+    "from": "us-usms",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10224PA4700107 to CLEARVIEW AI, INC. (period of performance 2024-02-22 to 2026-02-21, FY2024–FY2026; $95,000.00 obligated), described in the award record as \"*LAW ENFORCEMENT SENSITIVE* (LES) IOD-TOG-ESB-(CIU) - INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSE CONTRACT FILE: APC-FY24-000032\".",
+    "sources": [
+      "proc-usasp-15m10224pa4700107"
+    ]
+  },
+  {
+    "from": "us-irs",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2023H226P00217 to CLEARVIEW AI, INC. (period of performance 2026-03-16 to 2027-03-15, FY2026–FY2027; $63,000.00 obligated), described in the award record as \"INVESTIGATOR TOOL WEB SUBSCRIPTION. BASE YEAR PERIOD OF PERFORMANCE: 03-16-26 TO 03-15-27\".",
+    "sources": [
+      "proc-usasp-2023h226p00217"
+    ]
+  },
+  {
+    "from": "us-army",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W9124725PA010 to CLEARVIEW AI, INC. (period of performance 2025-03-20 to 2026-03-19, FY2025–FY2026; $75,000.00 obligated), described in the award record as \"CLEARVIEW AI IS A URL BASED INTELLIGENCE SERVICE THAT RUNS ON A TOOL CLOUD DATABASE AND PERMITS A USER ACCESS TO SYSTEM FOR A PERIOD OF 12 MONTHS.\".",
+    "sources": [
+      "proc-usasp-w9124725pa010"
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "id": "us-socom",
+  "name": "U.S. Special Operations Command",
+  "aliases": [
+    "SOCOM",
+    "USSOCOM"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-h9227620p0070"
+  ]
+}

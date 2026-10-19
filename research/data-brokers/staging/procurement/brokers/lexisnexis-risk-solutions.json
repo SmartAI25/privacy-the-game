@@ -1,0 +1,20 @@
+{
+  "id": "lexisnexis-risk-solutions",
+  "name": "LexisNexis Risk Solutions",
+  "aliases": [
+    "LEXISNEXIS RISK SOLUTIONS INC"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70cmsd21c00000001",
+    "proc-usasp-2032h821f00127",
+    "proc-usasp-70us0921c70090081",
+    "proc-usasp-15ddh022p00000051",
+    "proc-usasp-w15qkn19c0063",
+    "proc-usasp-fa701417p3000",
+    "proc-usasp-n6311622p0525"
+  ]
+}

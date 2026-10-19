@@ -1,0 +1,16 @@
+{
+  "id": "venntel",
+  "name": "Venntel",
+  "aliases": [
+    "VENNTEL INC"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70cmsd18p00000127",
+    "proc-usasp-70b02c20p00000521",
+    "proc-usasp-15ddst18p00000052"
+  ]
+}

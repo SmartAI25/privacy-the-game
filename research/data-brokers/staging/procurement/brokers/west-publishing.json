@@ -1,0 +1,19 @@
+{
+  "id": "west-publishing",
+  "name": "West Publishing",
+  "aliases": [
+    "West Publishing Corporation"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-hscemd17f00008",
+    "proc-usasp-hsbp1014j00318",
+    "proc-usasp-djf151200g0000753",
+    "proc-usasp-n0018909fz076",
+    "proc-usasp-hs002123f0058",
+    "proc-usasp-15m10226pa4700366"
+  ]
+}

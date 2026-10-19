@@ -1,0 +1,17 @@
+{
+  "id": "equifax-workforce-solutions",
+  "name": "Equifax Workforce Solutions",
+  "aliases": [
+    "EQUIFAX WORKFORCE SOLUTIONS LLC",
+    "TALX",
+    "The Work Number"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-15f06721f0001429",
+    "proc-usasp-hs002123f0047"
+  ]
+}
