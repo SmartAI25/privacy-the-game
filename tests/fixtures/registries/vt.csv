@@ -1,0 +1,12 @@
+Name,Idregistration,DataBrokerStatus,PrimaryInterneturl,IspersonalinformationOptOut,OptOutMethod,OptOutActivities,ThirdPartyOptOutAuthorization,ExpirationDate
+ ACXIOM LLC ,0000001,Registered,www.acxiom.com,True,"Consumers may opt out through our tool located on
+www.acxiom.com/optout.",,,2/1/2027 12:00:00 AM
+ ACXIOM LLC ,0000001,Registered,www.acxiom.com,True,"Consumers may opt out through our tool located on
+www.acxiom.com/optout.",,,2/1/2027 12:00:00 AM
+"Vermont Only Data, Inc.",0000002,Registered,www.vtonly.test,True,https://vtonly.test/opt-out,,,2/1/2027 12:00:00 AM
+"Vermont Only Data, Inc.",0000002,Registered,www.vtonly.test,True,https://vtonly.test/opt-out,,,2/1/2027 12:00:00 AM
+Blank Optout VT LLC,0000003,Registered,blankvt.test,False,,,,2/1/2027 12:00:00 AM
+"GEO PARENT HOLDINGS, INC.",0000004,Registered,,True,"Webform, email, phone",,,2/1/2027 12:00:00 AM
+Lapsed Data LLC,0000005,Unregistered,lapsed.test,True,https://lapsed.test/opt-out,,,2/1/2026 12:00:00 AM
+Renewed Data LLC,0000006,Unregistered,renewed.test,True,,,,2/1/2026 12:00:00 AM
+Renewed Data LLC,0000007,Registered,renewed.test,True,,,,2/1/2027 12:00:00 AM
