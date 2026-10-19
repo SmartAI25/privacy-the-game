@@ -1,6 +1,6 @@
 # Open data broker dataset
 
-A dataset of US data brokers and the documented links between them: who owns whom, who supplies whom, who buys from whom. Every link cites a document, and every document has an archived copy.
+A dataset of mostly US data brokers (and some of their UK and French parent companies) and the documented links between them: who owns whom, who supplies whom, who buys from whom. Every link cites a document, and every document has an archived copy.
 
 It was built for [Reclaim City](https://github.com/lizTheDeveloper/privacy-the-game), a game about taking your data back. It is published separately for journalists, researchers and privacy advocates who want to check, reuse or extend it.
 
@@ -74,7 +74,7 @@ Broker records themselves (names, registry data, opt-out routes) are published i
 
 These are the rules every published claim follows. They are what you need to judge whether to rely on one.
 
-- **Narrow claims.** Each `claim` says only what its source says, and names the document. Allegations in a complaint are written as allegations ("the FTC alleges…"); a claim from a complaint describes what the complaint says, not a court finding. Where a claim cites a settlement order in which the company neither admitted nor denied the allegations, the claim says so. Most of these enforcement cases ended in such settlements, including some whose links cite only the complaint.
+- **Narrow claims.** Each `claim` says only what its source says, and names the document. Allegations in a complaint are written as allegations ("the FTC alleges…"); a claim from a complaint describes what the complaint says, not a court finding. Some of those cases later settled. A link states settlement status only when it cites the order or settlement itself; there, if the company neither admitted nor denied the allegations, the claim says so. A link that cites only a complaint says nothing about how the case ended.
 - **Archived and checkable.** Every source has a Wayback Machine copy (`archived`). Every published claim can be checked against that archived copy, not only against the live page.
 - **Procurement archives are API records.** USAspending award pages are JavaScript shells that archive as blank pages, so procurement sources are archived as the award's JSON from the USAspending API (`api.usaspending.gov/api/v2/awards/<id>/`). The `url` is still the human-readable award page.
 - **What counts as a purchase.** A procurement `buys` link is published only when the award's own description, or its product/service code, shows the government bought data or access to data. Awards that read as software or licences only are kept unpublished. Some published awards are narrow (for example, employee credit checks), and their claims say so.
@@ -140,7 +140,7 @@ The game reads a derived file, `src/data/broker-map.json`, which holds only publ
 - `dead`: a 404 or 410 response, or the domain no longer resolves.
 - `unchecked`: not yet checked. A record with no `status` has also not been checked.
 
-Current results for the 743 records with an opt-out entry: 617 verified, 15 suspect, 74 blocked, 20 dead, 17 not yet checked. The check is automated and cannot fill in forms; a `verified` page can still fail to work.
+Current results for the 743 records with an opt-out entry: 617 verified, 15 suspect, 74 blocked, 20 dead, 17 not yet checked. The 17 (including Equifax and LexisNexis Risk Solutions) have no check result yet; a full `npm run brokers:check-urls` covers them. The check is automated and cannot fill in forms; a `verified` page can still fail to work.
 
 ### Link (`links.json`)
 
@@ -171,7 +171,7 @@ Current results for the 743 records with an opt-out entry: 617 verified, 15 susp
 
 ## Reach and hubs
 
-**Reach** is 1 plus the number of distinct records downstream of a broker along published links. `owns`, `supplies` and `matches-identity` point downstream from `from` to `to`. `buys` points the other way: if an agency buys from a vendor, the agency is downstream of the vendor. Each record is counted once, even when there are cycles. Size signals are not used. The code is `build/reach.js`.
+**Reach** is 1 plus the number of distinct records downstream of a broker along published links. `owns`, `supplies` and `matches-identity` point downstream from `from` to `to`. `buys` points the other way: if an agency buys from a vendor, the agency is downstream of the vendor. Each record is counted once, even when there are cycles. Size signals are recorded on broker records but don't affect reach. The code is `build/reach.js`.
 
 **Hubs** are the 12 records with the highest reach, ties broken alphabetically by id, and only if their reach is above 1. For this release:
 
@@ -195,7 +195,10 @@ Clearview AI is the 12th hub because of the alphabetical tie-break: GoodRx, Jump
 Reading these numbers:
 
 - Reach measures documented, published flows only. It is not market size or the amount of data held.
-- For TransUnion, Experian, RELX and Equifax, most of the reach comes from documented ownership of subsidiaries. For the vendors in the lower half, it comes from government purchases.
+- The hubs' direct links come from different kinds of source:
+  - ownership of subsidiaries, from SEC filings and annual reports: TransUnion, Experian, RELX, Equifax (their reach also counts what those subsidiaries are documented to supply or sell);
+  - supply of data, from FTC enforcement documents: General Motors, Avast;
+  - government purchases, from federal procurement records: Experian Information Solutions, LexisNexis Risk Solutions, TransUnion Risk and Alternative Data Solutions, Babel Street, West Publishing, Clearview AI.
 - A company whose documented links are mainly inbound, or not yet published, ranks low. LiveRamp and Acxiom each have reach 1 here: the published links point into them (for example, Jumpshot supplied LiveRamp; Omnicom owns Acxiom), and Acxiom's outbound links are tier C and unpublished.
 
 ## How to rebuild
@@ -215,7 +218,8 @@ rm -rf research/data-brokers/brokers
 echo '{}' > research/data-brokers/sources.json
 echo '[]' > research/data-brokers/links.json
 
-# 2. Import the registries
+# 2. Import the registries. The last argument is each snapshot's Wayback capture. A capture can
+#    predate our download (CA's is from 2026-08-06); SOURCES.md records that the file had not changed.
 npm run brokers:import -- CA research/data-brokers/sources/registries/ca-2026-10-18.csv 2026-10-18 https://web.archive.org/web/20260806041805/https://cppa.ca.gov/data_broker_registry/registry.csv
 npm run brokers:import -- TX research/data-brokers/sources/registries/tx-2026-10-18.csv 2026-10-18 https://web.archive.org/web/20261019051305/https://texas-sos.appianportalsgov.com/data-broker-registry
 npm run brokers:import -- OR research/data-brokers/sources/registries/or-2026-10-18.csv 2026-10-18 https://web.archive.org/web/20261019051000/https://www4.cbs.state.or.us/ex/shared/downtemp/dfcs_db_optout.csv
