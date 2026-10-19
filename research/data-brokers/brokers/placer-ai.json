@@ -24,5 +24,8 @@
   },
   "sources": [
     "pol-placer-consumer-privacy"
+  ],
+  "missions": [
+    "location_brokers-fortify-optout"
   ]
 }

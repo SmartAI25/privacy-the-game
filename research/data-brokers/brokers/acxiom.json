@@ -41,5 +41,8 @@
     "jour-markup-xandr-segments-2023",
     "jour-propublica-facebook-brokers-2016"
   ],
-  "website": "https://www.acxiom.com"
+  "website": "https://www.acxiom.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

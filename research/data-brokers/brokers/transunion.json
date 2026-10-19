@@ -43,5 +43,8 @@
     "sec-tru-10k-2025",
     "sec-tru-10k-2025-ex21",
     "pol-transunion-consumer-privacy"
+  ],
+  "missions": [
+    "enterprise_data-fortify-property"
   ]
 }

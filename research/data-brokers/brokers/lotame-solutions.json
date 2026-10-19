@@ -30,5 +30,8 @@
     "enf-ftc-avast-complaint-2024",
     "pol-lotame-privacy-choices",
     "pol-lotame-publicis-article"
+  ],
+  "missions": [
+    "ad_trackers-reclaim-individual"
   ]
 }

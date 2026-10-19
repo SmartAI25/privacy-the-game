@@ -17,5 +17,8 @@
   },
   "sources": [
     "sec-tru-10k-2025"
+  ],
+  "missions": [
+    "enterprise_data-fortify-property"
   ]
 }

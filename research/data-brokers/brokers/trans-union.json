@@ -33,5 +33,8 @@
     "enf-cfpb-turss-complaint-2023",
     "enf-cfpb-turss-order-2023"
   ],
-  "website": "https://www.transunion.com"
+  "website": "https://www.transunion.com",
+  "missions": [
+    "enterprise_data-fortify-property"
+  ]
 }

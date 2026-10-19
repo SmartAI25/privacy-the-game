@@ -57,5 +57,8 @@
     "pol-liveramp-privacy-choices",
     "pol-liveramp-service-privacy"
   ],
-  "website": "https://www.liveramp.com"
+  "website": "https://www.liveramp.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

@@ -50,5 +50,11 @@
     "pol-spokeo-privacy",
     "pol-thatsthem-optout"
   ],
-  "website": "https://www.spokeo.com"
+  "website": "https://www.spokeo.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-2",
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-web-forms",
+    "people_search-recon-find-yourself"
+  ]
 }

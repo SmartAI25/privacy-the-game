@@ -39,5 +39,8 @@
     "sec-publicis-urd-2025-activities",
     "pol-epsilon-consumer-info"
   ],
-  "website": "https://www.epsilon.com"
+  "website": "https://www.epsilon.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

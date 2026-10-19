@@ -37,5 +37,9 @@
     "pol-whitepages-suppression",
     "pol-whitepages-privacy"
   ],
-  "website": "https://www.whitepages.com"
+  "website": "https://www.whitepages.com",
+  "missions": [
+    "people_search-fortify-web-forms",
+    "people_search-recon-find-yourself"
+  ]
 }

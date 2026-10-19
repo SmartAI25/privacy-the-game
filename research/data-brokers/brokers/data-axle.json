@@ -40,5 +40,8 @@
     "pol-dataaxle-privacy",
     "pol-dataaxle-rights-request"
   ],
-  "website": "https://www.data-axle.com"
+  "website": "https://www.data-axle.com",
+  "missions": [
+    "enterprise_data-reclaim-deep-layer"
+  ]
 }

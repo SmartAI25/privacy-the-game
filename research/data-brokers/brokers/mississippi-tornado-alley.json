@@ -57,5 +57,10 @@
     "pol-smartbackgroundchecks-remove",
     "pol-usphonebook-removal"
   ],
-  "website": "https://AdvancedBackgroundChecks.com"
+  "website": "https://AdvancedBackgroundChecks.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-1",
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-removal-links"
+  ]
 }

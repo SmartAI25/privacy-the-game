@@ -37,5 +37,8 @@
     "registry-or-2026-10-18",
     "pol-spydialer-consumers"
   ],
-  "website": "https://spydialer.com"
+  "website": "https://spydialer.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-2"
+  ]
 }

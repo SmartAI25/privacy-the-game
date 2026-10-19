@@ -24,5 +24,8 @@
   "sources": [
     "pol-safegraph-privacy",
     "jour-markup-life360-2021"
+  ],
+  "missions": [
+    "location_brokers-fortify-optout"
   ]
 }

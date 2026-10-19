@@ -39,5 +39,8 @@
     "sec-clgx-8k-2021-merger",
     "pol-cotality-privacy",
     "pol-cotality-product-privacy"
+  ],
+  "missions": [
+    "enterprise_data-fortify-property"
   ]
 }

@@ -48,5 +48,9 @@
     "sec-efx-10k-2025-ex21",
     "pol-twn-employment-data-report"
   ],
-  "website": "https://www.theworknumber.com"
+  "website": "https://www.theworknumber.com",
+  "missions": [
+    "enterprise_data-reclaim-deep-layer",
+    "enterprise_data-recon-supply-chain"
+  ]
 }

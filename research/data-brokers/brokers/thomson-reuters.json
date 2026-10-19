@@ -36,5 +36,9 @@
     "sec-tri-40f-2025-annual-report",
     "pol-tr-privacy-records",
     "jour-globe-wapo-nctue-utility-ice-2021"
+  ],
+  "missions": [
+    "enterprise_data-fortify-thomson",
+    "enterprise_data-recon-supply-chain"
   ]
 }

@@ -35,5 +35,9 @@
     "registry-or-2026-10-18",
     "pol-truepeoplesearch-removal"
   ],
-  "website": "https://truepeoplesearch.com"
+  "website": "https://truepeoplesearch.com",
+  "missions": [
+    "people_search-fortify-removal-links",
+    "people_search-recon-find-yourself"
+  ]
 }

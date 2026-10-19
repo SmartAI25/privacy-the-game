@@ -31,5 +31,9 @@
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18"
   ],
-  "website": "https://risk.lexisnexis.com"
+  "website": "https://risk.lexisnexis.com",
+  "missions": [
+    "enterprise_data-fortify-lexisnexis",
+    "enterprise_data-recon-supply-chain"
+  ]
 }

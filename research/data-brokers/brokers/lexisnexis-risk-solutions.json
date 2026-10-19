@@ -46,5 +46,9 @@
     "enf-ftc-gm-complaint-2026",
     "pol-lexisnexis-risk-optout",
     "pol-lexisnexis-risk-about"
+  ],
+  "missions": [
+    "enterprise_data-fortify-lexisnexis",
+    "enterprise_data-recon-supply-chain"
   ]
 }

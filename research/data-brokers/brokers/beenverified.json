@@ -34,5 +34,8 @@
     "registry-or-2026-10-18",
     "pol-beenverified-optout"
   ],
-  "website": "https://beenverified.com"
+  "website": "https://beenverified.com",
+  "missions": [
+    "people_search-fortify-web-forms"
+  ]
 }

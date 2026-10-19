@@ -37,5 +37,9 @@
     "pol-peopleconnect-home",
     "pol-peopleconnect-privacy"
   ],
-  "website": "https://www.intelius.com"
+  "website": "https://www.intelius.com",
+  "missions": [
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-removal-links"
+  ]
 }
