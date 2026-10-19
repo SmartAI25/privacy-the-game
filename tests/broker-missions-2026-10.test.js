@@ -26,9 +26,11 @@ const norm = (u) => u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '').toL
 const host = (u) => norm(u).replace(/\/.*/, '');
 
 describe('broker dataset vs mission steps', () => {
-  it('no step links to an opt-out the dataset records as dead or suspect', () => {
-    const bad = brokers.filter((b) => b.optOut?.url && ['dead', 'suspect'].includes(b.optOut.status)).map((b) => norm(b.optOut.url));
-    const hits = allSteps().filter((s) => s.url && bad.includes(norm(s.url))).map((s) => `${s.id}: ${s.url}`);
+  // By host, not exact URL: a dead broker's other paths (or a query-string variant) are just as dead.
+  it('no step links to the site of an opt-out the dataset records as dead or suspect', () => {
+    const bad = new Set(brokers.filter((b) => b.optOut?.url && ['dead', 'suspect'].includes(b.optOut.status)).map((b) => host(b.optOut.url)));
+    expect(bad.size).toBeGreaterThan(0);
+    const hits = allSteps().filter((s) => s.url && bad.has(host(s.url))).map((s) => `${s.id}: ${s.url}`);
     expect(hits).toEqual([]);
   });
 
@@ -53,8 +55,12 @@ describe('Radaris (domain transferred by court order)', () => {
     expect(mission(id).briefing).not.toContain('Radaris has a privacy control center');
     expect(mission(id).briefing).not.toContain('Nuwber');
   });
-  it('the removal-links briefing no longer sends players to a Radaris portal', () => {
-    expect(mission('people_search-fortify-removal-links').briefing).not.toMatch(/Radaris have/);
+  // Anything a player reads may mention Radaris only in the past tense or as gone.
+  it('nothing claims Radaris still has a portal, control center or opt-out', () => {
+    const present = /Radaris\b[^.]{0,80}(?<!used to )\b(has|have|offers?|runs?)\b[^.]{0,60}\b(portal|control|opt-?out|removal|form)/i;
+    const hits = MISSIONS.filter((m) => present.test(JSON.stringify(m))).map((m) => m.id);
+    expect(hits).toEqual([]);
+    expect(mission('people_search-fortify-removal-links').briefing).not.toMatch(/Radaris/);
   });
   it('Scout does not count brokers that can no longer be cleared', () => {
     expect(everything(id)).not.toContain('Ten brokers cleared');
@@ -109,5 +115,37 @@ describe('copy that must be true for every player', () => {
     expect(m.scoutDialog.briefing).not.toContain('every registered data broker has to process it');
     expect(m.scoutDialog.briefing).toContain("California's Delete Act requires the registered data brokers to process it");
     expect(JSON.stringify(m.scoutDialog)).not.toMatch(/every registered broker|\b600\b/);
+  });
+});
+
+describe('location brokers: what works and what the FTC did', () => {
+  it('Gravy Analytics links its live Opt Out & Do Not Sell form, and Scout counts it', () => {
+    const m = mission('location_brokers-fortify-optout');
+    const s = stepFor(m.id, 'Opt out of Gravy Analytics');
+    expect(s?.url).toBe('https://gravyanalytics.com/opt-out-do-not-sell');
+    expect(everything(m.id)).not.toContain('Its old privacy page no longer works');
+    expect(m.scoutDialog.debrief['some-submitted']).toMatch(/Gravy Analytics/);
+  });
+
+  // FTC orders against X-Mode, Gravy/Venntel and Mobilewalla restrict selling sensitive
+  // location data; they are not bans on the companies, and the Gravy order was final in 2025.
+  it('Scout does not overstate the FTC orders', () => {
+    const scout = mission('location_brokers-reclaim-legal').scoutDialog.briefing;
+    expect(scout).not.toMatch(/banned three/);
+    expect(scout).not.toMatch(/delete all previously collected data/);
+    expect(scout).toMatch(/brought cases against several location data brokers since 2024/);
+    expect(everything('location_brokers-fortify-optout')).not.toMatch(/a 2024 FTC order/);
+  });
+
+  it('the DROP step names Gravy by its registered name', () => {
+    expect(everything('location_brokers-reclaim-legal')).toContain('registered as Unacast');
+  });
+});
+
+describe('dialogue.js words DROP the way the law does', () => {
+  it('no line says DROP reaches every or all registered brokers', async () => {
+    const src = readFileSync(new URL('../src/data/dialogue.js', import.meta.url), 'utf8');
+    expect(src).not.toMatch(/(reaches|to) every (registered )?broker|of all registered data brokers/);
+    expect(src).toMatch(/the law requires registered data brokers to process it/);
   });
 });

@@ -183,7 +183,8 @@
     "https://us.shein.com/user/privacy-center": "curl 200 (2026-10-18; redirects to sign-in, then the Privacy Center)",
     "https://us.shein.com/Consumer-Privacy-Notice-s-101.html": "curl 200 (2026-10-18): SHEIN PRIVACY NOTICE | SHEIN USA",
     "https://www.lotame.com/privacy/information-privacy-choices-services/": "browser 200 (2026-10-19): Information about your Privacy Rights and Choices | Lotame; explains opt-out/delete requests and links the Privacy Rights Request Form",
-    "https://www.placer.ai/privacy-policy/consumer-privacy-policy": "browser 200 (2026-10-19): Privacy Policy (Consumers) - Placer.ai; YOUR CHOICES gives privacy@placer.ai"
+    "https://www.placer.ai/privacy-policy/consumer-privacy-policy": "browser 200 (2026-10-19): Privacy Policy (Consumers) - Placer.ai; YOUR CHOICES gives privacy@placer.ai",
+    "https://gravyanalytics.com/opt-out-do-not-sell": "curl 200 and browser 200 (2026-10-19): Opt Out & Do Not Sell (Unacast-branded page with a HubSpot opt-out form)"
   },
   "dns": {
     "checked": "2026-10-08",

@@ -743,16 +743,16 @@ export const RECLAMATION_MISSIONS = [
     briefing: "Individual opt-outs from the major location data brokers. Most require an email rather than a web form -- these companies don't make it easy. SafeGraph sells foot-traffic data. X-Mode (now Outlogic) sold prayer app data to the military. Gravy Analytics was breached in 2025.",
     steps: [
       { text: "Opt out of SafeGraph -- email privacy@safegraph.com citing your right to data deletion", url: "https://www.safegraph.com/privacy-policy" },
-      { text: 'X-Mode Social (later Outlogic): a 2024 FTC order bars it from selling sensitive location data, and its opt-out page no longer works' },
+      { text: 'X-Mode Social (later Outlogic): an FTC order bars it from selling sensitive location data, and its opt-out page no longer works' },
       { text: 'Opt out of Placer.ai -- use the contact in its privacy policy', url: 'https://www.placer.ai/privacy-policy/consumer-privacy-policy' },
-      { text: 'Gravy Analytics: a 2024 FTC order limits its use of sensitive location data. Its old privacy page no longer works' },
+      { text: 'Opt out of Gravy Analytics (it now does business as Unacast) -- use its Opt Out & Do Not Sell form. An FTC order also limits its use of sensitive location data', url: 'https://gravyanalytics.com/opt-out-do-not-sell' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
       briefing: "\"These companies buy your GPS data from apps, package it into movement profiles, and sell it. SafeGraph to businesses. X-Mode to US military contractors. Near Intelligence to anti-abortion groups. Most hide their opt-outs behind email addresses instead of web forms. They're betting you won't bother. Prove them wrong.\"",
       debrief: {
         "all-submitted": "\"Location broker opt-outs submitted. Email ones take longer -- follow up if you don't get confirmation within 30 days.\"",
-        "some-submitted": "\"Partial progress. SafeGraph and Placer.ai are the ones with a working route today.\"",
+        "some-submitted": "\"Partial progress. SafeGraph, Placer.ai and Gravy Analytics are the ones with a working route today.\"",
         "skip": "\"Location data is the most sensitive category. Come back when you can send a few emails.\"",
       },
     },
@@ -765,14 +765,14 @@ export const RECLAMATION_MISSIONS = [
     title: "Legal Tools: DROP + GDPR + Complaints",
     briefing: "For location brokers without opt-out pages -- or to catch ones you missed -- use the legal tools. If you're in California, DROP reaches the brokers registered there. GDPR erasure requests work for EU/UK data. And filing complaints creates the paper trail regulators use to build enforcement cases -- the FTC has brought cases against several location brokers since 2024.",
     steps: [
-      { text: "Submit through California DROP (covers Gravy Analytics and hundreds more)", url: "https://privacy.ca.gov/drop/" },
+      { text: "Submit through California DROP (covers Gravy Analytics, registered as Unacast, and its Venntel unit, and hundreds more)", url: "https://privacy.ca.gov/drop/" },
       { text: "Generate a GDPR erasure request if applicable (EU/UK)", url: "https://www.datarequests.org/generator/" },
       { text: "If any broker ignores your request: file an FTC complaint", url: "https://reportfraud.ftc.gov/" },
       { text: 'Also file with the California Privacy Protection Agency (CPPA)', url: 'https://cppa.ca.gov/webapplications/complaint' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"When there is no opt-out page, that does not mean no legal obligation to delete your data. Having no web form is a bet that you won't send a letter. Make them lose that bet. The FTC banned three location data brokers since 2024. Venntel was ordered to delete all previously collected data. Your request matters even when it's ignored -- it becomes evidence in the next enforcement case. Your letter is part of the paper trail that makes lawsuits and regulations possible.\"",
+      briefing: "\"When there is no opt-out page, that does not mean no legal obligation to delete your data. Having no web form is a bet that you won't send a letter. Make them lose that bet. The FTC has brought cases against several location data brokers since 2024, and its orders restrict selling sensitive location data and cover the location data they'd already collected. Your request matters even when it's ignored -- it becomes evidence in the next enforcement case. Your letter is part of the paper trail that makes lawsuits and regulations possible.\"",
       debrief: {
         "all-submitted": "\"Location Data Brokers: liberated. Phone permissions locked, individual opt-outs sent, legal tools deployed. You've dismantled the location tracking layer as thoroughly as an individual can. Check phone permissions whenever you install a new app.\"",
         "some-submitted": "\"California DROP is the highest leverage. One form, hundreds of brokers.\"",
