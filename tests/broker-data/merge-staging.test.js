@@ -313,6 +313,12 @@ describe('mergeStaging', () => {
     expect([r(['f']), r(['c']), r(['k']), r(['k'], 'class actions alleging x'), r(['j'])]).toEqual([5, 4, 3, 2, 1]);
   });
 
+  it('sourceRank ranks procurement award records with court records (R24)', () => {
+    const S = { f: { kind: 'ftc-order' }, c: { kind: 'court' }, p: { kind: 'procurement' }, k: { kind: 'sec-10k' } };
+    const r = (sources) => sourceRank({ sources, claim: 'x' }, S);
+    expect([r(['p']), r(['c']), r(['p', 'k']), r(['f', 'p'])]).toEqual([4, 4, 4, 5]);
+  });
+
   it('link-overrides.json drops and reassigns staged links and unpublishes any link', async () => {
     await setup({
       config: { 'link-overrides.json': {
@@ -353,6 +359,20 @@ describe('mergeStaging', () => {
     expect((await readB('a')).aliases).toEqual(['Good Alias']);
     const n = await readB('n');
     expect([n.name, n.aliases, n.parent]).toEqual(['Legal Name, Inc.', ['Brand'], 'a']);
+  });
+
+  it('record-overrides.json sets an empty kind, citing its source', async () => {
+    await setup({
+      config: { 'record-overrides.json': { k: { kind: ['location'], source: 's1', reason: 'award describes a location feed' }, m: { kind: ['location'], reason: 'would overwrite' } } },
+      brokers: [broker('k', 'K', { kind: [] }), broker('m', 'M')],
+      staged: { sources: { s1: src() }, brokers: [{ id: 'k', name: 'K', sources: ['s1'] }] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    const k = await readB('k');
+    expect([k.kind, k.sources.includes('s1')]).toEqual([['location'], true]);
+    expect((await readB('m')).kind).toEqual(['marketing']);
+    expect(r.rejected.some((x) => /m: record-overrides kind would overwrite/.test(x.reason))).toBe(true);
   });
 
   it('alias-blocklist.json entries need a reason', async () => {

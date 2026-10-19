@@ -43,6 +43,60 @@
       "to": "neustar",
       "type": "matches-identity",
       "reason": "fact-check ruling R21: the 2024 Avast complaint para 26 alleges only that Jumpshot's contract permitted Omnicom to translate Jumpshot GUIDs into Neustar IDs; it alleges no Omnicom-Neustar matching or agreement"
+    },
+    {
+      "from": "us-cbp",
+      "to": "venntel",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 70B02C20P00000521 (API record) description \"PURCHASE OF PORTAL (LICENSE) SEAT\", PSC 7030 information technology software; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-dea",
+      "to": "venntel",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 15DDST18P00000052 (API record) description \"SOFTWARE LICENSE\", PSC 7030 information technology software, NAICS 511210 software publishers; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-usss",
+      "to": "babel-street",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award HSSS0115C0040 (API record) description \"OPEN SOURCE INTELLIGENCE MONITORING SYSTEM\", PSC D317 web-based subscription; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-air-force",
+      "to": "babel-street",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award FA489017P0017 (API record) description \"BABEL X SUBSCRIPTION\", PSC D313 CAD/CAM; USMS DJM16A32P0045 itemizes a Babel X data package separately from the subscription; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-army",
+      "to": "babel-street",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award W90BRJ15P0015 (API record) description \"BABEL SENTRY GLOBAL\", PSC 7030 ADP software; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-usms",
+      "to": "west-publishing",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 15M10226PA4700366 (API record) description names \"VIGILANT-CRIMETRACER\", not a West or Thomson Reuters product, PSC DA10 software as a service; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-dea",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 15DDH022P00000051 (API record) description \"LEXIS NEXIS ACCURANT LE PLUS IDS WITH PHONE PLUS ACCOUNT\", PSC 7G22 satellite and RF communications products; neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-ice",
+      "to": "clearview-ai",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 70CMSD21P00000127 (API record) description \"CLEARVIEW FACIAL RECOGNITION ENTERPRISE LICENSES\", PSC 7A21 business application software (perpetual license); neither the description nor the PSC says data or data access, so a data purchase is not shown"
+    },
+    {
+      "from": "us-irs",
+      "to": "clearview-ai",
+      "type": "buys",
+      "reason": "procurement fact-check: USAspending award 2023H226P00217 (API record) description \"INVESTIGATOR TOOL WEB SUBSCRIPTION\", PSC DE10 end user as a service (help desk, productivity tools); unlike the CBP and USMS awards it does not mention the cloud database; neither the description nor the PSC says data or data access, so a data purchase is not shown"
     }
   ],
   "reassign": [

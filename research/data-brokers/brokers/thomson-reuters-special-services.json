@@ -6,7 +6,9 @@
     "TRSS"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "risk-identity"
+  ],
   "registries": {},
   "sells": [],
   "optOut": null,

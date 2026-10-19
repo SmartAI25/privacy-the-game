@@ -1637,7 +1637,7 @@
         "verifiedAt": "2026-10-18"
       },
       "missions": [],
-      "reach": 9,
+      "reach": 6,
       "hub": true
     },
     {
@@ -3036,7 +3036,7 @@
         "verifiedAt": "2026-10-18"
       },
       "missions": [],
-      "reach": 7,
+      "reach": 5,
       "hub": true
     },
     {
@@ -6529,7 +6529,7 @@
         "verifiedAt": "2026-10-18"
       },
       "missions": [],
-      "reach": 12,
+      "reach": 11,
       "hub": true
     },
     {
@@ -6756,7 +6756,7 @@
         "notes": "'Opt Out & Do Not Sell' page; privacy contact privacy@gravyanalytics.com, 703-840-8850. Unacast's own policy names the entity as 'Gravy Analytics, Inc. dba Unacast', with its opt-out at unacast.com/opt-out. gravyanalytics.com now serves Unacast's site. The older gravyanalytics.com/opt-out page is a stale 2019 page."
       },
       "missions": [],
-      "reach": 5,
+      "reach": 3,
       "hub": false
     },
     {
@@ -9107,7 +9107,7 @@
         "enterprise_data-fortify-lexisnexis",
         "enterprise_data-recon-supply-chain"
       ],
-      "reach": 8,
+      "reach": 7,
       "hub": true
     },
     {
@@ -12810,7 +12810,7 @@
       "registries": {},
       "optOut": null,
       "missions": [],
-      "reach": 15,
+      "reach": 14,
       "hub": true
     },
     {
@@ -14966,7 +14966,9 @@
       "id": "thomson-reuters-special-services",
       "name": "Thomson Reuters Special Services",
       "parent": null,
-      "kind": [],
+      "kind": [
+        "risk-identity"
+      ],
       "registries": {},
       "optOut": null,
       "missions": [],
@@ -16026,7 +16028,7 @@
         "verifiedAt": "2026-10-19"
       },
       "missions": [],
-      "reach": 4,
+      "reach": 2,
       "hub": false
     },
     {
@@ -16640,7 +16642,7 @@
         "enterprise_data-fortify-thomson",
         "enterprise_data-recon-supply-chain"
       ],
-      "reach": 7,
+      "reach": 6,
       "hub": true
     },
     {
@@ -18106,19 +18108,6 @@
     },
     {
       "from": "us-air-force",
-      "to": "babel-street",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Department of the Air Force award FA489017P0017 to BABEL STREET, INC. (period of performance 2017-07-28 to 2018-06-02, FY2017–FY2018; $333,214.00 obligated), described in the award record as \"BABEL X SUBSCRIPTION\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019062611/https://www.usaspending.gov/award/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-air-force",
       "to": "lexisnexis-risk-solutions",
       "type": "buys",
       "tier": "A",
@@ -18126,7 +18115,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064702/https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019075837/https://api.usaspending.gov/api/v2/awards/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18139,20 +18128,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019051440/https://www.usaspending.gov/award/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-army",
-      "to": "babel-street",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Department of the Army award W90BRJ15P0015 to BABEL STREET, INC. (period of performance 2015-04-05 to 2016-04-05, FY2015–FY2016; $246,000.00 obligated), described in the award record as \"BABEL SENTRY GLOBAL\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019062809/https://www.usaspending.gov/award/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080649/https://api.usaspending.gov/api/v2/awards/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18165,7 +18141,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20260403084644/https://www.usaspending.gov/award/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20260403084646/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18178,7 +18154,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730",
-          "archived": "https://web.archive.org/web/20261019065402/https://www.usaspending.gov/award/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730"
+          "archived": "https://web.archive.org/web/20261019081959/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730/"
         }
       ]
     },
@@ -18191,7 +18167,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064455/https://www.usaspending.gov/award/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019075725/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18204,7 +18180,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019063423/https://www.usaspending.gov/award/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019074534/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18217,7 +18193,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019070206/https://www.usaspending.gov/award/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019082800/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18230,7 +18206,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019063021/https://www.usaspending.gov/award/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019074147/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18243,20 +18219,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20251225224328/https://www.usaspending.gov/award/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-cbp",
-      "to": "venntel",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B02C20P00000521 to VENNTEL INC (period of performance 2020-09-10 to 2021-09-09, FY2020–FY2021; $20,000.00 obligated), described in the award record as \"PURCHASE OF PORTAL (LICENSE) SEAT\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20250524093757/https://www.usaspending.gov/award/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080210/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18269,7 +18232,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300",
-          "archived": "https://web.archive.org/web/20250502052347/https://www.usaspending.gov/award/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300"
+          "archived": "https://web.archive.org/web/20261019074722/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300/"
         }
       ]
     },
@@ -18282,7 +18245,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732",
-          "archived": "https://web.archive.org/web/20250723145439/https://www.usaspending.gov/award/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732"
+          "archived": "https://web.archive.org/web/20261019081027/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732/"
         }
       ]
     },
@@ -18295,7 +18258,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732",
-          "archived": "https://web.archive.org/web/20261019063804/https://www.usaspending.gov/award/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732"
+          "archived": "https://web.archive.org/web/20261019075050/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732/"
         }
       ]
     },
@@ -18308,7 +18271,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549",
-          "archived": "https://web.archive.org/web/20261019062010/https://www.usaspending.gov/award/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549"
+          "archived": "https://web.archive.org/web/20261019073028/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549/"
         }
       ]
     },
@@ -18321,20 +18284,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730",
-          "archived": "https://web.archive.org/web/20261019065804/https://www.usaspending.gov/award/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730"
-        }
-      ]
-    },
-    {
-      "from": "us-dea",
-      "to": "lexisnexis-risk-solutions",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDH022P00000051 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-10-01 to 2023-09-30, FY2023; $14,035.68 obligated), described in the award record as \"LEXIS NEXIS ACCURANT LE PLUS IDS WITH PHONE PLUS ACCOUNT #1357965 POP: 10/01/22-09/30/23. SUBJECT TO AVAILABILITY OF FY 2022/2023 FUNDS\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064357/https://www.usaspending.gov/award/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019082347/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730/"
         }
       ]
     },
@@ -18347,20 +18297,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019065200/https://www.usaspending.gov/award/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-dea",
-      "to": "venntel",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDST18P00000052 to VENNTEL INC (period of performance 2018-04-11 to 2019-04-11, FY2018–FY2019; $25,000.00 obligated), described in the award record as \"SOFTWARE LICENSE\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019045853/https://www.usaspending.gov/award/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080315/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18373,7 +18310,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019062218/https://www.usaspending.gov/award/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019073247/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18386,7 +18323,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019070003/https://www.usaspending.gov/award/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019082552/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18399,7 +18336,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549",
-          "archived": "https://web.archive.org/web/20261019051838/https://www.usaspending.gov/award/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549"
+          "archived": "https://web.archive.org/web/20261019080838/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549/"
         }
       ]
     },
@@ -18412,7 +18349,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730",
-          "archived": "https://web.archive.org/web/20261019052225/https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730"
+          "archived": "https://web.archive.org/web/20261019081503/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730/"
         }
       ]
     },
@@ -18425,7 +18362,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732",
-          "archived": "https://web.archive.org/web/20261019063221/https://www.usaspending.gov/award/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732"
+          "archived": "https://web.archive.org/web/20261019074337/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732/"
         }
       ]
     },
@@ -18438,7 +18375,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730",
-          "archived": "https://web.archive.org/web/20261019050628/https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730"
+          "archived": "https://web.archive.org/web/20261019074857/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730/"
         }
       ]
     },
@@ -18451,20 +18388,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012",
-          "archived": "https://web.archive.org/web/20251005001117/https://www.usaspending.gov/award/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012"
-        }
-      ]
-    },
-    {
-      "from": "us-ice",
-      "to": "clearview-ai",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21P00000127 to CLEARVIEW AI, INC. (period of performance 2021-09-03 to 2024-09-03, FY2021–FY2024; $2,287,500.00 obligated), described in the award record as \"CLEARVIEW FACIAL RECOGNITION ENTERPRISE LICENSES\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261010082347/https://www.usaspending.gov/award/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-/"
+          "archived": "https://web.archive.org/web/20261019072451/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012/"
         }
       ]
     },
@@ -18477,7 +18401,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730",
-          "archived": "https://web.archive.org/web/20261019052021/https://www.usaspending.gov/award/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730"
+          "archived": "https://web.archive.org/web/20261019081402/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730/"
         }
       ]
     },
@@ -18490,7 +18414,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20260928104747/https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019083601/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18503,7 +18427,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20260928104906/https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019083402/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18516,7 +18440,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019051230/https://www.usaspending.gov/award/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080452/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18529,7 +18453,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20250127152528/https://www.usaspending.gov/award/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019071749/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18542,7 +18466,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732",
-          "archived": "https://web.archive.org/web/20260928104946/https://www.usaspending.gov/award/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732"
+          "archived": "https://web.archive.org/web/20221227015339/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732/"
         }
       ]
     },
@@ -18555,20 +18479,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019062415/https://www.usaspending.gov/award/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-irs",
-      "to": "clearview-ai",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records Internal Revenue Service award 2023H226P00217 to CLEARVIEW AI, INC. (period of performance 2026-03-16 to 2027-03-15, FY2026–FY2027; $63,000.00 obligated), described in the award record as \"INVESTIGATOR TOOL WEB SUBSCRIPTION. BASE YEAR PERIOD OF PERFORMANCE: 03-16-26 TO 03-15-27\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019070712/https://www.usaspending.gov/award/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019073450/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18581,7 +18492,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730",
-          "archived": "https://web.archive.org/web/20260908090012/https://www.usaspending.gov/award/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730"
+          "archived": "https://web.archive.org/web/20261019081220/https://api.usaspending.gov/api/v2/awards/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730/"
         }
       ]
     },
@@ -18594,7 +18505,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050",
-          "archived": "https://web.archive.org/web/20261019052400/https://www.usaspending.gov/award/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050"
+          "archived": "https://web.archive.org/web/20261019081703/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050/"
         }
       ]
     },
@@ -18607,7 +18518,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050",
-          "archived": "https://web.archive.org/web/20261019064142/https://www.usaspending.gov/award/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050"
+          "archived": "https://web.archive.org/web/20261019075303/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050/"
         }
       ]
     },
@@ -18620,7 +18531,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730",
-          "archived": "https://web.archive.org/web/20261019065609/https://www.usaspending.gov/award/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730"
+          "archived": "https://web.archive.org/web/20261019082154/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730/"
         }
       ]
     },
@@ -18633,7 +18544,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064804/https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019075930/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18646,7 +18557,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019051709/https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080747/https://api.usaspending.gov/api/v2/awards/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18659,7 +18570,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730",
-          "archived": "https://web.archive.org/web/20261019063624/https://www.usaspending.gov/award/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730"
+          "archived": "https://web.archive.org/web/20261019074954/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730/"
         }
       ]
     },
@@ -18672,7 +18583,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20260309182608/https://www.usaspending.gov/award/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20221218064329/https://api.usaspending.gov/api/v2/awards/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18685,7 +18596,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019045926/https://www.usaspending.gov/award/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019072817/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18698,7 +18609,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019070626/https://www.usaspending.gov/award/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019083001/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18711,7 +18622,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019052532/https://www.usaspending.gov/award/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019081907/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18724,7 +18635,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20250505085513/https://www.usaspending.gov/award/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019072313/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18737,33 +18648,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064954/https://www.usaspending.gov/award/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-usms",
-      "to": "west-publishing",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records U.S. Marshals Service award 15M10226PA4700366 to WEST PUBLISHING CORPORATION (period of performance 2026-09-01 to 2027-08-31, FY2026–FY2027; $230,664.00 obligated), described in the award record as \"MISSION CRITICAL - APPREHENDING FUGITIVES FY26-IOD: VIGILANT-CRIMETRACER CF: APC-FY26-000319\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019063949/https://www.usaspending.gov/award/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-"
-        }
-      ]
-    },
-    {
-      "from": "us-usss",
-      "to": "babel-street",
-      "type": "buys",
-      "tier": "A",
-      "claim": "USAspending.gov records U.S. Secret Service award HSSS0115C0040 to BABEL STREET, INC. (period of performance 2015-09-28 to 2018-11-27, FY2015–FY2019; $2,073,260.68 obligated), described in the award record as \"OPEN SOURCE INTELLIGENCE MONITORING SYSTEM\".",
-      "sources": [
-        {
-          "url": "https://www.usaspending.gov/award/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20250418054118/https://www.usaspending.gov/award/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019080115/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18776,7 +18661,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20261019064302/https://www.usaspending.gov/award/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-"
+          "archived": "https://web.archive.org/web/20261019075405/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-/"
         }
       ]
     },
@@ -18789,7 +18674,7 @@
       "sources": [
         {
           "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-",
-          "archived": "https://web.archive.org/web/20260106042943/https://www.usaspending.gov/award/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-/"
+          "archived": "https://web.archive.org/web/20261019080024/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-/"
         }
       ]
     }

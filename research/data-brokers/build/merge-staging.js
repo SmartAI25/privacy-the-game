@@ -8,7 +8,7 @@
 //     drop and reassign act on staged links (keys after id resolution); unpublish and reclaim on every
 //     link (reclaim keys are final, i.e. after reassign). reclaim sets the narrower claim a fact-check found;
 //     with `replaces` (the old claim) it applies only when the current claim equals it, else logs a conflict.
-//   record-overrides.json { brokerId: { name?, parent?, sells?, source?, dropSources?, replaces?: {field: value}, reason } }
+//   record-overrides.json { brokerId: { name?, parent?, sells?, kind?, source?, dropSources?, replaces?: {field: value}, reason } }
 //     An override never silently replaces a different non-empty value: it applies only when the
 //     current value is empty or equals replaces[field]; otherwise it is reported as a conflict.
 // Same-tier claim conflicts go to the claim with the stronger source kind (sourceRank).
@@ -34,15 +34,16 @@ const normUrl = (u) => String(u).toLowerCase().replace(/^https?:\/\/(www\.)?/, '
 const domainLike = (a) => /^[\w.-]+\.[a-z]{2,}$/i.test(String(a).trim());
 
 // Source-kind precedence for same-tier claim conflicts (higher wins):
-// regulator order/complaint > court record > issuer's own SEC/statutory annual report >
+// regulator order/complaint > court record or procurement award record > issuer's own SEC/statutory annual report >
 // an SEC filing's summary of third-party allegations > anything else.
 const REGULATOR = /^(ftc|cfpb|fcc|sec-order|doj|state-ag|regulator)/;
+const COURT_LEVEL = new Set(['court', 'procurement']); // R24: government award records rank with court records
 const ISSUER = new Set(['sec-10k', 'sec-20f', 'sec-40f', 'sec-8k', 'annual-report']);
 const THIRD_PARTY = /\b(alleg\w*|putative class|plaintiffs?|lawsuits?)\b/i;
 export function sourceRank(link, sources) {
   const kinds = (link.sources ?? []).map((id) => sources[id]?.kind ?? '');
   if (kinds.some((k) => REGULATOR.test(k))) return 5;
-  if (kinds.includes('court')) return 4;
+  if (kinds.some((k) => COURT_LEVEL.has(k))) return 4;
   if (kinds.some((k) => ISSUER.has(k))) return THIRD_PARTY.test(link.claim ?? '') ? 2 : 3;
   return 1;
 }
@@ -338,7 +339,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     }
     if (ov.source !== undefined && !mergedSources[ov.source]) { reject({ broker: id, override: ov }, `${id}: record-overrides cites unknown source ${ov.source}; not applied`); continue; }
     const before = JSON.stringify(w);
-    for (const f of ['name', 'parent', 'sells']) {
+    for (const f of ['name', 'parent', 'sells', 'kind']) {
       if (!(f in ov) || same(w[f], ov[f])) continue;
       const ok = empty(w[f]) || (isObj(ov.replaces) && f in ov.replaces && same(ov.replaces[f], w[f]));
       if (!ok) { reject({ broker: id, field: f, existing: w[f], override: ov[f] }, `${id}: record-overrides ${f} would overwrite ${JSON.stringify(w[f])}; not applied (confirm it in "replaces")`); continue; }
