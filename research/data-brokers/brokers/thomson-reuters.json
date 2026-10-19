@@ -14,7 +14,8 @@
   "sells": [
     "US public records platform (CLEAR) for authorized businesses and government agencies",
     "CLEAR public- and proprietary-records platform licensed to law enforcement, welfare agencies, financial institutions, law firms and other authorized businesses and agencies",
-    "records sourced from 'third-party business partners (including private data providers and data brokers)', consumer reporting agencies, government entities and third-party websites (no companies named)"
+    "records sourced from 'third-party business partners (including private data providers and data brokers)', consumer reporting agencies, government entities and third-party websites (no companies named)",
+    "CLEAR investigation database"
   ],
   "optOut": {
     "method": "email",
@@ -33,6 +34,7 @@
   },
   "sources": [
     "sec-tri-40f-2025-annual-report",
-    "pol-tr-privacy-records"
+    "pol-tr-privacy-records",
+    "jour-globe-wapo-nctue-utility-ice-2021"
   ]
 }

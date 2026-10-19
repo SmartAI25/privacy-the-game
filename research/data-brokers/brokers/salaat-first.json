@@ -1,0 +1,19 @@
+{
+  "id": "salaat-first",
+  "name": "Salaat First",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-vice-salaat-first-2021"
+  ]
+}

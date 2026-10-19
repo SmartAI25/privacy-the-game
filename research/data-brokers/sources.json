@@ -747,5 +747,82 @@
     "kind": "privacy-policy",
     "title": "Whitepages — Opt-out (suppression requests)",
     "accessed": "2026-10-18"
+  },
+  "jour-globe-wapo-nctue-utility-ice-2021": {
+    "url": "https://www.bostonglobe.com/2021/12/08/nation/utility-giants-agree-no-longer-share-sensitive-records-ice-used-track-public/",
+    "archived": "https://web.archive.org/web/20250720104912/https://www.bostonglobe.com/2021/12/08/nation/utility-giants-agree-no-longer-share-sensitive-records-ice-used-track-public/",
+    "kind": "journalism",
+    "title": "Utility giants agree to no longer share sensitive records ICE used to track the public (Washington Post reporting, Boston Globe, Dec. 8, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-markup-life360-2021": {
+    "url": "https://themarkup.org/privacy/2021/12/06/the-popular-family-safety-app-life360-is-selling-precise-location-data-on-its-tens-of-millions-of-user",
+    "archived": "https://web.archive.org/web/20261012032733/https://themarkup.org/privacy/2021/12/06/the-popular-family-safety-app-life360-is-selling-precise-location-data-on-its-tens-of-millions-of-user",
+    "kind": "journalism",
+    "title": "The Popular Family Safety App Life360 Is Selling Precise Location Data on Its Tens of Millions of Users (The Markup, Dec. 6, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-military-xmode-2020": {
+    "url": "https://www.vice.com/en/article/us-military-location-data-xmode-locate-x/",
+    "archived": "https://web.archive.org/web/20261011174123/https://www.vice.com/en/article/us-military-location-data-xmode-locate-x/",
+    "kind": "journalism",
+    "title": "How the U.S. Military Buys Location Data from Ordinary Apps (Motherboard/VICE, Nov. 16, 2020)",
+    "accessed": "2026-10-18"
+  },
+  "jour-wyden-markey-auto-letter-2024": {
+    "url": "https://www.wyden.senate.gov/imo/media/doc/wyden-markey_auto_privacy_letter_to_ftc.pdf",
+    "archived": "https://web.archive.org/web/20260929211412/https://www.wyden.senate.gov/imo/media/doc/wyden-markey_auto_privacy_letter_to_ftc.pdf",
+    "kind": "other",
+    "title": "Letter from Sens. Wyden and Markey to FTC Chair Khan on automakers sharing driving data with Verisk (July 26, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "jour-eff-fog-data-science-2022": {
+    "url": "https://www.eff.org/deeplinks/2022/08/inside-fog-data-science-secretive-company-selling-mass-surveillance-local-police",
+    "archived": "https://web.archive.org/web/20261001222535/https://www.eff.org/deeplinks/2022/08/inside-fog-data-science-secretive-company-selling-mass-surveillance-local-police",
+    "kind": "journalism",
+    "title": "Inside Fog Data Science, the Secretive Company Selling Mass Surveillance to Local Police (EFF, Aug. 31, 2022)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-bounty-hunter-2019": {
+    "url": "https://www.vice.com/en/article/i-gave-a-bounty-hunter-300-dollars-located-phone-microbilt-zumigo-tmobile/",
+    "archived": "https://web.archive.org/web/20261012084754/https://www.vice.com/en/article/i-gave-a-bounty-hunter-300-dollars-located-phone-microbilt-zumigo-tmobile/",
+    "kind": "journalism",
+    "title": "I Gave a Bounty Hunter $300. Then He Located Our Phone (Motherboard/VICE, Jan. 8, 2019)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-salaat-first-2021": {
+    "url": "https://www.vice.com/en/article/muslim-app-location-data-salaat-first/",
+    "archived": "https://web.archive.org/web/20260820033311/https://www.vice.com/en/article/muslim-app-location-data-salaat-first/",
+    "kind": "journalism",
+    "title": "Leaked Location Data Shows Another Muslim Prayer App Tracking Users (Motherboard/VICE, Jan. 11, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-markup-xandr-segments-2023": {
+    "url": "https://themarkup.org/privacy/2023/06/08/from-heavy-purchasers-of-pregnancy-tests-to-the-depression-prone-we-found-650000-ways-advertisers-label-you",
+    "archived": "https://web.archive.org/web/20261001185656/https://themarkup.org/privacy/2023/06/08/from-heavy-purchasers-of-pregnancy-tests-to-the-depression-prone-we-found-650000-ways-advertisers-label-you",
+    "kind": "journalism",
+    "title": "From “Heavy Purchasers” of Pregnancy Tests to the Depression-Prone: We Found 650,000 Ways Advertisers Label You (The Markup, June 8, 2023)",
+    "accessed": "2026-10-18"
+  },
+  "jour-wyden-near-letter-2024": {
+    "url": "https://www.wyden.senate.gov/imo/media/doc/signed_near_letter_to_ftc_and_sec.pdf",
+    "archived": "https://web.archive.org/web/20261012113835/https://www.wyden.senate.gov/imo/media/doc/signed_near_letter_to_ftc_and_sec.pdf",
+    "kind": "other",
+    "title": "Letter from Sen. Wyden to FTC Chair Khan and SEC Chair Gensler on Near Intelligence (Feb. 13, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "jour-propublica-facebook-brokers-2016": {
+    "url": "https://www.propublica.org/article/facebook-doesnt-tell-users-everything-it-really-knows-about-them",
+    "archived": "https://web.archive.org/web/20261010025150/https://www.propublica.org/article/facebook-doesnt-tell-users-everything-it-really-knows-about-them",
+    "kind": "journalism",
+    "title": "Facebook Doesn't Tell Users Everything It Really Knows About Them (ProPublica, Dec. 27, 2016)",
+    "accessed": "2026-10-18"
+  },
+  "jour-nrk-phone-spying-venntel-2020": {
+    "url": "https://nrkbeta.no/2020/12/03/my-phone-was-spying-on-me-so-i-tracked-down-the-surveillants/",
+    "archived": "https://web.archive.org/web/20260525005333/https://nrkbeta.no/2020/12/03/my-phone-was-spying-on-me-so-i-tracked-down-the-surveillants/",
+    "kind": "journalism",
+    "title": "My Phone Was Spying on Me, so I Tracked Down the Surveillants (NRK Beta, Dec. 3, 2020)",
+    "accessed": "2026-10-18"
   }
 }

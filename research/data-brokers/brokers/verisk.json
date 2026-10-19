@@ -7,13 +7,15 @@
   ],
   "parent": null,
   "kind": [
-    "risk-identity"
+    "risk-identity",
+    "automotive"
   ],
   "registries": {},
   "sells": [
     "insurance underwriting and claims data and analytics from proprietary and contributory data",
     "consumer reports built from driving data (per FTC)",
-    "insurance data and analytics incl. ISO ClaimSearch"
+    "insurance data and analytics incl. ISO ClaimSearch",
+    "Driving Behavior Data History Reports"
   ],
   "optOut": null,
   "size": {
@@ -29,6 +31,7 @@
   "sources": [
     "sec-vrsk-10k-2025",
     "enf-ftc-gm-complaint-2026",
-    "pol-verisk-privacy-policies"
+    "pol-verisk-privacy-policies",
+    "jour-wyden-markey-auto-letter-2024"
   ]
 }

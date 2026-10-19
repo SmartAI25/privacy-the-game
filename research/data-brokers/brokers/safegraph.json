@@ -22,6 +22,7 @@
     "signals": []
   },
   "sources": [
-    "pol-safegraph-privacy"
+    "pol-safegraph-privacy",
+    "jour-markup-life360-2021"
   ]
 }

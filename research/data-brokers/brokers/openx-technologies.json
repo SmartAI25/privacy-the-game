@@ -1,9 +1,13 @@
 {
   "id": "openx-technologies",
   "name": "OpenX Technologies, Inc.",
-  "aliases": [],
+  "aliases": [
+    "OpenX"
+  ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "ad-network"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
@@ -22,7 +26,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "jour-wyden-near-letter-2024"
   ],
   "website": "https://www.openx.com"
 }

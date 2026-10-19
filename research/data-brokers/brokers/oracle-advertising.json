@@ -4,7 +4,9 @@
   "aliases": [
     "Oracle Data Cloud",
     "BlueKai",
-    "Moat"
+    "Moat",
+    "Oracle",
+    "Oracle BlueKai"
   ],
   "parent": null,
   "kind": [
@@ -26,6 +28,8 @@
   },
   "sources": [
     "pol-oracle-advertising-eol-faq",
-    "pol-oracle-data-services"
+    "pol-oracle-data-services",
+    "jour-markup-xandr-segments-2023",
+    "jour-propublica-facebook-brokers-2016"
   ]
 }
