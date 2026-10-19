@@ -7862,7 +7862,9 @@
         "status": "verified",
         "verifiedAt": "2026-10-19"
       },
-      "missions": [],
+      "missions": [
+        "location_brokers-fortify-optout"
+      ],
       "reach": 3,
       "hub": false
     },
@@ -14187,9 +14189,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-19"
       },
-      "missions": [
-        "people_search-fortify-privacy-portals"
-      ],
+      "missions": [],
       "reach": 1,
       "hub": false
     },
