@@ -2,11 +2,15 @@
   "id": "epsilon-data-management",
   "name": "Epsilon Data Management, LLC",
   "aliases": [
-    "EPSILON DATA MANAGEMENT LLC"
+    "EPSILON DATA MANAGEMENT LLC",
+    "Epsilon Data Management LLC",
+    "Epsilon"
   ],
-  "parent": null,
+  "parent": "publicis-groupe",
   "kind": [
-    "health"
+    "health",
+    "marketing",
+    "identity-resolution"
   ],
   "registries": {
     "CA": "2026",
@@ -14,12 +18,22 @@
     "TX": null,
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "identity graph and marketing data",
+    "consumer marketing databases supplied to clients as contacts for marketing programs"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://legal.epsilon.com/dsr/",
     "status": "verified",
-    "verifiedAt": "2026-10-18"
+    "verifiedAt": "2026-10-18",
+    "alternates": [
+      {
+        "site": "legal.epsilon.com",
+        "url": "https://legal.epsilon.com/us/consumer-information",
+        "source": "pol-epsilon-consumer-info"
+      }
+    ]
   },
   "size": {
     "known": false,
@@ -27,7 +41,13 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-publicis-urd-2025-note36",
+    "sec-publicis-urd-2025-activities",
+    "pol-epsilon-consumer-info"
   ],
-  "website": "https://www.epsilon.com"
+  "website": "https://www.epsilon.com",
+  "missions": [
+    "ad_trackers-reclaim-individual"
+  ]
 }

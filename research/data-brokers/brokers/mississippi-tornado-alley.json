@@ -14,22 +14,56 @@
     "FastPeopleSearch.com",
     "Mississippi Tornado Alley LLC",
     "MISSISSIPPI TORNADO ALLEY LLC",
-    "FastPplSearch, USPhonebook, SearchPeopleFree, USA-People-Search,AdvancedBackgroundChecks, SmartBackgroundChecks,CyberBackgroundChecks,"
+    "FastPplSearch, USPhonebook, SearchPeopleFree, USA-People-Search,AdvancedBackgroundChecks, SmartBackgroundChecks,CyberBackgroundChecks,",
+    "AdvancedBackgroundChecks",
+    "FastPeopleSearch",
+    "SearchPeopleFree",
+    "SmartBackgroundChecks",
+    "USPhonebook"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "people search and background records",
+    "free people-search records",
+    "free people search",
+    "reverse phone and people search"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.advancedbackgroundchecks.com/privacy",
     "status": "verified",
-    "verifiedAt": "2026-10-18"
+    "verifiedAt": "2026-10-18",
+    "alternates": [
+      {
+        "site": "fastpeoplesearch.com",
+        "url": "https://www.fastpeoplesearch.com/removal",
+        "source": "pol-fastpeoplesearch-removal"
+      },
+      {
+        "site": "searchpeoplefree.com",
+        "url": "https://www.searchpeoplefree.com/opt-out",
+        "source": "pol-searchpeoplefree-optout"
+      },
+      {
+        "site": "smartbackgroundchecks.com",
+        "url": "https://www.smartbackgroundchecks.com/remove",
+        "source": "pol-smartbackgroundchecks-remove"
+      },
+      {
+        "site": "usphonebook.com",
+        "url": "https://www.usphonebook.com/removal",
+        "source": "pol-usphonebook-removal"
+      }
+    ]
   },
   "size": {
     "known": false,
@@ -38,7 +72,17 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "pol-advancedbackgroundchecks-removal",
+    "pol-fastpeoplesearch-removal",
+    "pol-searchpeoplefree-optout",
+    "pol-smartbackgroundchecks-remove",
+    "pol-usphonebook-removal"
   ],
-  "website": "https://AdvancedBackgroundChecks.com"
+  "website": "https://AdvancedBackgroundChecks.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-1",
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-removal-links"
+  ]
 }

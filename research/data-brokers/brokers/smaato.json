@@ -1,0 +1,19 @@
+{
+  "id": "smaato",
+  "name": "Smaato",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-wyden-near-letter-2024"
+  ]
+}

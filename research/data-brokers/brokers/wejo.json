@@ -1,0 +1,21 @@
+{
+  "id": "wejo",
+  "name": "Wejo",
+  "aliases": [
+    "Wejo Ltd."
+  ],
+  "parent": null,
+  "kind": [
+    "automotive"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026"
+  ]
+}

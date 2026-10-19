@@ -4,20 +4,27 @@
   "aliases": [
     "Spydialer.com",
     "SPY LABS ADCO LLC",
-    "SpyDialer"
+    "SpyDialer",
+    "Spy Dialer",
+    "Spy Labs Adco, LLC"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "reverse phone lookup"
+  ],
   "optOut": {
     "method": "web-form",
-    "url": "https://spydialer.com/privacy.aspx",
+    "url": "https://www.spydialer.com/consumers/",
+    "notes": "spydialer.com/optout.aspx redirects here ('Remove My Info'); open to consumers in all states. Operator per footer: Spy Labs Adco, LLC.",
     "status": "verified",
     "verifiedAt": "2026-10-18"
   },
@@ -28,7 +35,11 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "pol-spydialer-consumers"
   ],
-  "website": "https://spydialer.com"
+  "website": "https://spydialer.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-2"
+  ]
 }

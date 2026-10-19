@@ -1,0 +1,19 @@
+{
+  "id": "neuro-id",
+  "name": "Neuro-ID, Inc.",
+  "aliases": [
+    "NeuroID"
+  ],
+  "parent": "experian",
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-experian-annual-report-2026"
+  ]
+}

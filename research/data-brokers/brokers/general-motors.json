@@ -2,11 +2,13 @@
   "id": "general-motors",
   "name": "General Motors LLC",
   "aliases": [
-    "GENERAL MOTORS LLC"
+    "GENERAL MOTORS LLC",
+    "GM"
   ],
   "parent": null,
   "kind": [
-    "location"
+    "location",
+    "automotive"
   ],
   "registries": {
     "CA": "2026",
@@ -27,7 +29,8 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-vrsk-10k-2025"
   ],
   "website": "https://www.gm.com"
 }

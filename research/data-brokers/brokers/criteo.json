@@ -1,9 +1,13 @@
 {
   "id": "criteo",
   "name": "Criteo Corp.",
-  "aliases": [],
+  "aliases": [
+    "Criteo"
+  ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "ad-network"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
@@ -22,7 +26,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "enf-ftc-goodrx-complaint-2023"
   ],
   "website": "https://www.criteo.com"
 }

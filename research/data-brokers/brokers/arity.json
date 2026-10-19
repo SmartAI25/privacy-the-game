@@ -1,0 +1,20 @@
+{
+  "id": "arity",
+  "name": "Arity",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "automotive"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-life360-2021"
+  ]
+}

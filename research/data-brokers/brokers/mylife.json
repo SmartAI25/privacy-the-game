@@ -1,0 +1,30 @@
+{
+  "id": "mylife",
+  "name": "MyLife",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {},
+  "sells": [
+    "people-search profiles and public 'Reputation Profile' scores",
+    "data from public databases, marketing and contracting partners, social media and data aggregators (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.mylife.com/ccpa/index.pubview",
+    "notes": "'Opt out of sale of personal information' form requests opt-out and deletion and removes any matching Reputation Profile. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-02-02 Wayback capture."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-mylife-optout",
+    "pol-mylife-privacy"
+  ],
+  "missions": [
+    "people_search-reclaim-stragglers"
+  ]
+}

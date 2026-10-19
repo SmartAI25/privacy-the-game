@@ -4,8 +4,10 @@
   "aliases": [
     "Dun and Bradstreet AB"
   ],
-  "parent": null,
-  "kind": [],
+  "parent": "dun-bradstreet",
+  "kind": [
+    "marketing"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
@@ -24,7 +26,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "sec-dnb-10k-2024"
   ],
   "website": "https://www.netwisedata.com"
 }

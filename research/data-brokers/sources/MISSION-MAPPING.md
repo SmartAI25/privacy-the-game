@@ -2,7 +2,7 @@
 
 `build/map-missions.js` fills each broker record's `missions` from the step URLs in
 `src/data/missions-reclamation.js`. Run it again after the missions or the broker records change;
-it is idempotent. Mapped 2026-10-18: 28 broker records carry at least one mission.
+it is idempotent. Mapped 2026-10-18: 33 broker records carry at least one mission.
 
 ## How a step URL is matched
 
@@ -22,7 +22,7 @@ constellation spec says a freeze lights no star, because it doesn't stop a burea
 |---|---|---|
 | consumer.risk.lexisnexis.com/request, optout.lexisnexis.com | lexisnexis-risk-solutions, lexisnexis-risk-solutions-fl | LexisNexis Risk Solutions' consumer opt-out. Not `relx` (RELX Inc.) or `lexisnexis-a-division-of-relx` (legal publishing), which share lexisnexis.com. |
 | legal.thomsonreuters.com/…/privacy-records | thomson-reuters, west-publishing, west-publising | Thomson Reuters' CLEAR/public-records request. West Publishing Corp is TR's registered broker; `west-publising` is the Oregon registry's misspelt duplicate of it. |
-| transunion.com/consumer-privacy | transunion, trans-union, tloxp | The mission says TLO is included. Other TransUnion subsidiaries that list transunion.com as their website are not lit. |
+| transunion.com/consumer-privacy | trans-union, tloxp | Trans Union LLC's consumer privacy portal; the mission says TLO is included. The TransUnion holding company (`transunion`) and the other subsidiaries that list transunion.com as their website are not lit. |
 | beenverified.com/faq/opt-out/ | beenverified, beenverified-llc-and-its-subsidiaries-and-affiliates | Two registry records for the same company (an import duplicate). |
 
 ## Steps without a URL that name a broker (`NAMED_STEPS`)
@@ -32,11 +32,18 @@ constellation spec says a freeze lights no star, because it doesn't stop a burea
 | people_search-fortify-removal-links | intelius | "Intelius: use the suppression request in its privacy center" |
 | people_search-fortify-privacy-portals | intelius | "PeopleFinder: use the opt-out link on its site". Intelius, LLC's CA registry filing lists www.peoplefinder.com among its websites. |
 | people_search-reclaim-stragglers | mylife | "MyLife: use its privacy request form" |
+| people_search-reclaim-stragglers | nuwber | "Nuwber: … use its own removal link" (registry record `nuwber`; the site didn't answer in October 2026) |
+| people_search-fortify-extended-sweep-2 | peoplewhiz, quickpeopletrace, usatrace | "PeopleWhiz … use the opt-out link", "QuickPeopleTrace …", "Usatrace …" |
+| people_search-fortify-extended-sweep-3 | rocketreach | "RocketReach: use its profile removal option" |
 | enterprise_data-fortify-property | corelogic | "CoreLogic (now Cotality): submit a consumer privacy request" |
+| enterprise_data-reclaim-deep-layer | insurance-services-office | "Verisk / ISO ClaimSearch (insurance claims)": ClaimSearch is ISO's database |
 
-Not mapped: Oracle Data Cloud, X-Mode/Outlogic and Gravy steps, which tell the player there is
-nothing left to file; Nuwber, ClustrMaps and AdvancedPeopleSearch, whose sites are down or parked
-and have no record.
+Not mapped:
+- the Oracle Data Cloud, X-Mode/Outlogic and Gravy steps, which tell the player there is nothing
+  left to file;
+- ClustrMaps and AdvancedPeopleSearch: down or parked, and no record;
+- Tracers and Merlin Information Services (enterprise_data-reclaim-deep-layer): no record. Tracers
+  is not `tracerfy`, which is a different company.
 
 ## Unmatched step URLs and decisions
 

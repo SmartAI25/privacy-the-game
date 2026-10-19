@@ -1,0 +1,31 @@
+{
+  "id": "jumpshot",
+  "name": "Jumpshot",
+  "aliases": [
+    "Jumpshot, Inc."
+  ],
+  "parent": "avast",
+  "kind": [
+    "marketing",
+    "data-marketplace"
+  ],
+  "registries": {},
+  "sells": [
+    "clickstream/browsing data feeds (All Clicks Feed, Search Plus Click Feed, Transaction Feed, etc.)"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "other",
+        "value": "FTC alleged Jumpshot sold browsing information to more than 100 customers from 2014 (2024 complaint)",
+        "source": "enf-ftc-avast-complaint-2024"
+      }
+    ]
+  },
+  "sources": [
+    "enf-ftc-avast-complaint-2024",
+    "enf-ftc-avast-order-2024"
+  ]
+}

@@ -3,20 +3,26 @@
   "name": "Free Data Services, LLC",
   "aliases": [
     "TruePeopleSearch.com",
-    "FREE DATA SERVICES LLC"
+    "FREE DATA SERVICES LLC",
+    "TruePeopleSearch"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "people-search"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "free people-search records"
+  ],
   "optOut": {
     "method": "web-form",
-    "url": "https://www.truepeoplesearch.com/privacy",
+    "url": "https://www.truepeoplesearch.com/removal",
+    "notes": "Agree to terms, CAPTCHA, find record, remove. Live page returned 403 to automated fetches on 2026-10-18; the latest readable Wayback capture is from 2024-03-28, so this route may be stale.",
     "status": "blocked",
     "verifiedAt": "2026-10-18"
   },
@@ -27,7 +33,12 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "pol-truepeoplesearch-removal"
   ],
-  "website": "https://truepeoplesearch.com"
+  "website": "https://truepeoplesearch.com",
+  "missions": [
+    "people_search-fortify-removal-links",
+    "people_search-recon-find-yourself"
+  ]
 }

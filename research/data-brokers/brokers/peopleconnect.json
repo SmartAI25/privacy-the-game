@@ -1,0 +1,29 @@
+{
+  "id": "peopleconnect",
+  "name": "PeopleConnect",
+  "aliases": [
+    "The Control Group Media Company LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {},
+  "sells": [
+    "people-search brands Intelius, TruthFinder, Instant Checkmate and US Search; Classmates"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://suppression.peopleconnect.us/login",
+    "notes": "'PeopleConnect - Suppression Center' returned HTTP 200 on 2026-10-18 (JavaScript app; only its title is machine-readable). Third-party guides say one suppression covers Intelius, TruthFinder, Instant Checkmate and US Search; that coverage is not confirmed from PeopleConnect's own text."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy",
+    "pol-peopleconnect-suppression"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "appriss-insights",
+  "name": "Appriss Insights, LLC",
+  "aliases": [
+    "Appriss Insights"
+  ],
+  "parent": "equifax",
+  "kind": [
+    "risk-identity"
+  ],
+  "registries": {},
+  "sells": [
+    "VINE (a registered trademark of Appriss Insights, per the Equifax page)"
+  ],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-efx-10k-2025-ex21",
+    "sec-efx-10k-2025",
+    "pol-twn-employment-data-report"
+  ]
+}

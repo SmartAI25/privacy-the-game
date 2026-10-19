@@ -1,0 +1,20 @@
+{
+  "id": "predicio",
+  "name": "Predicio",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-vice-salaat-first-2021",
+    "jour-nrk-phone-spying-venntel-2020"
+  ]
+}

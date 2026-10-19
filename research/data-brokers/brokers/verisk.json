@@ -1,0 +1,35 @@
+{
+  "id": "verisk",
+  "name": "Verisk Analytics, Inc.",
+  "aliases": [
+    "Verisk",
+    "Verisk Analytics"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity",
+    "automotive"
+  ],
+  "registries": {},
+  "sells": [
+    "insurance underwriting and claims data and analytics from proprietary and contributory data",
+    "insurance data and analytics incl. ISO ClaimSearch",
+    "Driving Behavior Data History Reports"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 total revenues $3,072.7 million",
+        "source": "sec-vrsk-10k-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-vrsk-10k-2025",
+    "pol-verisk-privacy-policies",
+    "jour-wyden-markey-auto-letter-2024"
+  ]
+}

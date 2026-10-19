@@ -1,0 +1,28 @@
+{
+  "id": "innovis",
+  "name": "Innovis",
+  "aliases": [
+    "Innovis Data Solutions, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "financial"
+  ],
+  "registries": {},
+  "sells": [
+    "consumer reports sold to customers and to resellers who pass them on to their own customers"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.innovis.com/personal/optOutOptIn",
+    "notes": "Prescreen (firm offers of credit/insurance) opt-out is done at www.optoutprescreen.com. Innovis says it does no direct-to-consumer marketing, so it cannot process marketing opt-outs. Security freeze at innovis.com/personal/securityFreeze; phone 1-800-540-2505."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-innovis-optout",
+    "pol-innovis-privacy"
+  ]
+}

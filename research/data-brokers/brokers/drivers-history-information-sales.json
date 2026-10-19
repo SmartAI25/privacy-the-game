@@ -1,8 +1,10 @@
 {
   "id": "drivers-history-information-sales",
   "name": "Drivers History Information Sales, LLC",
-  "aliases": [],
-  "parent": null,
+  "aliases": [
+    "Drivers History Information Sales LLC"
+  ],
+  "parent": "transunion",
   "kind": [],
   "registries": {
     "CA": "2026",
@@ -23,7 +25,8 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "sec-tru-10k-2025-ex21"
   ],
   "website": "https://www.transunion.com"
 }
