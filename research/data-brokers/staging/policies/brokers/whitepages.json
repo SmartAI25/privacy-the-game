@@ -1,0 +1,28 @@
+{
+  "id": "whitepages",
+  "name": "Whitepages",
+  "aliases": [
+    "Whitepages, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search, reverse phone and property data; Pro API contact and property data",
+    "data from data licensors, public records, affiliated entities, marketing companies and surveys (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.whitepages.com/suppression-requests",
+    "notes": "5-step opt-out starting with your profile URL. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-14 Wayback capture."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-whitepages-suppression",
+    "pol-whitepages-privacy"
+  ]
+}

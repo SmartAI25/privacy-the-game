@@ -1,0 +1,15 @@
+{
+  "id": "conversant",
+  "name": "Conversant LLC",
+  "aliases": [],
+  "parent": "publicis-groupe",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-publicis-urd-2025-note36"
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "stagedId": "collective-data-solutions",
+    "existingId": "collective-data-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "criteo",
+    "existingId": "criteo",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "inmarket-media",
+    "existingId": "inmarket-media",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "instant-checkmate",
+    "existingId": "instant-checkmate",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "lexisnexis-risk-solutions",
+    "existingId": "lexisnexis-risk-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "liveramp",
+    "existingId": "liveramp",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "lotame",
+    "existingId": "lotame-solutions",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "mobilewalla",
+    "existingId": "mobilewalla",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "neustar",
+    "existingId": "neustar",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "omnicom",
+    "existingId": "omnicom",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "outlogic",
+    "existingId": "outlogic",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "spokeo",
+    "existingId": "spokeo",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "trans-union",
+    "existingId": "trans-union",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "transunion-rental-screening-solutions",
+    "existingId": "transunion-rental-screening-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "truthfinder",
+    "existingId": "truthfinder",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "venntel",
+    "existingId": "venntel",
+    "matchedBy": "id"
+  }
+]

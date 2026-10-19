@@ -1,0 +1,22 @@
+{
+  "id": "oracle",
+  "name": "Oracle",
+  "aliases": [
+    "Oracle BlueKai",
+    "Oracle Data Cloud"
+  ],
+  "parent": null,
+  "kind": [
+    "marketing",
+    "data-marketplace"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-xandr-segments-2023",
+    "jour-propublica-facebook-brokers-2016"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "x-mode-social",
+  "name": "X-Mode Social",
+  "aliases": [
+    "X-Mode"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "app location data"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-life360-2021",
+    "jour-vice-military-xmode-2020"
+  ]
+}

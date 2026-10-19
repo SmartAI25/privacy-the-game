@@ -1,0 +1,272 @@
+[
+  {
+    "from": "national-consumer-telecom-utilities-exchange",
+    "to": "equifax",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Washington Post reporting (Dec. 2021, via Boston Globe) says the National Consumer Telecom & Utilities Exchange gave utility header data to Equifax, which Equifax said NCTUE had allowed it to license for law-enforcement purposes; NCTUE said in 2021 it was ending the practice.",
+    "sources": [
+      "jour-globe-wapo-nctue-utility-ice-2021"
+    ]
+  },
+  {
+    "from": "equifax",
+    "to": "thomson-reuters",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Washington Post reporting (Dec. 2021, via Boston Globe) says Equifax sold NCTUE utility header data for use in databases including Thomson Reuters' CLEAR, a service ICE subscribes to.",
+    "sources": [
+      "jour-globe-wapo-nctue-utility-ice-2021"
+    ]
+  },
+  {
+    "from": "life360",
+    "to": "x-mode-social",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Life360 sold location data to X-Mode, confirmed by a former Life360 employee, a former X-Mode employee, and Life360's CEO naming X-Mode among about a dozen data partners.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ]
+  },
+  {
+    "from": "life360",
+    "to": "cuebiq",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Cuebiq received raw location data from Life360, per former employees and Life360's CEO; Cuebiq said it provides only aggregated data to its customers.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ]
+  },
+  {
+    "from": "life360",
+    "to": "arity",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Life360's privacy policy disclosed Arity as a data partner and that Life360 said it would continue selling precise location data only to Arity.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ]
+  },
+  {
+    "from": "life360",
+    "to": "safegraph",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that a former Life360 employee and a Life360 executive's email it viewed identified SafeGraph as a buyer of Life360 data; Life360's CEO declined to confirm, citing confidentiality.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ]
+  },
+  {
+    "from": "muslim-pro",
+    "to": "x-mode-social",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that Muslim Pro was among the apps sending location data to X-Mode; Muslim Pro then said it would stop sharing data with X-Mode.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ]
+  },
+  {
+    "from": "x-mode-social",
+    "to": "sierra-nevada",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that archived versions of X-Mode's website listed Sierra Nevada Corporation as a customer; X-Mode said it does not work with Sierra Nevada but did not deny it had been a customer.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ]
+  },
+  {
+    "from": "x-mode-social",
+    "to": "systems-technology-research",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that archived versions of X-Mode's website listed Systems & Technology Research as a customer; X-Mode said it does not work with STR but did not deny it had been a customer.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ]
+  },
+  {
+    "from": "honda",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sens. Wyden and Markey wrote to the FTC on July 26, 2024 that, per information Honda gave Wyden's office, Honda shared data from 97,000 cars with Verisk between 2020 and 2024 for $25,920 (26 cents per car).",
+    "sources": [
+      "jour-wyden-markey-auto-letter-2024"
+    ]
+  },
+  {
+    "from": "hyundai",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sens. Wyden and Markey wrote to the FTC on July 26, 2024 that, per information Hyundai provided, Hyundai shared data from 1.7 million vehicles with Verisk between 2018 and 2024 for $1,043,315.69 (61 cents per car).",
+    "sources": [
+      "jour-wyden-markey-auto-letter-2024"
+    ]
+  },
+  {
+    "from": "venntel",
+    "to": "fog-data-science",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "EFF reported in Aug. 2022, from public records, that evidence (a Venntel-headed license agreement, an Iowa DPS email Fog forwarded to Venntel, and Venntel URLs in Fog's code) suggests Venntel is the source of Fog Data Science's location data; EFF said it could not confirm this for sure.",
+    "sources": [
+      "jour-eff-fog-data-science-2022"
+    ]
+  },
+  {
+    "from": "zumigo",
+    "to": "microbilt",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2019 that T-Mobile shared location data with aggregator Zumigo, which shared information with Microbilt, whose phone-tracking product was used to locate a reporter's phone for a bounty hunter.",
+    "sources": [
+      "jour-vice-bounty-hunter-2019"
+    ]
+  },
+  {
+    "from": "salaat-first",
+    "to": "predicio",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2021 that the developer of the Salaat First prayer app confirmed the app sent users' location data to Predicio.",
+    "sources": [
+      "jour-vice-salaat-first-2021"
+    ]
+  },
+  {
+    "from": "predicio",
+    "to": "gravy-analytics",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2021 that documents shared by NRK show Gravy Analytics, Venntel's parent, obtained data from Predicio; it was unclear whether Salaat First data specifically reached Gravy.",
+    "sources": [
+      "jour-vice-salaat-first-2021"
+    ]
+  },
+  {
+    "from": "complementics",
+    "to": "gravy-analytics",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "NRK reported in Dec. 2020 that Gravy Analytics' response to a data-access request named Complementics (and Predicio) as companies its data on the reporter came from.",
+    "sources": [
+      "jour-nrk-phone-spying-venntel-2020"
+    ]
+  },
+  {
+    "from": "oracle",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of 650,000 marketplace audience segments listed Oracle as data supplier for more than a third of them.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ]
+  },
+  {
+    "from": "acxiom",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of marketplace audience segments listed Acxiom among the segment data suppliers.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ]
+  },
+  {
+    "from": "experian",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of marketplace audience segments listed Experian as supplier of segments such as \"Tough Times\".",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ]
+  },
+  {
+    "from": "equifax",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that segments in a May 2021 Xandr marketplace file came from consumer credit agencies including Equifax.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ]
+  },
+  {
+    "from": "foursquare",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr marketplace file listed Foursquare (Factual) as supplier of extensive geofenced audience segments.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ]
+  },
+  {
+    "from": "near-intelligence",
+    "to": "aelius-exploitation-technologies",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter to the FTC and SEC says Near's chief privacy officer confirmed to Wyden's staff that Near had for three years sold location data to defense contractor AELIUS Exploitation Technologies.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ]
+  },
+  {
+    "from": "openx",
+    "to": "near-intelligence",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Near's attorney told his staff that, until June 2023, location data Near sold about Americans included data from the ad exchange OpenX; the WSJ reported exchanges then cut Near off.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ]
+  },
+  {
+    "from": "smaato",
+    "to": "near-intelligence",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Near's attorney told his staff that, until June 2023, location data Near sold about Americans included data from the ad exchange Smaato; the WSJ reported exchanges then cut Near off.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ]
+  },
+  {
+    "from": "recrue-media",
+    "to": "near-intelligence",
+    "type": "buys",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Recrue Media's co-founder told his staff its employees used Near's website to geofence about 600 Planned Parenthood locations for the Veritas Society's anti-abortion ad campaign.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ]
+  },
+  {
+    "from": "datalogix",
+    "to": "meta-platforms",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "ProPublica reported in Dec. 2016 that Facebook signed a data deal with Datalogix in 2012 and that Datalogix provided about 350 types of data to Facebook.",
+    "sources": [
+      "jour-propublica-facebook-brokers-2016"
+    ]
+  },
+  {
+    "from": "acxiom",
+    "to": "meta-platforms",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "ProPublica reported in Dec. 2016 that Acxiom was one of the data brokers supplying Facebook's broker-sourced ad-targeting categories.",
+    "sources": [
+      "jour-propublica-facebook-brokers-2016"
+    ]
+  }
+]

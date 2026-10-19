@@ -1,0 +1,21 @@
+{
+  "id": "lexisnexis-risk-solutions",
+  "name": "LexisNexis Risk Solutions",
+  "aliases": [
+    "Lexis Nexis Risk Solutions, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "consumer reports built from driving data (per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "lexisnexis-risk-solutions",
+  "name": "LexisNexis Risk Solutions Inc.",
+  "aliases": [
+    "LexisNexis Risk Solutions",
+    "LexisNexis Risk",
+    "LNRS"
+  ],
+  "parent": "relx",
+  "kind": [
+    "risk-identity",
+    "financial",
+    "automotive"
+  ],
+  "sells": [
+    "risk, fraud and identity analytics from public, contributory and proprietary data",
+    "vehicle and behaviour-centric data for insurers",
+    "investigative tools (Accurint)",
+    "digital identity network (ThreatMetrix)"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "other",
+        "value": "2025 revenue £3,485 million; 79% from North America (RELX Annual Report 2025)",
+        "source": "sec-relx-annual-report-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-relx-annual-report-2025",
+    "sec-relx-20f-2025"
+  ]
+}

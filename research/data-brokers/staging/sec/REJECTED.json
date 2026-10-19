@@ -1,0 +1,42 @@
+[
+  {
+    "item": {
+      "from": "general-motors",
+      "to": "verisk",
+      "type": "supplies",
+      "tier": "A",
+      "claim": "Verisk's FY2025 Form 10-K discloses putative class actions alleging that GM/OnStar collected drivers' behavior data through vehicle software and transmitted it to LexisNexis and Verisk, which shared it with auto insurers; these are plaintiffs' allegations, and the claims against Verisk in the MDL were voluntarily dismissed and refiled as Dinitz v. Verisk.",
+      "sources": [
+        "sec-vrsk-10k-2025"
+      ]
+    },
+    "reason": "link general-motors|verisk|supplies: dropped by link-overrides.json (rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> insurance-services-office, which names the recipient)"
+  },
+  {
+    "item": {
+      "from": "general-motors",
+      "to": "lexisnexis-risk-solutions",
+      "type": "supplies",
+      "tier": "A",
+      "claim": "Verisk's FY2025 Form 10-K discloses putative class actions alleging that GM/OnStar collected drivers' behavior data through vehicle software and transmitted it to LexisNexis Risk Solutions and Verisk; these are plaintiffs' allegations in pending litigation.",
+      "sources": [
+        "sec-vrsk-10k-2025"
+      ]
+    },
+    "reason": "link general-motors|lexisnexis-risk-solutions|supplies: dropped by link-overrides.json (rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> lexisnexis-risk-solutions)"
+  },
+  {
+    "item": {
+      "broker": "transunion-rental-screening-solutions",
+      "override": {
+        "parent": "trans-union",
+        "replaces": {
+          "parent": "transunion"
+        },
+        "source": "enf-cfpb-turss-complaint-2023",
+        "reason": "CFPB/FTC 2023 complaint: a wholly owned subsidiary of Trans Union LLC (direct parent); TransUnion's Exhibit 21 lists it without hierarchy"
+      }
+    },
+    "reason": "transunion-rental-screening-solutions: record-overrides cites unknown source enf-cfpb-turss-complaint-2023; not applied"
+  }
+]

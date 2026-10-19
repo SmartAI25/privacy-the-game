@@ -1,0 +1,22 @@
+{
+  "id": "outlogic",
+  "name": "Outlogic",
+  "aliases": [
+    "X-Mode (successor)"
+  ],
+  "parent": "digital-envoy",
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "location data (successor to X-Mode business)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-xmode-complaint-2024",
+    "enf-ftc-xmode-order-2024"
+  ]
+}

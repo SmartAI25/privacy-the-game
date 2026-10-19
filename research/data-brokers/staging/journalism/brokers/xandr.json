@@ -1,0 +1,20 @@
+{
+  "id": "xandr",
+  "name": "Xandr",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "ad-network",
+    "data-marketplace"
+  ],
+  "sells": [
+    "audience segment marketplace"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-xandr-segments-2023"
+  ]
+}

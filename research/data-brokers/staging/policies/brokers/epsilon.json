@@ -1,0 +1,24 @@
+{
+  "id": "epsilon",
+  "name": "Epsilon",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "sells": [
+    "consumer marketing databases supplied to clients as contacts for marketing programs"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://legal.epsilon.com/us/consumer-information",
+    "notes": "Consumer Request Form ('Do not sell my personal information/Opt-out'); phone (866) 267-3861. Epsilon says an opt-out marks the record 'Do Not Share' rather than deleting it. www.epsilon.com/us/consumer-information redirects here."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-epsilon-consumer-info"
+  ]
+}

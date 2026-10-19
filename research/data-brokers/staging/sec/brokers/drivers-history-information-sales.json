@@ -1,0 +1,15 @@
+{
+  "id": "drivers-history-information-sales",
+  "name": "Drivers History Information Sales LLC",
+  "aliases": [],
+  "parent": "transunion",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-tru-10k-2025-ex21"
+  ]
+}

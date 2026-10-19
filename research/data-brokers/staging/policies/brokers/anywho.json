@@ -1,0 +1,24 @@
+{
+  "id": "anywho",
+  "name": "AnyWho",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "phone and people lookup"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.spokeo.com/optout",
+    "notes": "anywho.com/optout redirected to Spokeo's opt-out page on 2026-10-18. The redirect alone does not establish a corporate relationship."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-spokeo-optout"
+  ]
+}

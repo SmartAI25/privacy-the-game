@@ -1,0 +1,24 @@
+{
+  "id": "truepeoplesearch",
+  "name": "TruePeopleSearch",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "free people-search records"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.truepeoplesearch.com/removal",
+    "notes": "Agree to terms, CAPTCHA, find record, remove. Live page returned 403 to automated fetches on 2026-10-18; the latest readable Wayback capture is from 2024-03-28, so this route may be stale."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-truepeoplesearch-removal"
+  ]
+}

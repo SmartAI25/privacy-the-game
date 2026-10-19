@@ -1,0 +1,27 @@
+{
+  "id": "mobilewalla",
+  "name": "Mobilewalla",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "marketing"
+  ],
+  "sells": [
+    "audience segments derived from location data"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "FTC complaint (2025) says Mobilewalla estimates it collected more than 2 billion unique advertising identifiers from RTB exchanges (2018-2020)",
+        "source": "enf-ftc-mobilewalla-complaint-2025"
+      }
+    ]
+  },
+  "sources": [
+    "enf-ftc-mobilewalla-complaint-2025",
+    "enf-ftc-mobilewalla-order-2025"
+  ]
+}

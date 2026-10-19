@@ -1,0 +1,18 @@
+{
+  "id": "argus-information-and-advisory-services",
+  "name": "Argus Information and Advisory Services, Inc.",
+  "aliases": [
+    "Argus"
+  ],
+  "parent": "transunion",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-tru-10k-2025",
+    "sec-tru-10k-2025-ex21"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "verisk",
+  "name": "Verisk",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "insurance data and analytics incl. ISO ClaimSearch"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-verisk-privacy-policies"
+  ]
+}

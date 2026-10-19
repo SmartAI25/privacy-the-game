@@ -1,0 +1,24 @@
+{
+  "id": "searchpeoplefree",
+  "name": "SearchPeopleFree",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "free people search"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.searchpeoplefree.com/opt-out",
+    "notes": "Enter email, name and CAPTCHA; you get an emailed link to the record-removal form and 30 minutes to remove your record."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-searchpeoplefree-optout"
+  ]
+}

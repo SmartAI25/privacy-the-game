@@ -1,0 +1,17 @@
+{
+  "id": "datalogix",
+  "name": "Datalogix",
+  "aliases": [],
+  "parent": "oracle",
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-propublica-facebook-brokers-2016"
+  ]
+}

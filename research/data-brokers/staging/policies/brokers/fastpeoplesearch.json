@@ -1,0 +1,24 @@
+{
+  "id": "fastpeoplesearch",
+  "name": "FastPeopleSearch",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "free people-search records"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.fastpeoplesearch.com/removal",
+    "notes": "Enter email and CAPTCHA, find your record, click 'Remove My Record', then confirm by email. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2025-07-01 Wayback capture."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-fastpeoplesearch-removal"
+  ]
+}

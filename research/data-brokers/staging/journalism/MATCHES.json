@@ -1,0 +1,77 @@
+[
+  {
+    "stagedId": "acxiom",
+    "existingId": "acxiom",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "complementics",
+    "existingId": "econtextai",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "equifax",
+    "existingId": "equifax",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "experian",
+    "existingId": "experian",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "fog-data-science",
+    "existingId": "fog-data-science",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "foursquare",
+    "existingId": "foursquare-labs",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "gravy-analytics",
+    "existingId": "gravy-analytics",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "meta-platforms",
+    "existingId": "meta",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "openx",
+    "existingId": "openx-technologies",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "oracle",
+    "existingId": "oracle-advertising",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "safegraph",
+    "existingId": "safegraph",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "thomson-reuters",
+    "existingId": "thomson-reuters",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "venntel",
+    "existingId": "venntel",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "verisk",
+    "existingId": "verisk",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "x-mode-social",
+    "existingId": "x-mode-social",
+    "matchedBy": "id"
+  }
+]

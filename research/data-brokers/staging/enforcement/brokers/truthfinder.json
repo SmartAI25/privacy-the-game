@@ -1,0 +1,22 @@
+{
+  "id": "truthfinder",
+  "name": "TruthFinder",
+  "aliases": [
+    "TruthFinder, LLC"
+  ],
+  "parent": "pubrec",
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "background reports"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-truthfinder-complaint-2023",
+    "enf-ftc-truthfinder-order-2023"
+  ]
+}

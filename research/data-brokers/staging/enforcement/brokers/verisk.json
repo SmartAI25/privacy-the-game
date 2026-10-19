@@ -1,0 +1,21 @@
+{
+  "id": "verisk",
+  "name": "Verisk Analytics",
+  "aliases": [
+    "Insurance Services Office, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "consumer reports built from driving data (per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "corelogic",
+  "name": "CoreLogic, Inc.",
+  "aliases": [
+    "CoreLogic"
+  ],
+  "parent": null,
+  "kind": [
+    "financial"
+  ],
+  "sells": [
+    "property information",
+    "mortgage information",
+    "consumer information"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2020 operating revenue $1,642.4 million (last 10-K before the June 2021 take-private)",
+        "source": "sec-clgx-10k-2020"
+      }
+    ]
+  },
+  "sources": [
+    "sec-clgx-10k-2020",
+    "sec-clgx-8k-2021-merger"
+  ]
+}

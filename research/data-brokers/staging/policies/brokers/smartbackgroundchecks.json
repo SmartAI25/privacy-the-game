@@ -1,0 +1,24 @@
+{
+  "id": "smartbackgroundchecks",
+  "name": "SmartBackgroundChecks",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search and background records"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.smartbackgroundchecks.com/remove",
+    "notes": "smartbackgroundchecks.com/optout redirects here. Email, name and CAPTCHA, then an emailed link to the form; allow 3 days."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-smartbackgroundchecks-remove"
+  ]
+}

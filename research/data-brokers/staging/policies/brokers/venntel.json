@@ -1,0 +1,27 @@
+{
+  "id": "venntel",
+  "name": "Venntel",
+  "aliases": [
+    "Venntel, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "geolocation intelligence for defense, civilian government, risk and OSINT customers"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.venntel.com/opt-out",
+    "notes": "'Opt Out & Delete Request' page (Venntel, Inc.). Its privacy policy uses the same template as Gravy/Unacast's but names no parent."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-venntel-privacy",
+    "pol-venntel-optout"
+  ]
+}

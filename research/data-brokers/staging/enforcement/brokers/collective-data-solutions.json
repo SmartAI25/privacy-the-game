@@ -1,0 +1,20 @@
+{
+  "id": "collective-data-solutions",
+  "name": "Collective Data Solutions",
+  "aliases": [],
+  "parent": "kochava",
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "data broker business transferred from Kochava (per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-kochava-sac-2024",
+    "enf-ftc-kochava-order-2026"
+  ]
+}

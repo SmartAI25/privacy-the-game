@@ -1,0 +1,36 @@
+{
+  "id": "liveramp",
+  "name": "LiveRamp Holdings, Inc.",
+  "aliases": [
+    "LiveRamp"
+  ],
+  "parent": null,
+  "kind": [
+    "identity-resolution",
+    "data-marketplace"
+  ],
+  "sells": [
+    "deterministic identity resolution (RampID)",
+    "Data Marketplace for third-party data",
+    "data onboarding",
+    "clean-room data collaboration"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 (year ended March 31, 2026) total revenues $812.9 million",
+        "source": "sec-ramp-10k-fy2026"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 Marketplace and Other revenue $198.5 million",
+        "source": "sec-ramp-10k-fy2026"
+      }
+    ]
+  },
+  "sources": [
+    "sec-ramp-10k-fy2026"
+  ]
+}

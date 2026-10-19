@@ -1,0 +1,27 @@
+{
+  "id": "kochava",
+  "name": "Kochava",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "data-marketplace"
+  ],
+  "sells": [
+    "mobile app measurement and attribution",
+    "data, analytics and ETL services"
+  ],
+  "optOut": {
+    "method": "email",
+    "url": "https://www.kochava.com/privacy/support-privacy/",
+    "notes": "kochava.com/opt-out/ only gives device-level instructions (disable interest-based ads, reset the advertising ID, opt out inside the app). Privacy contact privacy@kochava.com is on the support-privacy page."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-kochava-optout",
+    "pol-kochava-support-privacy"
+  ]
+}

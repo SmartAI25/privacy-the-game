@@ -1,0 +1,19 @@
+{
+  "id": "life360",
+  "name": "Life360",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "app location data"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-life360-2021"
+  ]
+}

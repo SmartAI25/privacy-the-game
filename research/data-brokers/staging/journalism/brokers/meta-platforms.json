@@ -1,0 +1,20 @@
+{
+  "id": "meta-platforms",
+  "name": "Meta Platforms",
+  "aliases": [
+    "Facebook"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network",
+    "buyer"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-propublica-facebook-brokers-2016"
+  ]
+}

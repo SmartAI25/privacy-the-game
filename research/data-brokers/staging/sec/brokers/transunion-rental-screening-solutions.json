@@ -1,0 +1,15 @@
+{
+  "id": "transunion-rental-screening-solutions",
+  "name": "TransUnion Rental Screening Solutions, Inc.",
+  "aliases": [],
+  "parent": "transunion",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-tru-10k-2025-ex21"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "acxiom",
+  "name": "Acxiom, LLC",
+  "aliases": [
+    "Acxiom"
+  ],
+  "parent": "omnicom",
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-omc-10k-2025",
+    "sec-omc-10k-2025-ex21"
+  ]
+}

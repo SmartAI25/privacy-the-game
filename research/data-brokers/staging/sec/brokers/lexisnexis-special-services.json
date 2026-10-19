@@ -1,0 +1,15 @@
+{
+  "id": "lexisnexis-special-services",
+  "name": "LexisNexis Special Services Inc.",
+  "aliases": [],
+  "parent": "relx",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-relx-annual-report-2025"
+  ]
+}

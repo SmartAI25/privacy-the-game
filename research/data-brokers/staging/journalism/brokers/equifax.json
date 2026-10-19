@@ -1,0 +1,19 @@
+{
+  "id": "equifax",
+  "name": "Equifax",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-globe-wapo-nctue-utility-ice-2021",
+    "jour-markup-xandr-segments-2023"
+  ]
+}

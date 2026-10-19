@@ -1,0 +1,22 @@
+{
+  "id": "leaplab",
+  "name": "LeapLab",
+  "aliases": [
+    "Sitesearch Corporation",
+    "LeapLab Corporation"
+  ],
+  "parent": null,
+  "kind": [
+    "financial"
+  ],
+  "sells": [
+    "payday loan applications (per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-leaplab-complaint-2014"
+  ]
+}

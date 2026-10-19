@@ -1,0 +1,25 @@
+{
+  "id": "general-motors",
+  "name": "General Motors Company",
+  "aliases": [
+    "General Motors LLC",
+    "General Motors Holdings LLC",
+    "GM"
+  ],
+  "parent": null,
+  "kind": [
+    "automotive"
+  ],
+  "sells": [
+    "connected-vehicle precise geolocation data",
+    "OnStar Smart Driver driving behavior data"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026",
+    "enf-ftc-gm-order-2026"
+  ]
+}

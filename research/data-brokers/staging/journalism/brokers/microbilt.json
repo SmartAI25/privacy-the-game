@@ -1,0 +1,22 @@
+{
+  "id": "microbilt",
+  "name": "Microbilt",
+  "aliases": [
+    "MicroBilt"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity",
+    "location"
+  ],
+  "sells": [
+    "mobile phone tracking product"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-vice-bounty-hunter-2019"
+  ]
+}

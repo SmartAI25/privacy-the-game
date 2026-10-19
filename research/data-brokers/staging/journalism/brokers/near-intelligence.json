@@ -1,0 +1,19 @@
+{
+  "id": "near-intelligence",
+  "name": "Near Intelligence",
+  "aliases": [
+    "Near"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-wyden-near-letter-2024"
+  ]
+}

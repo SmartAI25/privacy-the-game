@@ -1,0 +1,25 @@
+{
+  "id": "the-work-number",
+  "name": "The Work Number",
+  "aliases": [],
+  "parent": "equifax",
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "sells": [
+    "employment and income verification records furnished by participating employers"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://employees.theworknumber.com/employment-data-report",
+    "notes": "Request your Employment Data Report online (account registration), by phone 1-800-367-2884 (TTY 1-800-424-0253), or by mail/email (form to EDR@equifax.com). The mission notes the same site offers a data freeze; this is a disclosure/freeze route, not a deletion."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-twn-employment-data-report"
+  ]
+}

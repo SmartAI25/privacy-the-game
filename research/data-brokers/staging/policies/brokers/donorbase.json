@@ -1,0 +1,19 @@
+{
+  "id": "donorbase",
+  "name": "DonorBase",
+  "aliases": [
+    "DonorBase, Inc."
+  ],
+  "parent": "data-axle",
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-dataaxle-privacy"
+  ]
+}

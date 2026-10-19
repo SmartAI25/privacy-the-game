@@ -1,0 +1,21 @@
+{
+  "id": "idverse",
+  "name": "IDVerse Pty Ltd",
+  "aliases": [
+    "IDVerse"
+  ],
+  "parent": "lexisnexis-risk-solutions",
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "automated document authentication and fraud detection"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-relx-annual-report-2025"
+  ]
+}

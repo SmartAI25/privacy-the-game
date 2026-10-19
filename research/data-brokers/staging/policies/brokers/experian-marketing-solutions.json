@@ -1,0 +1,29 @@
+{
+  "id": "experian-marketing-solutions",
+  "name": "Experian Marketing Solutions",
+  "aliases": [
+    "Experian Marketing Solutions, LLC",
+    "Experian Marketing Services"
+  ],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "sells": [
+    "consumer marketing data and audiences for retail, financial services, telecom, insurance, travel, media and agencies",
+    "data drawn from tax assessor and deed files, consumer surveys, telephone directories, publications/subscriptions, US Census data, inferences, online and mobile sites/apps/ads, and 'other authorized data providers' (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://consumerprivacy.experian.com/",
+    "notes": "Per experian.com/privacy/opt-out-targeted-advertising: opt out at consumerprivacy.experian.com or email full name and mailing address to optout@experian.com. consumerprivacy.experian.com returned HTTP 200 (a JavaScript app) on 2026-10-18. Policy says Experian Marketing Solutions, LLC is a registered data broker under Texas law."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-experian-marketing-data-practices",
+    "pol-experian-optout-targeted-ads"
+  ]
+}

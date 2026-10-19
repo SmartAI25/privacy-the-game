@@ -1,0 +1,27 @@
+{
+  "id": "atdata",
+  "name": "AtData, LLC",
+  "aliases": [
+    "AtData"
+  ],
+  "parent": "experian",
+  "kind": [
+    "identity-resolution"
+  ],
+  "sells": [
+    "email intelligence data"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "Experian says AtData added more than 10 billion email addresses to its data assets (Annual Report 2026)",
+        "source": "sec-experian-annual-report-2026"
+      }
+    ]
+  },
+  "sources": [
+    "sec-experian-annual-report-2026"
+  ]
+}

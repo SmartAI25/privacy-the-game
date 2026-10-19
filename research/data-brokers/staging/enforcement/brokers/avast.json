@@ -1,0 +1,20 @@
+{
+  "id": "avast",
+  "name": "Avast",
+  "aliases": [
+    "Avast Limited",
+    "Avast Software s.r.o."
+  ],
+  "parent": null,
+  "sells": [
+    "browsing data (via former subsidiary Jumpshot, per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-avast-complaint-2024",
+    "enf-ftc-avast-order-2024"
+  ]
+}

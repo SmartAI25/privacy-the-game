@@ -1,0 +1,52 @@
+[
+  {
+    "item": {
+      "broker": "transunion-rental-screening-solutions",
+      "field": "parent",
+      "existing": "transunion",
+      "staged": "trans-union"
+    },
+    "reason": "transunion-rental-screening-solutions: parent conflicts with existing value; existing kept"
+  },
+  {
+    "item": {
+      "from": "x-mode-social",
+      "to": "outlogic",
+      "type": "supplies",
+      "tier": "A",
+      "claim": "The FTC's April 2024 complaint states X-Mode Social transferred its business and substantially all of its assets to its successor Outlogic around May 25, 2021.",
+      "sources": [
+        "enf-ftc-xmode-complaint-2024"
+      ]
+    },
+    "reason": "link x-mode-social|outlogic|supplies: dropped by link-overrides.json (the FTC complaint describes a business and asset transfer to a successor, not a data flow)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|insurance-services-office|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|insurance-services-office|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|lexisnexis-risk-solutions|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|lexisnexis-risk-solutions|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|wejo|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|wejo|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|jacobs-engineering-group|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|jacobs-engineering-group|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  }
+]

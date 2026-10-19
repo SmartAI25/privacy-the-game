@@ -1,0 +1,18 @@
+{
+  "id": "gravy-analytics",
+  "name": "Gravy Analytics",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-vice-salaat-first-2021",
+    "jour-nrk-phone-spying-venntel-2020"
+  ]
+}

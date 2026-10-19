@@ -1,0 +1,16 @@
+{
+  "id": "neustar",
+  "name": "Neustar",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "identity-resolution"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-avast-complaint-2024"
+  ]
+}
