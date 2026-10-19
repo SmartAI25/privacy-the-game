@@ -222,6 +222,25 @@ describe('mergeStaging', () => {
     expect((await readLinks())[0].from).toBe('acme');
   });
 
+  it('an id-map entry is final: a mapped id that does not exist yet is created, never name-matched', async () => {
+    await setup({
+      idMap: { 'acme-holdco': 'acme-holdco', 'acme-plc': 'acme-group' },
+      brokers: [broker('acme', 'Acme LLC'), broker('c', 'C')],
+      staged: { sources: { s1: src() }, brokers: [
+        { id: 'acme-holdco', name: 'Acme', kind: ['marketing'], sources: ['s1'] },
+        { id: 'acme-plc', name: 'Acme PLC', aliases: ['Acme'], kind: ['marketing'], sources: ['s1'] },
+      ], links: [link('acme-holdco', 'acme')] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.added).toBe(2);
+    expect(r.matches).toEqual([]);
+    expect((await readB('acme-holdco')).name).toBe('Acme');
+    expect((await readB('acme-group')).name).toBe('Acme PLC');
+    expect((await readB('acme')).aliases).toEqual([]);
+    expect((await readLinks())[0]).toMatchObject({ from: 'acme-holdco', to: 'acme' });
+  });
+
   it('unions size signals and rejects ones citing rejected sources', async () => {
     await setup({
       brokers: [broker('a', 'A')],

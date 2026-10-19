@@ -1,5 +1,5 @@
 // Folds research/data-brokers/staging/<family>/ into the dataset.
-// Rules: match by id then legalKey(name); never overwrite a non-null scalar (conflicts go to
+// Rules: match by id (or a final id-map.json entry) then legalKey(name), then staged alias; never overwrite a non-null scalar (conflicts go to
 // `rejected`); arrays union; links dedupe on from|to|type; published is always tier === 'A'.
 // Usage: node research/data-brokers/build/merge-staging.js <family> [--dry-run]
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -88,7 +88,10 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     const mapped = mapId(sb.id);
     let target = null;
     let matchedBy = null;
+    // An id-map entry is final: it names the record (existing or to be created) and skips name matching.
+    const pinned = Object.hasOwn(idMap, sb.id);
     if (work.has(mapped)) { target = mapped; matchedBy = mapped === sb.id ? 'id' : 'id-map'; }
+    else if (pinned) { /* new record under the mapped id */ }
     else if (byKey.has(legalKey(sb.name))) { target = byKey.get(legalKey(sb.name)); matchedBy = 'legalKey'; }
     else for (const a of sb.aliases ?? []) { if (isStr(a) && byKey.has(legalKey(a))) { target = byKey.get(legalKey(a)); matchedBy = 'alias'; break; } }
     if (!(sb.sources ?? []).some((s) => okSource(srcId(s)))) {
@@ -99,7 +102,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     if (target && !isNew.has(target)) matchLog.push({ stagedId: sb.id, existingId: target, matchedBy });
     if (!target) {
       target = mapped;
-      if (!work.has(target)) { work.set(target, newBroker(target, sb.name)); isNew.add(target); byKey.set(legalKey(sb.name), target); }
+      if (!work.has(target)) { work.set(target, newBroker(target, sb.name)); isNew.add(target); if (!byKey.has(legalKey(sb.name))) byKey.set(legalKey(sb.name), target); }
     }
     resolved.set(sb.id, target);
     matches.push([target, sb]);
