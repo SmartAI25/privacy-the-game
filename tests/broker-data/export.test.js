@@ -4,15 +4,19 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildExport, serialize } from '../../research/data-brokers/build/export.js';
 
-async function fixture() {
+async function fixture({ links, noMissions = [] } = {}) {
   const dir = await mkdtemp(join(tmpdir(), 'brokers-'));
   await mkdir(join(dir, 'brokers'));
   const mk = (id) => ({ id, name: id.toUpperCase(), aliases: [], parent: null, kind: ['marketing'], registries: {}, sells: [], optOut: { method: 'none' }, missions: [] });
-  for (const id of ['b', 'a', 'c']) await writeFile(join(dir, 'brokers', `${id}.json`), JSON.stringify(mk(id)));
+  for (const id of ['b', 'a', 'c']) {
+    const b = mk(id);
+    if (noMissions.includes(id)) delete b.missions;
+    await writeFile(join(dir, 'brokers', `${id}.json`), JSON.stringify(b));
+  }
   await writeFile(join(dir, 'sources.json'), JSON.stringify({
     s1: { url: 'https://x.test/1', archived: 'https://web.archive.org/1', kind: 'filing', title: 't', accessed: '2026-10-18' },
   }));
-  await writeFile(join(dir, 'links.json'), JSON.stringify([
+  await writeFile(join(dir, 'links.json'), JSON.stringify(links ?? [
     { from: 'b', to: 'c', type: 'supplies', tier: 'A', claim: 'pub', sources: ['s1'], published: true },
     { from: 'a', to: 'b', type: 'owns', tier: 'B', claim: 'unpub', sources: ['s1'], published: false },
   ]));
@@ -34,5 +38,19 @@ describe('buildExport', () => {
   it('export is byte-identical across two runs', async () => {
     const dir = await fixture();
     expect(serialize(await buildExport(dir))).toBe(serialize(await buildExport(dir)));
+  });
+  it('emits missions as [] when a record has none', async () => {
+    const out = await buildExport(await fixture({ noMissions: ['a'] }));
+    expect(out.brokers.find((x) => x.id === 'a').missions).toEqual([]);
+  });
+  it('a broker that reaches nothing (reach 1) is never a hub, even in the top 12', async () => {
+    const out = await buildExport(await fixture());
+    expect(out.brokers.filter((x) => x.hub).map((x) => x.id)).toEqual(['b']);
+    expect(out.brokers.find((x) => x.id === 'a').reach).toBe(1);
+    expect(out.brokers.find((x) => x.id === 'c').hub).toBe(false);
+  });
+  it('throws on a published link citing an unknown source', async () => {
+    const dir = await fixture({ links: [{ from: 'b', to: 'c', type: 'supplies', tier: 'A', claim: 'x', sources: ['nope'], published: true }] });
+    await expect(buildExport(dir)).rejects.toThrow(/unknown source "nope"/);
   });
 });

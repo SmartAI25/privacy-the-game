@@ -24,7 +24,7 @@ export async function buildExport(dir) {
 
   const brokers = raw.map((b) => ({
     id: b.id, name: b.name, parent: b.parent, kind: b.kind, registries: b.registries,
-    optOut: b.optOut, missions: b.missions, reach: reach.get(b.id), hub: hubs.has(b.id),
+    optOut: b.optOut, missions: b.missions ?? [], reach: reach.get(b.id), hub: hubs.has(b.id),
   }));
   const links = published
     .map((l) => ({
