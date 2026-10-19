@@ -1,8 +1,28 @@
 {
-  "verisk": ["Insurance Services Office, Inc."],
-  "outlogic": ["X-Mode Social", "X-Mode (successor)"],
-  "oracle-advertising": ["Oracle"],
-  "gravy-analytics": ["Unacast"],
-  "general-motors": ["General Motors Company", "General Motors Holdings LLC"],
-  "general-motors-company": ["General Motors LLC", "General Motors Holdings LLC"]
+  "verisk": [
+    { "alias": "Insurance Services Office, Inc.", "reason": "ISO is a Verisk subsidiary with its own record (insurance-services-office), not another name for Verisk Analytics, Inc." },
+    { "alias": "Verisk Analytics", "reason": "the FTC C-4828 caption gives 'Verisk Analytics' as Insurance Services Office, Inc.'s d/b/a; verisk keeps its legal name Verisk Analytics, Inc." }
+  ],
+  "outlogic": [
+    { "alias": "X-Mode Social", "reason": "X-Mode Social, Inc. is a separate entity with its own record; the FTC complaint says it transferred its business to Outlogic" },
+    { "alias": "X-Mode (successor)", "reason": "describes the succession, not a name of Outlogic, LLC" }
+  ],
+  "oracle-advertising": [
+    { "alias": "Oracle", "reason": "Oracle is the parent corporation, not the name of its discontinued advertising business" }
+  ],
+  "gravy-analytics": [
+    { "alias": "Unacast", "reason": "Unacast, Inc. has its own registry record; only the source's own form 'Gravy Analytics, Inc. dba Unacast' is kept" }
+  ],
+  "general-motors": [
+    { "alias": "General Motors Company", "reason": "GM LLC's parent, a separate entity with its own record (general-motors-company)" },
+    { "alias": "General Motors Holdings LLC", "reason": "a separate legal entity; the FTC complaint names it as a distinct respondent" }
+  ],
+  "general-motors-company": [
+    { "alias": "General Motors LLC", "reason": "a separate legal entity with its own record (general-motors)" },
+    { "alias": "General Motors Holdings LLC", "reason": "a separate legal entity, not a name of General Motors Company" },
+    { "alias": "GM", "reason": "the FTC complaint defines 'GM' as the respondents (GM LLC, GM Holdings LLC, OnStar); GM LLC keeps it" }
+  ],
+  "trans-union": [
+    { "alias": "TransUnion", "reason": "the name of the holding company's own record (transunion)" }
+  ]
 }

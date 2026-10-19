@@ -2,8 +2,12 @@
 // Curation lives in build/ config, never in hand edits:
 //   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
-//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...] }
-//   record-overrides.json { brokerId: { name?, parent?, reason } }, applied after the merge
+//   alias-blocklist.json { brokerId: [{ alias, reason }] }
+//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}] }
+//     drop and reassign act on staged links (keys after id resolution); unpublish on every link.
+//   record-overrides.json { brokerId: { name?, parent?, sells?, source?, dropSources?, replaces?: {field: value}, reason } }
+//     An override never silently replaces a different non-empty value: it applies only when the
+//     current value is empty or equals replaces[field]; otherwise it is reported as a conflict.
 // Same-tier claim conflicts go to the claim with the stronger source kind (sourceRank).
 // optOut: a generic existing URL (homepage, privacy page, blocked) is replaced by a staged URL
 // on the record's own domain; any other differing staged URL goes to optOut.alternates.
@@ -99,6 +103,10 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const ovKey = (o) => `${o.from}|${o.to}|${o.type}`;
   const dropOv = new Map((linkOv.drop ?? []).map((o) => [ovKey(o), o]));
   const unpubOv = new Map((linkOv.unpublish ?? []).map((o) => [ovKey(o), o]));
+  const reassignOv = new Map((linkOv.reassign ?? []).map((o) => [ovKey(o), o]));
+  for (const [id, list] of Object.entries(aliasBlock)) {
+    if (!Array.isArray(list) || !list.every((x) => isObj(x) && isStr(x.alias) && isStr(x.reason))) throw new Error(`alias-blocklist.json ${id}: entries must be { alias, reason }`);
+  }
   const stBrokers = await readBrokers(join(stDir, 'brokers'));
   const stLinks = await readJson(join(stDir, 'links.json'), []);
   const stSources = await readJson(join(stDir, 'sources.json'), {});
@@ -201,7 +209,8 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       return;
     }
     if (w.optOut.url && normUrl(w.optOut.url) === normUrl(o.url)) return; // near-identical: leave alone
-    const own = new Set([domainOf(w.website ?? ''), domainOf(w.optOut.url ?? '')].filter(Boolean));
+    // The record's own domains, plus the domains the registry lists as its DBAs (domain-like aliases).
+    const own = new Set([domainOf(w.website ?? ''), domainOf(w.optOut.url ?? ''), ...w.aliases.filter(domainLike).map((a) => domainOf(a.trim()))].filter(Boolean));
     const d = domainOf(o.url);
     const src = stagedSourceFor(sb, o.url);
     if (isGenericOptOut(w.optOut) && own.has(d) && src) {
@@ -264,13 +273,12 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const finalLinks = links.map((l) => ({ ...l }));
   const idx = new Map(finalLinks.map((l, i) => [`${l.from}|${l.to}|${l.type}`, i]));
   let linksAdded = 0; let linksUpdated = 0;
-  for (const [k, o] of dropOv) {
-    const i = finalLinks.findIndex((l) => `${l.from}|${l.to}|${l.type}` === k);
-    if (i >= 0) { reject(finalLinks[i], `link ${k}: dropped by link-overrides.json (${o.reason})`); finalLinks.splice(i, 1); }
-  }
-  idx.clear(); finalLinks.forEach((l, i) => idx.set(`${l.from}|${l.to}|${l.type}`, i));
-  for (const l of cand) {
-    if (dropOv.has(`${l.from}|${l.to}|${l.type}`)) { reject(l, `link ${l.from}|${l.to}|${l.type}: dropped by link-overrides.json (${dropOv.get(`${l.from}|${l.to}|${l.type}`).reason})`); continue; }
+  for (const l0 of cand) {
+    const k0 = `${l0.from}|${l0.to}|${l0.type}`;
+    if (dropOv.has(k0)) { reject(l0, `link ${k0}: dropped by link-overrides.json (${dropOv.get(k0).reason})`); continue; }
+    const ra = reassignOv.get(k0);
+    const l = ra ? { ...l0, from: ra.newFrom } : l0;
+    if (ra) reject({ link: k0, newFrom: ra.newFrom }, `link ${k0}: reassigned to from=${ra.newFrom} by link-overrides.json (${ra.reason})`);
     if (!work.has(l.from) || !work.has(l.to)) {
       reject(l, `link ${l.from}->${l.to} rejected: endpoint not in dataset or rejected`);
       continue;
@@ -300,19 +308,29 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   for (const l of finalLinks) if (unpubOv.has(`${l.from}|${l.to}|${l.type}`)) l.published = false;
 
   // ---- record overrides and alias blocklist (config, applied to every record every run)
+  const empty = (v) => v === null || v === undefined || (Array.isArray(v) && v.length === 0);
   for (const [id, ov] of Object.entries(recordOv)) {
     const w = work.get(id);
     if (!w) continue;
+    if (ov.parent && !work.has(ov.parent)) continue; // parent record arrives with a later family
+    if (ov.source !== undefined && !mergedSources[ov.source]) { reject({ broker: id, override: ov }, `${id}: record-overrides cites unknown source ${ov.source}; not applied`); continue; }
     const before = JSON.stringify(w);
-    if (isStr(ov.name) && ov.name !== w.name) { w.aliases = union(w.aliases, [w.name]); w.name = ov.name; }
-    if (ov.parent !== undefined) w.parent = ov.parent;
+    for (const f of ['name', 'parent', 'sells']) {
+      if (!(f in ov) || same(w[f], ov[f])) continue;
+      const ok = empty(w[f]) || (isObj(ov.replaces) && f in ov.replaces && same(ov.replaces[f], w[f]));
+      if (!ok) { reject({ broker: id, field: f, existing: w[f], override: ov[f] }, `${id}: record-overrides ${f} would overwrite ${JSON.stringify(w[f])}; not applied (confirm it in "replaces")`); continue; }
+      if (f === 'name') w.aliases = union(w.aliases, [w.name]);
+      w[f] = ov[f];
+    }
+    if (ov.source) w.sources = union(w.sources, [ov.source]);
+    if (Array.isArray(ov.dropSources)) w.sources = w.sources.filter((x) => !ov.dropSources.includes(srcId(x)));
     w.aliases = w.aliases.filter((a) => a !== w.name);
     if (JSON.stringify(w) !== before) touched.add(id);
   }
   for (const [id, list] of Object.entries(aliasBlock)) {
     const w = work.get(id);
     if (!w) continue;
-    const kept = w.aliases.filter((a) => !list.includes(a));
+    const kept = w.aliases.filter((a) => !list.some((x) => x.alias === a));
     if (kept.length !== w.aliases.length) { w.aliases = kept; touched.add(id); }
   }
 

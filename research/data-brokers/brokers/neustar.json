@@ -1,14 +1,9 @@
 {
   "id": "neustar",
   "name": "NEUSTAR INC",
-  "aliases": [
-    "Neustar, Inc.",
-    "Neustar"
-  ],
-  "parent": "transunion",
-  "kind": [
-    "identity-resolution"
-  ],
+  "aliases": [],
+  "parent": null,
+  "kind": [],
   "registries": {
     "CA": null,
     "VT": null,
@@ -27,9 +22,6 @@
     "signals": []
   },
   "sources": [
-    "registry-or-2026-10-18",
-    "sec-tru-10k-2025",
-    "sec-tru-10k-2025-ex21",
-    "enf-ftc-avast-complaint-2024"
+    "registry-or-2026-10-18"
   ]
 }

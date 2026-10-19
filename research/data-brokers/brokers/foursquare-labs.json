@@ -2,9 +2,7 @@
   "id": "foursquare-labs",
   "name": "Foursquare Labs, Inc.",
   "aliases": [
-    "Foursquare Labs Inc",
-    "Foursquare",
-    "Factual"
+    "Foursquare Labs Inc"
   ],
   "parent": null,
   "kind": [
@@ -30,8 +28,7 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18",
-    "jour-markup-xandr-segments-2023"
+    "registry-or-2026-10-18"
   ],
   "website": "https://foursquare.com"
 }

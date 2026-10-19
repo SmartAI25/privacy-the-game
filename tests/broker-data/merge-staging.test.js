@@ -313,27 +313,33 @@ describe('mergeStaging', () => {
     expect([r(['f']), r(['c']), r(['k']), r(['k'], 'class actions alleging x'), r(['j'])]).toEqual([5, 4, 3, 2, 1]);
   });
 
-  it('link-overrides.json drops and unpublishes links, staged or existing', async () => {
+  it('link-overrides.json drops and reassigns staged links and unpublishes any link', async () => {
     await setup({
       config: { 'link-overrides.json': {
-        drop: [{ from: 'p', to: 'c', type: 'supplies', reason: 'succession' }, { from: 'q', to: 'c', type: 'owns', reason: 'old' }],
-        unpublish: [{ from: 'p', to: 'q', type: 'buys', reason: 'inference' }],
+        drop: [{ from: 'p', to: 'c', type: 'supplies', reason: 'succession' }, { from: 'q', to: 'c', type: 'owns', reason: 'only staged links are dropped' }],
+        unpublish: [{ from: 'p', to: 'q', type: 'buys', reason: 'inference' }, { from: 'q', to: 'c', type: 'owns', reason: 'existing too' }],
+        reassign: [{ from: 'q', to: 'c', type: 'supplies', newFrom: 'p', reason: 'the source names p' }],
       } },
       brokers: [broker('p', 'P'), broker('c', 'C'), broker('q', 'Q')],
       links: [{ ...link('q', 'c', { sources: ['reg'] }), published: true }],
-      staged: { sources: { s1: src() }, links: [link('p', 'c', { type: 'supplies' }), link('p', 'q', { type: 'buys' })] },
+      staged: { sources: { s1: src() }, links: [link('p', 'c', { type: 'supplies' }), link('p', 'q', { type: 'buys' }), link('q', 'c', { type: 'supplies', claim: 'q2' })] },
     });
     const r = await mergeStaging(dir, 'fam');
     expect(r.errors).toEqual([]);
-    expect(await readLinks()).toEqual([{ from: 'p', to: 'q', type: 'buys', tier: 'A', claim: 'c', sources: ['s1'], published: false }]);
-    expect(r.rejected.filter((x) => /link-overrides/.test(x.reason))).toHaveLength(2);
+    expect(await readLinks()).toEqual([
+      { from: 'q', to: 'c', type: 'owns', tier: 'A', claim: 'c', sources: ['reg'], published: false },
+      { from: 'p', to: 'q', type: 'buys', tier: 'A', claim: 'c', sources: ['s1'], published: false },
+      { from: 'p', to: 'c', type: 'supplies', tier: 'A', claim: 'q2', sources: ['s1'], published: true },
+    ]);
+    expect(r.rejected.filter((x) => /dropped by link-overrides/.test(x.reason))).toHaveLength(1);
+    expect(r.rejected.filter((x) => /reassigned to from=p/.test(x.reason))).toHaveLength(1);
   });
 
   it('alias-blocklist.json and record-overrides.json apply after the merge', async () => {
     await setup({
       config: {
-        'alias-blocklist.json': { a: ['Bad Alias'] },
-        'record-overrides.json': { n: { name: 'Legal Name, Inc.', parent: 'a', reason: 'source names it' } },
+        'alias-blocklist.json': { a: [{ alias: 'Bad Alias', reason: 'another entity' }] },
+        'record-overrides.json': { n: { name: 'Legal Name, Inc.', parent: 'a', replaces: { name: 'Brand' }, reason: 'source names it' } },
         'id-map.json': { fam: { n: 'n' } },
       },
       brokers: [broker('a', 'A')],
@@ -347,6 +353,48 @@ describe('mergeStaging', () => {
     expect((await readB('a')).aliases).toEqual(['Good Alias']);
     const n = await readB('n');
     expect([n.name, n.aliases, n.parent]).toEqual(['Legal Name, Inc.', ['Brand'], 'a']);
+  });
+
+  it('alias-blocklist.json entries need a reason', async () => {
+    await setup({ config: { 'alias-blocklist.json': { a: ['Bad Alias'] } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/alias, reason/);
+  });
+
+  it('record-overrides.json never silently overwrites a different value; replaces confirms it; source is cited', async () => {
+    await setup({
+      config: { 'record-overrides.json': {
+        a: { parent: 'p2', reason: 'unconfirmed' },
+        b: { parent: 'p2', replaces: { parent: 'p1' }, source: 's1', reason: 'direct parent' },
+        c: { sells: ['moved'], dropSources: ['reg'], reason: 'empty before' },
+        d: { parent: 'later', reason: 'parent arrives later' },
+      } },
+      brokers: [broker('p1', 'P1'), broker('p2', 'P2'), broker('a', 'A', { parent: 'p1' }), broker('b', 'B'), broker('c', 'C'), broker('d', 'D')],
+      staged: { sources: { s1: src() }, brokers: [{ id: 'b', name: 'B', parent: 'p1', sources: ['s1'] }] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readB('a')).parent).toBe('p1');
+    expect(r.rejected.some((x) => /a: record-overrides parent would overwrite "p1"/.test(x.reason))).toBe(true);
+    const b = await readB('b');
+    expect([b.parent, b.sources.includes('s1')]).toEqual(['p2', true]);
+    expect((await readB('c')).sells).toEqual(['moved']);
+    expect((await readB('c')).sources).toEqual([]);
+    expect((await readB('d')).parent).toBe(null);
+  });
+
+  it('optOut: a staged form on a registry-listed DBA domain replaces a generic primary; later ones become alternates', async () => {
+    const oo = (url) => ({ method: 'web-form', url });
+    await setup({
+      brokers: [broker('m', 'M LLC', { website: 'https://main.example', aliases: ['One.example', 'Two.example'], optOut: oo('https://main.example/privacy') })],
+      staged: { sources: { s1: src({ url: 'https://one.example/x' }) }, brokers: [
+        { id: 'a-one', name: 'One', optOut: oo('https://www.one.example/removal'), sources: ['s1'] },
+        { id: 'b-two', name: 'Two', optOut: oo('https://two.example/opt-out'), sources: ['s1'] },
+      ] },
+      idMap: { 'a-one': 'm', 'b-two': 'm' },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readB('m')).optOut).toEqual({ ...oo('https://www.one.example/removal'), status: 'unchecked', alternates: [{ site: 'two.example', url: 'https://two.example/opt-out', source: 's1' }] });
   });
 
   it('unions size signals and rejects ones citing rejected sources', async () => {

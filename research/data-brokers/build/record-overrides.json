@@ -1,10 +1,18 @@
 {
-  "insurance-services-office": { "name": "Insurance Services Office, Inc.", "reason": "FTC C-4828 complaint names 'Insurance Services Office, Inc., doing business as Verisk Analytics'; Verisk Analytics is the d/b/a" },
-  "transunion-rental-screening-solutions": { "parent": "trans-union", "reason": "CFPB/FTC 2023 complaint: a wholly owned subsidiary of Trans Union LLC (direct parent); TransUnion's Exhibit 21 lists it without hierarchy" },
-  "lexisnexis-risk-solutions": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "id-analytics": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "lexisnexis-risk-data-management": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "lexisnexis-special-services": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "lexisnexis-coplogic-solutions": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
-  "lnrs-data-services": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" }
+  "insurance-services-office": { "name": "Insurance Services Office, Inc.", "replaces": { "name": "Verisk Analytics" }, "source": "enf-ftc-gm-complaint-2026", "reason": "FTC C-4828 names 'Insurance Services Office, Inc., doing business as Verisk Analytics'" },
+  "general-motors": {
+    "parent": "general-motors-company",
+    "source": "enf-ftc-gm-complaint-2026",
+    "sells": ["connected-vehicle precise geolocation data", "OnStar Smart Driver driving behavior data"],
+    "dropSources": ["sec-vrsk-10k-2025"],
+    "reason": "FTC C-4828: GM LLC is a respondent and a wholly owned subsidiary of General Motors Company; the sells come from the respondents' conduct. The Verisk 10-K supported only the dropped allegation links."
+  },
+  "general-motors-company": { "sells": [], "replaces": { "sells": ["connected-vehicle precise geolocation data", "OnStar Smart Driver driving behavior data"] }, "source": "enf-ftc-gm-complaint-2026", "reason": "General Motors Company is not a C-4828 respondent; it keeps only owns -> onstar" },
+  "transunion-rental-screening-solutions": { "parent": "trans-union", "replaces": { "parent": "transunion" }, "source": "enf-cfpb-turss-complaint-2023", "reason": "CFPB/FTC 2023 complaint: a wholly owned subsidiary of Trans Union LLC (direct parent); TransUnion's Exhibit 21 lists it without hierarchy" },
+  "lexisnexis-risk-solutions": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "id-analytics": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-risk-data-management": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-special-services": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-coplogic-solutions": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lnrs-data-services": { "parent": null, "replaces": { "parent": "relx-plc" }, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" }
 }

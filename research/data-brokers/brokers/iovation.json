@@ -2,7 +2,7 @@
   "id": "iovation",
   "name": "iovation Inc.",
   "aliases": [],
-  "parent": "transunion",
+  "parent": null,
   "kind": [],
   "registries": {
     "CA": "2026",
@@ -23,8 +23,7 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18",
-    "sec-tru-10k-2025-ex21"
+    "registry-tx-2026-10-18"
   ],
   "website": "https://www.transunion.com"
 }

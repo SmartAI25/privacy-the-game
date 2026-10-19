@@ -4,13 +4,11 @@
   "aliases": [
     "Azira. LLC",
     "Azira LLC",
-    "AZIRA LLC",
-    "Azira"
+    "AZIRA LLC"
   ],
   "parent": null,
   "kind": [
-    "location",
-    "ad-network"
+    "location"
   ],
   "registries": {
     "CA": "2026",
@@ -18,22 +16,12 @@
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [
-    "location and audience intelligence; acts as a demand-side platform in real-time bidding auctions",
-    "collects personal information from ad exchanges (bid requests), pixels, and 'trusted third-party sources, such as data brokers' (none named)"
-  ],
+  "sells": [],
   "optOut": {
     "method": "web-form",
     "url": "https://azira.com/privacy-policy",
     "status": "verified",
-    "verifiedAt": "2026-10-18",
-    "alternates": [
-      {
-        "site": "submit-irm.trustarc.com",
-        "url": "https://submit-irm.trustarc.com/services/validation/0a80503b-1d56-4d50-a898-4377a0227dab",
-        "source": "pol-azira-privacy"
-      }
-    ]
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,
@@ -42,8 +30,7 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18",
-    "pol-azira-privacy"
+    "registry-or-2026-10-18"
   ],
   "website": "https://www.azira.com"
 }
