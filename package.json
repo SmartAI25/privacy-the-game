@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "brokers:validate": "node research/data-brokers/build/validate.js",
     "dev": "npx serve src -l 3000",
     "test": "vitest run",
     "test:watch": "vitest"
