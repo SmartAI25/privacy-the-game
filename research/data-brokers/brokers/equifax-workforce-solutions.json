@@ -14,7 +14,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.equifax.com/personal/my-privacy/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

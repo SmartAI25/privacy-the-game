@@ -20,7 +20,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.veraset.com/legal/do-not-sell-request#consumer-opt-out-do-not-sell-request",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

@@ -19,7 +19,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://eltoro.com/your-privacy-choices/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

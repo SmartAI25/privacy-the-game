@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://trustsuperset.com/dsrs?orgId=275d6c62-eb0f-4f8a-80c2-b72573902714",
-    "status": "unchecked"
+    "status": "suspect",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

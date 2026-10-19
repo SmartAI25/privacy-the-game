@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://irys.us/do-not-sell-ccpa",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

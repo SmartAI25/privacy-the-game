@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.sheerid.com/global-privacy-policy/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

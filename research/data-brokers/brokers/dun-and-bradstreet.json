@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.dnb.com/en-us/why-dnb/data-transparency.html",
-    "status": "unchecked"
+    "status": "dead",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

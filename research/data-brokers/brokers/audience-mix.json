@@ -19,7 +19,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.audiencemix.net/do-no-sell-or-share-my-personal-informat",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

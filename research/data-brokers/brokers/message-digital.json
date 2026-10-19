@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://messagedigital.com/my-data",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

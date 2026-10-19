@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.livedatatechnologies.com/opt-out",
-    "status": "unchecked"
+    "status": "suspect",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

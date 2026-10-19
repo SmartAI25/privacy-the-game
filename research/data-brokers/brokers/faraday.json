@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://faraday.ai/privacy-options",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

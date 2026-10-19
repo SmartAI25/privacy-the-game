@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.vrtcal.com/docs/PrivacyPolicy-Advertising.pdf",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

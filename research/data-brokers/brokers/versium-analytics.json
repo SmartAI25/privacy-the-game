@@ -14,7 +14,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://versium.com/ccpa-opt-out",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

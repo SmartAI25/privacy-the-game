@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.lexisnexis.com/global/privacy/en/privacy-center-us.page",
-    "status": "unchecked"
+    "status": "dead",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

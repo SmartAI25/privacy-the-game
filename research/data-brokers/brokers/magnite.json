@@ -19,7 +19,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.magnite.com/legal/user-choice-portal/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

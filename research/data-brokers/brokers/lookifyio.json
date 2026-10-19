@@ -14,7 +14,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://lookify.io/ccpa-privacy-statement",
-    "status": "unchecked"
+    "status": "dead",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

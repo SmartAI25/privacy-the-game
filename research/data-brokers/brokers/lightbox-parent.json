@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.lightboxre.com/lightbox-individual-data-rights-request/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

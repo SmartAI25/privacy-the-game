@@ -21,7 +21,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://360-media-direct.privacy.saymine.io/360_Media_Direct",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

@@ -19,7 +19,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.mobilewalla.com/global-opt-out-request",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

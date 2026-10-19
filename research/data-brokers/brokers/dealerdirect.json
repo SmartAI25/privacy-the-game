@@ -17,7 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.forddirectprivacy.com",
-    "status": "unchecked"
+    "status": "suspect",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

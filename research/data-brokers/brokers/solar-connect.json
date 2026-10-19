@@ -23,7 +23,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.bluefireleads.com/privacy-policy.php",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

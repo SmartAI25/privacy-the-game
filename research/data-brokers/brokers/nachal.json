@@ -23,7 +23,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://getliminal.com/privacypolicy",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

@@ -14,7 +14,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://onaudience.com/do-not-sell-my-personal-info/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

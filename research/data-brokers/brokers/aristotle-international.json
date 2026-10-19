@@ -16,7 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.aristotle.com/privacy/addendum-for-california-residents/",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

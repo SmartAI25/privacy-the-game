@@ -14,7 +14,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://www.samba.tv/users/privacy-policy?lang=en",
-    "status": "unchecked"
+    "status": "suspect",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,

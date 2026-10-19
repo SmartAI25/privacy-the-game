@@ -18,7 +18,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://portals.dporganizer.com/fa778b0e-817f-4c96-b13d-e2b614470033",
-    "status": "unchecked"
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
   },
   "size": {
     "known": false,
