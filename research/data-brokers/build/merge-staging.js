@@ -5,7 +5,7 @@
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { legalKey } from './import-registry.js';
-import { validateDataset, validateSource } from './schema.js';
+import { KINDS, LINK_TYPES, TIERS, validateDataset, validateSource } from './schema.js';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const isStr = (x) => typeof x === 'string' && x.trim() !== '';
@@ -79,13 +79,24 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   for (const b of existingBrokers) if (!byKey.has(legalKey(b.name))) byKey.set(legalKey(b.name), b.id);
   const mapId = (id) => idMap[id] ?? id;
   const resolved = new Map(); // staged id -> canonical id
-  const candidates = new Map(); // canonical new id -> list of staged records
   const matches = []; // [canonicalId, stagedRecord]
+  const matchLog = [];
   for (const sb of stBrokers) {
     if (!isStr(sb.id) || !isStr(sb.name)) { reject(sb, 'staged broker needs id and name'); continue; }
+    const badKind = (Array.isArray(sb.kind) ? sb.kind : []).filter((k) => !KINDS.includes(k));
+    if (badKind.length) { reject(sb, `${sb.id}: unknown kind ${badKind.join(', ')}`); continue; }
     const mapped = mapId(sb.id);
-    let target = work.has(mapped) ? mapped : byKey.get(legalKey(sb.name));
-    if (!target) for (const a of sb.aliases ?? []) { if (isStr(a) && byKey.has(legalKey(a))) { target = byKey.get(legalKey(a)); break; } }
+    let target = null;
+    let matchedBy = null;
+    if (work.has(mapped)) { target = mapped; matchedBy = mapped === sb.id ? 'id' : 'id-map'; }
+    else if (byKey.has(legalKey(sb.name))) { target = byKey.get(legalKey(sb.name)); matchedBy = 'legalKey'; }
+    else for (const a of sb.aliases ?? []) { if (isStr(a) && byKey.has(legalKey(a))) { target = byKey.get(legalKey(a)); matchedBy = 'alias'; break; } }
+    if (!(sb.sources ?? []).some((s) => okSource(srcId(s)))) {
+      reject(sb, `${sb.id}: staged broker has no usable (archived) source; contributes nothing`);
+      if (target) resolved.set(sb.id, target);
+      continue;
+    }
+    if (target && !isNew.has(target)) matchLog.push({ stagedId: sb.id, existingId: target, matchedBy });
     if (!target) {
       target = mapped;
       if (!work.has(target)) { work.set(target, newBroker(target, sb.name)); isNew.add(target); byKey.set(legalKey(sb.name), target); }
@@ -100,9 +111,13 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   let cand = [];
   for (const l of stLinks) {
     const nl = { ...l, from: res(l.from), to: res(l.to) };
-    const good = (l.sources ?? []).filter(okSource);
-    if (!good.length) { reject(l, `link ${l.from}->${l.to} rejected: no usable (archived) source`); continue; }
-    nl.sources = good;
+    if (!LINK_TYPES.includes(l.type)) { reject(l, `link ${l.from}->${l.to} rejected: unknown type "${l.type}"`); continue; }
+    if (!TIERS.includes(l.tier)) { reject(l, `link ${l.from}->${l.to} rejected: unknown tier "${l.tier}"`); continue; }
+    if (nl.from === nl.to) { reject(l, `link ${l.from}->${l.to} rejected: self-link after resolution`); continue; }
+    const srcs = l.sources ?? [];
+    if (!srcs.length) { reject(l, `link ${l.from}->${l.to} rejected: no source`); continue; }
+    const bad = srcs.filter((x) => !okSource(x));
+    if (bad.length) { reject(l, `link ${l.from}->${l.to} rejected: cites rejected or unknown source(s) ${bad.join(', ')}; claim may rest on them`); continue; }
     cand.push(nl);
   }
   const brokerSourceOk = (id) => stagedFor(id).some((sb) => (sb.sources ?? []).some((s) => okSource(srcId(s))));
@@ -191,8 +206,10 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       reject(l, `link ${key}: claim differs from existing at the same or stronger tier; existing kept`);
       continue;
     }
-    if (stronger) { cur.tier = l.tier; cur.claim = l.claim; }
-    cur.sources = union(cur.sources, l.sources);
+    if (stronger) {
+      reject({ claim: cur.claim, tier: cur.tier, sources: cur.sources, link: key }, `link ${key}: superseded by stronger tier`);
+      cur.tier = l.tier; cur.claim = l.claim; cur.sources = [...l.sources];
+    } else cur.sources = union(cur.sources, l.sources);
     cur.published = cur.tier === 'A';
     linksUpdated++;
   }
@@ -208,7 +225,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     errors = (await validateDataset(scratch)).errors;
   } finally { await rm(scratch, { recursive: true, force: true }); }
 
-  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, errors, written: false };
+  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, matches: matchLog, errors, written: false };
   if (errors.length || dryRun) return result;
 
   await mkdir(join(datasetDir, 'brokers'), { recursive: true });
@@ -228,13 +245,16 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const r = await mergeStaging(root, family, { dryRun });
   if (r.errors.length) {
     for (const e of r.errors) console.error(e);
+    if (r.rejected.length) console.error(JSON.stringify(r.rejected, null, 2));
     console.error(`${r.errors.length} validation error(s); nothing written`);
     process.exit(1);
   }
   console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, rejected: r.rejected.length }));
   if (dryRun) { if (r.rejected.length) console.log(JSON.stringify(r.rejected, null, 2)); }
   else {
-    const { writeFile } = await import('node:fs/promises');
+    const { writeFile, mkdir } = await import('node:fs/promises');
+    await mkdir(join(root, 'staging', family), { recursive: true });
     await writeFile(join(root, 'staging', family, 'REJECTED.json'), fmt(r.rejected));
+    await writeFile(join(root, 'staging', family, 'MATCHES.json'), fmt(r.matches));
   }
 }

@@ -104,8 +104,9 @@ describe('mergeStaging', () => {
     expect(links).toHaveLength(1);
     expect(links[0].tier).toBe('A');
     expect(links[0].claim).toBe('strong');
-    expect(links[0].sources.sort()).toEqual(['s0', 's1']);
+    expect(links[0].sources).toEqual(['s1']);
     expect(links[0].published).toBe(true);
+    expect(r.rejected.some((x) => /superseded by stronger tier/.test(x.reason) && x.item.claim === 'weak')).toBe(true);
   });
 
   it('tier B staged link lands unpublished, even if staging says published', async () => {
@@ -149,16 +150,64 @@ describe('mergeStaging', () => {
       brokers: [broker('p', 'P'), broker('c', 'C')],
       staged: {
         sources: { bad: src({ archived: null }), ok: src() },
-        links: [link('p', 'c', { sources: ['bad'] }), link('c', 'p', { sources: ['bad', 'ok'] })],
+        links: [link('p', 'c', { sources: ['bad'] }), link('c', 'p', { sources: ['bad', 'ok'] }), link('p', 'c', { type: 'buys', sources: ['ok'] })],
       },
     });
     const r = await mergeStaging(dir, 'fam');
     expect(r.errors).toEqual([]);
     const links = await readLinks();
     expect(links).toHaveLength(1);
+    expect(links[0].type).toBe('buys');
     expect(links[0].sources).toEqual(['ok']);
     expect(Object.keys(JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8')))).toEqual(['reg', 'ok']);
-    expect(r.rejected.length).toBeGreaterThanOrEqual(2);
+    expect(r.rejected.length).toBeGreaterThanOrEqual(3);
+    expect(r.rejected.some((x) => /claim may rest/.test(x.reason))).toBe(true);
+  });
+
+  it('matched staged broker with no usable sources contributes nothing', async () => {
+    await setup({
+      brokers: [broker('a', 'A')],
+      staged: { sources: { bad: src({ archived: null }) }, brokers: [{ id: 'a', name: 'A', sells: ['x'], website: 'https://a.example', sources: ['bad'] }] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.updated).toBe(0);
+    expect(await readB('a')).toEqual(broker('a', 'A'));
+    expect(r.rejected.some((x) => x.item.id === 'a' && /source/.test(x.reason))).toBe(true);
+  });
+
+  it('logs every match with how it was made', async () => {
+    await setup({
+      idMap: { m: 'viaMap' },
+      brokers: [broker('byid', 'By Id'), broker('bykey', 'By Key Inc'), broker('byalias', 'By Alias'), broker('viaMap', 'Via Map')],
+      staged: { sources: { s1: src() }, brokers: [
+        { id: 'byid', name: 'By Id', sources: ['s1'] },
+        { id: 'k', name: 'BY KEY LLC', sources: ['s1'] },
+        { id: 'al', name: 'Zzz', aliases: ['By Alias Corp'], sources: ['s1'] },
+        { id: 'm', name: 'Whatever', sources: ['s1'] },
+      ] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect([...r.matches].sort((x, y) => x.stagedId.localeCompare(y.stagedId))).toEqual([
+      { stagedId: 'al', existingId: 'byalias', matchedBy: 'alias' },
+      { stagedId: 'byid', existingId: 'byid', matchedBy: 'id' },
+      { stagedId: 'k', existingId: 'bykey', matchedBy: 'legalKey' },
+      { stagedId: 'm', existingId: 'viaMap', matchedBy: 'id-map' },
+    ]);
+  });
+
+  it('rejects only the offending item for bad kind, tier, type, and self-links', async () => {
+    await setup({
+      brokers: [broker('p', 'P'), broker('c', 'C')],
+      staged: { sources: { s1: src() },
+        brokers: [{ id: 'nk', name: 'Nk', kind: ['bogus'], sources: ['s1'] }, { id: 'ok', name: 'Ok', kind: ['marketing'], sources: ['s1'] }],
+        links: [link('p', 'c', { tier: 'Z' }), link('p', 'c', { type: 'weird' }), link('p', 'p'), link('p', 'c')] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.added).toBe(1);
+    expect(await readLinks()).toHaveLength(1);
+    expect(r.rejected).toHaveLength(4);
+    expect(r.rejected.some((x) => /self-link/.test(x.reason))).toBe(true);
   });
 
   it('id-map.json redirects staged ids and link endpoints', async () => {
@@ -200,8 +249,10 @@ describe('mergeStaging', () => {
   it('writes nothing when the merged dataset fails validation', async () => {
     await setup({
       brokers: [broker('p', 'P')],
-      staged: { sources: { s1: src() }, brokers: [{ id: 'p', name: 'P', kind: ['not-a-kind'], sources: ['s1'] }] },
+      staged: { sources: { s1: src() }, brokers: [{ id: 'p', name: 'P', parent: null, website: 5, sources: ['s1'] }] },
     });
+    const { writeFile: wf } = await import('node:fs/promises');
+    await wf(join(dir, 'brokers', 'q.json'), '{"id":"q"}');
     const r = await mergeStaging(dir, 'fam');
     expect(r.errors.length).toBeGreaterThan(0);
     expect((await readB('p')).kind).toEqual(['marketing']);
