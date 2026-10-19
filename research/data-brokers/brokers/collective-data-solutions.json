@@ -2,9 +2,10 @@
   "id": "collective-data-solutions",
   "name": "Collective Data Solutions, LLC",
   "aliases": [
-    "COLLECTIVE DATA SOLUTIONS LLC"
+    "COLLECTIVE DATA SOLUTIONS LLC",
+    "Collective Data Solutions"
   ],
-  "parent": null,
+  "parent": "kochava",
   "kind": [
     "location"
   ],
@@ -14,7 +15,9 @@
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "data broker business transferred from Kochava (per FTC)"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://collectivedata.io",
@@ -28,7 +31,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "enf-ftc-kochava-sac-2024",
+    "enf-ftc-kochava-order-2026"
   ],
   "website": "https://collectivedata.io"
 }

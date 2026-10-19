@@ -1,0 +1,29 @@
+{
+  "id": "x-mode-social",
+  "name": "X-Mode Social",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [
+    "raw location data tied to persistent identifiers",
+    "location-based audience segments"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "FTC alleged (2024 complaint) X-Mode ingested over 10 billion location data points daily",
+        "source": "enf-ftc-xmode-complaint-2024"
+      }
+    ]
+  },
+  "sources": [
+    "enf-ftc-xmode-complaint-2024",
+    "enf-ftc-xmode-order-2024"
+  ]
+}

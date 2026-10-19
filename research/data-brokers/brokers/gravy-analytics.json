@@ -1,0 +1,23 @@
+{
+  "id": "gravy-analytics",
+  "name": "Gravy Analytics",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {},
+  "sells": [
+    "location data tied to MAIDs and IP addresses",
+    "geofenced lists of devices"
+  ],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gravy-complaint-2024",
+    "enf-ftc-gravy-order-2025"
+  ]
+}

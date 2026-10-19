@@ -159,5 +159,173 @@
     "kind": "sec-8k",
     "title": "CoreLogic, Inc. Form 8-K filed 2021-06-04 reporting completion of acquisition by affiliates of Stone Point Capital and Insight Partners",
     "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-complaint-2022": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/1.%20Complaint.pdf",
+    "archived": "https://web.archive.org/web/20261013174152/https://www.ftc.gov/system/files/ftc_gov/pdf/1.%20Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Kochava Inc., No. 2:22-cv-377 (D. Idaho), Complaint for Permanent Injunction and Other Relief, filed Aug. 29, 2022",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-sac-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/86-SecondAmendedComplaint.pdf",
+    "archived": "https://web.archive.org/web/20261003175839/https://www.ftc.gov/system/files/ftc_gov/pdf/86-SecondAmendedComplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Kochava Inc. and Collective Data Solutions, LLC, No. 2:22-cv-377 (D. Idaho), Second Amended Complaint, filed July 15, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-order-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Kochava-Order.pdf",
+    "archived": "https://web.archive.org/web/20260626161543/https://www.ftc.gov/system/files/ftc_gov/pdf/Kochava-Order.pdf",
+    "kind": "ftc-order",
+    "title": "FTC v. Kochava, Inc., No. 2:22-cv-00377-BLW (D. Idaho), Stipulated Order for Injunction and Other Relief, dated June 25, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-xmode-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialComplaint.pdf",
+    "archived": "https://web.archive.org/web/20260930012546/https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialComplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of X-Mode Social, Inc. and Outlogic, LLC, FTC Docket No. C-4802, Complaint, issued Apr. 11, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-xmode-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialDecisionandOrder.pdf",
+    "archived": "https://web.archive.org/web/20261009212608/https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialDecisionandOrder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of X-Mode Social, Inc. and Outlogic, LLC, FTC Docket No. C-4802, Decision and Order, issued Apr. 11, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-inmarket-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-Complaint.pdf",
+    "archived": "https://web.archive.org/web/20260930012546/https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of InMarket Media, LLC, FTC Docket No. C-4803, Complaint (final, posted May 1, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-inmarket-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-DecisionandOrder.pdf",
+    "archived": "https://web.archive.org/web/20260907050023/https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-DecisionandOrder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of InMarket Media, LLC, FTC Docket No. C-4803, Decision and Order, issued Apr. 29, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gravy-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf",
+    "archived": "https://web.archive.org/web/20260915174435/https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Gravy Analytics, Inc. and Venntel, Inc., FTC File No. 212-3035, Complaint (Dec. 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gravy-order-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/212_3035_-_gravy_analytics_final_consent_package_without_signatures.pdf",
+    "archived": "https://web.archive.org/web/20261002165806/https://www.ftc.gov/system/files/ftc_gov/pdf/212_3035_-_gravy_analytics_final_consent_package_without_signatures.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Gravy Analytics, Inc. and Venntel, Inc., FTC File No. 212-3035, final consent package incl. Decision and Order issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-mobilewalla-complaint-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-Complaint.pdf",
+    "archived": "https://web.archive.org/web/20260421134353/https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Mobilewalla, Inc., FTC Docket No. C-4811, Complaint, issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-mobilewalla-order-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-D%26O.pdf",
+    "archived": "https://web.archive.org/web/20260906205859/https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-D%26O.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Mobilewalla, Inc., FTC Docket No. C-4811, Decision and Order, issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gm-complaint-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalcomplaint.pdf",
+    "archived": "https://web.archive.org/web/20260117044220/https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalcomplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of General Motors LLC, General Motors Holdings LLC, and OnStar, LLC, FTC Docket No. C-4828, Complaint, issued Jan. 13, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gm-order-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalorder.pdf",
+    "archived": "https://web.archive.org/web/20260117035059/https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalorder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of General Motors LLC et al., FTC Docket No. C-4828, Decision and Order, issued Jan. 13, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-avast-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf",
+    "archived": "https://web.archive.org/web/20240222194152/https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Avast Limited, Avast Software s.r.o., and Jumpshot, Inc., FTC File No. 202-3033, Complaint (published Feb. 22, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-avast-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/202_3033_-_avast_final_consent_package.pdf",
+    "archived": "https://web.archive.org/web/20260924223135/https://www.ftc.gov/system/files/ftc_gov/pdf/202_3033_-_avast_final_consent_package.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Avast Limited et al., FTC File No. 202-3033, final consent package incl. Decision and Order issued June 26, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-truthfinder-complaint-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_complaint.pdf",
+    "archived": "https://web.archive.org/web/20250713075749/https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Instant Checkmate, LLC, TruthFinder, LLC, et al., Complaint (S.D. Cal., Sept. 2023)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-truthfinder-order-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_stipulated_order_signed_by_judge.pdf",
+    "archived": "https://web.archive.org/web/20251221184907/https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_stipulated_order_signed_by_judge.pdf",
+    "kind": "ftc-order",
+    "title": "FTC v. Instant Checkmate, LLC et al., No. 23-cv-1674 (S.D. Cal.), Stipulated Order for Permanent Injunction, Civil Penalty Judgment, and Other Relief, dated Oct. 11, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-cfpb-turss-complaint-2023": {
+    "url": "https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_complaint_2023-10.pdf",
+    "archived": "https://web.archive.org/web/20251209044949/https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_complaint_2023-10.pdf",
+    "kind": "court",
+    "title": "CFPB and FTC v. TransUnion Rental Screening Solutions, Inc. and Trans Union LLC, No. 1:23-cv-02659 (D. Colo.), Complaint, filed Oct. 12, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-cfpb-turss-order-2023": {
+    "url": "https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf",
+    "archived": "https://web.archive.org/web/20261019051259/https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf",
+    "kind": "cfpb-order",
+    "title": "CFPB and FTC v. TransUnion Rental Screening Solutions, Inc. and Trans Union LLC, No. 1:23-cv-02659 (D. Colo.), Stipulated Final Judgment and Order, so ordered Oct. 18, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-spokeo-complaint-2012": {
+    "url": "https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeocmpt.pdf",
+    "archived": "https://web.archive.org/web/20251130050049/https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeocmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "United States v. Spokeo, Inc., No. 2:12-cv-05001 (C.D. Cal.), Complaint for Civil Penalties, Injunction and Other Relief, filed June 7, 2012",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-spokeo-order-2012": {
+    "url": "https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeoorder.pdf",
+    "archived": "https://web.archive.org/web/20260708074314/https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeoorder.pdf",
+    "kind": "ftc-order",
+    "title": "United States v. Spokeo, Inc., No. 2:12-cv-05001 (C.D. Cal.), Consent Decree and Order for Civil Penalties, Injunction and Other Relief (June 2012)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-leaplab-complaint-2014": {
+    "url": "https://www.ftc.gov/system/files/documents/cases/141223leaplabcmpt.pdf",
+    "archived": "https://web.archive.org/web/20251018064722/https://www.ftc.gov/system/files/documents/cases/141223leaplabcmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Sitesearch Corporation d/b/a LeapLab, et al. (D. Ariz.), Complaint for Permanent Injunction and Other Equitable Relief, dated Dec. 22, 2014",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-sequoia-one-complaint-2015": {
+    "url": "https://www.ftc.gov/system/files/documents/cases/150812sequoiaonecmpt.pdf",
+    "archived": "https://web.archive.org/web/20260112082722/https://www.ftc.gov/system/files/documents/cases/150812sequoiaonecmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Sequoia One, LLC, et al., No. 2:15-cv-01512 (D. Nev.), Complaint for Permanent Injunction and Other Equitable Relief, filed Aug. 7, 2015",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-goodrx-complaint-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/goodrx_complaint_for_permanent_injunction_civil_penalties_and_other_relief.pdf",
+    "archived": "https://web.archive.org/web/20261003070844/https://www.ftc.gov/system/files/ftc_gov/pdf/goodrx_complaint_for_permanent_injunction_civil_penalties_and_other_relief.pdf",
+    "kind": "court",
+    "title": "United States v. GoodRx Holdings, Inc., No. 3:23-cv-00460 (N.D. Cal.), Complaint for Permanent Injunction, Civil Penalties, and Other Relief, filed Feb. 1, 2023",
+    "accessed": "2026-10-18"
   }
 }

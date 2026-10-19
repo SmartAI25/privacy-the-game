@@ -1,0 +1,32 @@
+{
+  "id": "kochava",
+  "name": "Kochava",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "data-marketplace"
+  ],
+  "registries": {},
+  "sells": [
+    "precise geolocation data tied to mobile advertising IDs",
+    "App Graph app-usage data",
+    "audience segments (via the Kochava Collective)"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "FTC alleged (2024 second amended complaint) that Kochava collects and shares information on hundreds of millions of consumers",
+        "source": "enf-ftc-kochava-sac-2024"
+      }
+    ]
+  },
+  "sources": [
+    "enf-ftc-kochava-complaint-2022",
+    "enf-ftc-kochava-sac-2024",
+    "enf-ftc-kochava-order-2026"
+  ]
+}

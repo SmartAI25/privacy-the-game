@@ -7,7 +7,8 @@
   "parent": "publicis-groupe",
   "kind": [
     "data-marketplace",
-    "identity-resolution"
+    "identity-resolution",
+    "marketing"
   ],
   "registries": {},
   "sells": [
@@ -20,6 +21,7 @@
   },
   "sources": [
     "sec-publicis-urd-2025-note3",
-    "sec-publicis-urd-2025-note36"
+    "sec-publicis-urd-2025-note36",
+    "enf-ftc-avast-complaint-2024"
   ]
 }

@@ -4,7 +4,8 @@
   "aliases": [
     "LexisNexis Risk Solutions",
     "LexisNexis Risk",
-    "LNRS"
+    "LNRS",
+    "Lexis Nexis Risk Solutions, Inc."
   ],
   "parent": "relx-plc",
   "kind": [
@@ -17,7 +18,8 @@
     "risk, fraud and identity analytics from public, contributory and proprietary data",
     "vehicle and behaviour-centric data for insurers",
     "investigative tools (Accurint)",
-    "digital identity network (ThreatMetrix)"
+    "digital identity network (ThreatMetrix)",
+    "consumer reports built from driving data (per FTC)"
   ],
   "optOut": null,
   "size": {
@@ -32,6 +34,7 @@
   },
   "sources": [
     "sec-relx-annual-report-2025",
-    "sec-relx-20f-2025"
+    "sec-relx-20f-2025",
+    "enf-ftc-gm-complaint-2026"
   ]
 }

@@ -5,7 +5,7 @@
     "Venntel",
     "VENNTEL INC"
   ],
-  "parent": null,
+  "parent": "gravy-analytics",
   "kind": [
     "location"
   ],
@@ -15,7 +15,9 @@
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "location data and analysis tools to public sector customers, such as government contractors (per FTC)"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.venntel.com/privacy-policy",
@@ -29,7 +31,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "enf-ftc-gravy-complaint-2024",
+    "enf-ftc-gravy-order-2025"
   ],
   "website": "https://www.venntel.com"
 }

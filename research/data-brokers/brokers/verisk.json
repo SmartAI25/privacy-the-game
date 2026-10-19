@@ -2,7 +2,8 @@
   "id": "verisk",
   "name": "Verisk Analytics, Inc.",
   "aliases": [
-    "Verisk"
+    "Verisk",
+    "Verisk Analytics"
   ],
   "parent": null,
   "kind": [
@@ -10,7 +11,8 @@
   ],
   "registries": {},
   "sells": [
-    "insurance underwriting and claims data and analytics from proprietary and contributory data"
+    "insurance underwriting and claims data and analytics from proprietary and contributory data",
+    "consumer reports built from driving data (per FTC)"
   ],
   "optOut": null,
   "size": {
@@ -24,6 +26,7 @@
     ]
   },
   "sources": [
-    "sec-vrsk-10k-2025"
+    "sec-vrsk-10k-2025",
+    "enf-ftc-gm-complaint-2026"
   ]
 }

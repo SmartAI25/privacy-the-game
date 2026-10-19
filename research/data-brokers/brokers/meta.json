@@ -1,0 +1,21 @@
+{
+  "id": "meta",
+  "name": "Meta Platforms",
+  "aliases": [
+    "Facebook"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-goodrx-complaint-2023"
+  ]
+}
