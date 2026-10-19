@@ -17,8 +17,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://6sense.com/privacy-policy/",
-    "status": "dead",
-    "verifiedAt": "2026-10-18"
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
   },
   "size": {
     "known": false,

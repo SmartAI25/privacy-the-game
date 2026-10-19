@@ -1,14 +1,29 @@
 import { describe, it, expect } from 'vitest';
 import { classifyResponse, registrableDomain } from '../../research/data-brokers/build/check-urls.js';
 
-const c = (requestedUrl, finalUrl, status) => classifyResponse({ requestedUrl, finalUrl, status });
+const c = (requestedUrl, finalUrl, status, error) => classifyResponse({ requestedUrl, finalUrl, status, error });
 
 describe('classifyResponse', () => {
   it('404 is dead', () => {
     expect(c('https://a.com/optout', 'https://a.com/optout', 404)).toBe('dead');
   });
-  it('network error is dead', () => {
-    expect(c('https://a.com/optout', null, null)).toBe('dead');
+  it('410 is dead', () => {
+    expect(c('https://a.com/optout', 'https://a.com/optout', 410)).toBe('dead');
+  });
+  it('403 is blocked', () => {
+    expect(c('https://a.com/optout', 'https://a.com/optout', 403)).toBe('blocked');
+  });
+  it('429 is blocked', () => {
+    expect(c('https://a.com/optout', 'https://a.com/optout', 429)).toBe('blocked');
+  });
+  it('500 is blocked', () => {
+    expect(c('https://a.com/optout', 'https://a.com/optout', 500)).toBe('blocked');
+  });
+  it('DNS failure is dead', () => {
+    expect(c('https://a.com/optout', null, null, 'ENOTFOUND')).toBe('dead');
+  });
+  it('timeout is blocked', () => {
+    expect(c('https://a.com/optout', null, null, 'TimeoutError')).toBe('blocked');
   });
   it('redirect to root is suspect', () => {
     expect(c('https://a.com/privacy/optout', 'https://a.com/', 200)).toBe('suspect');

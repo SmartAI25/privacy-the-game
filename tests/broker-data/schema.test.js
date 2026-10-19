@@ -49,6 +49,7 @@ describe('validateBroker', () => {
     expect(v(broker({ optOut: { method: 'email', email: 'a@b.com' } }))).toEqual([]);
     expect(v(broker({ optOut: { method: 'email' } })).length).toBeGreaterThan(0);
   });
+  it('blocked optOut status is accepted', () => expect(v(broker({ optOut: { method: 'none', status: 'blocked' } }))).toEqual([]));
   it('bad optOut status fails', () => expect(v(broker({ optOut: { method: 'none', status: 'meh' } })).length).toBeGreaterThan(0));
   it('size.known false must have empty signals', () =>
     expect(v(broker({ size: { known: false, signals: [{ kind: 'x', value: '1', source: 's1' }] } })).length).toBeGreaterThan(0));

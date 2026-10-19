@@ -16,8 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://blis.com/privacy-centre/",
-    "status": "dead",
-    "verifiedAt": "2026-10-18"
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
   },
   "size": {
     "known": false,

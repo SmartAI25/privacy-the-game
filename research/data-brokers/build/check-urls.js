@@ -13,8 +13,13 @@ export function registrableDomain(url) {
 
 const isRoot = (url) => { const p = new URL(url).pathname; return p === '' || p === '/'; };
 
-export function classifyResponse({ requestedUrl, finalUrl, status }) {
-  if (!finalUrl || status == null || status >= 400) return 'dead';
+const DNS_ERRORS = new Set(['ENOTFOUND', 'EAI_AGAIN']);
+
+// 'blocked' means "could not verify" (bot walls, rate limits, transient or network trouble), not "page is gone".
+export function classifyResponse({ requestedUrl, finalUrl, status, error }) {
+  if (!finalUrl || status == null) return DNS_ERRORS.has(error) ? 'dead' : 'blocked';
+  if (status === 404 || status === 410) return 'dead';
+  if (status >= 400) return 'blocked';
   if (isRoot(finalUrl) && !isRoot(requestedUrl)) return 'suspect';
   if (registrableDomain(finalUrl) !== registrableDomain(requestedUrl)) return 'suspect';
   return 'verified';
@@ -32,10 +37,12 @@ async function fetchOnce(url) {
   }
 }
 
-// One retry, only for network errors.
+// One retry (after a short delay) on network errors, 429 and 5xx.
 async function check(url) {
   const first = await fetchOnce(url);
-  return first.finalUrl ? first : fetchOnce(url);
+  if (first.finalUrl && first.status !== 429 && first.status < 500) return first;
+  await new Promise((r) => setTimeout(r, 2000));
+  return fetchOnce(url);
 }
 
 async function main() {
@@ -45,12 +52,14 @@ async function main() {
   const dir = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'brokers');
   const today = new Date().toISOString().slice(0, 10);
   const files = (await readdir(dir)).filter((f) => f.endsWith('.json')).sort();
+  const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7);
   const jobs = [];
   for (const f of files) {
     const b = JSON.parse(await readFile(join(dir, f), 'utf8'));
+    if (only && b.optOut?.status !== only) continue;
     if (b.optOut?.url && /^https?:\/\//i.test(b.optOut.url)) jobs.push({ f, b });
   }
-  const counts = { verified: 0, suspect: 0, dead: 0 };
+  const counts = { verified: 0, suspect: 0, blocked: 0, dead: 0 };
   const bad = [];
   let next = 0, written = 0;
   async function worker() {
@@ -69,7 +78,7 @@ async function main() {
   }
   await Promise.all(Array.from({ length: 8 }, worker));
   console.table(bad.sort((a, c) => a.status.localeCompare(c.status) || a.id.localeCompare(c.id)));
-  console.log(`checked ${jobs.length}: verified ${counts.verified}, suspect ${counts.suspect}, dead ${counts.dead}; ${written} files written`);
+  console.log(`checked ${jobs.length}: verified ${counts.verified}, suspect ${counts.suspect}, blocked ${counts.blocked}, dead ${counts.dead}; ${written} files written`);
 }
 
 const { fileURLToPath: f2p } = await import('node:url');

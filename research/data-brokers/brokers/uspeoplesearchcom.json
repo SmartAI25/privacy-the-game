@@ -16,8 +16,8 @@
   "optOut": {
     "method": "web-form",
     "url": "https://uspeoplesearch.com/privacy-rights/",
-    "status": "dead",
-    "verifiedAt": "2026-10-18"
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
   },
   "size": {
     "known": false,

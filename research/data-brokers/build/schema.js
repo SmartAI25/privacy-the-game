@@ -5,7 +5,7 @@ export const KINDS = Object.freeze(['people-search', 'marketing', 'risk-identity
 export const OPT_OUT_METHODS = Object.freeze(['web-form', 'email', 'mail', 'portal', 'sweep-only', 'none']);
 export const LINK_TYPES = Object.freeze(['owns', 'supplies', 'buys', 'matches-identity']);
 export const TIERS = Object.freeze(['A', 'B', 'C']);
-export const OPT_OUT_STATUSES = Object.freeze(['verified', 'suspect', 'dead', 'unchecked']);
+export const OPT_OUT_STATUSES = Object.freeze(['verified', 'suspect', 'dead', 'blocked', 'unchecked']);
 export const REGISTRY_KEYS = Object.freeze(['CA', 'VT', 'TX', 'OR']);
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
