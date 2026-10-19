@@ -1,5 +1,5 @@
 // Opt-out URL checker: GETs every http(s) optOut.url and records whether it still lands on the same page.
-// CLI: node check-urls.js   (writes optOut.status and optOut.verifiedAt; never deletes a URL)
+// CLI: node check-urls.js [--only=<status>]   (writes optOut.status and optOut.verifiedAt; never deletes a URL)
 const MULTI = new Set(['co.uk', 'org.uk', 'ac.uk', 'gov.uk', 'com.au', 'net.au', 'org.au', 'co.jp', 'co.nz', 'co.za', 'com.br', 'com.mx', 'co.in', 'com.cn']);
 
 // Small eTLD+1 helper: enough for this dataset, not the full Public Suffix List.
@@ -29,6 +29,13 @@ export function classifyResponse({ requestedUrl, finalUrl, status, error }) {
   if (isRoot(finalUrl) && !isRoot(requestedUrl)) return 'suspect';
   if (registrableDomain(finalUrl) !== registrableDomain(requestedUrl)) return 'suspect';
   return 'verified';
+}
+
+// --only=<status> filter. A record with an opt-out but no status has never been checked, so it counts as 'unchecked'.
+export function matchesOnly(b, only) {
+  if (!only) return true;
+  if (!b?.optOut) return false;
+  return (b.optOut.status ?? 'unchecked') === only;
 }
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
@@ -62,7 +69,7 @@ async function main() {
   const jobs = [];
   for (const f of files) {
     const b = JSON.parse(await readFile(join(dir, f), 'utf8'));
-    if (only && b.optOut?.status !== only) continue;
+    if (!matchesOnly(b, only)) continue;
     if (b.optOut?.url && /^https?:\/\//i.test(b.optOut.url)) jobs.push({ f, b });
   }
   const counts = { verified: 0, suspect: 0, blocked: 0, dead: 0 };

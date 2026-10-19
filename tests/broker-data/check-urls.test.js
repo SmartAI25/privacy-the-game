@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { classifyResponse, localDate, registrableDomain } from '../../research/data-brokers/build/check-urls.js';
+import { classifyResponse, localDate, matchesOnly, registrableDomain } from '../../research/data-brokers/build/check-urls.js';
 
 const c = (requestedUrl, finalUrl, status, error) => classifyResponse({ requestedUrl, finalUrl, status, error });
 
@@ -59,4 +59,19 @@ describe('localDate', () => {
     expect(localDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05');
     expect(localDate(new Date(2026, 9, 18, 0, 1))).toBe('2026-10-18');
   });
+});
+
+describe('matchesOnly', () => {
+  const b = (optOut) => ({ id: 'x', optOut });
+  it('no filter matches everything', () => expect(matchesOnly(b(null), undefined)).toBe(true));
+  it('--only=unchecked matches a literal unchecked and a missing status', () => {
+    expect(matchesOnly(b({ method: 'web-form', url: 'https://a.com/o', status: 'unchecked' }), 'unchecked')).toBe(true);
+    expect(matchesOnly(b({ method: 'web-form', url: 'https://a.com/o' }), 'unchecked')).toBe(true);
+    expect(matchesOnly(b({ method: 'web-form', url: 'https://a.com/o', status: 'verified' }), 'unchecked')).toBe(false);
+  });
+  it('other filters match only that status', () => {
+    expect(matchesOnly(b({ method: 'web-form', url: 'https://a.com/o', status: 'blocked' }), 'blocked')).toBe(true);
+    expect(matchesOnly(b({ method: 'web-form', url: 'https://a.com/o' }), 'blocked')).toBe(false);
+  });
+  it('a record with no opt-out never matches a filter', () => expect(matchesOnly(b(null), 'unchecked')).toBe(false));
 });
