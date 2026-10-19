@@ -1,0 +1,30 @@
+{
+  "id": "thomson-reuters",
+  "name": "Thomson Reuters Corporation",
+  "aliases": [
+    "Thomson Reuters",
+    "CLEAR"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "registries": {},
+  "sells": [
+    "US public records platform (CLEAR) for authorized businesses and government agencies"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "2025 revenues $7,476 million (whole company; CLEAR revenue not broken out)",
+        "source": "sec-tri-40f-2025-annual-report"
+      }
+    ]
+  },
+  "sources": [
+    "sec-tri-40f-2025-annual-report"
+  ]
+}

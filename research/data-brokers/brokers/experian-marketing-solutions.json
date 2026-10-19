@@ -4,7 +4,7 @@
   "aliases": [
     "EXPERIAN MARKETING SOLUTIONS LLC"
   ],
-  "parent": null,
+  "parent": "experian",
   "kind": [],
   "registries": {
     "CA": "2026",
@@ -26,7 +26,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-experian-annual-report-2026"
   ],
   "website": "https://www.experian.com"
 }

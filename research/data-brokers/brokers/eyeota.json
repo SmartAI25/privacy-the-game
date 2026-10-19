@@ -1,0 +1,19 @@
+{
+  "id": "eyeota",
+  "name": "Eyeota Holdings Pte. Ltd.",
+  "aliases": [],
+  "parent": "dun-bradstreet",
+  "kind": [
+    "marketing"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-dnb-10k-2024"
+  ]
+}

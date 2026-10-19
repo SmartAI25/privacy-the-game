@@ -1,9 +1,14 @@
 {
   "id": "neustar",
   "name": "NEUSTAR INC",
-  "aliases": [],
-  "parent": null,
-  "kind": [],
+  "aliases": [
+    "Neustar, Inc.",
+    "Neustar"
+  ],
+  "parent": "transunion",
+  "kind": [
+    "identity-resolution"
+  ],
   "registries": {
     "CA": null,
     "VT": null,
@@ -22,6 +27,8 @@
     "signals": []
   },
   "sources": [
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-tru-10k-2025",
+    "sec-tru-10k-2025-ex21"
   ]
 }

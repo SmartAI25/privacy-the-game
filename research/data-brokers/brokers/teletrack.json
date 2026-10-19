@@ -1,0 +1,17 @@
+{
+  "id": "teletrack",
+  "name": "Teletrack, LLC",
+  "aliases": [],
+  "parent": "equifax",
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-efx-10k-2025-ex21"
+  ]
+}

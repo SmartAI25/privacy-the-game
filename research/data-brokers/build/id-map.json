@@ -1,1 +1,13 @@
-{}
+{
+  "transunion": "transunion",
+  "dun-bradstreet": "dun-bradstreet",
+  "relx": "relx-plc",
+  "meta-platforms": "meta",
+  "lotame": "lotame-solutions",
+  "epsilon": "epsilon-data-management",
+  "the-work-number": "equifax-workforce-solutions",
+  "oracle": "oracle-advertising",
+  "foursquare": "foursquare-labs",
+  "openx": "openx-technologies",
+  "complementics": "econtextai"
+}

@@ -4,7 +4,7 @@
   "aliases": [
     "Audigent"
   ],
-  "parent": null,
+  "parent": "experian",
   "kind": [],
   "registries": {
     "CA": "2026",
@@ -24,7 +24,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "sec-experian-annual-report-2026"
   ],
   "website": "https://www.audigent.com"
 }

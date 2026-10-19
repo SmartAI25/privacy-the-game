@@ -1,0 +1,17 @@
+{
+  "id": "id-analytics",
+  "name": "ID Analytics, LLC",
+  "aliases": [],
+  "parent": "relx-plc",
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-relx-annual-report-2025"
+  ]
+}

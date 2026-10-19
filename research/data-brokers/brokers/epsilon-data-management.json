@@ -2,11 +2,15 @@
   "id": "epsilon-data-management",
   "name": "Epsilon Data Management, LLC",
   "aliases": [
-    "EPSILON DATA MANAGEMENT LLC"
+    "EPSILON DATA MANAGEMENT LLC",
+    "Epsilon Data Management LLC",
+    "Epsilon"
   ],
-  "parent": null,
+  "parent": "publicis-groupe",
   "kind": [
-    "health"
+    "health",
+    "marketing",
+    "identity-resolution"
   ],
   "registries": {
     "CA": "2026",
@@ -14,7 +18,9 @@
     "TX": null,
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "identity graph and marketing data"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://legal.epsilon.com/dsr/",
@@ -27,7 +33,9 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-publicis-urd-2025-note36",
+    "sec-publicis-urd-2025-activities"
   ],
   "website": "https://www.epsilon.com"
 }

@@ -3,17 +3,26 @@
   "name": "LiveRamp Holdings, Inc.",
   "aliases": [
     "LiveRamp Holdings Inc.",
-    "LIVERAMP HOLDINGS INC"
+    "LIVERAMP HOLDINGS INC",
+    "LiveRamp"
   ],
   "parent": null,
-  "kind": [],
+  "kind": [
+    "identity-resolution",
+    "data-marketplace"
+  ],
   "registries": {
     "CA": "2026",
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [],
+  "sells": [
+    "deterministic identity resolution (RampID)",
+    "Data Marketplace for third-party data",
+    "data onboarding",
+    "clean-room data collaboration"
+  ],
   "optOut": {
     "method": "web-form",
     "url": "https://www.liveramp.com",
@@ -21,13 +30,25 @@
     "verifiedAt": "2026-10-18"
   },
   "size": {
-    "known": false,
-    "signals": []
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 (year ended March 31, 2026) total revenues $812.9 million",
+        "source": "sec-ramp-10k-fy2026"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2026 Marketplace and Other revenue $198.5 million",
+        "source": "sec-ramp-10k-fy2026"
+      }
+    ]
   },
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "sec-ramp-10k-fy2026"
   ],
   "website": "https://www.liveramp.com"
 }

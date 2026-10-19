@@ -1,0 +1,45 @@
+{
+  "id": "equifax",
+  "name": "Equifax Inc.",
+  "aliases": [
+    "Equifax"
+  ],
+  "parent": null,
+  "kind": [
+    "financial",
+    "risk-identity",
+    "marketing"
+  ],
+  "registries": {},
+  "sells": [
+    "consumer and commercial credit reports and scores",
+    "employment and income verification (The Work Number)",
+    "financial marketing data for targeting and segmentation",
+    "consumer credit information sold to resellers"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 total operating revenue $6,074.5 million",
+        "source": "sec-efx-10k-2025"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 U.S. Information Solutions operating revenue $2,078.5 million, of which Financial Marketing Services $257.1 million",
+        "source": "sec-efx-10k-2025"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 Workforce Solutions operating revenue $2,582.3 million (43% of total)",
+        "source": "sec-efx-10k-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-efx-10k-2025",
+    "sec-efx-10k-2025-ex21"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "experian",
+  "name": "Experian plc",
+  "aliases": [
+    "Experian"
+  ],
+  "parent": null,
+  "kind": [
+    "financial",
+    "marketing",
+    "identity-resolution",
+    "risk-identity",
+    "automotive",
+    "health"
+  ],
+  "registries": {},
+  "sells": [
+    "credit bureau data",
+    "marketing services and digital identity linkage",
+    "automotive and health data services",
+    "email intelligence (AtData)",
+    "direct-to-consumer credit and marketplace services"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "other",
+        "value": "FY2026 (year ended 31 March 2026) total revenue US$8,445 million; North America US$5,587 million (annual report)",
+        "source": "sec-experian-annual-report-2026"
+      },
+      {
+        "kind": "other",
+        "value": "FY2026 North America revenue for the Automotive, Health and Marketing Services verticals US$1,510 million (annual report)",
+        "source": "sec-experian-annual-report-2026"
+      }
+    ]
+  },
+  "sources": [
+    "sec-experian-annual-report-2026"
+  ]
+}
