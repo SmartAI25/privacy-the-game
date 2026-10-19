@@ -1,0 +1,28 @@
+{
+  "id": "jd-power-a-corporation-of-delaware",
+  "name": "JD POWER A CORPORATION OF DELAWARE",
+  "aliases": [
+    "J.D. Power"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.jdpower.com",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

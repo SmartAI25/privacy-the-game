@@ -10,7 +10,7 @@
   "registries": {
     "CA": "2026",
     "VT": null,
-    "TX": null,
+    "TX": "2026",
     "OR": "2026"
   },
   "sells": [],
@@ -25,6 +25,7 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
     "registry-or-2026-10-18"
   ],
   "website": "https://www.hireez.com"

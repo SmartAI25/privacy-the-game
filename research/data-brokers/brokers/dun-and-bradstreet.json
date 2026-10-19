@@ -1,14 +1,17 @@
 {
   "id": "dun-and-bradstreet",
   "name": "Dun and Bradstreet Inc.",
-  "aliases": [],
+  "aliases": [
+    "Dun & Bradstreet, Inc.",
+    "DUN & BRADSTREET INC"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
     "CA": "2026",
     "VT": null,
-    "TX": null,
-    "OR": null
+    "TX": "2026",
+    "OR": "2026"
   },
   "sells": [],
   "optOut": {
@@ -21,7 +24,9 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
   ],
   "website": "https://dnb.com"
 }

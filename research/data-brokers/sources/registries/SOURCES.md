@@ -3,19 +3,19 @@
 Each file here is an official state registry, saved on the date in its name. `build/import-registry.js` turns them into `brokers/*.json`:
 
 ```
-npm run brokers:import -- <CA|TX|OR> sources/registries/<state>-<date>.csv <date> [waybackUrl]
+npm run brokers:import -- <CA|TX|OR> research/data-brokers/sources/registries/<state>-<date>.csv <date> [waybackUrl]
 ```
 
 Every broker found in a snapshot gets the source id `registry-<state>-<date>` (see `sources.json`).
 
-| State | Snapshot | Rows | Brokers after in-file dedupe |
+| State | Snapshot | Rows | Brokers listing it |
 |---|---|---|---|
-| CA | `ca-2026-10-18.csv` | 603 | 593 |
+| CA | `ca-2026-10-18.csv` | 603 | 603 |
 | TX | `tx-2026-10-18.csv` (from `tx-2026-10-18.xlsx`) | 451 | 437 |
-| OR | `or-2026-10-18.csv` | 391 | 385 |
+| OR | `or-2026-10-18.csv` | 391 | 387 |
 | VT | not obtained (see below) | – | – |
 
-Deduped total across the three registries: **723 brokers**.
+Deduped total across the three registries: **735 brokers**. Pairs that share only a DBA or brand are kept apart and listed in `MERGE-CANDIDATES.md` (generated on every import).
 
 ## California (CPPA)
 
@@ -53,7 +53,7 @@ Deduped total across the three registries: **723 brokers**.
 
 ## How the import decides things
 
-- **Matching:** a row joins an existing record when `normalizeName` of its legal name or any DBA equals that of the record's name or any alias. When one row matches two records (e.g. its legal name matches one and its DBA matches another), the two are merged. Other spellings become `aliases`.
+- **Matching:** two rows are the same broker only when their legal names match after `normalizeName` (suffixes such as LLC/Inc/Limited dropped, `&` read as "and"), also ignoring spaces ("BEEN VERIFIED" = "BeenVerified"). A legal name with an embedded "d/b/a", "dba" or "doing business as" (common in TX) is split into the legal name and a DBA first. DBAs and other spellings become `aliases`, but a shared DBA or alias never merges two records, even within one registry and even when one row names both. Those pairs go to `MERGE-CANDIDATES.md` for the research pass, which decides between same broker, parent/subsidiary (`parent`) and unrelated.
 - **Opt-out:** set only when the field is a URL (or a list made only of URLs), giving `{method:'web-form', url, status:'unchecked'}`, or an email address, giving `{method:'email', email}`. Prose is never mined for links. A blank field leaves `optOut: null`. An opt-out route that is already set is never overwritten by a later registry.
 - **Kind:** only unambiguous flags (see CA). Anything else gives `kind: []`.
-- **Registries:** `registries[state]` is the snapshot year (`"2026"`).
+- **Registries:** `registries[state]` is the year of the snapshot we took (`"2026"`), not the year the broker registered. For TX in particular, the export lists every currently registered broker; a value of `"2026"` means "listed in the 2026-10-18 snapshot", even if the registration (see "Submitted On") was filed in 2024 or 2025.

@@ -3,8 +3,7 @@
   "name": "Lightcast, LLC",
   "aliases": [
     "Economic Modeling",
-    "Rhetorik",
-    "ECONOMIC MODELING LLC"
+    "Rhetorik"
   ],
   "parent": null,
   "kind": [],
@@ -12,7 +11,7 @@
     "CA": "2026",
     "VT": null,
     "TX": null,
-    "OR": "2026"
+    "OR": null
   },
   "sells": [],
   "optOut": {
@@ -25,8 +24,7 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-ca-2026-10-18"
   ],
   "website": "https://lightcast.io"
 }

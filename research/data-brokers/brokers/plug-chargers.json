@@ -2,8 +2,7 @@
   "id": "plug-chargers",
   "name": "Plug Chargers LLC",
   "aliases": [
-    "Plug Industries",
-    "PLUG INDUSTRIES"
+    "Plug Industries"
   ],
   "parent": null,
   "kind": [],
@@ -11,7 +10,7 @@
     "CA": "2026",
     "VT": null,
     "TX": "2026",
-    "OR": "2026"
+    "OR": null
   },
   "sells": [],
   "optOut": {
@@ -25,8 +24,7 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-tx-2026-10-18"
   ],
   "website": "https://www.plug-industries.com"
 }

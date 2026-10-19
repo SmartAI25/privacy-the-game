@@ -1,0 +1,28 @@
+{
+  "id": "infinite-media-concepts-incorporates",
+  "name": "INFINITE MEDIA CONCEPTS INCORPORATES",
+  "aliases": [
+    "Mailinglists.com"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.mailinglists.com",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

@@ -4,15 +4,11 @@
   "aliases": [
     "Mobility Global",
     "S&P Global",
-    "S&P Global Inc",
     "R.L Polk & Company",
-    "S&P GLOBAL INC",
-    "R.L.POLK & COMPANY"
+    "R L POLK CO"
   ],
   "parent": null,
-  "kind": [
-    "location"
-  ],
+  "kind": [],
   "registries": {
     "CA": "2026",
     "VT": null,

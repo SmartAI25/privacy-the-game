@@ -100,22 +100,48 @@ function newBroker(id, name) {
 const addUnique = (arr, v) => { if (v && !arr.includes(v)) arr.push(v); };
 const sortKinds = (ks) => KINDS.filter((k) => ks.includes(k));
 
-// Fold record `b` into record `a` (one broker that two records described). Additive: `a` keeps its scalars.
-function absorb(a, b) {
-  for (const n of [b.name, ...b.aliases]) if (n !== a.name) addUnique(a.aliases, n);
-  for (const [k, v] of Object.entries(b.registries ?? {})) {
-    const cur = a.registries[k] ?? null;
-    a.registries[k] = cur === null ? v : (v !== null && v > cur ? v : cur);
+// Matching key: normalizeName with spaces removed, so "BEEN VERIFIED" = "BeenVerified".
+export const legalKey = (name) => normalizeName(name).replace(/ /g, '');
+
+// "Acme LLC d/b/a Acme Data" → ["Acme LLC", "Acme Data"]. A name with no d/b/a comes back alone.
+const DBA_SPLIT = /\s*[(,]?\s*\b(?:d\s*\/\s*b\s*\/\s*a|d\.b\.a\.?|dba|doing business as)\b[:.]?\s*/i;
+export function splitDba(name) {
+  const m = String(name).match(DBA_SPLIT);
+  if (!m) return [name];
+  const legal = name.slice(0, m.index).replace(/[\s,]+$/, '').trim();
+  const dba = name.slice(m.index + m[0].length).replace(/^\s+|[\s)]+$/g, '').trim();
+  if (!legal || !dba) return [name];
+  return [legal, dba];
+}
+
+// Pairs of records that share a spelling (a DBA, brand or alias) but have different legal names.
+// They are never merged automatically; the research pass decides. Sorted, so output is stable.
+export function mergeCandidates(brokers) {
+  const byKey = new Map(); // legalKey → Map(id → spelling)
+  const list = [...brokers].sort((x, y) => (x.id < y.id ? -1 : x.id > y.id ? 1 : 0));
+  for (const b of list) {
+    for (const n of [b.name, ...b.aliases]) {
+      const k = legalKey(n);
+      if (!k) continue;
+      if (!byKey.has(k)) byKey.set(k, new Map());
+      const ids = byKey.get(k);
+      if (!ids.has(b.id)) ids.set(b.id, n);
+    }
   }
-  a.kind = sortKinds([...new Set([...a.kind, ...b.kind])]);
-  for (const key of ['sells', 'sources', 'missions']) {
-    if (!Array.isArray(b[key])) continue;
-    a[key] = a[key] ?? [];
-    for (const v of b[key]) addUnique(a[key], v);
+  const regs = (b) => REGISTRY_KEYS.filter((k) => b.registries?.[k]).join(',');
+  const byId = new Map(list.map((b) => [b.id, b]));
+  const out = [];
+  for (const ids of byKey.values()) {
+    const entries = [...ids];
+    for (let i = 0; i < entries.length; i++) for (let j = i + 1; j < entries.length; j++) {
+      const [a, sa] = entries[i]; const [b, sb] = entries[j];
+      out.push({ a, b, shared: sa.length <= sb.length ? sa : sb, registriesA: regs(byId.get(a)), registriesB: regs(byId.get(b)) });
+    }
   }
-  for (const key of ['optOut', 'website', 'parent']) if ((a[key] ?? null) === null && (b[key] ?? null) !== null) a[key] = b[key];
-  if (!a.size?.known && b.size?.known) a.size = b.size;
-  for (const [k, v] of Object.entries(b)) if (!(k in a)) a[k] = v;
+  const seen = new Set();
+  return out
+    .sort((x, y) => (x.a + '\0' + x.b + '\0' + x.shared).localeCompare(y.a + '\0' + y.b + '\0' + y.shared))
+    .filter((c) => { const k = `${c.a}|${c.b}`; if (seen.has(k)) return false; seen.add(k); return true; });
 }
 
 // Merge one registry's rows into a copy of `existing`. Pure: the input map and records are not mutated.
@@ -126,10 +152,10 @@ export function importRows(state, rows, existing, sourceId) {
   if (!year) throw new Error(`sourceId "${sourceId}" must end in a YYYY-MM-DD snapshot date`);
 
   const out = new Map([...existing].map(([id, b]) => [id, structuredClone(b)]));
-  const index = new Map(); // normalizeName → id (first record to claim a spelling keeps it)
-  const indexRecord = (b) => { for (const n of [b.name, ...b.aliases]) { const k = normalizeName(n); if (k && !index.has(k)) index.set(k, b.id); } };
-  const reindex = () => { index.clear(); for (const b of out.values()) indexRecord(b); };
-  reindex();
+  // Records match only on their legal name (record.name). DBAs and aliases never join two records;
+  // shared ones are reported by mergeCandidates instead.
+  const index = new Map(); // legalKey(name) → id
+  for (const b of [...out.values()].sort((x, y) => (x.id < y.id ? -1 : 1))) { const k = legalKey(b.name); if (k && !index.has(k)) index.set(k, b.id); }
 
   // Some exports carry metadata rows above the header (TX); find the real header row.
   const h = rows.findIndex((r) => r.map((c) => c.trim()).includes(col.name));
@@ -139,19 +165,13 @@ export function importRows(state, rows, existing, sourceId) {
 
   for (const r of rows.slice(h + 1)) {
     const row = at(r);
-    const name = clean(row(col.name)).replace(/\s+/g, ' ');
+    const [name, ...embedded] = splitDba(clean(row(col.name)).replace(/\s+/g, ' '));
     if (!name) continue;
-    const dbas = col.dba ? clean(row(col.dba)).split(/[;\n]/).map((s) => clean(s).replace(/\s+/g, ' ')).filter((s) => s && !NOT_A_DBA.test(s)) : [];
+    const dbaField = col.dba ? clean(row(col.dba)).split(/[;\n]/).flatMap((s) => splitDba(clean(s).replace(/\s+/g, ' '))) : [];
+    const dbas = [...embedded, ...dbaField].map(clean).filter((s) => s && !NOT_A_DBA.test(s));
 
-    // The legal name's match comes first, so it becomes the surviving record.
-    const ids = [...new Set([name, ...dbas].map((n) => index.get(normalizeName(n))).filter(Boolean))];
-    let id = ids[0];
+    let id = index.get(legalKey(name));
     let b = id && out.get(id);
-    if (ids.length > 1) {
-      // One row names two records (e.g. legal name matches one, DBA another): they are the same broker.
-      for (const other of ids.slice(1)) { absorb(b, out.get(other)); out.delete(other); }
-      reindex();
-    }
     if (!b) {
       const base = slugify(name);
       if (!base) continue;
@@ -159,9 +179,9 @@ export function importRows(state, rows, existing, sourceId) {
       for (let i = 2; out.has(id); i++) id = `${base}-${i}`;
       b = newBroker(id, name);
       out.set(id, b);
+      index.set(legalKey(name), id);
     }
     for (const n of [name, ...dbas]) if (n !== b.name) addUnique(b.aliases, n);
-    indexRecord(b);
 
     b.registries = { ...Object.fromEntries(REGISTRY_KEYS.map((k) => [k, null])), ...b.registries, [state]: year };
     if (b.optOut === null || b.optOut === undefined) b.optOut = optOutFrom(row, col);
@@ -218,8 +238,24 @@ async function main(argv) {
   }
   let removed = 0;
   for (const id of existing.keys()) if (!merged.has(id)) { await unlink(join(brokersDir, `${id}.json`)); removed++; }
+  const cands = mergeCandidates(merged.values());
+  const md = [
+    '# Merge candidates',
+    '',
+    'Generated by `build/import-registry.js`; do not edit by hand. Each pair shares a DBA, brand or alias',
+    'but has a different legal name, so the import keeps them as separate records. The research pass',
+    'decides whether each pair is one broker, a parent and subsidiary (`parent`), or unrelated.',
+    '',
+    `${cands.length} pairs.`,
+    '',
+    '| Record A | Record B | Shared string | Registries A | Registries B |',
+    '|---|---|---|---|---|',
+    ...cands.map((c) => `| ${c.a} | ${c.b} | ${c.shared.replace(/\|/g, '\\|')} | ${c.registriesA} | ${c.registriesB} |`),
+    '',
+  ].join('\n');
+  await writeFile(join(root, 'sources', 'registries', 'MERGE-CANDIDATES.md'), md);
   const touched = [...merged.values()].filter((b) => b.sources.includes(sourceId)).length;
-  console.log(`${state} ${date}: ${touched} brokers in registry, ${merged.size - existing.size} new, ${written} files written, ${removed} merged away`);
+  console.log(`${state} ${date}: ${touched} brokers in registry, ${merged.size - existing.size} new, ${written} files written, ${removed} merged away, ${cands.length} merge candidates`);
 
   const { errors, counts } = await validateDataset(root);
   for (const e of errors) console.error(e);

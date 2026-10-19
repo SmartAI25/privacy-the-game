@@ -1,14 +1,17 @@
 {
   "id": "beenverified",
   "name": "BeenVerified, LLC",
-  "aliases": [],
+  "aliases": [
+    "BEEN VERIFIED LLC",
+    "www.beenverified.com"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
     "CA": null,
     "VT": null,
     "TX": "2026",
-    "OR": null
+    "OR": "2026"
   },
   "sells": [],
   "optOut": {
@@ -21,7 +24,8 @@
     "signals": []
   },
   "sources": [
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
   ],
   "website": "https://beenverified.com"
 }
