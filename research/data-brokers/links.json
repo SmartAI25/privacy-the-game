@@ -540,7 +540,7 @@
     "to": "lexisnexis-risk-solutions",
     "type": "supplies",
     "tier": "A",
-    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024.",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024; GM settled without admitting the allegations.",
     "sources": [
       "enf-ftc-gm-complaint-2026",
       "enf-ftc-gm-order-2026"
@@ -645,7 +645,7 @@
     "sources": [
       "enf-ftc-avast-complaint-2024"
     ],
-    "published": true
+    "published": false
   },
   {
     "from": "pubrec",
@@ -708,7 +708,7 @@
     "to": "ideal-financial-solutions",
     "type": "supplies",
     "tier": "A",
-    "claim": "The FTC alleged in its August 2015 complaint that Sequoia One and Gen X Marketing Group sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
+    "claim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
     "sources": [
       "enf-ftc-sequoia-one-complaint-2015"
     ],

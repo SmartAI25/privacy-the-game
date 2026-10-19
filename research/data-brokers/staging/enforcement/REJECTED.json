@@ -96,5 +96,21 @@
       "newClaim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits."
     },
     "reason": "link leaplab|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check: complaint para 24 and summary say \"Defendants\" sold, and the defendants are the four parties named in the caption, not LeapLab alone)"
+  },
+  {
+    "item": {
+      "link": "general-motors|lexisnexis-risk-solutions|supplies",
+      "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024.",
+      "newClaim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024; GM settled without admitting the allegations."
+    },
+    "reason": "link general-motors|lexisnexis-risk-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check fix: the claim cites enf-ftc-gm-order-2026, whose recitals say respondents \"neither admit nor deny any of the allegations in the Complaint\"; same wording as the ISO link)"
+  },
+  {
+    "item": {
+      "link": "sequoia-one|ideal-financial-solutions|supplies",
+      "claim": "The FTC alleged in its August 2015 complaint that Sequoia One and Gen X Marketing Group sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
+      "newClaim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender."
+    },
+    "reason": "link sequoia-one|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check fix: complaint para 14 says \"Defendants sold this information to at least one non-lender, Ideal Financial Solutions\"; the caption names the two LLCs and four individuals)"
   }
 ]

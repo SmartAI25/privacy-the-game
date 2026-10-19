@@ -4,9 +4,10 @@
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
 //   alias-blocklist.json { brokerId: [{ alias, reason }] }
 //   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
-//                         reclaim: [{from,to,type,claim,reason}] }
+//                         reclaim: [{from,to,type,claim,replaces?,reason}] }
 //     drop and reassign act on staged links (keys after id resolution); unpublish and reclaim on every
-//     link (reclaim keys are final, i.e. after reassign). reclaim sets the narrower claim a fact-check found.
+//     link (reclaim keys are final, i.e. after reassign). reclaim sets the narrower claim a fact-check found;
+//     with `replaces` (the old claim) it applies only when the current claim equals it, else logs a conflict.
 //   record-overrides.json { brokerId: { name?, parent?, sells?, source?, dropSources?, replaces?: {field: value}, reason } }
 //     An override never silently replaces a different non-empty value: it applies only when the
 //     current value is empty or equals replaces[field]; otherwise it is reported as a conflict.
@@ -108,8 +109,13 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const reassignOv = new Map((linkOv.reassign ?? []).map((o) => [ovKey(o), o]));
   for (const o of linkOv.reclaim ?? []) {
     if (!isObj(o) || !isStr(o.from) || !isStr(o.to) || !isStr(o.type) || !isStr(o.claim) || !isStr(o.reason)) throw new Error(`link-overrides.json reclaim entries need from, to, type, claim and reason: ${JSON.stringify(o)}`);
+    if (o.replaces !== undefined && !isStr(o.replaces)) throw new Error(`link-overrides.json reclaim replaces must be the old claim string: ${JSON.stringify(o)}`);
   }
-  const reclaimOv = new Map((linkOv.reclaim ?? []).map((o) => [ovKey(o), o]));
+  const reclaimOv = new Map();
+  for (const o of linkOv.reclaim ?? []) {
+    if (reclaimOv.has(ovKey(o))) reject({ link: ovKey(o), reclaim: o.claim }, `link ${ovKey(o)}: duplicate reclaim key in link-overrides.json; the later entry wins`);
+    reclaimOv.set(ovKey(o), o);
+  }
   for (const [id, list] of Object.entries(aliasBlock)) {
     if (!Array.isArray(list) || !list.every((x) => isObj(x) && isStr(x.alias) && isStr(x.reason))) throw new Error(`alias-blocklist.json ${id}: entries must be { alias, reason }`);
   }
@@ -316,6 +322,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     const l = idx.has(k) ? finalLinks[idx.get(k)] : null;
     if (!l) { reject({ link: k, reclaim: o.claim }, `link ${k}: reclaim has no matching link yet; not applied`); continue; }
     if (l.claim === o.claim) continue;
+    if (o.replaces !== undefined && l.claim !== o.replaces) { reject({ link: k, claim: l.claim, replaces: o.replaces, newClaim: o.claim }, `link ${k}: reclaim conflict, current claim differs from "replaces"; not applied`); continue; }
     reject({ link: k, claim: l.claim, newClaim: o.claim }, `link ${k}: claim replaced by link-overrides.json reclaim (${o.reason})`);
     l.claim = o.claim;
   }

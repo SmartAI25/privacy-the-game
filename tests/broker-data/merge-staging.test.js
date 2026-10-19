@@ -407,6 +407,34 @@ describe('mergeStaging', () => {
     expect(r.rejected.some((x) => /x\|y\|owns: reclaim has no matching link yet/.test(x.reason))).toBe(true);
   });
 
+  it('reclaim: replaces guards the old claim, duplicates are warned, tier B stays unpublished', async () => {
+    await setup({
+      config: { 'link-overrides.json': {
+        reclaim: [
+          { from: 'a', to: 'c', type: 'owns', claim: 'guarded ok', replaces: 'old a', reason: 'r' },
+          { from: 'b', to: 'c', type: 'owns', claim: 'guarded no', replaces: 'not the current claim', reason: 'r' },
+          { from: 'd', to: 'c', type: 'owns', claim: 'first', reason: 'r' },
+          { from: 'd', to: 'c', type: 'owns', claim: 'second', reason: 'r' },
+        ],
+      } },
+      brokers: [broker('a', 'A'), broker('b', 'B'), broker('c', 'C'), broker('d', 'D')],
+      links: [
+        { ...link('a', 'c', { claim: 'old a', sources: ['reg'] }), published: true },
+        { ...link('b', 'c', { claim: 'old b', sources: ['reg'] }), published: true },
+        { ...link('d', 'c', { tier: 'B', claim: 'old d', sources: ['reg'] }), published: false },
+      ],
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readLinks()).map((l) => [l.from, l.claim, l.published])).toEqual([
+      ['a', 'guarded ok', true],
+      ['b', 'old b', true],
+      ['d', 'second', false],
+    ]);
+    expect(r.rejected.some((x) => /b\|c\|owns: reclaim conflict/.test(x.reason))).toBe(true);
+    expect(r.rejected.some((x) => /d\|c\|owns: duplicate reclaim key/.test(x.reason))).toBe(true);
+  });
+
   it('link-overrides.json reclaim entries need a claim and a reason', async () => {
     await setup({ config: { 'link-overrides.json': { reclaim: [{ from: 'a', to: 'b', type: 'owns', claim: 'x' }] } } });
     await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/reclaim/);
