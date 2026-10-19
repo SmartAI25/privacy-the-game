@@ -243,9 +243,9 @@
       "from": "us-air-force",
       "to": "lexisnexis-risk-solutions",
       "type": "buys",
-      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated); modification P00004 (2018-12-18) describes it as \"LEXISNEXIS ACCURINT FOR LAW ENFORCEMENT WEB-BASED DATABASE INVESTIGATIVE SEARCH TOOL\".",
+      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\" under product or service code R612, \"SUPPORT- ADMINISTRATIVE: INFORMATION RETRIEVAL\".",
       "replaces": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
-      "reason": "procurement fact-check fix: the award description shows only the latest transaction (\"LEXISNEXIS ACCURINT\"); the award transaction history, modification P00004 dated 2018-12-18, names the web-based database investigative search tool"
+      "reason": "procurement fact-check (R28): quotes only what the archived API capture 20261019075837 contains, the award description and PSC base code R612 (information retrieval); the PSC is what shows data access"
     }
   ]
 }
