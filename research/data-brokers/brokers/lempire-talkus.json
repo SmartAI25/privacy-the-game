@@ -1,0 +1,26 @@
+{
+  "id": "lempire-talkus",
+  "name": "LEMPIRE (TALKUS)",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "email",
+    "email": "privacy@lemlist.com"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://lemlist.com"
+}

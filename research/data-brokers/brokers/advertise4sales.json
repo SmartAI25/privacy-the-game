@@ -1,0 +1,28 @@
+{
+  "id": "advertise4sales",
+  "name": "ADVERTISE4SALES INC",
+  "aliases": [
+    "4LegalLeads"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://4legalleads.com/removal/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

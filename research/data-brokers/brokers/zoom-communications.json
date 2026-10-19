@@ -1,0 +1,30 @@
+{
+  "id": "zoom-communications",
+  "name": "Zoom Communications, Inc.",
+  "aliases": [
+    "ZOOM COMMUNICATIONS INC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://privacyportal.onetrust.com/webform/65962359-ef0d-4399-9db4-572d06de08aa/f277f9f7-bfee-4233-815e-80e290139bc2",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.zoom.com"
+}

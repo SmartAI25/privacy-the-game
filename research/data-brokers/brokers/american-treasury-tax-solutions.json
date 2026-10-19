@@ -1,0 +1,27 @@
+{
+  "id": "american-treasury-tax-solutions",
+  "name": "American Treasury Tax Solutions Inc",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.americantreasurytaxsolutions.com/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://www.americantreasurytaxsolutions.com/"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "first-movers-advantage",
+  "name": "FIRST MOVERS ADVANTAGE LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.fmadata.com/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "milestone-marketing-solutions",
+  "name": "Milestone Marketing Solutions",
+  "aliases": [
+    "MILESTONE MARKETING SOLUTIONS"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.milestonemarketingsolutions.com/privacy-policy",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.milestonemarketingsolutions.com"
+}

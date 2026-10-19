@@ -1,0 +1,33 @@
+{
+  "id": "getemails",
+  "name": "GETEMAILS LLC",
+  "aliases": [
+    "RETENTION.COM",
+    "RB2B",
+    "Retention.com, RB2B"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.retention.com",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.retention.com"
+}

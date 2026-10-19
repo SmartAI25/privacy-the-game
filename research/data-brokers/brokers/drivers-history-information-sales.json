@@ -1,0 +1,28 @@
+{
+  "id": "drivers-history-information-sales",
+  "name": "Drivers History Information Sales, LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.transunion.com",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://www.transunion.com"
+}

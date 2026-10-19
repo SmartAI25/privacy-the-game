@@ -1,0 +1,27 @@
+{
+  "id": "captiv8",
+  "name": "Captiv8 Inc.",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://captiv8.io/policy/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://captiv8.io"
+}

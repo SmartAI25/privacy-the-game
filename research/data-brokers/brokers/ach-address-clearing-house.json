@@ -1,0 +1,30 @@
+{
+  "id": "ach-address-clearing-house",
+  "name": "ACH, Address Clearing House",
+  "aliases": [
+    "ACH ADDRESS CLEARING HOUSE LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.achcoop.com/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://achcoop.com"
+}

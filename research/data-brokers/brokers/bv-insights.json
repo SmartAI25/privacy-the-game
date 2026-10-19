@@ -1,0 +1,27 @@
+{
+  "id": "bv-insights",
+  "name": "BV Insights LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://big-village.com/privacy-policy/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.big-village.com"
+}

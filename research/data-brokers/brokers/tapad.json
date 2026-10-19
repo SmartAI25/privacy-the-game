@@ -1,0 +1,27 @@
+{
+  "id": "tapad",
+  "name": "Tapad",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://tapad.com/global-privacy-notice",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.experian.com"
+}

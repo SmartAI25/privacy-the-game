@@ -1,0 +1,27 @@
+{
+  "id": "beenverified-llc-and-its-subsidiaries-and-affiliates",
+  "name": "BeenVerified, LLC and its subsidiaries and affiliates",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.beenverified.com/svc/optout/search/comprehensive_optouts",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.beenverified.com"
+}

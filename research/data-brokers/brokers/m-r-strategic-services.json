@@ -1,0 +1,31 @@
+{
+  "id": "m-r-strategic-services",
+  "name": "M&R Strategic Services, Inc.",
+  "aliases": [
+    "M+R",
+    "M & R STRATEGIC SERVICES INC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.mrss.com",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.mrss.com"
+}

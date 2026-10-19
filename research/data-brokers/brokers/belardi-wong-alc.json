@@ -1,0 +1,27 @@
+{
+  "id": "belardi-wong-alc",
+  "name": "Belardi Wong, ALC, LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://belardiwong.com/privacy-policy/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://belardiwong.com/"
+}

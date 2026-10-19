@@ -1,0 +1,32 @@
+{
+  "id": "iqvia-digital",
+  "name": "IQVIA Digital Inc.",
+  "aliases": [
+    "IQVIA Digital, Inc.",
+    "IQVIA DIGITAL INC."
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://privacyportal.onetrust.com/webform/07e8dc4d-6686-403e-9b11-39fe7347d2f4/2f999bd2-c826-498c-a504-894eaf543b6f",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.iqviadigital.com"
+}

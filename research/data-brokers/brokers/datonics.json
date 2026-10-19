@@ -1,0 +1,31 @@
+{
+  "id": "datonics",
+  "name": "Datonics LLC",
+  "aliases": [
+    "DATONICS LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://datonics.com/",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.datonics.com"
+}

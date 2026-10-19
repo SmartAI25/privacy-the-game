@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "brokers:validate": "node research/data-brokers/build/validate.js",
+    "brokers:import": "node research/data-brokers/build/import-registry.js",
     "dev": "npx serve src -l 3000",
     "test": "vitest run",
     "test:watch": "vitest"

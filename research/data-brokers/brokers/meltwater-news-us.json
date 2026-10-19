@@ -1,0 +1,27 @@
+{
+  "id": "meltwater-news-us",
+  "name": "Meltwater News US, Inc.",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://meltwater.com/privacy",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.meltwater.com"
+}

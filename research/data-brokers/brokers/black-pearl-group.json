@@ -1,0 +1,26 @@
+{
+  "id": "black-pearl-group",
+  "name": "BLACK PEARL GROUP LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.blackpearl.com/your-privacy-choices",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

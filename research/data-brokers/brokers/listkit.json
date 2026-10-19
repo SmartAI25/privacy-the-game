@@ -1,0 +1,31 @@
+{
+  "id": "listkit",
+  "name": "ListKit LLC",
+  "aliases": [
+    "LISTKIT LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.listkit.io/privacy",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.listkit.io"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "dealmachine-operations",
+  "name": "DealMachine Operations Inc.",
+  "aliases": [
+    "DealMachine",
+    "DEALMACHINE OPERATIONS INC",
+    "DealMachine Operations"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://privacyrequest.dealmachine.com/remove",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://dealmachine.com"
+}

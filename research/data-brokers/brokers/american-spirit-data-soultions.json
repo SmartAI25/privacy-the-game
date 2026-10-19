@@ -1,0 +1,28 @@
+{
+  "id": "american-spirit-data-soultions",
+  "name": "AMERICAN SPIRIT DATA SOULTIONS LLC",
+  "aliases": [
+    "Aspire North"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.americanspiritcorp.com/do-not-sell-my-personal-information--out-out-request-form.html",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

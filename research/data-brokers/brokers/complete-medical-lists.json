@@ -1,0 +1,32 @@
+{
+  "id": "complete-medical-lists",
+  "name": "Complete Medical Lists, Inc.",
+  "aliases": [
+    "Complete Medical Lists Inc",
+    "COMPLETE MEDICAL LISTS INC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.completemedicallists.com/privacy.php",
+    "status": "unchecked"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://completemedicallists.com"
+}
