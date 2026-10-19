@@ -1,0 +1,36 @@
+[
+  {
+    "item": {
+      "link": "us-air-force|lexisnexis-risk-solutions|buys",
+      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+      "newClaim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\" under product or service code R612, \"SUPPORT- ADMINISTRATIVE: INFORMATION RETRIEVAL\"."
+    },
+    "reason": "link us-air-force|lexisnexis-risk-solutions|buys: claim replaced by link-overrides.json reclaim (procurement fact-check (R28): quotes only what the archived API capture 20261019075837 contains, the award description and PSC base code R612 (information retrieval); the PSC is what shows data access)"
+  },
+  {
+    "item": {
+      "broker": "kochava",
+      "override": {
+        "optOut": {
+          "email": "privacy@kochava.com"
+        },
+        "source": "pol-kochava-support-privacy",
+        "reason": "the email opt-out's address was only in notes; Kochava's support-privacy page lists privacy@kochava.com as the privacy contact"
+      }
+    },
+    "reason": "kochava: record-overrides cites unknown source pol-kochava-support-privacy; not applied"
+  },
+  {
+    "item": {
+      "broker": "thomson-reuters",
+      "override": {
+        "optOut": {
+          "email": "westlaw.privacypolicy@thomsonreuters.com"
+        },
+        "source": "pol-tr-privacy-records",
+        "reason": "the email opt-out's address was only in notes; the privacy-records page sends public-records requests (the records Thomson Reuters sells) to westlaw.privacypolicy@thomsonreuters.com; the do-not-sell address privacy.issues@thomsonreuters.com stays in notes"
+      }
+    },
+    "reason": "thomson-reuters: record-overrides cites unknown source pol-tr-privacy-records; not applied"
+  }
+]

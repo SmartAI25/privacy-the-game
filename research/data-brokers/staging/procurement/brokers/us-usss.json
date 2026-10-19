@@ -1,0 +1,20 @@
+{
+  "id": "us-usss",
+  "name": "U.S. Secret Service",
+  "aliases": [
+    "Secret Service",
+    "USSS"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-hsss0115c0040",
+    "proc-usasp-70us0921c70090081",
+    "proc-usasp-70us0921c70090014"
+  ]
+}

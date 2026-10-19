@@ -1,0 +1,19 @@
+{
+  "id": "experian-information-solutions",
+  "name": "Experian Information Solutions",
+  "aliases": [
+    "EXPERIAN INFORMATION SOLUTIONS, INC."
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-djf151200g0000693",
+    "proc-usasp-2032h519f00092",
+    "proc-usasp-djms12m0043",
+    "proc-usasp-w911sd21f0187",
+    "proc-usasp-n0018923fz089",
+    "proc-usasp-djd12hqg0018"
+  ]
+}

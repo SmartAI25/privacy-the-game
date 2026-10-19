@@ -1,0 +1,42 @@
+{
+  "id": "beenverified",
+  "name": "BeenVerified, LLC",
+  "aliases": [
+    "BEEN VERIFIED LLC",
+    "www.beenverified.com",
+    "BeenVerified"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [
+    "people search and background reports"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.beenverified.com/svc/optout/search/optouts",
+    "notes": "beenverified.com/faq/opt-out/ (the mission URL) redirects here. Live site returned 403 to automated fetches on 2026-10-18 and the latest Wayback capture (2025-05-09) is a JavaScript shell, so the form contents were not confirmed.",
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "pol-beenverified-optout"
+  ],
+  "website": "https://beenverified.com",
+  "missions": [
+    "people_search-fortify-web-forms"
+  ]
+}

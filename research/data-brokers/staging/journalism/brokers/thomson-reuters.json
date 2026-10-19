@@ -1,0 +1,21 @@
+{
+  "id": "thomson-reuters",
+  "name": "Thomson Reuters",
+  "aliases": [
+    "CLEAR"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "CLEAR investigation database"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-globe-wapo-nctue-utility-ice-2021"
+  ]
+}

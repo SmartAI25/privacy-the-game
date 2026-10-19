@@ -1,0 +1,19 @@
+{
+  "id": "onstar",
+  "name": "OnStar",
+  "aliases": [
+    "OnStar, LLC"
+  ],
+  "parent": "general-motors",
+  "kind": [
+    "automotive"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026",
+    "enf-ftc-gm-order-2026"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "general-motors",
+  "name": "General Motors LLC",
+  "aliases": [
+    "GM"
+  ],
+  "parent": null,
+  "kind": [
+    "automotive"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-vrsk-10k-2025"
+  ]
+}

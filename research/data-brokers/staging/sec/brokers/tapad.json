@@ -1,0 +1,17 @@
+{
+  "id": "tapad",
+  "name": "Tapad, Inc.",
+  "aliases": [
+    "Tapad"
+  ],
+  "parent": "experian",
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-experian-annual-report-2026"
+  ]
+}

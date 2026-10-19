@@ -1,0 +1,21 @@
+{
+  "id": "fog-data-science",
+  "name": "Fog Data Science",
+  "aliases": [
+    "Fog Reveal"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "device location search for law enforcement"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-eff-fog-data-science-2022"
+  ]
+}

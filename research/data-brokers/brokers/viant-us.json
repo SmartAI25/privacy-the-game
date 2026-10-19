@@ -1,0 +1,33 @@
+{
+  "id": "viant-us",
+  "name": "Viant US LLC",
+  "aliases": [
+    "Adelphic LLC",
+    "Viant Technology LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.viantinc.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.viantinc.com"
+}

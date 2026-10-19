@@ -1,0 +1,333 @@
+[
+  {
+    "item": {
+      "broker": "acxiom",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.acxiom.com/privacy",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.acxiom.com/optout/",
+        "notes": "US opt-out form is hosted on omnicom-privacy.my.onetrust.com; needs a valid email to confirm; phone 1-877-774-2094; mail Acxiom LLC, P.O. Box 2000. Processed within two weeks of confirmation; does not reach data already provided to marketers."
+      }
+    },
+    "reason": "acxiom: generic optOut https://www.acxiom.com/privacy replaced by staged https://www.acxiom.com/optout/"
+  },
+  {
+    "item": {
+      "broker": "spokeo",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.spokeo.com/privacy-policy",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.spokeo.com/optout",
+        "notes": "anywho.com/optout redirected to Spokeo's opt-out page on 2026-10-18. The redirect alone does not establish a corporate relationship."
+      }
+    },
+    "reason": "spokeo: generic optOut https://www.spokeo.com/privacy-policy replaced by staged https://www.spokeo.com/optout"
+  },
+  {
+    "item": {
+      "broker": "beenverified",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.beenverified.com/svc/optout/search/comprehensive_optouts",
+        "status": "blocked",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.beenverified.com/svc/optout/search/optouts",
+        "notes": "beenverified.com/faq/opt-out/ (the mission URL) redirects here. Live site returned 403 to automated fetches on 2026-10-18 and the latest Wayback capture (2025-05-09) is a JavaScript shell, so the form contents were not confirmed."
+      }
+    },
+    "reason": "beenverified: generic optOut https://www.beenverified.com/svc/optout/search/comprehensive_optouts replaced by staged https://www.beenverified.com/svc/optout/search/optouts"
+  },
+  {
+    "item": {
+      "broker": "data-axle",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.data-axle.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.data-axle.com/privacy-rights-request/",
+        "notes": "Consumer Privacy Rights Request form covering opt-out of sale/sharing, access, deletion and correction; authorized-agent form at /privacy-rights-request-authorized-agent/."
+      }
+    },
+    "reason": "data-axle: generic optOut https://www.data-axle.com replaced by staged https://www.data-axle.com/privacy-rights-request/"
+  },
+  {
+    "item": {
+      "broker": "mississippi-tornado-alley",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.advancedbackgroundchecks.com/privacy",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.fastpeoplesearch.com/removal",
+        "notes": "Enter email and CAPTCHA, find your record, click 'Remove My Record', then confirm by email. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2025-07-01 Wayback capture."
+      }
+    },
+    "reason": "mississippi-tornado-alley: generic optOut https://www.advancedbackgroundchecks.com/privacy replaced by staged https://www.fastpeoplesearch.com/removal"
+  },
+  {
+    "item": {
+      "broker": "instant-checkmate",
+      "field": "parent",
+      "existing": "pubrec",
+      "staged": "peopleconnect"
+    },
+    "reason": "instant-checkmate: parent conflicts with existing value; existing kept"
+  },
+  {
+    "item": {
+      "broker": "liveramp",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.liveramp.com",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://liveramp.com/privacy/my-privacy-choices/",
+        "notes": "Opt-out open to all US residents; first+last name and email give an opt-out across all linked identifiers; separate device (mobile ID) and browser (cookie) opt-outs; phone (844) 678-0045. Policy names no specific source or recipient companies."
+      }
+    },
+    "reason": "liveramp: generic optOut https://www.liveramp.com replaced by staged https://liveramp.com/privacy/my-privacy-choices/"
+  },
+  {
+    "item": {
+      "broker": "peoplewhiz",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.peoplewhiz.com",
+        "status": "blocked",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.peoplewhiz.com/remove-my-info",
+        "notes": "Search for your record, then confirm; ID required. PeopleWhiz says it will then notify its data partners. Live page returned 403 on 2026-10-18; content confirmed from the 2026-06-26 Wayback capture."
+      }
+    },
+    "reason": "peoplewhiz: generic optOut https://www.peoplewhiz.com replaced by staged https://www.peoplewhiz.com/remove-my-info"
+  },
+  {
+    "item": {
+      "broker": "rocketreach",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://rocketreach.co/privacy",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://rocketreach.co/remove-profile",
+        "notes": "rocketreach.co/claim-profile redirects here; returned HTTP 200 (JavaScript app) on 2026-10-18. The mission notes it may require an account."
+      }
+    },
+    "reason": "rocketreach: generic optOut https://rocketreach.co/privacy replaced by staged https://rocketreach.co/remove-profile"
+  },
+  {
+    "item": {
+      "broker": "spy-labs-adco",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://spydialer.com/privacy.aspx",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.spydialer.com/consumers/",
+        "notes": "spydialer.com/optout.aspx redirects here ('Remove My Info'); open to consumers in all states. Operator per footer: Spy Labs Adco, LLC."
+      }
+    },
+    "reason": "spy-labs-adco: generic optOut https://spydialer.com/privacy.aspx replaced by staged https://www.spydialer.com/consumers/"
+  },
+  {
+    "item": {
+      "broker": "trans-union",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.transunion.com",
+        "status": "blocked",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "portal",
+        "url": "https://www.transunion.com/consumer-privacy",
+        "notes": "Data privacy requests (opt out, limit, access, correct, delete) via a TransUnion Service Center account, or as a guest with results by mail. Live page returned HTTP 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-01 Wayback capture. The mission adds that TLO is included."
+      }
+    },
+    "reason": "trans-union: generic optOut https://www.transunion.com replaced by staged https://www.transunion.com/consumer-privacy"
+  },
+  {
+    "item": {
+      "broker": "free-data-services",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.truepeoplesearch.com/privacy",
+        "status": "blocked",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.truepeoplesearch.com/removal",
+        "notes": "Agree to terms, CAPTCHA, find record, remove. Live page returned 403 to automated fetches on 2026-10-18; the latest readable Wayback capture is from 2024-03-28, so this route may be stale."
+      }
+    },
+    "reason": "free-data-services: generic optOut https://www.truepeoplesearch.com/privacy replaced by staged https://www.truepeoplesearch.com/removal"
+  },
+  {
+    "item": {
+      "broker": "truthfinder",
+      "field": "parent",
+      "existing": "pubrec",
+      "staged": "peopleconnect"
+    },
+    "reason": "truthfinder: parent conflicts with existing value; existing kept"
+  },
+  {
+    "item": {
+      "broker": "venntel",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.venntel.com/privacy-policy",
+        "status": "verified",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.venntel.com/opt-out",
+        "notes": "'Opt Out & Delete Request' page (Venntel, Inc.). Its privacy policy uses the same template as Gravy/Unacast's but names no parent."
+      }
+    },
+    "reason": "venntel: generic optOut https://www.venntel.com/privacy-policy replaced by staged https://www.venntel.com/opt-out"
+  },
+  {
+    "item": {
+      "broker": "whitepages",
+      "field": "optOut",
+      "existing": {
+        "method": "web-form",
+        "url": "https://www.whitepages.com/privacy",
+        "status": "blocked",
+        "verifiedAt": "2026-10-18"
+      },
+      "staged": {
+        "method": "web-form",
+        "url": "https://www.whitepages.com/suppression-requests",
+        "notes": "5-step opt-out starting with your profile URL. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-14 Wayback capture."
+      }
+    },
+    "reason": "whitepages: generic optOut https://www.whitepages.com/privacy replaced by staged https://www.whitepages.com/suppression-requests"
+  },
+  {
+    "item": {
+      "from": "equifax",
+      "to": "kount",
+      "type": "owns",
+      "tier": "B",
+      "claim": "Equifax's Privacy Statement (accessed 2026-10-18) refers to 'Equifax Inc. and its U.S. subsidiary Kount Inc.'",
+      "sources": [
+        "pol-equifax-privacy-statement"
+      ]
+    },
+    "reason": "link equifax|kount|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  },
+  {
+    "item": {
+      "from": "equifax",
+      "to": "appriss-insights",
+      "type": "owns",
+      "tier": "B",
+      "claim": "The Work Number's Employment Data Report page (Equifax, accessed 2026-10-18) describes 'Appriss Insights, LLC, an Equifax company'.",
+      "sources": [
+        "pol-twn-employment-data-report"
+      ]
+    },
+    "reason": "link equifax|appriss-insights|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  },
+  {
+    "item": {
+      "from": "equifax",
+      "to": "equifax-workforce-solutions",
+      "type": "owns",
+      "tier": "B",
+      "claim": "The Work Number's Employment Data Report page is published under 'Copyright 2026 Equifax Inc.' and routes report requests to EDR@equifax.com (accessed 2026-10-18).",
+      "sources": [
+        "pol-twn-employment-data-report"
+      ]
+    },
+    "reason": "link equifax|equifax-workforce-solutions|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  },
+  {
+    "item": {
+      "from": "relx-plc",
+      "to": "lexisnexis-risk-solutions",
+      "type": "owns",
+      "tier": "B",
+      "claim": "LexisNexis Risk Solutions' About Us page (accessed 2026-10-18) says 'We are part of RELX' and calls RELX 'our parent company'.",
+      "sources": [
+        "pol-lexisnexis-risk-about"
+      ]
+    },
+    "reason": "link relx-plc|lexisnexis-risk-solutions|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  },
+  {
+    "item": {
+      "from": "publicis-groupe",
+      "to": "lotame-solutions",
+      "type": "owns",
+      "tier": "B",
+      "claim": "Lotame's article 'Notes From a 20-Year CEO, One Year Post-Acquisition by Publicis' (accessed 2026-10-18) describes Lotame as having joined Publicis Groupe through an acquisition.",
+      "sources": [
+        "pol-lotame-publicis-article"
+      ]
+    },
+    "reason": "link publicis-groupe|lotame-solutions|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  },
+  {
+    "item": {
+      "from": "peopleconnect",
+      "to": "intelius",
+      "type": "owns",
+      "tier": "B",
+      "claim": "PeopleConnect's home page (accessed 2026-10-18) presents US Search among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists US Search's site as a PeopleConnect 'sister site'.",
+      "sources": [
+        "pol-peopleconnect-home",
+        "pol-peopleconnect-privacy"
+      ]
+    },
+    "reason": "link peopleconnect|intelius|owns: claim differs from existing at the same or stronger tier and source precedence; existing kept"
+  }
+]

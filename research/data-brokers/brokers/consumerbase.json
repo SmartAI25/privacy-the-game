@@ -1,0 +1,35 @@
+{
+  "id": "consumerbase",
+  "name": "Consumerbase, LLC",
+  "aliases": [
+    "Exact Data",
+    "Consumer Base",
+    "Consumer Base LLC dba Exact Data"
+  ],
+  "parent": "data-axle",
+  "kind": [
+    "marketing"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.exactdata.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "pol-dataaxle-privacy"
+  ],
+  "website": "https://www.exactdata.com"
+}

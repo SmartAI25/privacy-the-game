@@ -1,0 +1,27 @@
+{
+  "id": "spokeo",
+  "name": "Spokeo",
+  "aliases": [
+    "Spokeo, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people-search profiles built from phone books, social networks, marketing surveys, real estate listings and other public sources (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.spokeo.com/optout",
+    "notes": "Paste your listing URL and an email, then confirm by email."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-spokeo-optout",
+    "pol-spokeo-privacy"
+  ]
+}

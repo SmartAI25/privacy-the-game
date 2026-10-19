@@ -1,0 +1,17 @@
+{
+  "id": "factortrust",
+  "name": "FactorTrust, Inc.",
+  "aliases": [],
+  "parent": "transunion",
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-tru-10k-2025-ex21"
+  ]
+}

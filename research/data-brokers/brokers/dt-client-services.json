@@ -1,0 +1,32 @@
+{
+  "id": "dt-client-services",
+  "name": "DT Client Services, LLC",
+  "aliases": [
+    "Data Trust",
+    "DT Client Services LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://thedatatrust.com/do-not-sell-my-personal-information/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://www.thedatatrust.com"
+}

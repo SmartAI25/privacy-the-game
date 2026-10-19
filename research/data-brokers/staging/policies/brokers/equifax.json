@@ -1,0 +1,27 @@
+{
+  "id": "equifax",
+  "name": "Equifax",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "sells": [
+    "consumer credit reports",
+    "employment and income data (The Work Number)"
+  ],
+  "optOut": {
+    "method": "portal",
+    "url": "https://myprivacy.equifax.com/opt-in-opt-out/personal-info",
+    "notes": "Linked as 'Your Privacy Choices' from The Work Number and Equifax pages; returned HTTP 200 (JavaScript app) on 2026-10-18, contents not machine-readable. Credit freezes are separate (equifax.com credit-freeze page)."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-equifax-privacy-statement",
+    "pol-twn-employment-data-report"
+  ]
+}

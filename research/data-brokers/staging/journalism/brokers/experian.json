@@ -1,0 +1,18 @@
+{
+  "id": "experian",
+  "name": "Experian",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing",
+    "financial"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-xandr-segments-2023"
+  ]
+}

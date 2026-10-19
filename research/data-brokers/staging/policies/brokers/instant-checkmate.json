@@ -1,0 +1,20 @@
+{
+  "id": "instant-checkmate",
+  "name": "Instant Checkmate",
+  "aliases": [],
+  "parent": "peopleconnect",
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search and background reports"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy"
+  ]
+}

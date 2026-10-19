@@ -1,0 +1,38 @@
+{
+  "id": "fog-data-science",
+  "name": "Fog Data science LLC",
+  "aliases": [
+    "Fog Data Science",
+    "FOG DATA SCIENCE LLC",
+    "Fog Reveal"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [
+    "device location search for law enforcement"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.fogdatascience.com/opt-out",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "proc-usasp-15m10318pa4100281",
+    "jour-eff-fog-data-science-2022"
+  ],
+  "website": "https://www.fogdatascience.com"
+}

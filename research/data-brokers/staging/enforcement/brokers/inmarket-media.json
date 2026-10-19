@@ -1,0 +1,28 @@
+{
+  "id": "inmarket-media",
+  "name": "InMarket Media",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location",
+    "marketing"
+  ],
+  "sells": [
+    "location-based advertising audiences",
+    "targeted mobile advertising"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "FTC alleged (2024 complaint) about 100 million unique devices sent InMarket location data each year from 2016",
+        "source": "enf-ftc-inmarket-complaint-2024"
+      }
+    ]
+  },
+  "sources": [
+    "enf-ftc-inmarket-complaint-2024",
+    "enf-ftc-inmarket-order-2024"
+  ]
+}

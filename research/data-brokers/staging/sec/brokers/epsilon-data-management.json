@@ -1,0 +1,23 @@
+{
+  "id": "epsilon-data-management",
+  "name": "Epsilon Data Management LLC",
+  "aliases": [
+    "Epsilon"
+  ],
+  "parent": "publicis-groupe",
+  "kind": [
+    "marketing",
+    "identity-resolution"
+  ],
+  "sells": [
+    "identity graph and marketing data"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-publicis-urd-2025-note36",
+    "sec-publicis-urd-2025-activities"
+  ]
+}

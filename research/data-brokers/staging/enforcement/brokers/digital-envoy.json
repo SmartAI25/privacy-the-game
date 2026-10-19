@@ -1,0 +1,13 @@
+{
+  "id": "digital-envoy",
+  "name": "Digital Envoy",
+  "aliases": [],
+  "parent": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-xmode-complaint-2024"
+  ]
+}

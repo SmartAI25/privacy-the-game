@@ -1,0 +1,17 @@
+{
+  "id": "safegraph",
+  "name": "SafeGraph",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-life360-2021"
+  ]
+}

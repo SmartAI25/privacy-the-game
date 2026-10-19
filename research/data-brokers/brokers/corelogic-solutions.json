@@ -1,0 +1,28 @@
+{
+  "id": "corelogic-solutions",
+  "name": "CoreLogic Solutions, LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.cotality.com/legal/privacy-policy",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://www.cotality.com"
+}

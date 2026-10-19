@@ -1,0 +1,21 @@
+{
+  "id": "fis",
+  "name": "FIS",
+  "aliases": [
+    "Fidelity National Information Services"
+  ],
+  "parent": null,
+  "kind": [
+    "financial"
+  ],
+  "sells": [
+    "parent of Chex Systems, Inc."
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-chexsystems-home"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "transunion-risk-and-alternative-data-solutions",
+  "name": "TransUnion Risk and Alternative Data Solutions, Inc.",
+  "aliases": [
+    "TransUnion Risk and Alternative Data Solutions",
+    "TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC."
+  ],
+  "parent": "transunion",
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.transunion.com",
+    "status": "blocked",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "sec-tru-10k-2025-ex21",
+    "proc-usasp-70us0921c70090014",
+    "proc-usasp-djm17d61p0001",
+    "proc-usasp-hsbp1014p00718",
+    "proc-usasp-15ddse18p00000061",
+    "proc-usasp-70cmsd20p00000155",
+    "proc-usasp-fa701414p3005",
+    "proc-usasp-m6700117p1192"
+  ],
+  "website": "https://www.transunion.com"
+}

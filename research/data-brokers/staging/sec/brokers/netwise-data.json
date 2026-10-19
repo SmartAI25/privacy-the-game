@@ -1,0 +1,17 @@
+{
+  "id": "netwise-data",
+  "name": "NetWise Data, LLC",
+  "aliases": [],
+  "parent": "dun-bradstreet",
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-dnb-10k-2024"
+  ]
+}

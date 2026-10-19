@@ -1,0 +1,23 @@
+{
+  "id": "meta",
+  "name": "Meta Platforms",
+  "aliases": [
+    "Facebook"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network",
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-goodrx-complaint-2023",
+    "jour-propublica-facebook-brokers-2016"
+  ]
+}

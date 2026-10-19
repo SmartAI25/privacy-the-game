@@ -1,0 +1,19 @@
+{
+  "id": "advancedbackgroundchecks",
+  "name": "AdvancedBackgroundChecks",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search and background records"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-advancedbackgroundchecks-removal"
+  ]
+}

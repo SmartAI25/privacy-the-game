@@ -1,0 +1,30 @@
+{
+  "id": "costar-realty-information",
+  "name": "CoStar Realty Information, Inc.",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.costar.com/about/privacy-notice",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18"
+  ],
+  "website": "https://www.costar.com"
+}

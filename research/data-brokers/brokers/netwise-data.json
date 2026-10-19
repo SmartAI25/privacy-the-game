@@ -1,0 +1,33 @@
+{
+  "id": "netwise-data",
+  "name": "NetWise Data, LLC",
+  "aliases": [
+    "Dun and Bradstreet AB"
+  ],
+  "parent": "dun-bradstreet",
+  "kind": [
+    "marketing"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.netwisedata.com",
+    "status": "blocked",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "sec-dnb-10k-2024"
+  ],
+  "website": "https://www.netwisedata.com"
+}

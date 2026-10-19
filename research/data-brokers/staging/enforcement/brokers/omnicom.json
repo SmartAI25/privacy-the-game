@@ -1,0 +1,16 @@
+{
+  "id": "omnicom",
+  "name": "Omnicom",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-avast-complaint-2024"
+  ]
+}

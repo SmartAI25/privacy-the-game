@@ -1,0 +1,17 @@
+{
+  "id": "trans-union",
+  "name": "Trans Union LLC",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-cfpb-turss-complaint-2023",
+    "enf-cfpb-turss-order-2023"
+  ]
+}

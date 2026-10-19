@@ -1,0 +1,26 @@
+{
+  "id": "beenverified",
+  "name": "BeenVerified",
+  "aliases": [
+    "BeenVerified, LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search and background reports"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.beenverified.com/svc/optout/search/optouts",
+    "notes": "beenverified.com/faq/opt-out/ (the mission URL) redirects here. Live site returned 403 to automated fetches on 2026-10-18 and the latest Wayback capture (2025-05-09) is a JavaScript shell, so the form contents were not confirmed."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-beenverified-optout"
+  ]
+}

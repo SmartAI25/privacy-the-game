@@ -1,0 +1,19 @@
+{
+  "id": "foursquare",
+  "name": "Foursquare",
+  "aliases": [
+    "Factual"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-markup-xandr-segments-2023"
+  ]
+}

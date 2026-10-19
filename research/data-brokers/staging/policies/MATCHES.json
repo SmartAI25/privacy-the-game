@@ -1,0 +1,212 @@
+[
+  {
+    "stagedId": "acxiom",
+    "existingId": "acxiom",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "advancedbackgroundchecks",
+    "existingId": "mississippi-tornado-alley",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "anywho",
+    "existingId": "spokeo",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "appriss-insights",
+    "existingId": "appriss-insights",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "azira",
+    "existingId": "azira",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "beenverified",
+    "existingId": "beenverified",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "consumer-base",
+    "existingId": "consumerbase",
+    "matchedBy": "legalKey"
+  },
+  {
+    "stagedId": "corelogic",
+    "existingId": "corelogic",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "data-axle",
+    "existingId": "data-axle",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "donorbase",
+    "existingId": "donorbase",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "epsilon",
+    "existingId": "epsilon-data-management",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "equifax",
+    "existingId": "equifax",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "experian-marketing-solutions",
+    "existingId": "experian-marketing-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "fastpeoplesearch",
+    "existingId": "mississippi-tornado-alley",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "gravy-analytics",
+    "existingId": "gravy-analytics",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "instant-checkmate",
+    "existingId": "instant-checkmate",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "intelius",
+    "existingId": "intelius",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "kochava",
+    "existingId": "kochava",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "kount",
+    "existingId": "kount",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "lexisnexis-risk-solutions",
+    "existingId": "lexisnexis-risk-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "liveramp",
+    "existingId": "liveramp",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "lotame",
+    "existingId": "lotame-solutions",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "outlogic",
+    "existingId": "outlogic",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "peoplewhiz",
+    "existingId": "peoplewhiz",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "publicis-groupe",
+    "existingId": "publicis-groupe",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "relx",
+    "existingId": "relx-plc",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "rocketreach",
+    "existingId": "rocketreach",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "searchpeoplefree",
+    "existingId": "mississippi-tornado-alley",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "smartbackgroundchecks",
+    "existingId": "mississippi-tornado-alley",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "spokeo",
+    "existingId": "spokeo",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "spydialer",
+    "existingId": "spy-labs-adco",
+    "matchedBy": "alias"
+  },
+  {
+    "stagedId": "thatsthem",
+    "existingId": "spokeo",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "the-work-number",
+    "existingId": "equifax-workforce-solutions",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "thomson-reuters",
+    "existingId": "thomson-reuters",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "transunion",
+    "existingId": "trans-union",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "truepeoplesearch",
+    "existingId": "free-data-services",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "truthfinder",
+    "existingId": "truthfinder",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "us-search",
+    "existingId": "intelius",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "usphonebook",
+    "existingId": "mississippi-tornado-alley",
+    "matchedBy": "id-map"
+  },
+  {
+    "stagedId": "venntel",
+    "existingId": "venntel",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "verisk",
+    "existingId": "verisk",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "whitepages",
+    "existingId": "whitepages",
+    "matchedBy": "id"
+  }
+]

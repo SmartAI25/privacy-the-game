@@ -1,0 +1,21 @@
+{
+  "id": "outlogic",
+  "name": "Outlogic",
+  "aliases": [
+    "X-Mode Social"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "geolocation data from 'local publisher partners' via its publisher toolkit"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-outlogic-home"
+  ]
+}

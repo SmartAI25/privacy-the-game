@@ -1,0 +1,28 @@
+{
+  "id": "lexisnexis-risk-solutions",
+  "name": "LexisNexis Risk Solutions",
+  "aliases": [],
+  "parent": "relx",
+  "kind": [
+    "risk-identity",
+    "marketing"
+  ],
+  "sells": [
+    "identity, fraud, due-diligence and public-records products for credentialed commercial and government customers",
+    "FCRA prescreen lists for firm offers of credit and insurance",
+    "direct marketing services (LexisNexis Risk Solutions FL Inc.)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://consumer.risk.lexisnexis.com/opt",
+    "notes": "optout.lexisnexis.com redirects here. Covers direct-marketing opt-out, FCRA prescreen opt-out, and suppression for personal-safety threat (public officials, judges, law enforcement, at-risk individuals, Daniel's Law); online form, PDF mail form, or phone 1-888-497-0011."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-lexisnexis-risk-optout",
+    "pol-lexisnexis-risk-about"
+  ]
+}

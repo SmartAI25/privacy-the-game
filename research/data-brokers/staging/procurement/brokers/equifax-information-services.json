@@ -1,0 +1,15 @@
+{
+  "id": "equifax-information-services",
+  "name": "Equifax Information Services",
+  "aliases": [
+    "EQUIFAX INFORMATION SERVICES LLC"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-tirno15z000080004",
+    "proc-usasp-hsceeh09f00025"
+  ]
+}

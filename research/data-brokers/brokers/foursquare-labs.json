@@ -1,0 +1,37 @@
+{
+  "id": "foursquare-labs",
+  "name": "Foursquare Labs, Inc.",
+  "aliases": [
+    "Foursquare Labs Inc",
+    "Foursquare",
+    "Factual"
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://foursquare.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "jour-markup-xandr-segments-2023"
+  ],
+  "website": "https://foursquare.com"
+}

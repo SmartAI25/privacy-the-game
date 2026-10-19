@@ -1,0 +1,22 @@
+{
+  "id": "us-fbi",
+  "name": "Federal Bureau of Investigation",
+  "aliases": [
+    "FBI"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-djf141200p0013007",
+    "proc-usasp-15f06726f0001553",
+    "proc-usasp-djf151200g0000753",
+    "proc-usasp-15f06721f0001429",
+    "proc-usasp-djf151200g0000693",
+    "proc-usasp-15f06723p0001356"
+  ]
+}

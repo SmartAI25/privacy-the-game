@@ -1,0 +1,19 @@
+{
+  "id": "publicis-groupe",
+  "name": "Publicis Groupe",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "sells": [
+    "parent of Lotame (per Lotame)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-lotame-publicis-article"
+  ]
+}

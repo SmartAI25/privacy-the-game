@@ -1,0 +1,45 @@
+{
+  "id": "inmarket-media",
+  "name": "InMarket Media, LLC",
+  "aliases": [
+    "InMarket",
+    "InMarket Media"
+  ],
+  "parent": null,
+  "kind": [
+    "location",
+    "marketing"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [
+    "location-based advertising audiences",
+    "targeted mobile advertising"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://preferences.inmarket.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "FTC alleged (2024 complaint) about 100 million unique devices sent InMarket location data each year from 2016",
+        "source": "enf-ftc-inmarket-complaint-2024"
+      }
+    ]
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "enf-ftc-inmarket-complaint-2024",
+    "enf-ftc-inmarket-order-2024"
+  ],
+  "website": "https://www.inmarket.com"
+}

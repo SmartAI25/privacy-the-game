@@ -1,0 +1,21 @@
+{
+  "id": "babel-street",
+  "name": "Babel Street",
+  "aliases": [
+    "BABEL STREET, INC."
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70cmsd19fc0000052",
+    "proc-usasp-hsss0115c0040",
+    "proc-usasp-djm16a32p0045",
+    "proc-usasp-15ddhq20f00001467",
+    "proc-usasp-djf141200p0013007",
+    "proc-usasp-2032h821c00039",
+    "proc-usasp-fa489017p0017",
+    "proc-usasp-w90brj15p0015"
+  ]
+}

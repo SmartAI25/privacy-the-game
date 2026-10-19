@@ -1,0 +1,19 @@
+{
+  "id": "relx",
+  "name": "RELX",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "parent of LexisNexis Risk Solutions"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-lexisnexis-risk-about"
+  ]
+}

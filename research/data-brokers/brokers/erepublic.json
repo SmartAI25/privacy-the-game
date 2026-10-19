@@ -1,0 +1,32 @@
+{
+  "id": "erepublic",
+  "name": "e.Republic, LLC",
+  "aliases": [
+    "EREPUBLIC LLC",
+    "e.Republic LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://erepublic.my.salesforce-sites.com/PrivacyRequest/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://erepublic.com"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "apollo-interactive",
+  "name": "Apollo Interactive, LLC",
+  "aliases": [
+    "Mortgage Rates Pro",
+    "Online Mortgage Loans",
+    "Best Auto Insurance",
+    "BlueSky Coverage",
+    "National Auto Quotes",
+    "National Home Quotes",
+    "Final Expense Quotes",
+    "Great Life Insurance",
+    "Life Insurance Pro",
+    "Affordable Health Quotes",
+    "Affordable Health Insurance",
+    "Health Insurance Online",
+    "Health Plans of America",
+    "Medicare Coverage Finder",
+    "Medicare Info",
+    "Medicare Providers",
+    "APOLLO INTERACTIVE LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.apollointeractive.com/privacy-policy.php",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://apollointeractive.com"
+}

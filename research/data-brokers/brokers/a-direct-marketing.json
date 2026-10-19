@@ -1,0 +1,32 @@
+{
+  "id": "a-direct-marketing",
+  "name": "A Direct Marketing Inc",
+  "aliases": [
+    "Bookyourdata",
+    "A DIRECT MARKETING INC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.bookyourdata.com",
+    "status": "blocked",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.bookyourdata.com"
+}

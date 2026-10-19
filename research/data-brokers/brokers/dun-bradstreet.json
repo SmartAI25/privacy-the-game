@@ -1,0 +1,32 @@
+{
+  "id": "dun-bradstreet",
+  "name": "Dun & Bradstreet Holdings, Inc.",
+  "aliases": [
+    "Dun & Bradstreet",
+    "D&B"
+  ],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "registries": {},
+  "sells": [
+    "B2B commercial data",
+    "B2B and business-to-consumer identity graph and audience targeting data"
+  ],
+  "optOut": null,
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2024 total revenue $2,381.7 million (last 10-K before going private in August 2025)",
+        "source": "sec-dnb-10k-2024"
+      }
+    ]
+  },
+  "sources": [
+    "sec-dnb-10k-2024",
+    "sec-dnb-8k-2025-merger"
+  ]
+}

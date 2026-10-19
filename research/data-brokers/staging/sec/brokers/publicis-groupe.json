@@ -1,0 +1,27 @@
+{
+  "id": "publicis-groupe",
+  "name": "Publicis Groupe SA",
+  "aliases": [
+    "Publicis"
+  ],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "other",
+        "value": "2025 net revenue €14,547 million (whole group; Universal Registration Document 2025)",
+        "source": "sec-publicis-urd-2025-keyfigures"
+      }
+    ]
+  },
+  "sources": [
+    "sec-publicis-urd-2025-note36",
+    "sec-publicis-urd-2025-note3",
+    "sec-publicis-urd-2025-keyfigures"
+  ]
+}

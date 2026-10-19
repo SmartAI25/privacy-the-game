@@ -1,0 +1,22 @@
+{
+  "id": "quicklocate",
+  "name": "QuickLocate",
+  "aliases": [
+    "QuickLocate LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "operator of Quick People Trace and USATrace (per site footers)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-quickpeopletrace-home",
+    "pol-usatrace-home"
+  ]
+}

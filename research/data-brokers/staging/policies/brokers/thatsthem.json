@@ -1,0 +1,24 @@
+{
+  "id": "thatsthem",
+  "name": "ThatsThem",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search by name, address, phone and email"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://thatsthem.com/optout",
+    "notes": "Form asks for name, street, city, state, ZIP, email and phone; processed within about 72 hours. Live page showed a bot check on 2026-10-18; content confirmed from the 2026-07-11 Wayback capture."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-thatsthem-optout"
+  ]
+}

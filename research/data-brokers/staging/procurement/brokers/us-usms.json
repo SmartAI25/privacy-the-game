@@ -1,0 +1,22 @@
+{
+  "id": "us-usms",
+  "name": "U.S. Marshals Service",
+  "aliases": [
+    "USMS"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-15m10318pa4100281",
+    "proc-usasp-djm16a32p0045",
+    "proc-usasp-15m10226pa4700366",
+    "proc-usasp-djm17d61p0001",
+    "proc-usasp-djms12m0043",
+    "proc-usasp-15m10224pa4700107"
+  ]
+}

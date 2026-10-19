@@ -1,0 +1,19 @@
+{
+  "id": "anomaly-six",
+  "name": "Anomaly 6 LLC",
+  "aliases": [
+    "Anomaly Six"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-h9227620p0070"
+  ]
+}

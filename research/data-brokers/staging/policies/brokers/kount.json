@@ -1,0 +1,19 @@
+{
+  "id": "kount",
+  "name": "Kount",
+  "aliases": [
+    "Kount Inc."
+  ],
+  "parent": "equifax",
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-equifax-privacy-statement"
+  ]
+}

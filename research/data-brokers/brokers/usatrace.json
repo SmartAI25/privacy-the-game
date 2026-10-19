@@ -1,0 +1,24 @@
+{
+  "id": "usatrace",
+  "name": "USATrace",
+  "aliases": [],
+  "parent": "quicklocate",
+  "kind": [
+    "people-search"
+  ],
+  "registries": {},
+  "sells": [
+    "people search"
+  ],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-usatrace-home"
+  ],
+  "missions": [
+    "people_search-fortify-extended-sweep-2"
+  ]
+}

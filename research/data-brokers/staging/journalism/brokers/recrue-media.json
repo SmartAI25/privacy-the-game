@@ -1,0 +1,17 @@
+{
+  "id": "recrue-media",
+  "name": "Recrue Media",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-wyden-near-letter-2024"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "spokeo",
+  "name": "Spokeo, Inc.",
+  "aliases": [
+    "Spokeo.com",
+    "Freepeopledirectory.com",
+    "Thatsthem.com",
+    "Peoplewin.com",
+    "Anywho.com",
+    "Family.me",
+    "Spokeo Inc",
+    "Freepeopledirectory, Thatsthem, peoplewin.",
+    "Spokeo",
+    "AnyWho",
+    "ThatsThem"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [
+    "consumer profiles assembled from online and offline sources",
+    "phone and people lookup",
+    "people-search profiles built from phone books, social networks, marketing surveys, real estate listings and other public sources (no companies named)",
+    "people search by name, address, phone and email"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.spokeo.com/optout",
+    "notes": "anywho.com/optout redirected to Spokeo's opt-out page on 2026-10-18. The redirect alone does not establish a corporate relationship.",
+    "status": "verified",
+    "alternates": [
+      {
+        "site": "thatsthem.com",
+        "url": "https://thatsthem.com/optout",
+        "source": "pol-thatsthem-optout"
+      }
+    ],
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "enf-ftc-spokeo-complaint-2012",
+    "enf-ftc-spokeo-order-2012",
+    "pol-spokeo-optout",
+    "pol-spokeo-privacy",
+    "pol-thatsthem-optout"
+  ],
+  "website": "https://www.spokeo.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-2",
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-web-forms",
+    "people_search-recon-find-yourself"
+  ]
+}

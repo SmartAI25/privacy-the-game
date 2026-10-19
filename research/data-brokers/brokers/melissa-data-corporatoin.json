@@ -1,0 +1,29 @@
+{
+  "id": "melissa-data-corporatoin",
+  "name": "MELISSA DATA CORPORATOIN",
+  "aliases": [
+    "Melissa"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.melissa.com/state-law-privacy-notice",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

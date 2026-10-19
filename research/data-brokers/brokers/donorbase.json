@@ -1,0 +1,33 @@
+{
+  "id": "donorbase",
+  "name": "DonorBase, Inc.",
+  "aliases": [
+    "DonorBase"
+  ],
+  "parent": "data-axle",
+  "kind": [
+    "marketing"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://donorbase.com",
+    "status": "suspect",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "pol-dataaxle-privacy"
+  ],
+  "website": "https://www.donorbase.com"
+}

@@ -1,0 +1,44 @@
+{
+  "id": "babel-street",
+  "name": "Babel Street, Inc.",
+  "aliases": [
+    "BABEL STREET INC",
+    "Babel Street",
+    "BABEL STREET, INC."
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.babelstreet.com/privacy",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "proc-usasp-70cmsd19fc0000052",
+    "proc-usasp-hsss0115c0040",
+    "proc-usasp-djm16a32p0045",
+    "proc-usasp-15ddhq20f00001467",
+    "proc-usasp-djf141200p0013007",
+    "proc-usasp-2032h821c00039",
+    "proc-usasp-fa489017p0017",
+    "proc-usasp-w90brj15p0015"
+  ],
+  "website": "https://www.babelstreet.com"
+}

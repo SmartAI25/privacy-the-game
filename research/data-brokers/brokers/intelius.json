@@ -1,0 +1,45 @@
+{
+  "id": "intelius",
+  "name": "Intelius, LLC",
+  "aliases": [
+    "Intelius, US Search, US Search Pro",
+    "INTELIUS LLC",
+    "Intelius, US Search & US Search Pro",
+    "Intelius",
+    "US Search"
+  ],
+  "parent": "peopleconnect",
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [
+    "people search and background reports"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.intelius.com/privacy-center",
+    "status": "blocked",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18",
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy"
+  ],
+  "website": "https://www.intelius.com",
+  "missions": [
+    "people_search-fortify-privacy-portals",
+    "people_search-fortify-removal-links"
+  ]
+}

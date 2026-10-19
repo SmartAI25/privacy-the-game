@@ -1,0 +1,20 @@
+{
+  "id": "consumer-base",
+  "name": "Consumer Base",
+  "aliases": [
+    "Consumer Base LLC dba Exact Data",
+    "Exact Data"
+  ],
+  "parent": "data-axle",
+  "kind": [
+    "marketing"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-dataaxle-privacy"
+  ]
+}

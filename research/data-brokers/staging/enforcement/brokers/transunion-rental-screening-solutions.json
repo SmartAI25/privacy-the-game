@@ -1,0 +1,22 @@
+{
+  "id": "transunion-rental-screening-solutions",
+  "name": "TransUnion Rental Screening Solutions",
+  "aliases": [
+    "TURSS"
+  ],
+  "parent": "trans-union",
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "tenant and employment background screening reports"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-cfpb-turss-complaint-2023",
+    "enf-cfpb-turss-order-2023"
+  ]
+}

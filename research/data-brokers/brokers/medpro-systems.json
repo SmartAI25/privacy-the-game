@@ -1,0 +1,33 @@
+{
+  "id": "medpro-systems",
+  "name": "MedPro Systems, LLC",
+  "aliases": [
+    "MedPro Systems",
+    "MEDPRO SYSTEMS",
+    "MedPro Systems LLC"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.medprosystems.com/privacy-policy/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.medprosystems.com"
+}

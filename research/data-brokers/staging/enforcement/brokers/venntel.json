@@ -1,0 +1,20 @@
+{
+  "id": "venntel",
+  "name": "Venntel",
+  "aliases": [],
+  "parent": "gravy-analytics",
+  "kind": [
+    "location"
+  ],
+  "sells": [
+    "location data and analysis tools to public sector customers, such as government contractors (per FTC)"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gravy-complaint-2024",
+    "enf-ftc-gravy-order-2025"
+  ]
+}

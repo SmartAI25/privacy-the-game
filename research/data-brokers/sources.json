@@ -1,0 +1,1199 @@
+{
+  "registry-ca-2026-10-18": {
+    "url": "https://cppa.ca.gov/data_broker_registry/registry.csv",
+    "title": "California Privacy Protection Agency, California Data Broker Registry (2026 registrations)",
+    "archived": "https://web.archive.org/web/20260806041805/https://cppa.ca.gov/data_broker_registry/registry.csv",
+    "kind": "registry",
+    "accessed": "2026-10-18"
+  },
+  "registry-tx-2026-10-18": {
+    "url": "https://texas-sos.appianportalsgov.com/data-broker-registry",
+    "title": "Texas Secretary of State, Registry of Registered Data Brokers (Export to Excel)",
+    "archived": "https://web.archive.org/web/20261019051305/https://texas-sos.appianportalsgov.com/data-broker-registry",
+    "kind": "registry",
+    "accessed": "2026-10-18"
+  },
+  "registry-or-2026-10-18": {
+    "url": "https://www4.cbs.state.or.us/ex/shared/downtemp/dfcs_db_optout.csv",
+    "title": "Oregon DCBS Division of Financial Regulation, Data Broker Opt Out Methods report",
+    "archived": "https://web.archive.org/web/20261019051000/https://www4.cbs.state.or.us/ex/shared/downtemp/dfcs_db_optout.csv",
+    "kind": "registry",
+    "accessed": "2026-10-18"
+  },
+  "sec-efx-10k-2025": {
+    "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+    "archived": "https://web.archive.org/web/20260731044155/https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/efx-20251231.htm",
+    "kind": "sec-10k",
+    "title": "Equifax Inc. Form 10-K for fiscal year ended December 31, 2025 (filed 2026-02-19)",
+    "accessed": "2026-10-18"
+  },
+  "sec-efx-10k-2025-ex21": {
+    "url": "https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/exhibit211-masterequifaxsu.htm",
+    "archived": "https://web.archive.org/web/20260823131450/https://www.sec.gov/Archives/edgar/data/33185/000003318526000010/exhibit211-masterequifaxsu.htm",
+    "kind": "sec-10k",
+    "title": "Equifax Inc. FY2025 Form 10-K Exhibit 21.1, List of Equifax Inc. Subsidiaries (as of December 31, 2025)",
+    "accessed": "2026-10-18"
+  },
+  "sec-tru-10k-2025": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm",
+    "archived": "https://web.archive.org/web/20261001124719/https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/tru-20251231.htm",
+    "kind": "sec-10k",
+    "title": "TransUnion Form 10-K for fiscal year ended December 31, 2025 (filed 2026-02-27)",
+    "accessed": "2026-10-18"
+  },
+  "sec-tru-10k-2025-ex21": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/exhibit21subsidiarieslist2.htm",
+    "archived": "https://web.archive.org/web/20260227215225/https://www.sec.gov/Archives/edgar/data/1552033/000155203326000012/exhibit21subsidiarieslist2.htm",
+    "kind": "sec-10k",
+    "title": "TransUnion FY2025 Form 10-K Exhibit 21, List of Subsidiaries",
+    "accessed": "2026-10-18"
+  },
+  "sec-ramp-10k-fy2026": {
+    "url": "https://www.sec.gov/Archives/edgar/data/733269/000073326926000025/ramp-20260331.htm",
+    "archived": "https://web.archive.org/web/20261019051436/https://www.sec.gov/Archives/edgar/data/733269/000073326926000025/ramp-20260331.htm",
+    "kind": "sec-10k",
+    "title": "LiveRamp Holdings, Inc. Form 10-K for fiscal year ended March 31, 2026 (filed 2026-05-21)",
+    "accessed": "2026-10-18"
+  },
+  "sec-omc-10k-2025": {
+    "url": "https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/omc-20251231.htm",
+    "archived": "https://web.archive.org/web/20260221005855/https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/omc-20251231.htm",
+    "kind": "sec-10k",
+    "title": "Omnicom Group Inc. Form 10-K for fiscal year ended December 31, 2025 (filed 2026-02-20)",
+    "accessed": "2026-10-18"
+  },
+  "sec-omc-10k-2025-ex21": {
+    "url": "https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/a2025q4exhibit21.htm",
+    "archived": "https://web.archive.org/web/20260408153659/https://www.sec.gov/Archives/edgar/data/29989/000002998926000006/a2025q4exhibit21.htm",
+    "kind": "sec-10k",
+    "title": "Omnicom Group Inc. FY2025 Form 10-K Exhibit 21, Subsidiaries of the Registrant",
+    "accessed": "2026-10-18"
+  },
+  "sec-vrsk-10k-2025": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1442145/000143774926004452/vrsk20251231_10k.htm",
+    "archived": "https://web.archive.org/web/20260611224051/https://www.sec.gov/Archives/edgar/data/1442145/000143774926004452/vrsk20251231_10k.htm",
+    "kind": "sec-10k",
+    "title": "Verisk Analytics, Inc. Form 10-K for fiscal year ended December 31, 2025 (filed 2026-02-18)",
+    "accessed": "2026-10-18"
+  },
+  "sec-dnb-10k-2024": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1799208/000179920825000012/dnb-20241231.htm",
+    "archived": "https://web.archive.org/web/20260216155353/https://www.sec.gov/Archives/edgar/data/1799208/000179920825000012/dnb-20241231.htm",
+    "kind": "sec-10k",
+    "title": "Dun & Bradstreet Holdings, Inc. Form 10-K for fiscal year ended December 31, 2024 (filed 2025-02-21; last 10-K before going private)",
+    "accessed": "2026-10-18"
+  },
+  "sec-dnb-8k-2025-merger": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1799208/000110465925082892/tm2524330d1_8k.htm",
+    "archived": "https://web.archive.org/web/20261019051641/https://www.sec.gov/Archives/edgar/data/1799208/000110465925082892/tm2524330d1_8k.htm",
+    "kind": "sec-8k",
+    "title": "Dun & Bradstreet Holdings, Inc. Form 8-K filed 2025-08-26 reporting completion of merger with affiliates of Clearlake Capital",
+    "accessed": "2026-10-18"
+  },
+  "sec-tri-40f-2025-annual-report": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+    "archived": "https://web.archive.org/web/20261008074917/https://www.sec.gov/Archives/edgar/data/1075124/000119312526094222/tri-ex99_1.htm",
+    "kind": "annual-report",
+    "title": "Thomson Reuters Annual Report 2025 (Exhibit 99.1 to Form 40-F filed 2026-03-05)",
+    "accessed": "2026-10-18"
+  },
+  "sec-relx-20f-2025": {
+    "url": "https://www.sec.gov/Archives/edgar/data/929869/000110465926017277/relx-20251231x20f.htm",
+    "archived": "https://web.archive.org/web/20260219140843/https://www.sec.gov/Archives/edgar/data/929869/000110465926017277/relx-20251231x20f.htm",
+    "kind": "sec-20f",
+    "title": "RELX PLC Form 20-F for fiscal year ended December 31, 2025 (filed 2026-02-19)",
+    "accessed": "2026-10-18"
+  },
+  "sec-relx-annual-report-2025": {
+    "url": "https://www.relx.com/~/media/Files/R/RELX-Group/documents/reports/annual-reports/relx-2025-annual-report.pdf",
+    "archived": "https://web.archive.org/web/20260927162153/https://www.relx.com/~/media/Files/R/RELX-Group/documents/reports/annual-reports/relx-2025-annual-report.pdf",
+    "kind": "annual-report",
+    "title": "RELX Annual Report and Financial Statements 2025 (incorporated by reference into the 2025 Form 20-F)",
+    "accessed": "2026-10-18"
+  },
+  "sec-experian-annual-report-2026": {
+    "url": "https://www.experianplc.com/content/dam/marketing/global/plc/en/assets/documents/reports/2026/experian-annual-report-2026.pdf",
+    "archived": "https://web.archive.org/web/20260929200303/https://www.experianplc.com/content/dam/marketing/global/plc/en/assets/documents/reports/2026/experian-annual-report-2026.pdf",
+    "kind": "annual-report",
+    "title": "Experian plc Annual Report 2026 (year ended 31 March 2026)",
+    "accessed": "2026-10-18"
+  },
+  "sec-publicis-urd-2025-note3": {
+    "url": "https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/279/",
+    "archived": "https://web.archive.org/web/20261019051839/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/279/",
+    "kind": "annual-report",
+    "title": "Publicis Groupe Universal Registration Document 2025, Note 3 Changes to consolidation scope (p. 279)",
+    "accessed": "2026-10-18"
+  },
+  "sec-publicis-urd-2025-note36": {
+    "url": "https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/328/",
+    "archived": "https://web.archive.org/web/20261019052021/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/328/",
+    "kind": "annual-report",
+    "title": "Publicis Groupe Universal Registration Document 2025, Note 36 List of the main consolidated companies at December 31, 2025 (p. 328)",
+    "accessed": "2026-10-18"
+  },
+  "sec-publicis-urd-2025-activities": {
+    "url": "https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/26/",
+    "archived": "https://web.archive.org/web/20261007161307/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/26/",
+    "kind": "annual-report",
+    "title": "Publicis Groupe Universal Registration Document 2025, section 1.3 Activities and strategy",
+    "accessed": "2026-10-18"
+  },
+  "sec-publicis-urd-2025-keyfigures": {
+    "url": "https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/12/",
+    "archived": "https://web.archive.org/web/20261007212333/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/12/",
+    "kind": "annual-report",
+    "title": "Publicis Groupe Universal Registration Document 2025, Key figures",
+    "accessed": "2026-10-18"
+  },
+  "sec-clgx-10k-2020": {
+    "url": "https://www.sec.gov/Archives/edgar/data/36047/000003604721000018/clgx-20201231.htm",
+    "archived": "https://web.archive.org/web/20250120165941/https://www.sec.gov/Archives/edgar/data/36047/000003604721000018/clgx-20201231.htm",
+    "kind": "sec-10k",
+    "title": "CoreLogic, Inc. Form 10-K for fiscal year ended December 31, 2020 (filed 2021-03-01; last 10-K before going private)",
+    "accessed": "2026-10-18"
+  },
+  "sec-clgx-8k-2021-merger": {
+    "url": "https://www.sec.gov/Archives/edgar/data/36047/000119312521182272/d146556d8k.htm",
+    "archived": "https://web.archive.org/web/20261019052225/https://www.sec.gov/Archives/edgar/data/36047/000119312521182272/d146556d8k.htm",
+    "kind": "sec-8k",
+    "title": "CoreLogic, Inc. Form 8-K filed 2021-06-04 reporting completion of acquisition by affiliates of Stone Point Capital and Insight Partners",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-complaint-2022": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/1.%20Complaint.pdf",
+    "archived": "https://web.archive.org/web/20261013174152/https://www.ftc.gov/system/files/ftc_gov/pdf/1.%20Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Kochava Inc., No. 2:22-cv-377 (D. Idaho), Complaint for Permanent Injunction and Other Relief, filed Aug. 29, 2022",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-sac-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/86-SecondAmendedComplaint.pdf",
+    "archived": "https://web.archive.org/web/20261003175839/https://www.ftc.gov/system/files/ftc_gov/pdf/86-SecondAmendedComplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Kochava Inc. and Collective Data Solutions, LLC, No. 2:22-cv-377 (D. Idaho), Second Amended Complaint, filed July 15, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-kochava-order-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Kochava-Order.pdf",
+    "archived": "https://web.archive.org/web/20260626161543/https://www.ftc.gov/system/files/ftc_gov/pdf/Kochava-Order.pdf",
+    "kind": "ftc-order",
+    "title": "FTC v. Kochava, Inc., No. 2:22-cv-00377-BLW (D. Idaho), Stipulated Order for Injunction and Other Relief, dated June 25, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-xmode-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialComplaint.pdf",
+    "archived": "https://web.archive.org/web/20260930012546/https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialComplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of X-Mode Social, Inc. and Outlogic, LLC, FTC Docket No. C-4802, Complaint, issued Apr. 11, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-xmode-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialDecisionandOrder.pdf",
+    "archived": "https://web.archive.org/web/20261009212608/https://www.ftc.gov/system/files/ftc_gov/pdf/X-ModeSocialDecisionandOrder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of X-Mode Social, Inc. and Outlogic, LLC, FTC Docket No. C-4802, Decision and Order, issued Apr. 11, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-inmarket-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-Complaint.pdf",
+    "archived": "https://web.archive.org/web/20260930012546/https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of InMarket Media, LLC, FTC Docket No. C-4803, Complaint (final, posted May 1, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-inmarket-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-DecisionandOrder.pdf",
+    "archived": "https://web.archive.org/web/20260907050023/https://www.ftc.gov/system/files/ftc_gov/pdf/InMarketMedia-DecisionandOrder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of InMarket Media, LLC, FTC Docket No. C-4803, Decision and Order, issued Apr. 29, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gravy-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf",
+    "archived": "https://web.archive.org/web/20260915174435/https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Gravy Analytics, Inc. and Venntel, Inc., FTC File No. 212-3035, Complaint (Dec. 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gravy-order-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/212_3035_-_gravy_analytics_final_consent_package_without_signatures.pdf",
+    "archived": "https://web.archive.org/web/20261002165806/https://www.ftc.gov/system/files/ftc_gov/pdf/212_3035_-_gravy_analytics_final_consent_package_without_signatures.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Gravy Analytics, Inc. and Venntel, Inc., FTC File No. 212-3035, final consent package incl. Decision and Order issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-mobilewalla-complaint-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-Complaint.pdf",
+    "archived": "https://web.archive.org/web/20260421134353/https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-Complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Mobilewalla, Inc., FTC Docket No. C-4811, Complaint, issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-mobilewalla-order-2025": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-D%26O.pdf",
+    "archived": "https://web.archive.org/web/20260906205859/https://www.ftc.gov/system/files/ftc_gov/pdf/Mobilewalla-D%26O.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Mobilewalla, Inc., FTC Docket No. C-4811, Decision and Order, issued Jan. 13, 2025",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gm-complaint-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalcomplaint.pdf",
+    "archived": "https://web.archive.org/web/20260117044220/https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalcomplaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of General Motors LLC, General Motors Holdings LLC, and OnStar, LLC, FTC Docket No. C-4828, Complaint, issued Jan. 13, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-gm-order-2026": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalorder.pdf",
+    "archived": "https://web.archive.org/web/20260117035059/https://www.ftc.gov/system/files/ftc_gov/pdf/2423052c4828gmlexisfinalorder.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of General Motors LLC et al., FTC Docket No. C-4828, Decision and Order, issued Jan. 13, 2026",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-avast-complaint-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf",
+    "archived": "https://web.archive.org/web/20240222194152/https://www.ftc.gov/system/files/ftc_gov/pdf/Complaint-Avast.pdf",
+    "kind": "ftc-complaint",
+    "title": "In the Matter of Avast Limited, Avast Software s.r.o., and Jumpshot, Inc., FTC File No. 202-3033, Complaint (published Feb. 22, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-avast-order-2024": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/202_3033_-_avast_final_consent_package.pdf",
+    "archived": "https://web.archive.org/web/20260924223135/https://www.ftc.gov/system/files/ftc_gov/pdf/202_3033_-_avast_final_consent_package.pdf",
+    "kind": "ftc-order",
+    "title": "In the Matter of Avast Limited et al., FTC File No. 202-3033, final consent package incl. Decision and Order issued June 26, 2024",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-truthfinder-complaint-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_complaint.pdf",
+    "archived": "https://web.archive.org/web/20250713075749/https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_complaint.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Instant Checkmate, LLC, TruthFinder, LLC, et al., Complaint (S.D. Cal., Sept. 2023)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-truthfinder-order-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_stipulated_order_signed_by_judge.pdf",
+    "archived": "https://web.archive.org/web/20251221184907/https://www.ftc.gov/system/files/ftc_gov/pdf/truthfinder_stipulated_order_signed_by_judge.pdf",
+    "kind": "ftc-order",
+    "title": "FTC v. Instant Checkmate, LLC et al., No. 23-cv-1674 (S.D. Cal.), Stipulated Order for Permanent Injunction, Civil Penalty Judgment, and Other Relief, dated Oct. 11, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-cfpb-turss-complaint-2023": {
+    "url": "https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_complaint_2023-10.pdf",
+    "archived": "https://web.archive.org/web/20251209044949/https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_complaint_2023-10.pdf",
+    "kind": "court",
+    "title": "CFPB and FTC v. TransUnion Rental Screening Solutions, Inc. and Trans Union LLC, No. 1:23-cv-02659 (D. Colo.), Complaint, filed Oct. 12, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-cfpb-turss-order-2023": {
+    "url": "https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf",
+    "archived": "https://web.archive.org/web/20261019051259/https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf",
+    "kind": "cfpb-order",
+    "title": "CFPB and FTC v. TransUnion Rental Screening Solutions, Inc. and Trans Union LLC, No. 1:23-cv-02659 (D. Colo.), Stipulated Final Judgment and Order, so ordered Oct. 18, 2023",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-spokeo-complaint-2012": {
+    "url": "https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeocmpt.pdf",
+    "archived": "https://web.archive.org/web/20251130050049/https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeocmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "United States v. Spokeo, Inc., No. 2:12-cv-05001 (C.D. Cal.), Complaint for Civil Penalties, Injunction and Other Relief, filed June 7, 2012",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-spokeo-order-2012": {
+    "url": "https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeoorder.pdf",
+    "archived": "https://web.archive.org/web/20260708074314/https://www.ftc.gov/sites/default/files/documents/cases/2012/06/120612spokeoorder.pdf",
+    "kind": "ftc-order",
+    "title": "United States v. Spokeo, Inc., No. 2:12-cv-05001 (C.D. Cal.), Consent Decree and Order for Civil Penalties, Injunction and Other Relief (June 2012)",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-leaplab-complaint-2014": {
+    "url": "https://www.ftc.gov/system/files/documents/cases/141223leaplabcmpt.pdf",
+    "archived": "https://web.archive.org/web/20251018064722/https://www.ftc.gov/system/files/documents/cases/141223leaplabcmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Sitesearch Corporation d/b/a LeapLab, et al. (D. Ariz.), Complaint for Permanent Injunction and Other Equitable Relief, dated Dec. 22, 2014",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-sequoia-one-complaint-2015": {
+    "url": "https://www.ftc.gov/system/files/documents/cases/150812sequoiaonecmpt.pdf",
+    "archived": "https://web.archive.org/web/20260112082722/https://www.ftc.gov/system/files/documents/cases/150812sequoiaonecmpt.pdf",
+    "kind": "ftc-complaint",
+    "title": "FTC v. Sequoia One, LLC, et al., No. 2:15-cv-01512 (D. Nev.), Complaint for Permanent Injunction and Other Equitable Relief, filed Aug. 7, 2015",
+    "accessed": "2026-10-18"
+  },
+  "enf-ftc-goodrx-complaint-2023": {
+    "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/goodrx_complaint_for_permanent_injunction_civil_penalties_and_other_relief.pdf",
+    "archived": "https://web.archive.org/web/20261003070844/https://www.ftc.gov/system/files/ftc_gov/pdf/goodrx_complaint_for_permanent_injunction_civil_penalties_and_other_relief.pdf",
+    "kind": "court",
+    "title": "United States v. GoodRx Holdings, Inc., No. 3:23-cv-00460 (N.D. Cal.), Complaint for Permanent Injunction, Civil Penalties, and Other Relief, filed Feb. 1, 2023",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd18p00000127": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019071749/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD18P00000127: U.S. Immigration and Customs Enforcement to VENNTEL INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70b02c20p00000521": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019071955/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70B02C20P00000521: U.S. Customs and Border Protection to VENNTEL INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15ddst18p00000052": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019072157/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15DDST18P00000052: Drug Enforcement Administration to VENNTEL INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15m10318pa4100281": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019072313/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15M10318PA4100281: U.S. Marshals Service to FOG DATA SCIENCE LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-h9227620p0070": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20221218064329/https://api.usaspending.gov/api/v2/awards/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award H9227620P0070: U.S. Special Operations Command to ANOMALY 6 LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd19fc0000052": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012",
+    "archived": "https://web.archive.org/web/20261019072451/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD19FC0000052: U.S. Immigration and Customs Enforcement to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hsss0115c0040": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019072631/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSSS0115C0040: U.S. Secret Service to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djm16a32p0045": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019072817/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJM16A32P0045: U.S. Marshals Service to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15ddhq20f00001467": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549",
+    "archived": "https://web.archive.org/web/20261019073028/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15DDHQ20F00001467: Drug Enforcement Administration to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djf141200p0013007": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019073247/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJF141200P0013007: Federal Bureau of Investigation to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-2032h821c00039": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019073450/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 2032H821C00039: Internal Revenue Service to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-fa489017p0017": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019073727/https://api.usaspending.gov/api/v2/awards/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award FA489017P0017: Department of the Air Force to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-w90brj15p0015": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019073945/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award W90BRJ15P0015: Department of the Army to BABEL STREET, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd21c00000002": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019083402/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD21C00000002: U.S. Immigration and Customs Enforcement to THOMSON REUTERS SPECIAL SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hsbp1015p00702": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019074147/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSBP1015P00702: U.S. Customs and Border Protection to THOMSON REUTERS SPECIAL SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15f06726f0001553": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732",
+    "archived": "https://web.archive.org/web/20261019074337/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15F06726F0001553: Federal Bureau of Investigation to THOMSON REUTERS SPECIAL SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-w911nf25pa015": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019074534/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award W911NF25PA015: Department of the Army to THOMSON REUTERS SPECIAL SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hscemd17f00008": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732",
+    "archived": "https://web.archive.org/web/20221227015339/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSCEMD17F00008: U.S. Immigration and Customs Enforcement to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hsbp1014j00318": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300",
+    "archived": "https://web.archive.org/web/20261019074722/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSBP1014J00318: U.S. Customs and Border Protection to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djf151200g0000753": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730",
+    "archived": "https://web.archive.org/web/20261019074857/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJF151200G0000753: Federal Bureau of Investigation to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-n0018909fz076": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730",
+    "archived": "https://web.archive.org/web/20261019074954/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award N0018909FZ076: Department of the Navy to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hs002123f0058": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732",
+    "archived": "https://web.archive.org/web/20261019075050/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HS002123F0058: Defense Counterintelligence and Security Agency to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15m10226pa4700366": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075144/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15M10226PA4700366: U.S. Marshals Service to WEST PUBLISHING CORPORATION",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd21c00000001": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019083601/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD21C00000001: U.S. Immigration and Customs Enforcement to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-2032h821f00127": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050",
+    "archived": "https://web.archive.org/web/20261019075303/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 2032H821F00127: Internal Revenue Service to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70us0921c70090081": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075405/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70US0921C70090081: U.S. Secret Service to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15ddh022p00000051": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075556/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15DDH022P00000051: Drug Enforcement Administration to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-w15qkn19c0063": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075725/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award W15QKN19C0063: Department of the Army to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-fa701417p3000": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075837/https://api.usaspending.gov/api/v2/awards/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award FA701417P3000: Department of the Air Force to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-n6311622p0525": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019075930/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award N6311622P0525: Department of the Navy to LEXISNEXIS RISK SOLUTIONS INC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70us0921c70090014": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080024/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70US0921C70090014: U.S. Secret Service to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djm17d61p0001": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080115/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJM17D61P0001: U.S. Marshals Service to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hsbp1014p00718": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080210/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSBP1014P00718: U.S. Customs and Border Protection to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15ddse18p00000061": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080315/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15DDSE18P00000061: Drug Enforcement Administration to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd20p00000155": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080452/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD20P00000155: U.S. Immigration and Customs Enforcement to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-fa701414p3005": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080649/https://api.usaspending.gov/api/v2/awards/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award FA701414P3005: Department of the Air Force to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-m6700117p1192": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019080747/https://api.usaspending.gov/api/v2/awards/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award M6700117P1192: Department of the Navy to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15f06721f0001429": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549",
+    "archived": "https://web.archive.org/web/20261019080838/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15F06721F0001429: Federal Bureau of Investigation to EQUIFAX WORKFORCE SOLUTIONS LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hs002123f0047": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732",
+    "archived": "https://web.archive.org/web/20261019081027/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HS002123F0047: Defense Counterintelligence and Security Agency to EQUIFAX WORKFORCE SOLUTIONS LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-tirno15z000080004": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730",
+    "archived": "https://web.archive.org/web/20261019081220/https://api.usaspending.gov/api/v2/awards/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award TIRNO15Z000080004: Internal Revenue Service to EQUIFAX INFORMATION SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-hsceeh09f00025": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730",
+    "archived": "https://web.archive.org/web/20261019081402/https://api.usaspending.gov/api/v2/awards/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award HSCEEH09F00025: U.S. Immigration and Customs Enforcement to EQUIFAX INFORMATION SERVICES LLC",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djf151200g0000693": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730",
+    "archived": "https://web.archive.org/web/20261019081503/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJF151200G0000693: Federal Bureau of Investigation to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-2032h519f00092": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050",
+    "archived": "https://web.archive.org/web/20261019081703/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 2032H519F00092: Internal Revenue Service to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djms12m0043": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019081907/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJMS12M0043: U.S. Marshals Service to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-w911sd21f0187": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730",
+    "archived": "https://web.archive.org/web/20261019081959/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award W911SD21F0187: Department of the Army to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-n0018923fz089": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730",
+    "archived": "https://web.archive.org/web/20261019082154/https://api.usaspending.gov/api/v2/awards/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award N0018923FZ089: Department of the Navy to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-djd12hqg0018": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730",
+    "archived": "https://web.archive.org/web/20261019082347/https://api.usaspending.gov/api/v2/awards/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award DJD12HQG0018: Drug Enforcement Administration to EXPERIAN INFORMATION SOLUTIONS, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70cmsd21p00000127": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20241221112411/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70CMSD21P00000127: U.S. Immigration and Customs Enforcement to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15f06723p0001356": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019082552/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15F06723P0001356: Federal Bureau of Investigation to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-70b03c25p00000321": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019082800/https://api.usaspending.gov/api/v2/awards/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 70B03C25P00000321: U.S. Customs and Border Protection to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-15m10224pa4700107": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019083001/https://api.usaspending.gov/api/v2/awards/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 15M10224PA4700107: U.S. Marshals Service to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-2023h226p00217": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20261019083057/https://api.usaspending.gov/api/v2/awards/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award 2023H226P00217: Internal Revenue Service to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "proc-usasp-w9124725pa010": {
+    "url": "https://www.usaspending.gov/award/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-",
+    "archived": "https://web.archive.org/web/20260403084646/https://api.usaspending.gov/api/v2/awards/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-/",
+    "kind": "procurement",
+    "title": "USAspending.gov contract award W9124725PA010: Department of the Army to CLEARVIEW AI, INC.",
+    "accessed": "2026-10-18"
+  },
+  "pol-acxiom-optout": {
+    "url": "https://www.acxiom.com/optout/",
+    "archived": "https://web.archive.org/web/20260911224232/https://www.acxiom.com/optout/",
+    "kind": "privacy-policy",
+    "title": "Acxiom — Opt Out Requests",
+    "accessed": "2026-10-18"
+  },
+  "pol-advancedbackgroundchecks-removal": {
+    "url": "https://www.advancedbackgroundchecks.com/removal",
+    "archived": "https://web.archive.org/web/20260108011832/https://www.advancedbackgroundchecks.com/removal",
+    "kind": "privacy-policy",
+    "title": "AdvancedBackgroundChecks — Opt-Out Form",
+    "accessed": "2026-10-18"
+  },
+  "pol-azira-privacy": {
+    "url": "https://www.azira.com/privacy-policy",
+    "archived": "https://web.archive.org/web/20261007003237/https://www.azira.com/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Azira Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-beenverified-optout": {
+    "url": "https://www.beenverified.com/svc/optout/search/optouts",
+    "archived": "https://web.archive.org/web/20250509175122/https://www.beenverified.com/svc/optout/search/optouts",
+    "kind": "privacy-policy",
+    "title": "BeenVerified — Opt-out search",
+    "accessed": "2026-10-18"
+  },
+  "pol-chexsystems-freeze": {
+    "url": "https://www.chexsystems.com/security-freeze/information",
+    "archived": "https://web.archive.org/web/20260427165937/https://www.chexsystems.com/security-freeze/information",
+    "kind": "privacy-policy",
+    "title": "ChexSystems — Security Freeze",
+    "accessed": "2026-10-18"
+  },
+  "pol-chexsystems-home": {
+    "url": "https://www.chexsystems.com/",
+    "archived": "https://web.archive.org/web/20260806054330/https://www.chexsystems.com/",
+    "kind": "press-release",
+    "title": "ChexSystems home page (corporate disclosure)",
+    "accessed": "2026-10-18"
+  },
+  "pol-cotality-privacy": {
+    "url": "https://www.cotality.com/legal/privacy",
+    "archived": "https://web.archive.org/web/20261019051032/https://www.cotality.com/legal/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Cotality (CoreLogic, Inc. d/b/a Cotality) Website Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-cotality-product-privacy": {
+    "url": "https://www.cotality.com/legal/product-privacy-policy",
+    "archived": "https://web.archive.org/web/20261019052832/https://www.cotality.com/legal/product-privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Cotality Product Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-dataaxle-privacy": {
+    "url": "https://www.data-axle.com/privacy-policy/",
+    "archived": "https://web.archive.org/web/20261003192125/https://www.data-axle.com/privacy-policy/",
+    "kind": "privacy-policy",
+    "title": "Data Axle Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-dataaxle-rights-request": {
+    "url": "https://www.data-axle.com/privacy-rights-request/",
+    "archived": "https://web.archive.org/web/20260927004725/https://www.data-axle.com/privacy-rights-request/",
+    "kind": "privacy-policy",
+    "title": "Data Axle — Consumer Privacy Rights Request",
+    "accessed": "2026-10-18"
+  },
+  "pol-epsilon-consumer-info": {
+    "url": "https://legal.epsilon.com/us/consumer-information",
+    "archived": "https://web.archive.org/web/20261001033045/https://legal.epsilon.com/us/consumer-information",
+    "kind": "privacy-policy",
+    "title": "Epsilon — Consumer Information (US)",
+    "accessed": "2026-10-18"
+  },
+  "pol-equifax-privacy-statement": {
+    "url": "https://www.equifax.com/privacy/privacy-statement/",
+    "archived": "https://web.archive.org/web/20260929030925/https://www.equifax.com/privacy/privacy-statement/",
+    "kind": "privacy-policy",
+    "title": "Equifax Privacy Statement",
+    "accessed": "2026-10-18"
+  },
+  "pol-experian-marketing-data-practices": {
+    "url": "https://www.experian.com/privacy/marketing-data-practices-and-policies",
+    "archived": "https://web.archive.org/web/20260711141407/https://www.experian.com/privacy/marketing-data-practices-and-policies",
+    "kind": "privacy-policy",
+    "title": "Experian Marketing Solutions, LLC — Marketing Data Practices and Policies",
+    "accessed": "2026-10-18"
+  },
+  "pol-experian-optout-targeted-ads": {
+    "url": "https://www.experian.com/privacy/opt-out-targeted-advertising",
+    "archived": "https://web.archive.org/web/20261007071230/https://www.experian.com/privacy/opt-out-targeted-advertising",
+    "kind": "privacy-policy",
+    "title": "Experian — Opt Out Targeted Advertising",
+    "accessed": "2026-10-18"
+  },
+  "pol-fastpeoplesearch-removal": {
+    "url": "https://www.fastpeoplesearch.com/removal",
+    "archived": "https://web.archive.org/web/20250701231421/https://www.fastpeoplesearch.com/removal",
+    "kind": "privacy-policy",
+    "title": "FastPeopleSearch — Removal Request Form",
+    "accessed": "2026-10-18"
+  },
+  "pol-gravy-optout": {
+    "url": "https://gravyanalytics.com/opt-out-do-not-sell?hsLang=en",
+    "archived": "https://web.archive.org/web/20261019052627/https://gravyanalytics.com/opt-out-do-not-sell",
+    "kind": "privacy-policy",
+    "title": "Gravy Analytics — Opt Out & Do Not Sell",
+    "accessed": "2026-10-18"
+  },
+  "pol-gravy-privacy": {
+    "url": "https://gravyanalytics.com/privacy-policy",
+    "archived": "https://web.archive.org/web/20260520095915/https://gravyanalytics.com/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Privacy Policy served at gravyanalytics.com (Unacast)",
+    "accessed": "2026-10-18"
+  },
+  "pol-innovis-optout": {
+    "url": "https://www.innovis.com/personal/optOutOptIn",
+    "archived": "https://web.archive.org/web/20260710132924/https://www.innovis.com/personal/optOutOptIn",
+    "kind": "privacy-policy",
+    "title": "Innovis — Opt-Out / Opt-In",
+    "accessed": "2026-10-18"
+  },
+  "pol-innovis-privacy": {
+    "url": "https://www.innovis.com/home/privacy",
+    "archived": "https://web.archive.org/web/20261019051301/https://business.innovis.com/privacy/privacy-notice",
+    "kind": "privacy-policy",
+    "title": "Innovis Data Solutions Privacy Notice",
+    "accessed": "2026-10-18"
+  },
+  "pol-kochava-optout": {
+    "url": "https://www.kochava.com/opt-out/",
+    "archived": "https://web.archive.org/web/20261019052439/https://www.kochava.com/privacy/opt-out/",
+    "kind": "privacy-policy",
+    "title": "Kochava — Opt Out Instructions",
+    "accessed": "2026-10-18"
+  },
+  "pol-kochava-support-privacy": {
+    "url": "https://www.kochava.com/privacy/support-privacy/",
+    "archived": "https://web.archive.org/web/20261013101640/https://www.kochava.com/privacy/support-privacy/",
+    "kind": "privacy-policy",
+    "title": "Kochava — Data Security and Privacy",
+    "accessed": "2026-10-18"
+  },
+  "pol-lexisnexis-risk-about": {
+    "url": "https://risk.lexisnexis.com/about-us",
+    "archived": "https://web.archive.org/web/20261017081209/https://risk.lexisnexis.com/about-us",
+    "kind": "press-release",
+    "title": "LexisNexis Risk Solutions — About Us",
+    "accessed": "2026-10-18"
+  },
+  "pol-lexisnexis-risk-optout": {
+    "url": "https://consumer.risk.lexisnexis.com/opt",
+    "archived": "https://web.archive.org/web/20260929201603/https://consumer.risk.lexisnexis.com/opt",
+    "kind": "privacy-policy",
+    "title": "LexisNexis Risk Solutions Consumer Disclosure — Opt-Out",
+    "accessed": "2026-10-18"
+  },
+  "pol-liveramp-privacy-choices": {
+    "url": "https://liveramp.com/privacy/my-privacy-choices/",
+    "archived": "https://web.archive.org/web/20261006011420/https://liveramp.com/privacy/my-privacy-choices",
+    "kind": "privacy-policy",
+    "title": "LiveRamp — My Privacy Choices",
+    "accessed": "2026-10-18"
+  },
+  "pol-liveramp-service-privacy": {
+    "url": "https://liveramp.com/privacy/service-privacy-policy/",
+    "archived": "https://web.archive.org/web/20261010015119/https://liveramp.com/privacy/service-privacy-policy",
+    "kind": "privacy-policy",
+    "title": "LiveRamp Service Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-lotame-privacy-choices": {
+    "url": "https://www.lotame.com/privacy/information-privacy-choices-services",
+    "archived": "https://web.archive.org/web/20260901215213/https://www.lotame.com/privacy/information-privacy-choices-services/",
+    "kind": "privacy-policy",
+    "title": "Lotame — Information About Privacy Choices (Services)",
+    "accessed": "2026-10-18"
+  },
+  "pol-lotame-publicis-article": {
+    "url": "https://www.lotame.com/resources/notes-from-a-20-year-ceo-one-year-post-acquisition-by-publicis/",
+    "archived": "https://web.archive.org/web/20261011211425/https://www.lotame.com/resources/notes-from-a-20-year-ceo-one-year-post-acquisition-by-publicis/",
+    "kind": "press-release",
+    "title": "Lotame — Notes From a 20-Year CEO, One Year Post-Acquisition by Publicis",
+    "accessed": "2026-10-18"
+  },
+  "pol-mylife-optout": {
+    "url": "https://www.mylife.com/ccpa/index.pubview",
+    "archived": "https://web.archive.org/web/20260202234013/https://www.mylife.com/ccpa/index.pubview",
+    "kind": "privacy-policy",
+    "title": "MyLife — Opt Out of Sale of Personal Information",
+    "accessed": "2026-10-18"
+  },
+  "pol-mylife-privacy": {
+    "url": "https://www.mylife.com/privacy-policy",
+    "archived": "https://web.archive.org/web/20261001033025/https://www.mylife.com/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "MyLife Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-oracle-advertising-eol-faq": {
+    "url": "https://www.oracle.com/a/ocom/docs/oracle-advertising-end-of-life-faqs.pdf",
+    "archived": "https://web.archive.org/web/20261006092407/https://www.oracle.com/a/ocom/docs/oracle-advertising-end-of-life-faqs.pdf",
+    "kind": "press-release",
+    "title": "Oracle Advertising EOL Frequently Asked Questions, v3.0 (Aug 12, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "pol-oracle-data-services": {
+    "url": "https://www.oracle.com/contracts/data-services/",
+    "archived": "https://web.archive.org/web/20261013130234/https://www.oracle.com/contracts/data-services/",
+    "kind": "privacy-policy",
+    "title": "Oracle data services contracts (redirect target of former Oracle Advertising privacy policy URL)",
+    "accessed": "2026-10-18"
+  },
+  "pol-outlogic-home": {
+    "url": "https://outlogic.io/",
+    "archived": "https://web.archive.org/web/20261009095303/https://outlogic.io/",
+    "kind": "press-release",
+    "title": "Outlogic home page",
+    "accessed": "2026-10-18"
+  },
+  "pol-peopleconnect-home": {
+    "url": "https://www.peopleconnect.us/",
+    "archived": "https://web.archive.org/web/20260614125816/https://peopleconnect.us/",
+    "kind": "press-release",
+    "title": "PeopleConnect home page",
+    "accessed": "2026-10-18"
+  },
+  "pol-peopleconnect-privacy": {
+    "url": "https://www.peopleconnect.us/privacy-policy/",
+    "archived": "https://web.archive.org/web/20260918053255/https://peopleconnect.us/privacy-policy/",
+    "kind": "privacy-policy",
+    "title": "PeopleConnect.us Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-peopleconnect-suppression": {
+    "url": "https://suppression.peopleconnect.us/login",
+    "archived": "https://web.archive.org/web/20261019051705/https://suppression.peopleconnect.us/login",
+    "kind": "privacy-policy",
+    "title": "PeopleConnect — Suppression Center",
+    "accessed": "2026-10-18"
+  },
+  "pol-peoplewhiz-remove": {
+    "url": "https://www.peoplewhiz.com/remove-my-info",
+    "archived": "https://web.archive.org/web/20260626005414/https://www.peoplewhiz.com/remove-my-info",
+    "kind": "privacy-policy",
+    "title": "PeopleWhiz — Remove My Info",
+    "accessed": "2026-10-18"
+  },
+  "pol-placer-consumer-privacy": {
+    "url": "https://www.placer.ai/privacy-policy/consumer-privacy-policy",
+    "archived": "https://web.archive.org/web/20261007112615/https://www.placer.ai/privacy-policy/consumer-privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Placer.ai Consumer Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-quickpeopletrace-home": {
+    "url": "https://www.quickpeopletrace.com/",
+    "archived": "https://web.archive.org/web/20260618013843/https://www.quickpeopletrace.com/",
+    "kind": "press-release",
+    "title": "Quick People Trace home page (footer)",
+    "accessed": "2026-10-18"
+  },
+  "pol-radaris-court-transfer-notice": {
+    "url": "https://radaris.com/control/privacy",
+    "archived": "https://web.archive.org/web/20260929222104/https://radaris.com/control/privacy",
+    "kind": "press-release",
+    "title": "Notice at radaris.com: 'This Domain Has Been Transferred by Court Order' (Atlas Data Privacy Corp.)",
+    "accessed": "2026-10-18"
+  },
+  "pol-rocketreach-remove": {
+    "url": "https://rocketreach.co/remove-profile",
+    "archived": "https://web.archive.org/web/20260821232758/https://rocketreach.co/remove-profile",
+    "kind": "privacy-policy",
+    "title": "RocketReach — Remove profile",
+    "accessed": "2026-10-18"
+  },
+  "pol-safegraph-privacy": {
+    "url": "https://www.safegraph.com/privacy-policy/",
+    "archived": "https://web.archive.org/web/20261003050345/https://www.safegraph.com/privacy-policy/",
+    "kind": "privacy-policy",
+    "title": "SafeGraph Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-searchpeoplefree-optout": {
+    "url": "https://www.searchpeoplefree.com/opt-out",
+    "archived": "https://web.archive.org/web/20260909235215/https://www.searchpeoplefree.com/opt-out",
+    "kind": "privacy-policy",
+    "title": "SearchPeopleFree — Opt Out",
+    "accessed": "2026-10-18"
+  },
+  "pol-sift-service-privacy": {
+    "url": "https://sift.com/legal-and-compliance/service-privacy-notice/",
+    "archived": "https://web.archive.org/web/20260925111355/https://sift.com/legal-and-compliance/service-privacy-notice/",
+    "kind": "privacy-policy",
+    "title": "Sift Service Privacy Notice",
+    "accessed": "2026-10-18"
+  },
+  "pol-smartbackgroundchecks-remove": {
+    "url": "https://www.smartbackgroundchecks.com/remove",
+    "archived": "https://web.archive.org/web/20261019052251/https://www.smartbackgroundchecks.com/remove",
+    "kind": "privacy-policy",
+    "title": "SmartBackgroundChecks — Opt Out Process",
+    "accessed": "2026-10-18"
+  },
+  "pol-spokeo-optout": {
+    "url": "https://www.spokeo.com/optout",
+    "archived": "https://web.archive.org/web/20261011002246/https://www.spokeo.com/optout",
+    "kind": "privacy-policy",
+    "title": "Spokeo — Opt Out",
+    "accessed": "2026-10-18"
+  },
+  "pol-spokeo-privacy": {
+    "url": "https://www.spokeo.com/privacy",
+    "archived": "https://web.archive.org/web/20261004223117/https://www.spokeo.com/privacy",
+    "kind": "privacy-policy",
+    "title": "Spokeo — Privacy",
+    "accessed": "2026-10-18"
+  },
+  "pol-spydialer-consumers": {
+    "url": "https://www.spydialer.com/consumers/",
+    "archived": "https://web.archive.org/web/20261008204953/https://www.spydialer.com/consumers/",
+    "kind": "privacy-policy",
+    "title": "Spy Dialer — Remove My Info",
+    "accessed": "2026-10-18"
+  },
+  "pol-thatsthem-optout": {
+    "url": "https://thatsthem.com/optout",
+    "archived": "https://web.archive.org/web/20260711210658/https://thatsthem.com/optout",
+    "kind": "privacy-policy",
+    "title": "ThatsThem — Opt Out",
+    "accessed": "2026-10-18"
+  },
+  "pol-tr-privacy-records": {
+    "url": "https://legal.thomsonreuters.com/en/legal-notices/privacy-records",
+    "archived": "https://web.archive.org/web/20260905182141/https://legal.thomsonreuters.com/en/legal-notices/privacy-records",
+    "kind": "privacy-policy",
+    "title": "Thomson Reuters — Privacy and Public Records (CLEAR)",
+    "accessed": "2026-10-18"
+  },
+  "pol-transunion-consumer-privacy": {
+    "url": "https://www.transunion.com/consumer-privacy",
+    "archived": "https://web.archive.org/web/20261001033026/https://www.transunion.com/consumer-privacy",
+    "kind": "privacy-policy",
+    "title": "TransUnion — Consumer Privacy Rights",
+    "accessed": "2026-10-18"
+  },
+  "pol-truepeoplesearch-removal": {
+    "url": "https://www.truepeoplesearch.com/removal",
+    "archived": "https://web.archive.org/web/20240328140906/https://www.truepeoplesearch.com/removal",
+    "kind": "privacy-policy",
+    "title": "TruePeopleSearch — Removals",
+    "accessed": "2026-10-18"
+  },
+  "pol-twn-employment-data-report": {
+    "url": "https://employees.theworknumber.com/employment-data-report",
+    "archived": "https://web.archive.org/web/20260929041610/https://employees.theworknumber.com/employment-data-report",
+    "kind": "privacy-policy",
+    "title": "The Work Number — Employment Data Report",
+    "accessed": "2026-10-18"
+  },
+  "pol-unacast-privacy": {
+    "url": "https://www.unacast.com/privacy-policy",
+    "archived": "https://web.archive.org/web/20261010035554/https://www.unacast.com/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Unacast Privacy Policy (Gravy Analytics, Inc. dba Unacast)",
+    "accessed": "2026-10-18"
+  },
+  "pol-usatrace-home": {
+    "url": "https://www.usatrace.com/",
+    "archived": "https://web.archive.org/web/20260801185908/https://www.usatrace.com/",
+    "kind": "press-release",
+    "title": "USATrace home page (footer)",
+    "accessed": "2026-10-18"
+  },
+  "pol-usphonebook-removal": {
+    "url": "https://www.usphonebook.com/removal",
+    "archived": "https://web.archive.org/web/20261002233716/https://www.usphonebook.com/removal",
+    "kind": "privacy-policy",
+    "title": "USPhonebook — Opt-Out Form",
+    "accessed": "2026-10-18"
+  },
+  "pol-venntel-optout": {
+    "url": "https://www.venntel.com/opt-out",
+    "archived": "https://web.archive.org/web/20261005205129/https://www.venntel.com/opt-out",
+    "kind": "privacy-policy",
+    "title": "Venntel — Opt Out & Delete Request",
+    "accessed": "2026-10-18"
+  },
+  "pol-venntel-privacy": {
+    "url": "https://www.venntel.com/privacy-policy",
+    "archived": "https://web.archive.org/web/20261005205135/https://www.venntel.com/privacy-policy",
+    "kind": "privacy-policy",
+    "title": "Venntel Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-verisk-privacy-policies": {
+    "url": "https://www.verisk.com/privacy-policies/",
+    "archived": "https://web.archive.org/web/20261001223117/https://www.verisk.com/privacy-policies/",
+    "kind": "privacy-policy",
+    "title": "Verisk — Privacy Policies",
+    "accessed": "2026-10-18"
+  },
+  "pol-whitepages-privacy": {
+    "url": "https://www.whitepages.com/privacy",
+    "archived": "https://web.archive.org/web/20260716175201/https://www.whitepages.com/privacy",
+    "kind": "privacy-policy",
+    "title": "Whitepages Privacy Policy",
+    "accessed": "2026-10-18"
+  },
+  "pol-whitepages-suppression": {
+    "url": "https://www.whitepages.com/suppression-requests",
+    "archived": "https://web.archive.org/web/20261014211003/https://www.whitepages.com/suppression-requests",
+    "kind": "privacy-policy",
+    "title": "Whitepages — Opt-out (suppression requests)",
+    "accessed": "2026-10-18"
+  },
+  "jour-globe-wapo-nctue-utility-ice-2021": {
+    "url": "https://www.bostonglobe.com/2021/12/08/nation/utility-giants-agree-no-longer-share-sensitive-records-ice-used-track-public/",
+    "archived": "https://web.archive.org/web/20250720104912/https://www.bostonglobe.com/2021/12/08/nation/utility-giants-agree-no-longer-share-sensitive-records-ice-used-track-public/",
+    "kind": "journalism",
+    "title": "Utility giants agree to no longer share sensitive records ICE used to track the public (Washington Post reporting, Boston Globe, Dec. 8, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-markup-life360-2021": {
+    "url": "https://themarkup.org/privacy/2021/12/06/the-popular-family-safety-app-life360-is-selling-precise-location-data-on-its-tens-of-millions-of-user",
+    "archived": "https://web.archive.org/web/20261012032733/https://themarkup.org/privacy/2021/12/06/the-popular-family-safety-app-life360-is-selling-precise-location-data-on-its-tens-of-millions-of-user",
+    "kind": "journalism",
+    "title": "The Popular Family Safety App Life360 Is Selling Precise Location Data on Its Tens of Millions of Users (The Markup, Dec. 6, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-military-xmode-2020": {
+    "url": "https://www.vice.com/en/article/us-military-location-data-xmode-locate-x/",
+    "archived": "https://web.archive.org/web/20261011174123/https://www.vice.com/en/article/us-military-location-data-xmode-locate-x/",
+    "kind": "journalism",
+    "title": "How the U.S. Military Buys Location Data from Ordinary Apps (Motherboard/VICE, Nov. 16, 2020)",
+    "accessed": "2026-10-18"
+  },
+  "jour-wyden-markey-auto-letter-2024": {
+    "url": "https://www.wyden.senate.gov/imo/media/doc/wyden-markey_auto_privacy_letter_to_ftc.pdf",
+    "archived": "https://web.archive.org/web/20260929211412/https://www.wyden.senate.gov/imo/media/doc/wyden-markey_auto_privacy_letter_to_ftc.pdf",
+    "kind": "other",
+    "title": "Letter from Sens. Wyden and Markey to FTC Chair Khan on automakers sharing driving data with Verisk (July 26, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "jour-eff-fog-data-science-2022": {
+    "url": "https://www.eff.org/deeplinks/2022/08/inside-fog-data-science-secretive-company-selling-mass-surveillance-local-police",
+    "archived": "https://web.archive.org/web/20261001222535/https://www.eff.org/deeplinks/2022/08/inside-fog-data-science-secretive-company-selling-mass-surveillance-local-police",
+    "kind": "journalism",
+    "title": "Inside Fog Data Science, the Secretive Company Selling Mass Surveillance to Local Police (EFF, Aug. 31, 2022)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-bounty-hunter-2019": {
+    "url": "https://www.vice.com/en/article/i-gave-a-bounty-hunter-300-dollars-located-phone-microbilt-zumigo-tmobile/",
+    "archived": "https://web.archive.org/web/20261012084754/https://www.vice.com/en/article/i-gave-a-bounty-hunter-300-dollars-located-phone-microbilt-zumigo-tmobile/",
+    "kind": "journalism",
+    "title": "I Gave a Bounty Hunter $300. Then He Located Our Phone (Motherboard/VICE, Jan. 8, 2019)",
+    "accessed": "2026-10-18"
+  },
+  "jour-vice-salaat-first-2021": {
+    "url": "https://www.vice.com/en/article/muslim-app-location-data-salaat-first/",
+    "archived": "https://web.archive.org/web/20260820033311/https://www.vice.com/en/article/muslim-app-location-data-salaat-first/",
+    "kind": "journalism",
+    "title": "Leaked Location Data Shows Another Muslim Prayer App Tracking Users (Motherboard/VICE, Jan. 11, 2021)",
+    "accessed": "2026-10-18"
+  },
+  "jour-markup-xandr-segments-2023": {
+    "url": "https://themarkup.org/privacy/2023/06/08/from-heavy-purchasers-of-pregnancy-tests-to-the-depression-prone-we-found-650000-ways-advertisers-label-you",
+    "archived": "https://web.archive.org/web/20261001185656/https://themarkup.org/privacy/2023/06/08/from-heavy-purchasers-of-pregnancy-tests-to-the-depression-prone-we-found-650000-ways-advertisers-label-you",
+    "kind": "journalism",
+    "title": "From “Heavy Purchasers” of Pregnancy Tests to the Depression-Prone: We Found 650,000 Ways Advertisers Label You (The Markup, June 8, 2023)",
+    "accessed": "2026-10-18"
+  },
+  "jour-wyden-near-letter-2024": {
+    "url": "https://www.wyden.senate.gov/imo/media/doc/signed_near_letter_to_ftc_and_sec.pdf",
+    "archived": "https://web.archive.org/web/20261012113835/https://www.wyden.senate.gov/imo/media/doc/signed_near_letter_to_ftc_and_sec.pdf",
+    "kind": "other",
+    "title": "Letter from Sen. Wyden to FTC Chair Khan and SEC Chair Gensler on Near Intelligence (Feb. 13, 2024)",
+    "accessed": "2026-10-18"
+  },
+  "jour-propublica-facebook-brokers-2016": {
+    "url": "https://www.propublica.org/article/facebook-doesnt-tell-users-everything-it-really-knows-about-them",
+    "archived": "https://web.archive.org/web/20261010025150/https://www.propublica.org/article/facebook-doesnt-tell-users-everything-it-really-knows-about-them",
+    "kind": "journalism",
+    "title": "Facebook Doesn't Tell Users Everything It Really Knows About Them (ProPublica, Dec. 27, 2016)",
+    "accessed": "2026-10-18"
+  },
+  "jour-nrk-phone-spying-venntel-2020": {
+    "url": "https://nrkbeta.no/2020/12/03/my-phone-was-spying-on-me-so-i-tracked-down-the-surveillants/",
+    "archived": "https://web.archive.org/web/20260525005333/https://nrkbeta.no/2020/12/03/my-phone-was-spying-on-me-so-i-tracked-down-the-surveillants/",
+    "kind": "journalism",
+    "title": "My Phone Was Spying on Me, so I Tracked Down the Surveillants (NRK Beta, Dec. 3, 2020)",
+    "accessed": "2026-10-18"
+  }
+}

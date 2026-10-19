@@ -1,0 +1,46 @@
+{
+  "id": "whitepages",
+  "name": "Whitepages, Inc",
+  "aliases": [
+    "WHITEPAGES INC",
+    "Whitepages",
+    "Whitepages, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [
+    "people search, reverse phone and property data; Pro API contact and property data",
+    "data from data licensors, public records, affiliated entities, marketing companies and surveys (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.whitepages.com/suppression-requests",
+    "notes": "5-step opt-out starting with your profile URL. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-14 Wayback capture.",
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "pol-whitepages-suppression",
+    "pol-whitepages-privacy"
+  ],
+  "website": "https://www.whitepages.com",
+  "missions": [
+    "people_search-fortify-web-forms",
+    "people_search-recon-find-yourself"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "chex-systems",
+  "name": "ChexSystems",
+  "aliases": [
+    "Chex Systems, Inc."
+  ],
+  "parent": "fis",
+  "kind": [
+    "financial"
+  ],
+  "registries": {},
+  "sells": [
+    "consumer reports on deposit-account history"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.chexsystems.com/security-freeze/information",
+    "notes": "No general opt-out found; this is the security-freeze route (online, phone, mail to PO Box 583399, or email chexsystems.cr@fisglobal.com). A freeze limits access to the ChexSystems report only.",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-chexsystems-freeze",
+    "pol-chexsystems-home"
+  ]
+}

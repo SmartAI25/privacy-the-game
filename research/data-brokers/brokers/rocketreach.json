@@ -1,0 +1,42 @@
+{
+  "id": "rocketreach",
+  "name": "RocketReach LLC",
+  "aliases": [
+    "ROCKETREACH LLC",
+    "RocketReach"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [
+    "professional contact data (emails, phones)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://rocketreach.co/remove-profile",
+    "notes": "rocketreach.co/claim-profile redirects here; returned HTTP 200 (JavaScript app) on 2026-10-18. The mission notes it may require an account.",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "pol-rocketreach-remove"
+  ],
+  "website": "https://rocketreach.co",
+  "missions": [
+    "people_search-fortify-extended-sweep-3"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "moodys-analytics",
+  "name": "MOODYS ANALYTICS INC",
+  "aliases": [
+    "Moody's Analytics, Inc."
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

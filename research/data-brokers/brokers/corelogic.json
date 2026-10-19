@@ -1,0 +1,48 @@
+{
+  "id": "corelogic",
+  "name": "CoreLogic, Inc.",
+  "aliases": [
+    "CoreLogic",
+    "Cotality",
+    "CoreLogic, Inc. d/b/a Cotality"
+  ],
+  "parent": null,
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "registries": {},
+  "sells": [
+    "property information",
+    "mortgage information",
+    "consumer information",
+    "property, parcel, mortgage and insurance data and analytics",
+    "product data obtained from 'third-party data licensors and data providers' (no companies named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.cotality.com/legal/privacy",
+    "notes": "Requests to know/delete/correct/opt out of sale or sharing go through an 'Online Privacy Portal' (a Ketch pop-up on this page) or 1-866-221-9291 (California); privacy@cotality.com. The legal entity is 'CoreLogic, Inc. d/b/a Cotality'; corelogic.com/privacy/ now redirects to cotality.com and returned 404.",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "FY2020 operating revenue $1,642.4 million (last 10-K before the June 2021 take-private)",
+        "source": "sec-clgx-10k-2020"
+      }
+    ]
+  },
+  "sources": [
+    "sec-clgx-10k-2020",
+    "sec-clgx-8k-2021-merger",
+    "pol-cotality-privacy",
+    "pol-cotality-product-privacy"
+  ],
+  "missions": [
+    "enterprise_data-fortify-property"
+  ]
+}

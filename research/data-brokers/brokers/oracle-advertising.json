@@ -1,0 +1,36 @@
+{
+  "id": "oracle-advertising",
+  "name": "Oracle Advertising",
+  "aliases": [
+    "Oracle Data Cloud",
+    "BlueKai",
+    "Moat",
+    "Oracle BlueKai"
+  ],
+  "parent": null,
+  "kind": [
+    "marketing",
+    "data-marketplace"
+  ],
+  "registries": {},
+  "sells": [
+    "(discontinued) Oracle Marketing Cloud Data Management Platform, data append/enrichment, Digital Audiences (incl. OnRamp), offline targeting/direct mail, cross-device services, Moat"
+  ],
+  "optOut": {
+    "method": "none",
+    "url": "https://www.oracle.com/a/ocom/docs/oracle-advertising-end-of-life-faqs.pdf",
+    "notes": "Shut down: Oracle's EOL FAQ (v3.0, Aug 12 2024) says Oracle will End-of-Life all Oracle Advertising products and support effective September 30, 2024. The old advertising privacy policy URL now redirects to oracle.com/contracts/data-services/. Nothing left to opt out of.",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-oracle-advertising-eol-faq",
+    "pol-oracle-data-services",
+    "jour-markup-xandr-segments-2023",
+    "jour-propublica-facebook-brokers-2016"
+  ]
+}

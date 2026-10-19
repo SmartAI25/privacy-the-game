@@ -1,0 +1,21 @@
+{
+  "id": "national-consumer-telecom-utilities-exchange",
+  "name": "National Consumer Telecom & Utilities Exchange",
+  "aliases": [
+    "NCTUE"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity"
+  ],
+  "sells": [
+    "utility and telecom account header data"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-globe-wapo-nctue-utility-ice-2021"
+  ]
+}

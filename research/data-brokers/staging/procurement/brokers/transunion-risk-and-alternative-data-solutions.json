@@ -1,0 +1,21 @@
+{
+  "id": "transunion-risk-and-alternative-data-solutions",
+  "name": "TransUnion Risk and Alternative Data Solutions",
+  "aliases": [
+    "TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC.",
+    "TransUnion TLO"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70us0921c70090014",
+    "proc-usasp-djm17d61p0001",
+    "proc-usasp-hsbp1014p00718",
+    "proc-usasp-15ddse18p00000061",
+    "proc-usasp-70cmsd20p00000155",
+    "proc-usasp-fa701414p3005",
+    "proc-usasp-m6700117p1192"
+  ]
+}

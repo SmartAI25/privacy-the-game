@@ -1,0 +1,24 @@
+{
+  "id": "relx",
+  "name": "RELX PLC",
+  "aliases": [
+    "RELX"
+  ],
+  "parent": null,
+  "kind": [],
+  "sells": [],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "sec-revenue",
+        "value": "2025 Risk business area revenue £3,485 million of £9,590 million group revenue",
+        "source": "sec-relx-20f-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-relx-20f-2025",
+    "sec-relx-annual-report-2025"
+  ]
+}

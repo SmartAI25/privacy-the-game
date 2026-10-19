@@ -1,0 +1,20 @@
+{
+  "id": "us-search",
+  "name": "US Search",
+  "aliases": [],
+  "parent": "peopleconnect",
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search and background reports"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-peopleconnect-home",
+    "pol-peopleconnect-privacy"
+  ]
+}

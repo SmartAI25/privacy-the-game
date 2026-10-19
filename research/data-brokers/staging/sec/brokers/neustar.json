@@ -1,0 +1,20 @@
+{
+  "id": "neustar",
+  "name": "Neustar, Inc.",
+  "aliases": [
+    "Neustar"
+  ],
+  "parent": "transunion",
+  "kind": [
+    "identity-resolution"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "sec-tru-10k-2025",
+    "sec-tru-10k-2025-ex21"
+  ]
+}

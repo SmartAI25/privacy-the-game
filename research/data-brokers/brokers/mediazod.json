@@ -1,0 +1,25 @@
+{
+  "id": "mediazod",
+  "name": "MediaZod LLC",
+  "aliases": [
+    "LeadZod"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18"
+  ],
+  "website": "HTTP://leadzod.com"
+}

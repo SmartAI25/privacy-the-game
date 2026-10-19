@@ -1,0 +1,67 @@
+{
+  "id": "equifax-workforce-solutions",
+  "name": "Equifax Workforce Solutions LLC",
+  "aliases": [
+    "The Work Number",
+    "Workforce Solutions",
+    "Equifax Workforce Solutions",
+    "EQUIFAX WORKFORCE SOLUTIONS LLC"
+  ],
+  "parent": "equifax",
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [
+    "employment and income verification (The Work Number)",
+    "incarceration, justice and people-based risk intelligence data (Verification Services)",
+    "employment and income verification records furnished by participating employers"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.equifax.com/personal/my-privacy/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18",
+    "alternates": [
+      {
+        "site": "employees.theworknumber.com",
+        "url": "https://employees.theworknumber.com/employment-data-report",
+        "source": "pol-twn-employment-data-report"
+      }
+    ]
+  },
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "The Work Number held about 209 million active and 813 million total employment records at December 31, 2025",
+        "source": "sec-efx-10k-2025"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 Workforce Solutions segment operating revenue $2,582.3 million",
+        "source": "sec-efx-10k-2025"
+      }
+    ]
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "sec-efx-10k-2025",
+    "sec-efx-10k-2025-ex21",
+    "proc-usasp-15f06721f0001429",
+    "proc-usasp-hs002123f0047",
+    "pol-twn-employment-data-report"
+  ],
+  "website": "https://www.theworknumber.com",
+  "missions": [
+    "enterprise_data-reclaim-deep-layer",
+    "enterprise_data-recon-supply-chain"
+  ]
+}

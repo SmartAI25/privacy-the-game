@@ -1,0 +1,1754 @@
+[
+  {
+    "from": "equifax",
+    "to": "equifax-workforce-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Equifax Workforce Solutions LLC (Missouri) as a subsidiary; the 10-K describes The Work Number, run by its Workforce Solutions segment, as built on payroll data from over 4 million organizations.",
+    "sources": [
+      "sec-efx-10k-2025-ex21",
+      "sec-efx-10k-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "appriss-insights",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Appriss Insights, LLC as a subsidiary of Equifax Inc. as of December 31, 2025; the 10-K says proceeds of its August 2021 issue of 2.35% Senior Notes due 2031 helped fund acquisitions, including the Company's acquisition of Appriss Insights.",
+    "sources": [
+      "sec-efx-10k-2025-ex21",
+      "sec-efx-10k-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "ixi",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists IXI Corporation as a subsidiary of Equifax Inc. as of December 31, 2025.",
+    "sources": [
+      "sec-efx-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "teletrack",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Teletrack, LLC as a subsidiary of Equifax Inc. as of December 31, 2025.",
+    "sources": [
+      "sec-efx-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "datax",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists DataX, Ltd. as a subsidiary of Equifax Inc. as of December 31, 2025.",
+    "sources": [
+      "sec-efx-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "kount",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K Exhibit 21.1 lists Kount Inc. as a subsidiary of Equifax Inc. as of December 31, 2025.",
+    "sources": [
+      "sec-efx-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "equifax",
+    "to": "experian",
+    "type": "buys",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K says its U.S. mortgage solutions include tri-merge credit reports that combine information from Equifax, Experian and TransUnion into a single report.",
+    "sources": [
+      "sec-efx-10k-2025"
+    ],
+    "published": false
+  },
+  {
+    "from": "equifax",
+    "to": "transunion",
+    "type": "buys",
+    "tier": "A",
+    "claim": "Equifax's FY2025 Form 10-K says its U.S. mortgage solutions include tri-merge credit reports that combine information from Equifax, Experian and TransUnion into a single report.",
+    "sources": [
+      "sec-efx-10k-2025"
+    ],
+    "published": false
+  },
+  {
+    "from": "transunion",
+    "to": "neustar",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K refers to its acquisition of Neustar in December 2021, and Exhibit 21 lists Neustar, Inc. and several Neustar data entities as subsidiaries.",
+    "sources": [
+      "sec-tru-10k-2025",
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "tloxp",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K lists TLOxp among its own products: its TruLookup investigative solution line \"includes TLOxp® as a platform for delivery.\" TLOxp is a TransUnion product platform, not a separately listed legal entity.",
+    "sources": [
+      "sec-tru-10k-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "argus-information-and-advisory-services",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K refers to its acquisition of Argus, and Exhibit 21 lists Argus Information and Advisory Services, Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025",
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "tru-optik-data",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists Tru Optik Data Corp. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "iovation",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists iovation Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "factortrust",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists FactorTrust, Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "lssi-data",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists LSSi Data Corp. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "signal-digital",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists Signal Digital, Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "transunion-rental-screening-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists TransUnion Rental Screening Solutions, Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "drivers-history-information-sales",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists Drivers History Information Sales LLC as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "TransUnion's FY2025 Form 10-K Exhibit 21 lists TransUnion Risk and Alternative Data Solutions, Inc. as a subsidiary.",
+    "sources": [
+      "sec-tru-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "experian-information-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Experian Information Solutions, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "experian-marketing-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Experian Marketing Solutions, LLC (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "tapad",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Tapad, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "predictive-pop",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Predictive Pop, Inc. (USA) among its subsidiary undertakings at 31 March 2026; the report identifies Predictive Pop, Inc. as Audigent.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "clarity-services",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Clarity Services, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "experian-background-data",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Experian Background Data, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "the-41st-parameter",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists The 41st Parameter, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "neuro-id",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 lists Neuro-ID, Inc. (USA) among its subsidiary undertakings at 31 March 2026.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "experian",
+    "to": "atdata",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Experian plc's Annual Report 2026 says it acquired US-based data and email intelligence company AtData, LLC on 18 February 2026 for US$225m, adding over 10 billion email addresses to its data assets.",
+    "sources": [
+      "sec-experian-annual-report-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "lexisnexis-risk-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists LexisNexis Risk Solutions Inc. (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "id-analytics",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists ID Analytics, LLC (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "lexisnexis-risk-data-management",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists LexisNexis Risk Data Management, LLC (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "lexisnexis-special-services",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists LexisNexis Special Services Inc. (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "lexisnexis-coplogic-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists LexisNexis Coplogic Solutions Inc. (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "lnrs-data-services",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 (note 28, Related undertakings) lists LNRS Data Services Inc. (USA) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "relx-plc",
+    "to": "idverse",
+    "type": "owns",
+    "tier": "A",
+    "claim": "RELX's Annual Report 2025 says its LexisNexis Risk Solutions business closed the acquisition of IDVerse, a provider of AI-powered automated document authentication and fraud detection, in Q1 2025; note 28 lists IDVerse Pty Ltd (Australia) as an undertaking held indirectly by RELX PLC, at a 100% effective interest unless stated otherwise.",
+    "sources": [
+      "sec-relx-annual-report-2025"
+    ],
+    "published": true
+  },
+  {
+    "from": "hyundai-motor-america",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "Verisk's FY2025 Form 10-K discloses putative class actions against Hyundai Motor America and Verisk alleging that driving data collected through vehicle software was transmitted to Verisk and shared with auto insurers; these are plaintiffs' allegations, and the 10-K describes the suits as dismissed to date (its wording does not make clear whether that covers every suit).",
+    "sources": [
+      "sec-vrsk-10k-2025"
+    ],
+    "published": false
+  },
+  {
+    "from": "omnicom",
+    "to": "acxiom",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Omnicom's FY2025 Form 10-K says Omnicom completed its merger with The Interpublic Group (IPG) on November 26, 2025, that Acxiom was acquired from IPG, and Exhibit 21 lists Acxiom, LLC as a significant 100%-owned subsidiary.",
+    "sources": [
+      "sec-omc-10k-2025",
+      "sec-omc-10k-2025-ex21"
+    ],
+    "published": true
+  },
+  {
+    "from": "publicis-groupe",
+    "to": "epsilon-data-management",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Epsilon Data Management LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025, and section 1.3 says Publicis acquired Epsilon, \"a technology company specializing in data and marketing activities\", in 2019.",
+    "sources": [
+      "sec-publicis-urd-2025-note36",
+      "sec-publicis-urd-2025-activities"
+    ],
+    "published": true
+  },
+  {
+    "from": "publicis-groupe",
+    "to": "conversant",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 36) lists Conversant LLC (United States) as a main consolidated company with 100% control and interest at December 31, 2025.",
+    "sources": [
+      "sec-publicis-urd-2025-note36"
+    ],
+    "published": true
+  },
+  {
+    "from": "publicis-groupe",
+    "to": "lotame-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Publicis Groupe's Universal Registration Document 2025 (Note 3) says it acquired 100% of Lotame Solutions, Inc., a specialist in data and digital identity solutions, in April 2025 for €122 million cash consideration; Note 36 lists it at 100% control.",
+    "sources": [
+      "sec-publicis-urd-2025-note3",
+      "sec-publicis-urd-2025-note36"
+    ],
+    "published": true
+  },
+  {
+    "from": "dun-bradstreet",
+    "to": "netwise-data",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Dun & Bradstreet's FY2024 Form 10-K says it acquired NetWise Data, LLC in 2021 to expand its Data Cloud.",
+    "sources": [
+      "sec-dnb-10k-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "dun-bradstreet",
+    "to": "eyeota",
+    "type": "owns",
+    "tier": "A",
+    "claim": "Dun & Bradstreet's FY2024 Form 10-K says it acquired Eyeota Holdings Pte. Ltd. in 2021 to expand its Data Cloud.",
+    "sources": [
+      "sec-dnb-10k-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "kochava",
+    "to": "collective-data-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's July 2024 second amended complaint in FTC v. Kochava alleges Collective Data Solutions, LLC is a wholly-owned subsidiary of Kochava to which Kochava transferred at least part of its data broker business around July 2023.",
+    "sources": [
+      "enf-ftc-kochava-sac-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "digital-envoy",
+    "to": "outlogic",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's April 2024 complaint against X-Mode Social and Outlogic states that, in a May 2021 joint venture, X-Mode transferred its business to successor Outlogic, which became a wholly-owned subsidiary of Digital Envoy.",
+    "sources": [
+      "enf-ftc-xmode-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "gravy-analytics",
+    "to": "venntel",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+    "sources": [
+      "enf-ftc-gravy-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "gravy-analytics",
+    "to": "venntel",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+    "sources": [
+      "enf-ftc-gravy-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "general-motors-company",
+    "to": "onstar",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's January 2026 complaint (Docket C-4828) states OnStar, LLC is a wholly owned subsidiary of General Motors Company.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "general-motors",
+    "to": "insurance-services-office",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar furnished OnStar Smart Driver enrollees' identifying information and driving data to consumer reporting agency Insurance Services Office, Inc. d/b/a Verisk Analytics under a 2016 Telematics Data Exchange Program, ending March 2024; GM settled without admitting the allegations.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026",
+      "enf-ftc-gm-order-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "general-motors",
+    "to": "lexisnexis-risk-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024; GM settled without admitting the allegations.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026",
+      "enf-ftc-gm-order-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "general-motors",
+    "to": "wejo",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar licensed connected-vehicle precise geolocation data to Wejo Ltd. from 2018 until Wejo's bankruptcy, with Wejo permitted to sublicense to GM-approved 'egress licensees'.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "general-motors",
+    "to": "jacobs-engineering-group",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar licensed connected-vehicle location data to Jacobs Engineering Group, which acquired Wejo's assets on January 3, 2024, and continued sharing Smart Driver data with Jacobs until April 5, 2024.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ],
+    "published": true
+  },
+  {
+    "from": "avast",
+    "to": "jumpshot",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2024 complaint against Avast states Jumpshot, Inc. was a wholly-owned subsidiary of Avast Ltd until Jumpshot's operations closed in January 2020.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "avast",
+    "to": "jumpshot",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 complaint that from 2014 through January 2020 Avast transferred browsing information collected by its software to subsidiary Jumpshot, which sold it; Avast settled without admitting the allegations.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024",
+      "enf-ftc-avast-order-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "jumpshot",
+    "to": "liveramp",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that from May 2017 to April 2019 Jumpshot granted LiveRamp a world-wide license to use granular browsing information, including for data-driven marketing.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "jumpshot",
+    "to": "liveramp",
+    "type": "matches-identity",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "jumpshot",
+    "to": "lotame-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that an August 2018 contract let Lotame match, combine and model Jumpshot's data with Lotame's and license the modeled data to Lotame customers, with revenue shared with Jumpshot.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "jumpshot",
+    "to": "omnicom",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that under a December 2017 contract Jumpshot agreed to provide Omnicom an 'All Clicks Feed' for 50% of its user base in six countries, at roughly $2 million per year in the first work order.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": true
+  },
+  {
+    "from": "omnicom",
+    "to": "neustar",
+    "type": "matches-identity",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "pubrec",
+    "to": "truthfinder",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2023 complaint against Instant Checkmate and TruthFinder states PubRec, LLC has wholly owned TruthFinder since 2018.",
+    "sources": [
+      "enf-ftc-truthfinder-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "pubrec",
+    "to": "instant-checkmate",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2023 complaint against Instant Checkmate and TruthFinder states PubRec, LLC has wholly owned Instant Checkmate since 2018.",
+    "sources": [
+      "enf-ftc-truthfinder-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "trans-union",
+    "to": "transunion-rental-screening-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The CFPB/FTC October 2023 complaint states TransUnion Rental Screening Solutions, Inc. is a wholly owned subsidiary of Trans Union LLC.",
+    "sources": [
+      "enf-cfpb-turss-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "transunion-rental-screening-solutions",
+    "to": "lexisnexis-risk-and-information-analytics-group",
+    "type": "buys",
+    "tier": "A",
+    "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations.",
+    "sources": [
+      "enf-cfpb-turss-complaint-2023",
+      "enf-cfpb-turss-order-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "leaplab",
+    "to": "ideal-financial-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+    "sources": [
+      "enf-ftc-leaplab-complaint-2014"
+    ],
+    "published": true
+  },
+  {
+    "from": "sequoia-one",
+    "to": "ideal-financial-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
+    "sources": [
+      "enf-ftc-sequoia-one-complaint-2015"
+    ],
+    "published": true
+  },
+  {
+    "from": "goodrx",
+    "to": "meta",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared users' medication and health information with Facebook, including uploading lists of users who bought particular medications for ad targeting.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "goodrx",
+    "to": "google",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx configured a Google pixel and SDK to share users' medication information, contact details and advertising IDs with Google.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "goodrx",
+    "to": "criteo",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared user health information, including GoodRx Coupons accessed or used, with Criteo.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "goodrx",
+    "to": "twilio",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared sensitive user information with third parties including Twilio.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD18P00000127 to VENNTEL INC (period of performance 2018-08-07 to 2019-09-29, FY2018–FY2019; $190,000.00 obligated), described in the award record as \"DATA SERVICES SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-70cmsd18p00000127"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-cbp",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B02C20P00000521 to VENNTEL INC (period of performance 2020-09-10 to 2021-09-09, FY2020–FY2021; $20,000.00 obligated), described in the award record as \"PURCHASE OF PORTAL (LICENSE) SEAT\".",
+    "sources": [
+      "proc-usasp-70b02c20p00000521"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-dea",
+    "to": "venntel",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDST18P00000052 to VENNTEL INC (period of performance 2018-04-11 to 2019-04-11, FY2018–FY2019; $25,000.00 obligated), described in the award record as \"SOFTWARE LICENSE\".",
+    "sources": [
+      "proc-usasp-15ddst18p00000052"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-usms",
+    "to": "fog-data-science",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10318PA4100281 to FOG DATA SCIENCE LLC (period of performance 2018-09-21 to 2020-09-27, FY2018–FY2020; $120,000.00 obligated), described in the award record as \"2018 TOG FOG DATA LES (LAW ENFORCEMENT SENSITIVE) $60K\".",
+    "sources": [
+      "proc-usasp-15m10318pa4100281"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-socom",
+    "to": "anomaly-six",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Special Operations Command award H9227620P0070 to ANOMALY 6 LLC (period of performance 2020-09-18 to 2021-09-17, FY2020–FY2021; $589,500.00 obligated), described in the award record as \"COMMERCIAL TELEMETRY FEED\".",
+    "sources": [
+      "proc-usasp-h9227620p0070"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD19FC0000052 to BABEL STREET, INC. (period of performance 2019-09-12 to 2024-09-29, FY2019–FY2024; $3,681,061.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICES\".",
+    "sources": [
+      "proc-usasp-70cmsd19fc0000052"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usss",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award HSSS0115C0040 to BABEL STREET, INC. (period of performance 2015-09-28 to 2018-11-27, FY2015–FY2019; $2,073,260.68 obligated), described in the award record as \"OPEN SOURCE INTELLIGENCE MONITORING SYSTEM\".",
+    "sources": [
+      "proc-usasp-hsss0115c0040"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-usms",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJM16A32P0045 to BABEL STREET, INC. (period of performance 2016-09-09 to 2017-06-28, FY2016–FY2017; $33,181.46 obligated), described in the award record as \"BABEL ANNUAL SUBSCRIPTION (1 USER) BABEL X DATA PACKAGE (30M DOCUMENTS) INITIAL OSINT&PLATFORM TRAINING 3 DAYS BABEL X READ ONLY ACCOUNTS (5)\".",
+    "sources": [
+      "proc-usasp-djm16a32p0045"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dea",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDHQ20F00001467 to BABEL STREET, INC. (period of performance 2020-09-30 to 2021-09-29, FY2020–FY2021; $220,000.00 obligated), described in the award record as \"DATA COLLECTION\".",
+    "sources": [
+      "proc-usasp-15ddhq20f00001467"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-fbi",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF141200P0013007 to BABEL STREET, INC. (period of performance 2014-09-24 to 2014-10-31, FY2014–FY2015; $36,600.00 obligated), described in the award record as \"BABEL STREET PACIFIC LICENSE, MULTILINGUAL OPEN SOURCE DATA COLLECTION, ANALYSIS AND REPORTING.\".",
+    "sources": [
+      "proc-usasp-djf141200p0013007"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-irs",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H821C00039 to BABEL STREET, INC. (period of performance 2021-09-30 to 2021-10-29, FY2021–FY2022; $19,340.00 obligated), described in the award record as \"THIRD-PARTY MEDIA RESEARCH SOLUTION USED TO RECOGNIZE, COLLECT AND ARCHIVE CONTENT FROM PUBLIC FACING MEDIA PLATFORMS TO HELP EXPEDITE IRS CASE RESOLUTION FOR EXISTING TAX COMPLIANCE CASES.\".",
+    "sources": [
+      "proc-usasp-2032h821c00039"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-air-force",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA489017P0017 to BABEL STREET, INC. (period of performance 2017-07-28 to 2018-06-02, FY2017–FY2018; $333,214.00 obligated), described in the award record as \"BABEL X SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-fa489017p0017"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-army",
+    "to": "babel-street",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W90BRJ15P0015 to BABEL STREET, INC. (period of performance 2015-04-05 to 2016-04-05, FY2015–FY2016; $246,000.00 obligated), described in the award record as \"BABEL SENTRY GLOBAL\".",
+    "sources": [
+      "proc-usasp-w90brj15p0015"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-ice",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000002 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2021-05-28 to 2026-11-30, FY2021–FY2027; $25,218,959.64 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS), TASKS 2/2A\".",
+    "sources": [
+      "proc-usasp-70cmsd21c00000002"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-cbp",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1015P00702 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2015-09-28 to 2018-09-27, FY2015–FY2018; $687,493.30 obligated), described in the award record as \"THOMSON REUTERS DATABASE ACCESS SUBSCRIPTION FOR THE WASHINGTON, DC LOCATION.\".",
+    "sources": [
+      "proc-usasp-hsbp1015p00702"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-fbi",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06726F0001553 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2026-09-16 to 2027-09-15, FY2026–FY2027; $4,105,534.56 obligated), described in the award record as \"PUBLIC SOURCE DATA EFFORT-PSP\".",
+    "sources": [
+      "proc-usasp-15f06726f0001553"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-army",
+    "to": "thomson-reuters-special-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W911NF25PA015 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2025-09-15 to 2026-09-14, FY2025–FY2026; $13,565.91 obligated), described in the award record as \"THOMPOSON REUTERS CLEAR LICENSE: CLEAR FOR GOVERNMENT FRAUD, CLEAR WORLD-CHECK ADDON, CLEAR ADVERSE MEDIA WITH SANCTIONS, BATCH DOCUMENT SEARCH ADVERSE FILINGS (3,000 ANNUAL INPUTS). UP TO 2 LICENSED USERS\".",
+    "sources": [
+      "proc-usasp-w911nf25pa015"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEMD17F00008 to WEST PUBLISHING CORPORATION (period of performance 2017-01-19 to 2021-02-28, FY2017–FY2021; $20,632,465.71 obligated), described in the award record as \"CONSOLIDATED LEAD EVALUATION AND REPORTING (CLEAR) SYSTEM ACCESS/SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-hscemd17f00008"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-cbp",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014J00318 to WEST PUBLISHING CORPORATION (period of performance 2014-06-18 to 2015-03-31, FY2014–FY2015; $1,623,324.09 obligated), described in the award record as \"ACCESS TO CLEAR DATABASE - WEST PUBLISHING VERBAL AUTHORIZATION GIVEN BY DHS WCF FEDLINK TO CONTINUE SERVICES - DELIVERY ORDER COVERS DATES OF SERVICE COVERED BY AUTHORIZATION\".",
+    "sources": [
+      "proc-usasp-hsbp1014j00318"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-fbi",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000753 to WEST PUBLISHING CORPORATION (period of performance 2014-11-19 to 2017-09-30, FY2015–FY2017; $21,240,732.15 obligated), described in the award record as \"THE THOMSON REUTERS SERVICES CLEAR, CAIT, AND WESTLAW. CLEAR IS A PERSON SEARCH TOOL ALLOWING USERS TO LOCATE INDIVIDUALS. CAIT ASSISTS INVESTIGATORS WITH CHILD ABDUCTION CASES. WESTLAW IS A LEGAL RESEARCH TOOL USED…\".",
+    "sources": [
+      "proc-usasp-djf151200g0000753"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-navy",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N0018909FZ076 to WEST PUBLISHING CORPORATION (period of performance 2009-01-01 to 2013-12-31, FY2009–FY2014; $600,000.00 obligated), described in the award record as \"CHOICEPOINT CLEAR ACCESS\".",
+    "sources": [
+      "proc-usasp-n0018909fz076"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dcsa",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0058 to WEST PUBLISHING CORPORATION (period of performance 2023-08-01 to 2026-07-31, FY2023–FY2026; $495,050.76 obligated), described in the award record as \"CLEAR PRO PART NUMBER 41447595 ISD\".",
+    "sources": [
+      "proc-usasp-hs002123f0058"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usms",
+    "to": "west-publishing",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10226PA4700366 to WEST PUBLISHING CORPORATION (period of performance 2026-09-01 to 2027-08-31, FY2026–FY2027; $230,664.00 obligated), described in the award record as \"MISSION CRITICAL - APPREHENDING FUGITIVES FY26-IOD: VIGILANT-CRIMETRACER CF: APC-FY26-000319\".",
+    "sources": [
+      "proc-usasp-15m10226pa4700366"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-ice",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000001 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-02-25 to 2026-08-31, FY2021–FY2026; $24,509,116.00 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS)\".",
+    "sources": [
+      "proc-usasp-70cmsd21c00000001"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-irs",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H821F00127 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-05-27 to 2022-11-30, FY2021–FY2023; $2,246,999.76 obligated), described in the award record as \"ASSET LOCATOR SERVICES\".",
+    "sources": [
+      "proc-usasp-2032h821f00127"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usss",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090081 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-09-30 to 2023-09-29, FY2021–FY2023; $1,052,828.00 obligated), described in the award record as \"DATABASE INFORMATION AND SUPPORT\".",
+    "sources": [
+      "proc-usasp-70us0921c70090081"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dea",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDH022P00000051 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-10-01 to 2023-09-30, FY2023; $14,035.68 obligated), described in the award record as \"LEXIS NEXIS ACCURANT LE PLUS IDS WITH PHONE PLUS ACCOUNT #1357965 POP: 10/01/22-09/30/23. SUBJECT TO AVAILABILITY OF FY 2022/2023 FUNDS\".",
+    "sources": [
+      "proc-usasp-15ddh022p00000051"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-army",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W15QKN19C0063 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2019-09-03 to 2023-09-02, FY2019–FY2023; $1,095,552.00 obligated), described in the award record as \"THIS CONTRACT IS ESTABLISHED TO PROCURE ACCESS FOR 288 USERS TO A WEB BASED PUBLIC DATA SITE.\".",
+    "sources": [
+      "proc-usasp-w15qkn19c0063"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-air-force",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\" under product or service code R612, \"SUPPORT- ADMINISTRATIVE: INFORMATION RETRIEVAL\".",
+    "sources": [
+      "proc-usasp-fa701417p3000"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-navy",
+    "to": "lexisnexis-risk-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N6311622P0525 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-08-16 to 2023-08-15, FY2022–FY2023; $89,370.00 obligated), described in the award record as \"EMAIL AND POST ADDRESS UPDATES FOR 270K\".",
+    "sources": [
+      "proc-usasp-n6311622p0525"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usss",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090014 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2021-02-03 to 2026-02-22, FY2021–FY2026; $261,080.00 obligated), described in the award record as \"PURCHASE OF TLO DATABASE\".",
+    "sources": [
+      "proc-usasp-70us0921c70090014"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usms",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJM17D61P0001 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2016-09-27 to 2017-09-30, FY2016–FY2017; $4,684.52 obligated), described in the award record as \"FY2017 TLO INVESTIGATIVE SERVICES\".",
+    "sources": [
+      "proc-usasp-djm17d61p0001"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-cbp",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014P00718 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-10-01 to 2015-09-30, FY2015; $10,800.00 obligated), described in the award record as \"SUBSCRIPTION FOR TLO- ONLINE INVESTIGATION SYSTEM\".",
+    "sources": [
+      "proc-usasp-hsbp1014p00718"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dea",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award 15DDSE18P00000061 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2018-09-07 to 2019-09-30, FY2018–FY2019; $14,217.70 obligated), described in the award record as \"SEATTLE HIDTA/TRANSUNION/DATABASE/RURR\".",
+    "sources": [
+      "proc-usasp-15ddse18p00000061"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD20P00000155 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2020-09-01 to 2021-08-31, FY2020–FY2021; $19,200.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICE\".",
+    "sources": [
+      "proc-usasp-70cmsd20p00000155"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-air-force",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Air Force award FA701414P3005 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-01-01 to 2016-12-31, FY2014–FY2017; $39,900.00 obligated), described in the award record as \"LAW ENFORCEMENT DATABASE ACCESS\".",
+    "sources": [
+      "proc-usasp-fa701414p3005"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-navy",
+    "to": "transunion-risk-and-alternative-data-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award M6700117P1192 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2017-07-19 to 2020-09-22, FY2017–FY2020; $10,136.57 obligated), described in the award record as \"ONLINE INVESTIGATIVE SUBSCRIPTION\".",
+    "sources": [
+      "proc-usasp-m6700117p1192"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-fbi",
+    "to": "equifax-workforce-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06721F0001429 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2021-06-10 to 2022-07-07, FY2021–FY2022; $23,241.55 obligated), described in the award record as \"THE WORK NUMBER ONLINE EMPLOYMENT VERIFICATION SERVICE\".",
+    "sources": [
+      "proc-usasp-15f06721f0001429"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dcsa",
+    "to": "equifax-workforce-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0047 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2023-06-21 to 2027-05-31, FY2023–FY2027; $6,312,163.20 obligated), described in the award record as \"EMPLOYMENT VERIFICATION SERVICES\".",
+    "sources": [
+      "proc-usasp-hs002123f0047"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-irs",
+    "to": "equifax-information-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award TIRNO15Z000080004 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2016-02-01 to 2017-08-25, FY2016–FY2017; $4,965,435.80 obligated), described in the award record as \"FOR CRITICAL FUNCTIONS - EQUIFAX TRANSACTIONS FOR IDENTITY VERIFICATION\".",
+    "sources": [
+      "proc-usasp-tirno15z000080004"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "equifax-information-services",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEEH09F00025 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2009-09-25 to 2014-12-24, FY2009–FY2015; $111,930.04 obligated), described in the award record as \"PRE-EMPLOYMENT CREDIT INQUIRIES\".",
+    "sources": [
+      "proc-usasp-hsceeh09f00025"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-fbi",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000693 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2014-11-17 to 2017-09-30, FY2015–FY2017; $1,725,000.00 obligated), described in the award record as \"EXPERIAN PROVIDES A FILLE WITH MORE THAN 300 MILLION RECORDS WITH NAMES, ADDRESSES, AND PHONE NUMBERS IN A FORMAT COMPATIBLE WITH FBI AND FTTTF SYSTEMS.\".",
+    "sources": [
+      "proc-usasp-djf151200g0000693"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-irs",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2032H519F00092 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2018-11-28 to 2019-08-27, FY2019; $1,237,595.13 obligated), described in the award record as \"EXPERIAN THIRD PARTY IDENTITY VERIFICATION ORDER\".",
+    "sources": [
+      "proc-usasp-2032h519f00092"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usms",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award DJMS12M0043 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-10-01 to 2013-09-30, FY2012–FY2013; $33,167.75 obligated), described in the award record as \"AFD: VEHICLE HISTORY REPORTS\".",
+    "sources": [
+      "proc-usasp-djms12m0043"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-army",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W911SD21F0187 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2021-09-01 to 2024-08-31, FY2021–FY2024; $322,500.00 obligated), described in the award record as \"HISTORICAL CREDIT REPORT DATABASE\".",
+    "sources": [
+      "proc-usasp-w911sd21f0187"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-navy",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Navy award N0018923FZ089 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2022-12-06 to 2026-12-05, FY2023–FY2027; $55,600.00 obligated), described in the award record as \"CREDIT REPORTING SERVICES, CREDIT CHECKS FOR NAVY RECRUITING COMMAND (NRC)\".",
+    "sources": [
+      "proc-usasp-n0018923fz089"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-dea",
+    "to": "experian-information-solutions",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Drug Enforcement Administration award DJD12HQG0018 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-11-01 to 2012-10-21, FY2012–FY2013; $3,332.80 obligated), described in the award record as \"CREDIT REPORTING SERVICES\".",
+    "sources": [
+      "proc-usasp-djd12hqg0018"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-ice",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21P00000127 to CLEARVIEW AI, INC. (period of performance 2021-09-03 to 2024-09-03, FY2021–FY2024; $2,287,500.00 obligated), described in the award record as \"CLEARVIEW FACIAL RECOGNITION ENTERPRISE LICENSES\".",
+    "sources": [
+      "proc-usasp-70cmsd21p00000127"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-fbi",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06723P0001356 to CLEARVIEW AI, INC. (period of performance 2023-01-26 to 2026-01-25, FY2023–FY2026; $359,000.00 obligated), described in the award record as \"CLEARVIEW ACTS AS A SEARCH ENGINE OF PUBLICLY AVAILABLE IMAGES ON THE INTERNET. ITS AN INVESTIGATIVE TOOL DESIGNED TO BE USED IN WAYS THAT ULTIMATELY REDUCE CRIME, FRAUD, AND RISK IN ORDER TO MAKE COMMUNITIES SAFER.…\".",
+    "sources": [
+      "proc-usasp-15f06723p0001356"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-cbp",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B03C25P00000321 to CLEARVIEW AI, INC. (period of performance 2025-06-25 to 2026-06-24, FY2025–FY2026; $30,000.00 obligated), described in the award record as \"FEDERAL INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSES IN SUPPORT OF THE USBP SPOKANE SECTOR\".",
+    "sources": [
+      "proc-usasp-70b03c25p00000321"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-usms",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records U.S. Marshals Service award 15M10224PA4700107 to CLEARVIEW AI, INC. (period of performance 2024-02-22 to 2026-02-21, FY2024–FY2026; $95,000.00 obligated), described in the award record as \"*LAW ENFORCEMENT SENSITIVE* (LES) IOD-TOG-ESB-(CIU) - INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSE CONTRACT FILE: APC-FY24-000032\".",
+    "sources": [
+      "proc-usasp-15m10224pa4700107"
+    ],
+    "published": true
+  },
+  {
+    "from": "us-irs",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Internal Revenue Service award 2023H226P00217 to CLEARVIEW AI, INC. (period of performance 2026-03-16 to 2027-03-15, FY2026–FY2027; $63,000.00 obligated), described in the award record as \"INVESTIGATOR TOOL WEB SUBSCRIPTION. BASE YEAR PERIOD OF PERFORMANCE: 03-16-26 TO 03-15-27\".",
+    "sources": [
+      "proc-usasp-2023h226p00217"
+    ],
+    "published": false
+  },
+  {
+    "from": "us-army",
+    "to": "clearview-ai",
+    "type": "buys",
+    "tier": "A",
+    "claim": "USAspending.gov records Department of the Army award W9124725PA010 to CLEARVIEW AI, INC. (period of performance 2025-03-20 to 2026-03-19, FY2025–FY2026; $75,000.00 obligated), described in the award record as \"CLEARVIEW AI IS A URL BASED INTELLIGENCE SERVICE THAT RUNS ON A TOOL CLOUD DATABASE AND PERMITS A USER ACCESS TO SYSTEM FOR A PERIOD OF 12 MONTHS.\".",
+    "sources": [
+      "proc-usasp-w9124725pa010"
+    ],
+    "published": true
+  },
+  {
+    "from": "fis",
+    "to": "chex-systems",
+    "type": "owns",
+    "tier": "B",
+    "claim": "ChexSystems' website (accessed 2026-10-18) states that 'Chex Systems, Inc. is a consumer reporting agency and an indirect wholly owned subsidiary of FIS.'",
+    "sources": [
+      "pol-chexsystems-home"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "consumerbase",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists Consumer Base LLC dba Exact Data among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "donorbase",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists DonorBase, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "infousa",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists infoUSA Inc. and infoUSA Marketing, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "data-axle",
+    "to": "lake-group-media",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Data Axle's Privacy Policy (accessed 2026-10-18) lists Lake Group Media, Inc. among the affiliates and subsidiaries with which it may share data.",
+    "sources": [
+      "pol-dataaxle-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "intelius",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents Intelius among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists Intelius's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "truthfinder",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents TruthFinder among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists TruthFinder's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "peopleconnect",
+    "to": "instant-checkmate",
+    "type": "owns",
+    "tier": "B",
+    "claim": "PeopleConnect's home page (accessed 2026-10-18) presents Instant Checkmate among the brands through which 'we are one of the largest ... sources in the people search industry', and its privacy policy lists Instant Checkmate's site as a PeopleConnect 'sister site'.",
+    "sources": [
+      "pol-peopleconnect-home",
+      "pol-peopleconnect-privacy"
+    ],
+    "published": false
+  },
+  {
+    "from": "quicklocate",
+    "to": "quickpeopletrace",
+    "type": "owns",
+    "tier": "B",
+    "claim": "Quick People Trace's site footer (accessed 2026-10-18) gives the operator as 'QuickLocate LLC, Mechanicsville, VA'.",
+    "sources": [
+      "pol-quickpeopletrace-home"
+    ],
+    "published": false
+  },
+  {
+    "from": "quicklocate",
+    "to": "usatrace",
+    "type": "owns",
+    "tier": "B",
+    "claim": "USATrace's site footer (accessed 2026-10-18) gives the operator as 'QuickLocate LLC, Mechanicsville, VA'.",
+    "sources": [
+      "pol-usatrace-home"
+    ],
+    "published": false
+  },
+  {
+    "from": "national-consumer-telecom-utilities-exchange",
+    "to": "equifax",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Washington Post reporting (Dec. 2021, via Boston Globe) says the National Consumer Telecom & Utilities Exchange gave utility header data to Equifax, which Equifax said NCTUE had allowed it to license for law-enforcement purposes; NCTUE said in 2021 it was ending the practice.",
+    "sources": [
+      "jour-globe-wapo-nctue-utility-ice-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "equifax",
+    "to": "thomson-reuters",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Washington Post reporting (Dec. 2021, via Boston Globe) says Equifax sold NCTUE utility header data for use in databases including Thomson Reuters' CLEAR, a service ICE subscribes to.",
+    "sources": [
+      "jour-globe-wapo-nctue-utility-ice-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "life360",
+    "to": "x-mode-social",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Life360 sold location data to X-Mode, confirmed by a former Life360 employee, a former X-Mode employee, and Life360's CEO naming X-Mode among about a dozen data partners.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "life360",
+    "to": "cuebiq",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Cuebiq received raw location data from Life360, per former employees and Life360's CEO; Cuebiq said it provides only aggregated data to its customers.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "life360",
+    "to": "arity",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that Life360's privacy policy disclosed Arity as a data partner and that Life360 said it would continue selling precise location data only to Arity.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "life360",
+    "to": "safegraph",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in Dec. 2021 that a former Life360 employee and a Life360 executive's email it viewed identified SafeGraph as a buyer of Life360 data; Life360's CEO declined to confirm, citing confidentiality.",
+    "sources": [
+      "jour-markup-life360-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "muslim-pro",
+    "to": "x-mode-social",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that Muslim Pro was among the apps sending location data to X-Mode; Muslim Pro then said it would stop sharing data with X-Mode.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ],
+    "published": false
+  },
+  {
+    "from": "x-mode-social",
+    "to": "sierra-nevada",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that archived versions of X-Mode's website listed Sierra Nevada Corporation as a customer; X-Mode said it does not work with Sierra Nevada but did not deny it had been a customer.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ],
+    "published": false
+  },
+  {
+    "from": "x-mode-social",
+    "to": "systems-technology-research",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Nov. 2020 that archived versions of X-Mode's website listed Systems & Technology Research as a customer; X-Mode said it does not work with STR but did not deny it had been a customer.",
+    "sources": [
+      "jour-vice-military-xmode-2020"
+    ],
+    "published": false
+  },
+  {
+    "from": "honda",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sens. Wyden and Markey wrote to the FTC on July 26, 2024 that, per information Honda gave Wyden's office, Honda shared data from 97,000 cars with Verisk between 2020 and 2024 for $25,920 (26 cents per car).",
+    "sources": [
+      "jour-wyden-markey-auto-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "hyundai",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sens. Wyden and Markey wrote to the FTC on July 26, 2024 that, per information Hyundai provided, Hyundai shared data from 1.7 million vehicles with Verisk between 2018 and 2024 for $1,043,315.69 (61 cents per car).",
+    "sources": [
+      "jour-wyden-markey-auto-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "venntel",
+    "to": "fog-data-science",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "EFF reported in Aug. 2022, from public records, that evidence (a Venntel-headed license agreement, an Iowa DPS email Fog forwarded to Venntel, and Venntel URLs in Fog's code) suggests Venntel is the source of Fog Data Science's location data; EFF said it could not confirm this for sure.",
+    "sources": [
+      "jour-eff-fog-data-science-2022"
+    ],
+    "published": false
+  },
+  {
+    "from": "zumigo",
+    "to": "microbilt",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2019 that T-Mobile shared location data with aggregator Zumigo, which shared information with Microbilt, whose phone-tracking product was used to locate a reporter's phone for a bounty hunter.",
+    "sources": [
+      "jour-vice-bounty-hunter-2019"
+    ],
+    "published": false
+  },
+  {
+    "from": "salaat-first",
+    "to": "predicio",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2021 that the developer of the Salaat First prayer app confirmed the app sent users' location data to Predicio.",
+    "sources": [
+      "jour-vice-salaat-first-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "predicio",
+    "to": "gravy-analytics",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Motherboard reported in Jan. 2021 that documents shared by NRK show Gravy Analytics, Venntel's parent, obtained data from Predicio; it was unclear whether Salaat First data specifically reached Gravy.",
+    "sources": [
+      "jour-vice-salaat-first-2021"
+    ],
+    "published": false
+  },
+  {
+    "from": "econtextai",
+    "to": "gravy-analytics",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "NRK reported in Dec. 2020 that Gravy Analytics' response to a data-access request named Complementics (and Predicio) as companies its data on the reporter came from.",
+    "sources": [
+      "jour-nrk-phone-spying-venntel-2020"
+    ],
+    "published": false
+  },
+  {
+    "from": "oracle-advertising",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of 650,000 marketplace audience segments listed Oracle as data supplier for more than a third of them.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ],
+    "published": false
+  },
+  {
+    "from": "acxiom",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of marketplace audience segments listed Acxiom among the segment data suppliers.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ],
+    "published": false
+  },
+  {
+    "from": "experian",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr file of marketplace audience segments listed Experian as supplier of segments such as \"Tough Times\".",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ],
+    "published": false
+  },
+  {
+    "from": "equifax",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that segments in a May 2021 Xandr marketplace file came from consumer credit agencies including Equifax.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ],
+    "published": false
+  },
+  {
+    "from": "foursquare-labs",
+    "to": "xandr",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "The Markup reported in June 2023 that a May 2021 Xandr marketplace file listed Foursquare (Factual) as supplier of extensive geofenced audience segments.",
+    "sources": [
+      "jour-markup-xandr-segments-2023"
+    ],
+    "published": false
+  },
+  {
+    "from": "near-intelligence",
+    "to": "aelius-exploitation-technologies",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter to the FTC and SEC says Near's chief privacy officer confirmed to Wyden's staff that Near had for three years sold location data to defense contractor AELIUS Exploitation Technologies.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "openx-technologies",
+    "to": "near-intelligence",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Near's attorney told his staff that, until June 2023, location data Near sold about Americans included data from the ad exchange OpenX; the WSJ reported exchanges then cut Near off.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "smaato",
+    "to": "near-intelligence",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Near's attorney told his staff that, until June 2023, location data Near sold about Americans included data from the ad exchange Smaato; the WSJ reported exchanges then cut Near off.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "recrue-media",
+    "to": "near-intelligence",
+    "type": "buys",
+    "tier": "C",
+    "claim": "Sen. Wyden's Feb. 13, 2024 letter says Recrue Media's co-founder told his staff its employees used Near's website to geofence about 600 Planned Parenthood locations for the Veritas Society's anti-abortion ad campaign.",
+    "sources": [
+      "jour-wyden-near-letter-2024"
+    ],
+    "published": false
+  },
+  {
+    "from": "datalogix",
+    "to": "meta",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "ProPublica reported in Dec. 2016 that Facebook signed a data deal with Datalogix in 2012 and that Datalogix provided about 350 types of data to Facebook.",
+    "sources": [
+      "jour-propublica-facebook-brokers-2016"
+    ],
+    "published": false
+  },
+  {
+    "from": "acxiom",
+    "to": "meta",
+    "type": "supplies",
+    "tier": "C",
+    "claim": "ProPublica reported in Dec. 2016 that Acxiom was one of the data brokers supplying Facebook's broker-sourced ad-targeting categories.",
+    "sources": [
+      "jour-propublica-facebook-brokers-2016"
+    ],
+    "published": false
+  }
+]

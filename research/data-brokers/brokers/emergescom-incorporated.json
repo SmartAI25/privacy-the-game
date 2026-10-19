@@ -1,0 +1,29 @@
+{
+  "id": "emergescom-incorporated",
+  "name": "EMERGES.COM INCORPORATED",
+  "aliases": [
+    "eMerges.com"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.emerges.com/Government-Record-Opt-Out_ep_51-1.html",
+    "status": "dead",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ]
+}

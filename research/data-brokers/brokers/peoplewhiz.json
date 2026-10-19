@@ -1,0 +1,39 @@
+{
+  "id": "peoplewhiz",
+  "name": "Peoplewhiz, Inc",
+  "aliases": [
+    "PeopleWhiz"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": null,
+    "OR": null
+  },
+  "sells": [
+    "people search across PeopleWhiz mirror sites"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.peoplewhiz.com/remove-my-info",
+    "notes": "Search for your record, then confirm; ID required. PeopleWhiz says it will then notify its data partners. Live page returned 403 on 2026-10-18; content confirmed from the 2026-06-26 Wayback capture.",
+    "status": "blocked",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "pol-peoplewhiz-remove"
+  ],
+  "website": "https://www.peoplewhiz.com",
+  "missions": [
+    "people_search-fortify-extended-sweep-2"
+  ]
+}

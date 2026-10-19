@@ -1,0 +1,45 @@
+{
+  "id": "stirista",
+  "name": "Stirista, LLC",
+  "aliases": [
+    "Stirista",
+    "123Push",
+    "LBDigital",
+    "Media Source Solutions",
+    "Customer Portfolios",
+    "Portfolio Solutions",
+    "Ameribase Digital",
+    "Lighthouse Lists",
+    "Andrews Wharton",
+    "Adstir",
+    "List Builder 360",
+    "List Connection",
+    "Magnetik",
+    "STIRISTA"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.stirista.com/privacy-policy/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.stirista.com"
+}

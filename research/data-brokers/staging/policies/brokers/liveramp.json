@@ -1,0 +1,29 @@
+{
+  "id": "liveramp",
+  "name": "LiveRamp",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "identity-resolution",
+    "data-marketplace",
+    "marketing"
+  ],
+  "sells": [
+    "online identifiers that map customer records to cookies, mobile IDs and platform IDs",
+    "data appends, data hygiene and modeled audiences for advertisers",
+    "sale of identifiers and online activity data to unaffiliated third parties for interest-based advertising (per its service privacy notice)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://liveramp.com/privacy/my-privacy-choices/",
+    "notes": "Opt-out open to all US residents; first+last name and email give an opt-out across all linked identifiers; separate device (mobile ID) and browser (cookie) opt-outs; phone (844) 678-0045. Policy names no specific source or recipient companies."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-liveramp-privacy-choices",
+    "pol-liveramp-service-privacy"
+  ]
+}

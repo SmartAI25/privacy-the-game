@@ -1,0 +1,15 @@
+{
+  "id": "jacobs-engineering-group",
+  "name": "Jacobs Engineering Group",
+  "aliases": [
+    "Jacobs"
+  ],
+  "parent": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026"
+  ]
+}

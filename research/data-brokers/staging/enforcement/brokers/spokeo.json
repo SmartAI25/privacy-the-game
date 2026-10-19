@@ -1,0 +1,20 @@
+{
+  "id": "spokeo",
+  "name": "Spokeo",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "consumer profiles assembled from online and offline sources"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-spokeo-complaint-2012",
+    "enf-ftc-spokeo-order-2012"
+  ]
+}

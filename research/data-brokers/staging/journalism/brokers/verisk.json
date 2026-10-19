@@ -1,0 +1,22 @@
+{
+  "id": "verisk",
+  "name": "Verisk",
+  "aliases": [
+    "Verisk Analytics"
+  ],
+  "parent": null,
+  "kind": [
+    "automotive",
+    "risk-identity"
+  ],
+  "sells": [
+    "Driving Behavior Data History Reports"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-wyden-markey-auto-letter-2024"
+  ]
+}

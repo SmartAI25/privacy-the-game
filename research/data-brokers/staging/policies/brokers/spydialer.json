@@ -1,0 +1,26 @@
+{
+  "id": "spydialer",
+  "name": "Spy Dialer",
+  "aliases": [
+    "Spy Labs Adco, LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "reverse phone lookup"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.spydialer.com/consumers/",
+    "notes": "spydialer.com/optout.aspx redirects here ('Remove My Info'); open to consumers in all states. Operator per footer: Spy Labs Adco, LLC."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-spydialer-consumers"
+  ]
+}

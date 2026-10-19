@@ -1,0 +1,82 @@
+[
+  {
+    "stagedId": "acxiom",
+    "existingId": "acxiom",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "atdata",
+    "existingId": "atdata",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "drivers-history-information-sales",
+    "existingId": "drivers-history-information-sales",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "epsilon-data-management",
+    "existingId": "epsilon-data-management",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "equifax-workforce-solutions",
+    "existingId": "equifax-workforce-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "experian-information-solutions",
+    "existingId": "experian-information-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "experian-marketing-solutions",
+    "existingId": "experian-marketing-solutions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "general-motors",
+    "existingId": "general-motors",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "iovation",
+    "existingId": "iovation",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "ixi",
+    "existingId": "ixi",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "liveramp",
+    "existingId": "liveramp",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "netwise-data",
+    "existingId": "netwise-data",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "neustar",
+    "existingId": "neustar",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "predictive-pop",
+    "existingId": "predictive-pop",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "tapad",
+    "existingId": "tapad",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "transunion-risk-and-alternative-data-solutions",
+    "existingId": "transunion-risk-and-alternative-data-solutions",
+    "matchedBy": "id"
+  }
+]

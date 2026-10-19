@@ -1,0 +1,42 @@
+{
+  "id": "experian-information-solutions",
+  "name": "Experian Information Solutions, Inc",
+  "aliases": [
+    "Experian Information Solutions, Inc.",
+    "EXPERIAN INFORMATION SOLUTIONS INC",
+    "Experian Information Solutions",
+    "EXPERIAN INFORMATION SOLUTIONS, INC."
+  ],
+  "parent": "experian",
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.experian.com/privacy/us-consumer-data-privacy-policy",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "sec-experian-annual-report-2026",
+    "proc-usasp-djf151200g0000693",
+    "proc-usasp-2032h519f00092",
+    "proc-usasp-djms12m0043",
+    "proc-usasp-w911sd21f0187",
+    "proc-usasp-n0018923fz089",
+    "proc-usasp-djd12hqg0018"
+  ],
+  "website": "https://www.experian.com"
+}

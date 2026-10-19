@@ -1,0 +1,28 @@
+{
+  "id": "us-ice",
+  "name": "U.S. Immigration and Customs Enforcement",
+  "aliases": [
+    "ICE"
+  ],
+  "parent": null,
+  "kind": [
+    "buyer"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-70cmsd18p00000127",
+    "proc-usasp-70cmsd19fc0000052",
+    "proc-usasp-70cmsd21c00000002",
+    "proc-usasp-hscemd17f00008",
+    "proc-usasp-70cmsd21c00000001",
+    "proc-usasp-70cmsd20p00000155",
+    "proc-usasp-hsceeh09f00025",
+    "proc-usasp-70cmsd21p00000127"
+  ]
+}

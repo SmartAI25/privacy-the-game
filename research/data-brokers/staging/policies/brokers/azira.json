@@ -1,0 +1,28 @@
+{
+  "id": "azira",
+  "name": "Azira",
+  "aliases": [
+    "Azira LLC"
+  ],
+  "parent": null,
+  "kind": [
+    "location",
+    "ad-network"
+  ],
+  "sells": [
+    "location and audience intelligence; acts as a demand-side platform in real-time bidding auctions",
+    "collects personal information from ad exchanges (bid requests), pixels, and 'trusted third-party sources, such as data brokers' (none named)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://submit-irm.trustarc.com/services/validation/0a80503b-1d56-4d50-a898-4377a0227dab",
+    "notes": "'Opt-Out & Data Rights Form' (TrustArc) linked from azira.com/privacy-policy (policy updated Aug 6, 2025); also privacy@azira.com. Form URL returned HTTP 200 on 2026-10-18."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-azira-privacy"
+  ]
+}

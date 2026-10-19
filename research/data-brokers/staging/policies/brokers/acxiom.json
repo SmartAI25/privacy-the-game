@@ -1,0 +1,25 @@
+{
+  "id": "acxiom",
+  "name": "Acxiom",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing",
+    "identity-resolution"
+  ],
+  "sells": [
+    "consumer marketing data products"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.acxiom.com/optout/",
+    "notes": "US opt-out form is hosted on omnicom-privacy.my.onetrust.com; needs a valid email to confirm; phone 1-877-774-2094; mail Acxiom LLC, P.O. Box 2000. Processed within two weeks of confirmation; does not reach data already provided to marketers."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-acxiom-optout"
+  ]
+}

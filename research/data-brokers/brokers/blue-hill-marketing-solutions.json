@@ -1,0 +1,34 @@
+{
+  "id": "blue-hill-marketing-solutions",
+  "name": "Blue Hill Marketing Solutions, Inc",
+  "aliases": [
+    "LiftEngine",
+    "Blue Hill Marketing Solutions, Inc.",
+    "BLUE HILL MARKETING SOLUTIONS"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.liftbasedata.com/request-to-know/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.liftbasedata.com"
+}

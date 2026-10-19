@@ -1,0 +1,17 @@
+{
+  "id": "hyundai",
+  "name": "Hyundai",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "automotive"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-wyden-markey-auto-letter-2024"
+  ]
+}

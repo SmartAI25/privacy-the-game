@@ -1,0 +1,20 @@
+{
+  "id": "general-motors-company",
+  "name": "General Motors Company",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "automotive"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-gm-complaint-2026",
+    "enf-ftc-gm-order-2026"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "lotame",
+  "name": "Lotame",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "marketing"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "enf-ftc-avast-complaint-2024"
+  ]
+}

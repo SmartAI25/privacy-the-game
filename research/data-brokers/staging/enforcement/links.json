@@ -1,0 +1,276 @@
+[
+  {
+    "from": "kochava",
+    "to": "collective-data-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's July 2024 second amended complaint in FTC v. Kochava alleges Collective Data Solutions, LLC is a wholly-owned subsidiary of Kochava to which Kochava transferred at least part of its data broker business around July 2023.",
+    "sources": [
+      "enf-ftc-kochava-sac-2024"
+    ]
+  },
+  {
+    "from": "digital-envoy",
+    "to": "outlogic",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's April 2024 complaint against X-Mode Social and Outlogic states that, in a May 2021 joint venture, X-Mode transferred its business to successor Outlogic, which became a wholly-owned subsidiary of Digital Envoy.",
+    "sources": [
+      "enf-ftc-xmode-complaint-2024"
+    ]
+  },
+  {
+    "from": "x-mode-social",
+    "to": "outlogic",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC's April 2024 complaint states X-Mode Social transferred its business and substantially all of its assets to its successor Outlogic around May 25, 2021.",
+    "sources": [
+      "enf-ftc-xmode-complaint-2024"
+    ]
+  },
+  {
+    "from": "gravy-analytics",
+    "to": "venntel",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's December 2024 complaint against Gravy Analytics and Venntel states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+    "sources": [
+      "enf-ftc-gravy-complaint-2024"
+    ]
+  },
+  {
+    "from": "gravy-analytics",
+    "to": "venntel",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its December 2024 complaint that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+    "sources": [
+      "enf-ftc-gravy-complaint-2024"
+    ]
+  },
+  {
+    "from": "general-motors",
+    "to": "onstar",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's January 2026 complaint (Docket C-4828) states OnStar, LLC is a wholly owned subsidiary of General Motors Company.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ]
+  },
+  {
+    "from": "general-motors",
+    "to": "verisk",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar furnished OnStar Smart Driver enrollees' identifying information and driving data to consumer reporting agency Insurance Services Office, Inc. d/b/a Verisk Analytics under a 2016 Telematics Data Exchange Program, ending March 2024; GM settled without admitting the allegations.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026",
+      "enf-ftc-gm-order-2026"
+    ]
+  },
+  {
+    "from": "general-motors",
+    "to": "lexisnexis-risk-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026",
+      "enf-ftc-gm-order-2026"
+    ]
+  },
+  {
+    "from": "general-motors",
+    "to": "wejo",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar licensed connected-vehicle precise geolocation data to Wejo Ltd. from 2018 until Wejo's bankruptcy, with Wejo permitted to sublicense to GM-approved 'egress licensees'.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ]
+  },
+  {
+    "from": "general-motors",
+    "to": "jacobs-engineering-group",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar licensed connected-vehicle location data to Jacobs Engineering Group, which acquired Wejo's assets on January 3, 2024, and continued sharing Smart Driver data with Jacobs until April 5, 2024.",
+    "sources": [
+      "enf-ftc-gm-complaint-2026"
+    ]
+  },
+  {
+    "from": "avast",
+    "to": "jumpshot",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2024 complaint against Avast states Jumpshot, Inc. was a wholly-owned subsidiary of Avast Ltd until Jumpshot's operations closed in January 2020.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "avast",
+    "to": "jumpshot",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 complaint that from 2014 through January 2020 Avast transferred browsing information collected by its software to subsidiary Jumpshot, which sold it; Avast settled without admitting the allegations.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024",
+      "enf-ftc-avast-order-2024"
+    ]
+  },
+  {
+    "from": "jumpshot",
+    "to": "liveramp",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that from May 2017 to April 2019 Jumpshot granted LiveRamp a world-wide license to use granular browsing information, including for data-driven marketing.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "jumpshot",
+    "to": "liveramp",
+    "type": "matches-identity",
+    "tier": "A",
+    "claim": "The FTC's 2024 Avast complaint describes a Jumpshot-LiveRamp agreement for 'ID Syncing Services' matching Jumpshot's persistent identifiers to LiveRamp's identifiers.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "jumpshot",
+    "to": "lotame",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that an August 2018 contract let Lotame match, combine and model Jumpshot's data with Lotame's and license the modeled data to Lotame customers, with revenue shared with Jumpshot.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "jumpshot",
+    "to": "omnicom",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its 2024 Avast complaint that under a December 2017 contract Jumpshot agreed to provide Omnicom an 'All Clicks Feed' for 50% of its user base in six countries, at roughly $2 million per year in the first work order.",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "omnicom",
+    "to": "neustar",
+    "type": "matches-identity",
+    "tier": "A",
+    "claim": "The FTC's 2024 Avast complaint states the Jumpshot-Omnicom contract allowed Omnicom to translate Jumpshot GUIDs into Neustar IDs (and to match with LiveRamp).",
+    "sources": [
+      "enf-ftc-avast-complaint-2024"
+    ]
+  },
+  {
+    "from": "pubrec",
+    "to": "truthfinder",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2023 complaint against Instant Checkmate and TruthFinder states PubRec, LLC has wholly owned TruthFinder since 2018.",
+    "sources": [
+      "enf-ftc-truthfinder-complaint-2023"
+    ]
+  },
+  {
+    "from": "pubrec",
+    "to": "instant-checkmate",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The FTC's 2023 complaint against Instant Checkmate and TruthFinder states PubRec, LLC has wholly owned Instant Checkmate since 2018.",
+    "sources": [
+      "enf-ftc-truthfinder-complaint-2023"
+    ]
+  },
+  {
+    "from": "trans-union",
+    "to": "transunion-rental-screening-solutions",
+    "type": "owns",
+    "tier": "A",
+    "claim": "The CFPB/FTC October 2023 complaint states TransUnion Rental Screening Solutions, Inc. is a wholly owned subsidiary of Trans Union LLC.",
+    "sources": [
+      "enf-cfpb-turss-complaint-2023"
+    ]
+  },
+  {
+    "from": "transunion-rental-screening-solutions",
+    "to": "lexisnexis-risk-and-information-analytics-group",
+    "type": "buys",
+    "tier": "A",
+    "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order.",
+    "sources": [
+      "enf-cfpb-turss-complaint-2023",
+      "enf-cfpb-turss-order-2023"
+    ]
+  },
+  {
+    "from": "leaplab",
+    "to": "ideal-financial-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its December 2014 complaint that LeapLab sold consumer payday loan applications or information from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+    "sources": [
+      "enf-ftc-leaplab-complaint-2014"
+    ]
+  },
+  {
+    "from": "sequoia-one",
+    "to": "ideal-financial-solutions",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The FTC alleged in its August 2015 complaint that Sequoia One and Gen X Marketing Group sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
+    "sources": [
+      "enf-ftc-sequoia-one-complaint-2015"
+    ]
+  },
+  {
+    "from": "goodrx",
+    "to": "meta",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared users' medication and health information with Facebook, including uploading lists of users who bought particular medications for ad targeting.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ]
+  },
+  {
+    "from": "goodrx",
+    "to": "google",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx configured a Google pixel and SDK to share users' medication information, contact details and advertising IDs with Google.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ]
+  },
+  {
+    "from": "goodrx",
+    "to": "criteo",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared user health information, including GoodRx Coupons accessed or used, with Criteo.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ]
+  },
+  {
+    "from": "goodrx",
+    "to": "twilio",
+    "type": "supplies",
+    "tier": "A",
+    "claim": "The DOJ/FTC February 2023 complaint against GoodRx alleges GoodRx shared sensitive user information with third parties including Twilio.",
+    "sources": [
+      "enf-ftc-goodrx-complaint-2023"
+    ]
+  }
+]

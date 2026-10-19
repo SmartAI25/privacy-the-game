@@ -1,0 +1,41 @@
+{
+  "id": "outlogic",
+  "name": "Outlogic, LLC",
+  "aliases": [
+    "OUTLOGIC LLC",
+    "Outlogic"
+  ],
+  "parent": "digital-envoy",
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [
+    "location data (successor to X-Mode business)",
+    "geolocation data from 'local publisher partners' via its publisher toolkit"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://outlogic.io/opt-out-form/",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18",
+    "enf-ftc-xmode-complaint-2024",
+    "enf-ftc-xmode-order-2024",
+    "pol-outlogic-home"
+  ],
+  "website": "https://outlogic.io"
+}

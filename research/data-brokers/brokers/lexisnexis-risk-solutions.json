@@ -1,0 +1,64 @@
+{
+  "id": "lexisnexis-risk-solutions",
+  "name": "LexisNexis Risk Solutions Inc.",
+  "aliases": [
+    "LexisNexis Risk Solutions",
+    "LexisNexis Risk",
+    "LNRS",
+    "Lexis Nexis Risk Solutions, Inc.",
+    "LEXISNEXIS RISK SOLUTIONS INC"
+  ],
+  "parent": null,
+  "kind": [
+    "risk-identity",
+    "financial",
+    "automotive",
+    "marketing"
+  ],
+  "registries": {},
+  "sells": [
+    "risk, fraud and identity analytics from public, contributory and proprietary data",
+    "vehicle and behaviour-centric data for insurers",
+    "investigative tools (Accurint)",
+    "digital identity network (ThreatMetrix)",
+    "consumer reports built from driving data (per FTC)",
+    "identity, fraud, due-diligence and public-records products for credentialed commercial and government customers",
+    "FCRA prescreen lists for firm offers of credit and insurance",
+    "direct marketing services (LexisNexis Risk Solutions FL Inc.)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://consumer.risk.lexisnexis.com/opt",
+    "notes": "optout.lexisnexis.com redirects here. Covers direct-marketing opt-out, FCRA prescreen opt-out, and suppression for personal-safety threat (public officials, judges, law enforcement, at-risk individuals, Daniel's Law); online form, PDF mail form, or phone 1-888-497-0011.",
+    "status": "verified",
+    "verifiedAt": "2026-10-19"
+  },
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "other",
+        "value": "2025 revenue £3,485 million; 79% from North America (RELX Annual Report 2025)",
+        "source": "sec-relx-annual-report-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-relx-annual-report-2025",
+    "sec-relx-20f-2025",
+    "enf-ftc-gm-complaint-2026",
+    "proc-usasp-70cmsd21c00000001",
+    "proc-usasp-2032h821f00127",
+    "proc-usasp-70us0921c70090081",
+    "proc-usasp-15ddh022p00000051",
+    "proc-usasp-w15qkn19c0063",
+    "proc-usasp-fa701417p3000",
+    "proc-usasp-n6311622p0525",
+    "pol-lexisnexis-risk-optout",
+    "pol-lexisnexis-risk-about"
+  ],
+  "missions": [
+    "enterprise_data-fortify-lexisnexis",
+    "enterprise_data-recon-supply-chain"
+  ]
+}

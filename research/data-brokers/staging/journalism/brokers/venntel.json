@@ -1,0 +1,19 @@
+{
+  "id": "venntel",
+  "name": "Venntel",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "sells": [],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "jour-eff-fog-data-science-2022",
+    "jour-vice-salaat-first-2021",
+    "jour-nrk-phone-spying-venntel-2020"
+  ]
+}

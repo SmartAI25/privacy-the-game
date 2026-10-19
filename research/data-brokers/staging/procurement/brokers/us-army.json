@@ -1,0 +1,21 @@
+{
+  "id": "us-army",
+  "name": "Department of the Army",
+  "aliases": [
+    "US Army"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-w90brj15p0015",
+    "proc-usasp-w911nf25pa015",
+    "proc-usasp-w15qkn19c0063",
+    "proc-usasp-w911sd21f0187",
+    "proc-usasp-w9124725pa010"
+  ]
+}

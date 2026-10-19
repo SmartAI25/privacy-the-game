@@ -1,0 +1,24 @@
+{
+  "id": "rocketreach",
+  "name": "RocketReach",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "professional contact data (emails, phones)"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://rocketreach.co/remove-profile",
+    "notes": "rocketreach.co/claim-profile redirects here; returned HTTP 200 (JavaScript app) on 2026-10-18. The mission notes it may require an account."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-rocketreach-remove"
+  ]
+}

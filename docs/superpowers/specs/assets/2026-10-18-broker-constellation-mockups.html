@@ -1,0 +1,87 @@
+<h2>What shape should the broker map take?</h2>
+<p class="subtitle">Same data in all three: ~500 brokers, a few bright hubs, a faint crowd. <b style="color:#C6FF00">Lime</b> = you filed. <b style="color:#FF9F00">Amber</b> = re-check due. <b style="color:#FF2D9B">Magenta ✕</b> = no opt-out exists. Dim = not yet. (Fake positions and links, just to show the shape.)</p>
+
+<style>
+  .rc { background:#090B10; border-radius:8px; display:block; width:100%; height:auto; }
+  .rc text { font-family: 'JetBrains Mono', monospace; fill:#EDEFF3; }
+  .rc .lbl { font-size:11px; }
+  .rc .col { font-size:10px; fill:#8a93a6; letter-spacing:1px; }
+  .rc .big { font-size:12px; font-weight:bold; }
+</style>
+
+<div class="options">
+  <div class="option" data-choice="constellation" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Constellation</h3>
+      <p>A star map. Hubs are bright stars, and the crowd forms a nebula around the hubs it buys from. Filing an opt-out lights a star. It feels the most like a night sky going dark-to-lit, but you don't see a clear direction of flow.</p>
+      <svg class="rc" id="svgA" viewBox="0 0 640 360"></svg>
+    </div>
+  </div>
+
+  <div class="option" data-choice="river" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Supply-chain river</h3>
+      <p>Scout's sentence drawn literally: data flows left to right, from where it's collected, through the wholesalers, out to the retail resellers and the people who buy it. You see exactly where you "cut the chain." It reads clearest, but looks more like a diagram than a place.</p>
+      <svg class="rc" id="svgB" viewBox="0 0 640 360"></svg>
+    </div>
+  </div>
+
+  <div class="option" data-choice="shadow-city" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>The Shadow City</h3>
+      <p>The brokers are a city too, the one underneath yours. Hubs are towers and the crowd is a sprawl of small buildings, with pipes running between them. Filing an opt-out takes a building's lights out (or reclaims it). It matches the game's look, but the links are harder to read.</p>
+      <svg class="rc" id="svgC" viewBox="0 0 640 360"></svg>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  let seed=7; const r=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+  const el=(svg,tag,a,txt)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(txt)e.textContent=txt;svg.appendChild(e);return e;};
+  const state=()=>{const x=r();return x<0.22?'filed':x<0.28?'recheck':x<0.36?'none':'dim';};
+  const fill={filed:'#C6FF00',recheck:'#FF9F00',none:'#FF2D9B',dim:'#3a4256'};
+  const glow=(svg)=>{const d=el(svg,'defs',{});const f=el(d,'filter',{id:svg.id+'g',x:'-50%',y:'-50%',width:'200%',height:'200%'});el(f,'feGaussianBlur',{stdDeviation:'3',result:'b'});const m=el(f,'feMerge',{});el(m,'feMergeNode',{in:'b'});el(m,'feMergeNode',{in:'SourceGraphic'});};
+  const dot=(svg,x,y,s,rad)=>{ if(s==='none'){el(svg,'text',{x:x-3,y:y+3,'font-size':8,fill:'#FF2D9B',style:'fill:#FF2D9B'},'✕');return;} el(svg,'circle',{cx:x,cy:y,r:rad,fill:fill[s],opacity:s==='dim'?0.7:1});};
+
+  // A: constellation
+  const A=document.getElementById('svgA'); glow(A);
+  const hubsA=[['LiveRamp',320,175,'filed'],['Acxiom',190,110,'filed'],['Epsilon',450,105,'dim'],['Experian',170,260,'filed'],['LexisNexis',470,255,'recheck'],['TransUnion',330,295,'dim'],['Oracle (gone)',560,180,'none']];
+  hubsA.forEach(h=>{for(let i=0;i<60;i++){const a=r()*6.28,d=18+r()*55;const x=h[1]+Math.cos(a)*d,y=h[2]+Math.sin(a)*d*0.8; if(r()<0.25) el(A,'line',{x1:h[1],y1:h[2],x2:x,y2:y,stroke:'#00E5FF',opacity:0.08}); dot(A,x,y,state(),1.6);} });
+  hubsA.forEach((h,i)=>{if(i) el(A,'line',{x1:320,y1:175,x2:h[1],y2:h[2],stroke:'#00E5FF',opacity:0.35,'stroke-width':1.2});});
+  hubsA.forEach(h=>{ if(h[3]==='none'){el(A,'text',{x:h[1]-7,y:h[2]+6,'font-size':18,style:'fill:#FF2D9B'},'✕');} else el(A,'circle',{cx:h[1],cy:h[2],r:h[0]==='LiveRamp'?13:9,fill:fill[h[3]],filter:`url(#svgAg)`}); el(A,'text',{x:h[1]+14,y:h[2]-10,class:'big'},h[0]);});
+  el(A,'text',{x:12,y:20,class:'col'},'FIELD COVERED: 31%  ·  HUBS LIT 3/7');
+
+  // B: river
+  const B=document.getElementById('svgB'); glow(B);
+  const cols=[['WHERE IT\'S TAKEN',60,['Apps & SDKs','Stores & loyalty','Cars','Courts & DMVs','Credit files']],['WHOLESALE',230,['Acxiom','Experian','LexisNexis','LiveRamp','Epsilon']],['RETAIL RESELLERS',410,null],['WHO BUYS',570,['Insurers','Landlords','Employers','Police / ICE','Advertisers']]];
+  cols.forEach(c=>el(B,'text',{x:c[1]-40,y:22,class:'col'},c[0]));
+  const ys=[70,125,180,235,290];
+  for(let i=0;i<5;i++)for(let j=0;j<5;j++) if(r()<0.5) el(B,'path',{d:`M90 ${ys[i]} C160 ${ys[i]} 160 ${ys[j]} 215 ${ys[j]}`,stroke:'#00E5FF',fill:'none',opacity:0.18,'stroke-width':1.5});
+  const crowd=[]; for(let i=0;i<220;i++){crowd.push([350+r()*120,45+r()*290]);}
+  crowd.forEach(p=>{ if(r()<0.06){const j=Math.floor(r()*5); el(B,'line',{x1:245,y1:ys[j],x2:p[0],y2:p[1],stroke:'#00E5FF',opacity:0.07});} });
+  crowd.forEach(p=>dot(B,p[0],p[1],state(),1.7));
+  for(let j=0;j<5;j++) for(let k=0;k<5;k++) if(r()<0.35) el(B,'path',{d:`M470 ${70+r()*220} C520 ${ys[k]} 520 ${ys[k]} 545 ${ys[k]}`,stroke:'#FF2D9B',fill:'none',opacity:0.15});
+  cols[0][2].forEach((n,i)=>{el(B,'rect',{x:20,y:ys[i]-9,width:72,height:18,rx:3,fill:'#1A1F2B',stroke:'#3a4256'});el(B,'text',{x:25,y:ys[i]+4,class:'lbl','font-size':9},n);});
+  const hs=['filed','filed','recheck','filed','dim'];
+  cols[1][2].forEach((n,i)=>{el(B,'circle',{cx:230,cy:ys[i],r:11,fill:fill[hs[i]],filter:'url(#svgBg)'});el(B,'text',{x:246,y:ys[i]+4,class:'lbl'},n);});
+  cols[3][2].forEach((n,i)=>{el(B,'rect',{x:548,y:ys[i]-9,width:86,height:18,rx:3,fill:'#1A1F2B',stroke:'#FF2D9B',opacity:0.8});el(B,'text',{x:553,y:ys[i]+4,class:'lbl','font-size':9},n);});
+  el(B,'text',{x:330,y:352,class:'col'},'~480 people-search & resellers');
+
+  // C: shadow city
+  const C=document.getElementById('svgC'); glow(C);
+  el(C,'rect',{x:0,y:300,width:640,height:60,fill:'#1A1F2B'});
+  const towers=[['LiveRamp',300,170,'filed'],['Acxiom',150,140,'filed'],['Experian',470,150,'filed'],['LexisNexis',380,120,'recheck'],['Epsilon',230,110,'dim'],['TransUnion',540,100,'dim']];
+  for(let i=0;i<260;i++){const x=r()*630,h=6+r()*28,w=4+r()*6,s=state(); el(C,'rect',{x,y:300-h+r()*8,width:w,height:h,fill:s==='dim'?'#252c3b':fill[s],opacity:s==='dim'?1:0.85});}
+  for(let i=0;i<10;i++){const a=towers[Math.floor(r()*6)],b=towers[Math.floor(r()*6)]; el(C,'path',{d:`M${a[1]+12} ${300-a[2]+30} Q ${(a[1]+b[1])/2+12} ${330} ${b[1]+12} ${300-b[2]+30}`,stroke:'#00E5FF',fill:'none',opacity:0.25});}
+  towers.forEach(t=>{el(C,'rect',{x:t[1],y:300-t[2],width:24,height:t[2],fill:'#1A1F2B',stroke:fill[t[3]]});
+    for(let k=0;k<t[2]/12;k++){el(C,'rect',{x:t[1]+5,y:300-t[2]+6+k*12,width:5,height:5,fill:t[3]==='dim'?'#FF2D9B':'#090B10',opacity:t[3]==='dim'?0.8:1});el(C,'rect',{x:t[1]+14,y:300-t[2]+6+k*12,width:5,height:5,fill:t[3]==='dim'?'#FF2D9B':'#090B10',opacity:t[3]==='dim'?0.8:1});}
+    if(t[3]!=='dim') el(C,'rect',{x:t[1]-2,y:300-t[2]-4,width:28,height:3,fill:fill[t[3]],filter:'url(#svgCg)'});
+    el(C,'text',{x:t[1]-6,y:300-t[2]-10,class:'lbl'},t[0]);});
+  el(C,'text',{x:12,y:20,class:'col'},'MAGENTA WINDOWS = STILL WATCHING YOU  ·  LIME ROOF = RECLAIMED');
+})();
+</script>

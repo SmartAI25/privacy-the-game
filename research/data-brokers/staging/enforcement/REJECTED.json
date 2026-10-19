@@ -1,0 +1,149 @@
+[
+  {
+    "item": {
+      "broker": "transunion-rental-screening-solutions",
+      "field": "parent",
+      "existing": "transunion",
+      "staged": "trans-union"
+    },
+    "reason": "transunion-rental-screening-solutions: parent conflicts with existing value; existing kept"
+  },
+  {
+    "item": {
+      "from": "x-mode-social",
+      "to": "outlogic",
+      "type": "supplies",
+      "tier": "A",
+      "claim": "The FTC's April 2024 complaint states X-Mode Social transferred its business and substantially all of its assets to its successor Outlogic around May 25, 2021.",
+      "sources": [
+        "enf-ftc-xmode-complaint-2024"
+      ]
+    },
+    "reason": "link x-mode-social|outlogic|supplies: dropped by link-overrides.json (the FTC complaint describes a business and asset transfer to a successor, not a data flow)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|insurance-services-office|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|insurance-services-office|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|lexisnexis-risk-solutions|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|lexisnexis-risk-solutions|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|wejo|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|wejo|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "general-motors-company|jacobs-engineering-group|supplies",
+      "newFrom": "general-motors"
+    },
+    "reason": "link general-motors-company|jacobs-engineering-group|supplies: reassigned to from=general-motors by link-overrides.json (FTC C-4828 names GM LLC, GM Holdings LLC and OnStar, LLC (collectively GM) as respondents; General Motors Company is not one)"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|owns",
+      "claim": "The FTC's December 2024 complaint against Gravy Analytics and Venntel states Venntel is a wholly-owned subsidiary of Gravy Analytics.",
+      "newClaim": "The FTC's 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) states Venntel is a wholly-owned subsidiary of Gravy Analytics."
+    },
+    "reason": "link gravy-analytics|venntel|owns: claim replaced by link-overrides.json reclaim (fact-check: complaint para 2 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source)"
+  },
+  {
+    "item": {
+      "link": "gravy-analytics|venntel|supplies",
+      "claim": "The FTC alleged in its December 2024 complaint that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors.",
+      "newClaim": "The FTC alleged in its 2024 complaint against Gravy Analytics and Venntel (FTC File No. 212-3035) that Gravy Analytics transfers location data to its subsidiary Venntel, which sells it to public sector customers such as government contractors."
+    },
+    "reason": "link gravy-analytics|venntel|supplies: claim replaced by link-overrides.json reclaim (fact-check: complaint para 18 supports the fact; the cited PDF is undated (\"this ___ day of ___, 2024\"), so the month is not in the source)"
+  },
+  {
+    "item": {
+      "link": "jumpshot|liveramp|matches-identity",
+      "claim": "The FTC's 2024 Avast complaint describes a Jumpshot-LiveRamp agreement for 'ID Syncing Services' matching Jumpshot's persistent identifiers to LiveRamp's identifiers.",
+      "newClaim": "The FTC alleged in its 2024 Avast complaint that an agreement between LiveRamp and Jumpshot provided for \"ID Syncing Services\", a \"synchronization and matching of identifiers\" between the two companies."
+    },
+    "reason": "link jumpshot|liveramp|matches-identity: claim replaced by link-overrides.json reclaim (fact-check: complaint para 24; the earlier claim said the complaint \"describes\" the agreement and did not mark it as an allegation)"
+  },
+  {
+    "item": {
+      "link": "omnicom|neustar|matches-identity",
+      "claim": "The FTC's 2024 Avast complaint states the Jumpshot-Omnicom contract allowed Omnicom to translate Jumpshot GUIDs into Neustar IDs (and to match with LiveRamp).",
+      "newClaim": "The FTC alleged in its 2024 Avast complaint that Jumpshot's December 2017 contract with Omnicom allowed Omnicom to \"map out/translate Jumpshot GUIDs into\" Neustar IDs and to match with LiveRamp; the complaint does not say whether Omnicom did so."
+    },
+    "reason": "link omnicom|neustar|matches-identity: claim replaced by link-overrides.json reclaim (fact-check: complaint para 26 describes what the contract permitted, as an allegation; it names no Omnicom-Neustar agreement and no completed matching)"
+  },
+  {
+    "item": {
+      "link": "transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys",
+      "claim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order.",
+      "newClaim": "The CFPB/FTC October 2023 complaint alleges TransUnion Rental Screening Solutions purchases the information in its eviction proceeding records from third-party vendor LexisNexis Risk and Information Analytics Group, Inc.; the case settled by stipulated order, in which the defendants neither admit nor deny the allegations."
+    },
+    "reason": "link transunion-rental-screening-solutions|lexisnexis-risk-and-information-analytics-group|buys: claim replaced by link-overrides.json reclaim (fact-check: complaint para 37; stipulated order para 3 (\"Defendants neither admit nor deny any of the allegations\"); the earlier claim omitted the non-admission)"
+  },
+  {
+    "item": {
+      "link": "leaplab|ideal-financial-solutions|supplies",
+      "claim": "The FTC alleged in its December 2014 complaint that LeapLab sold consumer payday loan applications or information from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits.",
+      "newClaim": "The FTC alleged in its December 2014 complaint that the defendants, Sitesearch Corporation d/b/a LeapLab, LeapLab, LLC, Leads Company, LLC and John Ayers, sold consumer payday loan applications or information assembled from them to Ideal Financial Solutions, knowing or having reason to know Ideal used it for unauthorized debits."
+    },
+    "reason": "link leaplab|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check: complaint para 24 and summary say \"Defendants\" sold, and the defendants are the four parties named in the caption, not LeapLab alone)"
+  },
+  {
+    "item": {
+      "link": "general-motors|lexisnexis-risk-solutions|supplies",
+      "claim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024.",
+      "newClaim": "The FTC alleged in its January 2026 complaint (Docket C-4828) that GM and OnStar sold driving event data, including precise geolocation, from OnStar Smart Driver enrollees to consumer reporting agency LexisNexis Risk Solutions, Inc. under an August 2019 contract, ending March 2024; GM settled without admitting the allegations."
+    },
+    "reason": "link general-motors|lexisnexis-risk-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check fix: the claim cites enf-ftc-gm-order-2026, whose recitals say respondents \"neither admit nor deny any of the allegations in the Complaint\"; same wording as the ISO link)"
+  },
+  {
+    "item": {
+      "link": "sequoia-one|ideal-financial-solutions|supplies",
+      "claim": "The FTC alleged in its August 2015 complaint that Sequoia One and Gen X Marketing Group sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender.",
+      "newClaim": "The FTC alleged in its August 2015 complaint that the defendants, Sequoia One, LLC, Gen X Marketing Group, LLC and individual defendants Jason A. Kotzker, Theresa D. Bartholomew, John E. Bartholomew, Jr. and Paul T. McDonnell, sold sensitive information from payday loan applications to Ideal Financial Solutions, a non-lender."
+    },
+    "reason": "link sequoia-one|ideal-financial-solutions|supplies: claim replaced by link-overrides.json reclaim (fact-check fix: complaint para 14 says \"Defendants sold this information to at least one non-lender, Ideal Financial Solutions\"; the caption names the two LLCs and four individuals)"
+  },
+  {
+    "item": {
+      "link": "us-air-force|lexisnexis-risk-solutions|buys",
+      "reclaim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\" under product or service code R612, \"SUPPORT- ADMINISTRATIVE: INFORMATION RETRIEVAL\"."
+    },
+    "reason": "link us-air-force|lexisnexis-risk-solutions|buys: reclaim has no matching link yet; not applied"
+  },
+  {
+    "item": {
+      "broker": "kochava",
+      "override": {
+        "optOut": {
+          "email": "privacy@kochava.com"
+        },
+        "source": "pol-kochava-support-privacy",
+        "reason": "the email opt-out's address was only in notes; Kochava's support-privacy page lists privacy@kochava.com as the privacy contact"
+      }
+    },
+    "reason": "kochava: record-overrides cites unknown source pol-kochava-support-privacy; not applied"
+  },
+  {
+    "item": {
+      "broker": "thomson-reuters",
+      "override": {
+        "optOut": {
+          "email": "westlaw.privacypolicy@thomsonreuters.com"
+        },
+        "source": "pol-tr-privacy-records",
+        "reason": "the email opt-out's address was only in notes; the privacy-records page sends public-records requests (the records Thomson Reuters sells) to westlaw.privacypolicy@thomsonreuters.com; the do-not-sell address privacy.issues@thomsonreuters.com stays in notes"
+      }
+    },
+    "reason": "thomson-reuters: record-overrides cites unknown source pol-tr-privacy-records; not applied"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "id": "quickpeopletrace",
+  "name": "Quick People Trace",
+  "aliases": [],
+  "parent": "quicklocate",
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "people search, background checks, reverse phone"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-quickpeopletrace-home"
+  ]
+}

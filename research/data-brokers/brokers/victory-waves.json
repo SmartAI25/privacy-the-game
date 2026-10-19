@@ -1,0 +1,31 @@
+{
+  "id": "victory-waves",
+  "name": "Victory Waves Co.",
+  "aliases": [
+    "VICTORY WAVES CO"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": "2026",
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.victorywaves.com/legal/privacy-choices",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-tx-2026-10-18",
+    "registry-or-2026-10-18"
+  ],
+  "website": "https://www.victorywaves.com"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "equifax-workforce-solutions",
+  "name": "Equifax Workforce Solutions LLC",
+  "aliases": [
+    "The Work Number",
+    "Workforce Solutions"
+  ],
+  "parent": "equifax",
+  "kind": [
+    "financial",
+    "risk-identity"
+  ],
+  "sells": [
+    "employment and income verification (The Work Number)",
+    "incarceration, justice and people-based risk intelligence data (Verification Services)"
+  ],
+  "size": {
+    "known": true,
+    "signals": [
+      {
+        "kind": "records-claimed",
+        "value": "The Work Number held about 209 million active and 813 million total employment records at December 31, 2025",
+        "source": "sec-efx-10k-2025"
+      },
+      {
+        "kind": "sec-revenue",
+        "value": "FY2025 Workforce Solutions segment operating revenue $2,582.3 million",
+        "source": "sec-efx-10k-2025"
+      }
+    ]
+  },
+  "sources": [
+    "sec-efx-10k-2025",
+    "sec-efx-10k-2025-ex21"
+  ]
+}

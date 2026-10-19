@@ -1,0 +1,33 @@
+{
+  "id": "west-publising",
+  "name": "WEST PUBLISING CORPORATION",
+  "aliases": [
+    "West Publishing Corp"
+  ],
+  "parent": null,
+  "kind": [],
+  "registries": {
+    "CA": null,
+    "VT": null,
+    "TX": null,
+    "OR": "2026"
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.thomsonreuters.com/en/privacy-statement.html",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-or-2026-10-18"
+  ],
+  "missions": [
+    "enterprise_data-fortify-thomson",
+    "enterprise_data-recon-supply-chain"
+  ]
+}

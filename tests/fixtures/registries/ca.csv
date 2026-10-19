@@ -1,0 +1,7 @@
+Data broker name:,"Doing Business As (DBA), if applicable:",Data broker primary website:,Data broker primary contact email address:,Data broker's primary website that contains details on how consumers can exercise their CA Consumer Privacy rights:,Data broker collects personal information of minors:,Data broker collects consumers' precise geolocation,Data broker collects consumers’ reproductive health care data:
+Acxiom LLC,Acxiom,https://www.acxiom.com,privacy@acxiom.com,https://isapps.acxiom.com/optout/optout.aspx,No,No,No
+Example Location Co.,,https://example-location.test,privacy@example-location.test,,No,Yes,Yes
+Mailbox Data Inc.,,https://mailbox.test,contact@mailbox.test,optout@mailbox.test,No,No,No
+Placeholder Data Corp,No,https://placeholder.test,a@placeholder.test,https://placeholder.test/privacy,No,No,No
+Two Links LLC,,https://twolinks.test,a@twolinks.test,https://twolinks.test/opt-out; https://twolinks.test/privacy,No,No,No
+Prose Optout LLC,,https://prose.test,a@prose.test,Visit https://prose.test/optout to opt out,No,No,No

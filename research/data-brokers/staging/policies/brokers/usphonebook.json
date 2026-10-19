@@ -1,0 +1,24 @@
+{
+  "id": "usphonebook",
+  "name": "USPhonebook",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "people-search"
+  ],
+  "sells": [
+    "reverse phone and people search"
+  ],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.usphonebook.com/removal",
+    "notes": "usphonebook.com/opt-out redirects here; 'US Phone Book Opt-Out Form'."
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "pol-usphonebook-removal"
+  ]
+}

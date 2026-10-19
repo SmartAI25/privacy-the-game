@@ -1,0 +1,33 @@
+{
+  "id": "freewheel-media",
+  "name": "FreeWheel Media Inc",
+  "aliases": [
+    "Freewheel Media, Inc."
+  ],
+  "parent": null,
+  "kind": [
+    "location"
+  ],
+  "registries": {
+    "CA": "2026",
+    "VT": null,
+    "TX": "2026",
+    "OR": null
+  },
+  "sells": [],
+  "optOut": {
+    "method": "web-form",
+    "url": "https://www.freewheel.com",
+    "status": "verified",
+    "verifiedAt": "2026-10-18"
+  },
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "registry-ca-2026-10-18",
+    "registry-tx-2026-10-18"
+  ],
+  "website": "https://www.freewheel.com"
+}

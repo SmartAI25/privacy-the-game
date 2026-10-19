@@ -1,0 +1,19 @@
+{
+  "id": "us-air-force",
+  "name": "Department of the Air Force",
+  "aliases": [
+    "US Air Force"
+  ],
+  "kind": [
+    "buyer"
+  ],
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "proc-usasp-fa489017p0017",
+    "proc-usasp-fa701417p3000",
+    "proc-usasp-fa701414p3005"
+  ]
+}
