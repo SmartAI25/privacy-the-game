@@ -20,6 +20,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -40,6 +41,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -60,6 +62,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -80,6 +83,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -100,6 +104,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -122,6 +127,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -142,6 +148,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -162,6 +169,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -182,6 +190,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -202,6 +211,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -222,6 +232,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -242,6 +253,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -262,6 +274,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -284,6 +297,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -304,6 +318,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -327,7 +342,7 @@
         "url": "https://www.acxiom.com/optout/",
         "notes": "US opt-out form is hosted on omnicom-privacy.my.onetrust.com; needs a valid email to confirm; phone 1-877-774-2094; mail Acxiom LLC, P.O. Box 2000. Processed within two weeks of confirmation; does not reach data already provided to marketers.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "ad_trackers-reclaim-individual"
@@ -352,6 +367,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -372,6 +388,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -392,6 +409,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -412,6 +430,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -434,6 +453,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -454,6 +474,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -474,6 +495,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -496,6 +518,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -516,6 +539,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -536,6 +560,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -548,6 +573,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -568,6 +594,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -588,6 +615,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -608,6 +636,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -628,6 +657,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -648,6 +678,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -668,6 +699,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -688,6 +720,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -708,6 +741,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -728,6 +762,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -748,6 +783,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -768,6 +804,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -788,6 +825,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -808,6 +846,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -828,6 +867,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -848,6 +888,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -868,6 +909,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -888,6 +930,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -908,6 +951,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -923,6 +967,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -943,6 +988,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -963,6 +1009,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -983,6 +1030,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1003,6 +1051,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1023,7 +1072,19 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "anomaly-six",
+      "name": "Anomaly Six",
+      "parent": null,
+      "kind": [],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 2,
       "hub": false
     },
     {
@@ -1043,6 +1104,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1063,6 +1125,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1083,6 +1146,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1103,6 +1167,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1115,6 +1180,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1125,6 +1191,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1145,6 +1212,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1158,6 +1226,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1178,6 +1247,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1198,6 +1268,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1218,6 +1289,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1238,6 +1310,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1258,6 +1331,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1280,6 +1354,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1300,6 +1375,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1320,6 +1396,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1340,6 +1417,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1360,6 +1438,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1382,6 +1461,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1402,6 +1482,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1422,6 +1503,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1444,6 +1526,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1454,6 +1537,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 6,
       "hub": true
     },
@@ -1474,6 +1558,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1497,6 +1582,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1527,6 +1613,7 @@
           }
         ]
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1549,8 +1636,9 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
-      "hub": false
+      "missions": [],
+      "reach": 9,
+      "hub": true
     },
     {
       "id": "bachmanity",
@@ -1571,6 +1659,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1591,6 +1680,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1611,6 +1701,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1631,6 +1722,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1651,6 +1743,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1671,6 +1764,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1693,6 +1787,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1714,7 +1809,7 @@
         "url": "https://www.beenverified.com/svc/optout/search/optouts",
         "notes": "beenverified.com/faq/opt-out/ (the mission URL) redirects here. Live site returned 403 to automated fetches on 2026-10-18 and the latest Wayback capture (2025-05-09) is a JavaScript shell, so the form contents were not confirmed.",
         "status": "blocked",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-web-forms"
@@ -1764,6 +1859,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1784,6 +1880,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1804,6 +1901,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1824,6 +1922,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1844,6 +1943,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1864,6 +1964,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1884,6 +1985,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1904,6 +2006,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1924,6 +2027,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1944,6 +2048,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1966,6 +2071,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -1986,6 +2092,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2006,6 +2113,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2026,6 +2134,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2046,6 +2155,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2066,6 +2176,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2086,6 +2197,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2106,6 +2218,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2126,6 +2239,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2146,6 +2260,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2166,6 +2281,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2186,6 +2302,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2206,6 +2323,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2228,6 +2346,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2250,6 +2369,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2270,6 +2390,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2290,6 +2411,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2312,6 +2434,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2332,6 +2455,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2352,6 +2476,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2372,6 +2497,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2387,6 +2513,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2407,6 +2534,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2429,6 +2557,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2449,6 +2578,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2469,6 +2599,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2489,6 +2620,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2509,6 +2641,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2529,6 +2662,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2549,6 +2683,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2571,6 +2706,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2587,6 +2723,7 @@
         "url": "https://www.chexsystems.com/security-freeze/information",
         "notes": "No general opt-out found; this is the security-freeze route (online, phone, mail to PO Box 583399, or email chexsystems.cr@fisglobal.com). A freeze limits access to the ChexSystems report only."
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2610,6 +2747,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2630,6 +2768,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2650,6 +2789,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2670,6 +2810,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2692,6 +2833,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2712,6 +2854,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2734,6 +2877,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2754,6 +2898,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2774,6 +2919,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2784,6 +2930,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2804,6 +2951,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2824,6 +2972,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2844,6 +2993,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2864,6 +3014,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2884,8 +3035,9 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
-      "hub": false
+      "missions": [],
+      "reach": 7,
+      "hub": true
     },
     {
       "id": "clickagy",
@@ -2904,6 +3056,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2926,6 +3079,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2946,6 +3100,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2968,6 +3123,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -2988,6 +3144,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3008,6 +3165,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3028,6 +3186,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3048,6 +3207,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3068,6 +3228,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3088,6 +3249,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3108,6 +3270,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3128,6 +3291,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3148,6 +3312,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3168,6 +3333,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3188,6 +3354,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3208,6 +3375,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3230,6 +3398,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3252,6 +3421,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3272,6 +3442,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3292,6 +3463,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3302,6 +3474,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3322,6 +3495,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3362,6 +3536,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3384,6 +3559,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3406,6 +3582,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3426,6 +3603,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3446,6 +3624,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3468,6 +3647,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3488,6 +3668,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3508,6 +3689,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3528,6 +3710,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3540,6 +3723,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3562,6 +3746,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3582,6 +3767,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3604,6 +3790,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3624,6 +3811,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3646,7 +3834,7 @@
         "url": "https://www.data-axle.com/privacy-rights-request/",
         "notes": "Consumer Privacy Rights Request form covering opt-out of sale/sharing, access, deletion and correction; authorized-agent form at /privacy-rights-request-authorized-agent/.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-reclaim-deep-layer"
@@ -3671,6 +3859,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3691,6 +3880,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3711,6 +3901,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3733,6 +3924,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3753,6 +3945,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3768,6 +3961,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3790,6 +3984,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3810,6 +4005,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3830,6 +4026,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3842,6 +4039,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3862,6 +4060,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3882,6 +4081,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3902,6 +4102,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3922,6 +4123,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3942,6 +4144,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3952,6 +4155,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3972,6 +4176,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -3992,6 +4197,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4012,6 +4218,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4032,6 +4239,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4052,6 +4260,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4072,6 +4281,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4092,6 +4302,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4112,6 +4323,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4132,6 +4344,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4154,6 +4367,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4174,6 +4388,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4194,6 +4409,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4214,6 +4430,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4234,6 +4451,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4254,6 +4472,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4274,6 +4493,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4294,6 +4514,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4314,6 +4535,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4334,6 +4556,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4344,8 +4567,9 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
-      "hub": true
+      "hub": false
     },
     {
       "id": "digital-media-solutions",
@@ -4364,6 +4588,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4386,6 +4611,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4406,6 +4632,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4428,6 +4655,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4448,6 +4676,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4468,6 +4697,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4490,6 +4720,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4510,6 +4741,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4532,6 +4764,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4552,6 +4785,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4572,6 +4806,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4592,6 +4827,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4612,6 +4848,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4632,6 +4869,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4652,6 +4890,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4672,6 +4911,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4692,6 +4932,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4714,6 +4955,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4734,6 +4976,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4746,8 +4989,9 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 3,
-      "hub": true
+      "hub": false
     },
     {
       "id": "eab-global",
@@ -4766,6 +5010,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4786,6 +5031,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4808,6 +5054,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4828,6 +5075,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4848,6 +5096,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4870,6 +5119,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4890,6 +5140,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4910,6 +5161,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4930,6 +5182,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4950,6 +5203,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4970,6 +5224,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -4992,6 +5247,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5012,6 +5268,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5032,6 +5289,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5047,6 +5305,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5101,6 +5360,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5119,7 +5379,8 @@
         "url": "https://myprivacy.equifax.com/opt-in-opt-out/personal-info",
         "notes": "Linked as 'Your Privacy Choices' from The Work Number and Equifax pages; returned HTTP 200 (JavaScript app) on 2026-10-18, contents not machine-readable. Credit freezes are separate (equifax.com credit-freeze page)."
       },
-      "reach": 7,
+      "missions": [],
+      "reach": 9,
       "hub": true
     },
     {
@@ -5139,7 +5400,8 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
+      "missions": [],
+      "reach": 3,
       "hub": false
     },
     {
@@ -5173,7 +5435,7 @@
         "enterprise_data-reclaim-deep-layer",
         "enterprise_data-recon-supply-chain"
       ],
-      "reach": 1,
+      "reach": 3,
       "hub": false
     },
     {
@@ -5193,6 +5455,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5213,6 +5476,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5235,6 +5499,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5255,6 +5520,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5275,6 +5541,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5295,6 +5562,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5315,6 +5583,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5335,6 +5604,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5355,6 +5625,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5372,7 +5643,8 @@
       ],
       "registries": {},
       "optOut": null,
-      "reach": 10,
+      "missions": [],
+      "reach": 16,
       "hub": true
     },
     {
@@ -5382,6 +5654,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5402,6 +5675,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5422,8 +5696,9 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
-      "hub": false
+      "missions": [],
+      "reach": 7,
+      "hub": true
     },
     {
       "id": "experian-marketing-solutions",
@@ -5444,6 +5719,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5464,6 +5740,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5476,6 +5753,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5496,6 +5774,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5516,6 +5795,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5536,6 +5816,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5546,6 +5827,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5566,6 +5848,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5586,6 +5869,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5606,6 +5890,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5628,6 +5913,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5648,6 +5934,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5668,6 +5955,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5688,6 +5976,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5708,6 +5997,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5728,6 +6018,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5748,6 +6039,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5768,6 +6060,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5788,6 +6081,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5808,6 +6102,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5820,6 +6115,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5840,6 +6136,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5862,7 +6159,8 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
+      "missions": [],
+      "reach": 2,
       "hub": false
     },
     {
@@ -5882,6 +6180,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5902,6 +6201,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5917,6 +6217,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5937,6 +6238,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5957,6 +6259,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5977,6 +6280,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -5999,6 +6303,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6021,6 +6326,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6041,6 +6347,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6062,7 +6369,7 @@
         "url": "https://www.truepeoplesearch.com/removal",
         "notes": "Agree to terms, CAPTCHA, find record, remove. Live page returned 403 to automated fetches on 2026-10-18; the latest readable Wayback capture is from 2024-03-28, so this route may be stale.",
         "status": "blocked",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-removal-links",
@@ -6090,6 +6397,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6112,6 +6420,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6132,6 +6441,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6152,6 +6462,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6172,6 +6483,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6192,6 +6504,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6215,7 +6528,8 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 5,
+      "missions": [],
+      "reach": 12,
       "hub": true
     },
     {
@@ -6227,6 +6541,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -6247,6 +6562,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6267,6 +6583,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6287,6 +6604,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6307,6 +6625,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6329,6 +6648,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6349,6 +6669,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6361,8 +6682,9 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 5,
-      "hub": true
+      "hub": false
     },
     {
       "id": "google",
@@ -6373,6 +6695,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6393,6 +6716,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6413,6 +6737,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6430,7 +6755,8 @@
         "url": "https://gravyanalytics.com/opt-out-do-not-sell?hsLang=en",
         "notes": "'Opt Out & Do Not Sell' page; privacy contact privacy@gravyanalytics.com, 703-840-8850. Unacast's own policy names the entity as 'Gravy Analytics, Inc. dba Unacast', with its opt-out at unacast.com/opt-out. gravyanalytics.com now serves Unacast's site. The older gravyanalytics.com/opt-out page is a stale 2019 page."
       },
-      "reach": 2,
+      "missions": [],
+      "reach": 5,
       "hub": false
     },
     {
@@ -6450,6 +6776,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6470,6 +6797,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6490,6 +6818,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6510,6 +6839,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6530,6 +6860,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6550,6 +6881,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6570,6 +6902,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6590,6 +6923,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6610,6 +6944,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6632,6 +6967,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6652,6 +6988,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6674,6 +7011,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6694,6 +7032,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6714,6 +7053,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6734,6 +7074,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6754,6 +7095,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6776,6 +7118,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6796,6 +7139,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6808,6 +7152,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6828,6 +7173,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6848,6 +7194,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6868,6 +7215,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6888,6 +7236,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6900,6 +7249,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6912,6 +7262,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6932,6 +7283,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6942,6 +7294,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6962,6 +7315,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6974,6 +7328,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -6996,6 +7351,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7008,6 +7364,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7028,6 +7385,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7048,6 +7406,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7068,6 +7427,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7090,6 +7450,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7110,6 +7471,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7130,6 +7492,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7150,6 +7513,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7170,6 +7534,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7190,6 +7555,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7210,6 +7576,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7232,6 +7599,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7254,6 +7622,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7266,6 +7635,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7286,6 +7656,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7306,6 +7677,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7329,6 +7701,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7349,6 +7722,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7369,6 +7743,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7389,6 +7764,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7405,6 +7781,7 @@
         "url": "https://www.innovis.com/personal/optOutOptIn",
         "notes": "Prescreen (firm offers of credit/insurance) opt-out is done at www.optoutprescreen.com. Innovis says it does no direct-to-consumer marketing, so it cannot process marketing opt-outs. Security freeze at innovis.com/personal/securityFreeze; phone 1-800-540-2505."
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7425,6 +7802,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7445,6 +7823,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7467,6 +7846,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7487,6 +7867,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7507,6 +7888,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7542,6 +7924,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7562,6 +7945,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7610,6 +7994,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7630,6 +8015,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7650,6 +8036,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7670,6 +8057,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7690,6 +8078,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7710,6 +8099,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7730,6 +8120,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7752,6 +8143,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7772,6 +8164,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7792,6 +8185,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7812,6 +8206,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7832,6 +8227,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7842,6 +8238,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7862,6 +8259,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7882,6 +8280,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7902,6 +8301,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7922,6 +8322,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7942,6 +8343,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7962,6 +8364,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7982,6 +8385,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -7995,8 +8399,9 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 5,
-      "hub": true
+      "hub": false
     },
     {
       "id": "jun-group-productions",
@@ -8015,6 +8420,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8035,6 +8441,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8055,6 +8462,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8075,6 +8483,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8095,6 +8504,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8115,6 +8525,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8135,6 +8546,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8155,6 +8567,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8175,6 +8588,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8192,6 +8606,7 @@
         "url": "https://www.kochava.com/privacy/support-privacy/",
         "notes": "kochava.com/opt-out/ only gives device-level instructions (disable interest-based ads, reset the advertising ID, opt out inside the app). Privacy contact privacy@kochava.com is on the support-privacy page."
       },
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -8212,6 +8627,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8232,6 +8648,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8252,6 +8669,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8264,6 +8682,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8286,6 +8705,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8298,6 +8718,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8318,6 +8739,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8338,6 +8760,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8358,6 +8781,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8380,6 +8804,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8400,6 +8825,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8420,6 +8846,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8440,6 +8867,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8460,6 +8888,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8480,6 +8909,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8500,6 +8930,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8512,6 +8943,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -8534,6 +8966,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8554,6 +8987,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8572,6 +9006,7 @@
         "method": "email",
         "email": "privacy@lemlist.com"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8592,6 +9027,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8612,6 +9048,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8622,6 +9059,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8634,6 +9072,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -8644,6 +9083,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8667,8 +9107,8 @@
         "enterprise_data-fortify-lexisnexis",
         "enterprise_data-recon-supply-chain"
       ],
-      "reach": 1,
-      "hub": false
+      "reach": 8,
+      "hub": true
     },
     {
       "id": "lexisnexis-risk-solutions-fl",
@@ -8703,6 +9143,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8715,6 +9156,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8735,6 +9177,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8755,6 +9198,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8775,6 +9219,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8795,6 +9240,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8815,6 +9261,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8835,6 +9282,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8857,6 +9305,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8880,7 +9329,7 @@
         "url": "https://liveramp.com/privacy/my-privacy-choices/",
         "notes": "Opt-out open to all US residents; first+last name and email give an opt-out across all linked identifiers; separate device (mobile ID) and browser (cookie) opt-outs; phone (844) 678-0045. Policy names no specific source or recipient companies.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "ad_trackers-reclaim-individual"
@@ -8905,6 +9354,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8915,6 +9365,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8935,6 +9386,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8955,6 +9407,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8975,6 +9428,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -8995,6 +9449,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9017,6 +9472,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9058,6 +9514,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9078,6 +9535,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9088,6 +9546,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9108,6 +9567,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9128,6 +9588,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9150,6 +9611,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9172,6 +9634,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9194,6 +9657,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9214,6 +9678,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9234,6 +9699,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9254,6 +9720,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9274,6 +9741,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9296,6 +9764,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9318,6 +9787,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9338,6 +9808,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9358,6 +9829,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9378,6 +9850,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9398,6 +9871,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9413,6 +9887,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9433,6 +9908,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9453,6 +9929,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9473,6 +9950,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9493,6 +9971,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9513,6 +9992,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9533,6 +10013,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9546,6 +10027,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9566,6 +10048,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9579,6 +10062,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9599,6 +10083,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9619,6 +10104,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9657,7 +10143,7 @@
             "source": "pol-usphonebook-removal"
           }
         ],
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-extended-sweep-1",
@@ -9686,6 +10172,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9706,6 +10193,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9729,6 +10217,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9751,6 +10240,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9771,6 +10261,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9791,6 +10282,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9811,6 +10303,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9831,6 +10324,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9851,6 +10345,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9871,6 +10366,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9883,6 +10379,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9903,6 +10400,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9923,6 +10421,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9964,6 +10463,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9984,6 +10484,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -9996,6 +10497,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10018,6 +10520,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10038,6 +10541,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10050,6 +10554,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10070,6 +10575,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10090,6 +10596,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10112,6 +10619,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10132,6 +10640,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10142,6 +10651,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10164,6 +10674,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10186,6 +10697,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10206,6 +10718,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10226,6 +10739,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10246,6 +10760,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10266,6 +10781,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10286,6 +10802,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10306,6 +10823,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10328,6 +10846,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10348,6 +10867,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10368,6 +10888,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10411,6 +10932,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10431,6 +10953,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10451,6 +10974,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10471,6 +10995,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10483,6 +11008,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -10503,6 +11029,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10525,6 +11052,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10545,6 +11073,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10565,6 +11094,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10577,6 +11107,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10597,6 +11128,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10619,6 +11151,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10639,6 +11172,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10656,6 +11190,7 @@
         "url": "https://www.oracle.com/a/ocom/docs/oracle-advertising-end-of-life-faqs.pdf",
         "notes": "Shut down: Oracle's EOL FAQ (v3.0, Aug 12 2024) says Oracle will End-of-Life all Oracle Advertising products and support effective September 30, 2024. The old advertising privacy policy URL now redirects to oracle.com/contracts/data-services/. Nothing left to opt out of."
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10676,6 +11211,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10696,6 +11232,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10718,6 +11255,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10738,6 +11276,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10758,6 +11297,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10778,6 +11318,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10798,6 +11339,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10820,6 +11362,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10840,6 +11383,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10860,6 +11404,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10880,6 +11425,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10900,6 +11446,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10922,6 +11469,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10942,6 +11490,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10958,6 +11507,7 @@
         "url": "https://suppression.peopleconnect.us/login",
         "notes": "'PeopleConnect - Suppression Center' returned HTTP 200 on 2026-10-18 (JavaScript app; only its title is machine-readable). Third-party guides say one suppression covers Intelius, TruthFinder, Instant Checkmate and US Search; that coverage is not confirmed from PeopleConnect's own text."
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10978,6 +11528,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -10998,6 +11549,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11019,7 +11571,7 @@
         "url": "https://www.peoplewhiz.com/remove-my-info",
         "notes": "Search for your record, then confirm; ID required. PeopleWhiz says it will then notify its data partners. Live page returned 403 on 2026-10-18; content confirmed from the 2026-06-26 Wayback capture.",
         "status": "blocked",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-extended-sweep-2"
@@ -11044,6 +11596,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11064,6 +11617,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11086,6 +11640,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11108,6 +11663,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11147,6 +11703,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11167,6 +11724,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11187,6 +11745,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11207,6 +11766,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11227,6 +11787,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11247,6 +11808,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11267,6 +11829,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11287,6 +11850,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11307,6 +11871,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11327,6 +11892,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11347,6 +11913,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11367,6 +11934,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11389,6 +11957,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11409,6 +11978,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11421,6 +11991,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11441,6 +12012,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11461,6 +12033,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11481,6 +12054,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11501,6 +12075,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11516,6 +12091,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11536,6 +12112,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11556,6 +12133,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11576,6 +12154,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11598,6 +12177,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11618,6 +12198,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11630,8 +12211,9 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 4,
-      "hub": true
+      "hub": false
     },
     {
       "id": "publicnsa",
@@ -11650,6 +12232,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11672,6 +12255,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11694,6 +12278,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11704,8 +12289,9 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 3,
-      "hub": true
+      "hub": false
     },
     {
       "id": "pulsepoint",
@@ -11724,6 +12310,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11744,6 +12331,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11766,6 +12354,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11786,6 +12375,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11798,6 +12388,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11835,6 +12426,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11855,6 +12447,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11896,6 +12489,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11916,6 +12510,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11936,6 +12531,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11956,6 +12552,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11976,6 +12573,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -11996,6 +12594,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12016,6 +12615,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12036,6 +12636,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12048,6 +12649,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12068,6 +12670,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12088,6 +12691,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12108,6 +12712,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12128,6 +12733,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12148,6 +12754,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12168,6 +12775,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12188,6 +12796,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12200,7 +12809,8 @@
       ],
       "registries": {},
       "optOut": null,
-      "reach": 8,
+      "missions": [],
+      "reach": 15,
       "hub": true
     },
     {
@@ -12220,6 +12830,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12240,6 +12851,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12260,6 +12872,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12280,6 +12893,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12300,6 +12914,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12320,6 +12935,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12342,6 +12958,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12362,6 +12979,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12384,6 +13002,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12404,6 +13023,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12424,6 +13044,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12444,6 +13065,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12464,6 +13086,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12484,6 +13107,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12504,6 +13128,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12525,7 +13150,7 @@
         "url": "https://rocketreach.co/remove-profile",
         "notes": "rocketreach.co/claim-profile redirects here; returned HTTP 200 (JavaScript app) on 2026-10-18. The mission notes it may require an account.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-extended-sweep-3"
@@ -12550,6 +13175,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12570,6 +13196,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12590,6 +13217,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12610,6 +13238,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12632,6 +13261,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12652,6 +13282,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12684,6 +13315,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12699,6 +13331,7 @@
         "OR": null
       },
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12719,6 +13352,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12739,6 +13373,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12759,6 +13394,7 @@
         "status": "suspect",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12779,6 +13415,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12801,6 +13438,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12821,6 +13459,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12841,6 +13480,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12861,6 +13501,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12881,6 +13522,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12901,6 +13543,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12921,6 +13564,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12943,6 +13587,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12955,6 +13600,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 2,
       "hub": false
     },
@@ -12975,6 +13621,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -12997,6 +13644,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13017,6 +13665,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13037,6 +13686,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13049,6 +13699,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13078,6 +13729,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13098,6 +13750,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13118,6 +13771,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13138,6 +13792,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13158,6 +13813,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13178,6 +13834,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13190,6 +13847,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13210,6 +13868,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13230,6 +13889,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13250,6 +13910,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13270,6 +13931,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13290,6 +13952,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13310,6 +13973,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13330,6 +13994,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13350,6 +14015,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13370,6 +14036,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13390,6 +14057,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13418,7 +14086,7 @@
             "source": "pol-thatsthem-optout"
           }
         ],
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-extended-sweep-2",
@@ -13446,6 +14114,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13466,6 +14135,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13487,7 +14157,7 @@
         "url": "https://www.spydialer.com/consumers/",
         "notes": "spydialer.com/optout.aspx redirects here ('Remove My Info'); open to consumers in all states. Operator per footer: Spy Labs Adco, LLC.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-extended-sweep-2"
@@ -13514,6 +14184,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13537,6 +14208,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13557,6 +14229,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13577,6 +14250,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13597,6 +14271,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13617,6 +14292,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13637,6 +14313,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13657,6 +14334,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13677,6 +14355,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13697,6 +14376,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13717,6 +14397,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13737,6 +14418,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13757,6 +14439,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13777,6 +14460,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13797,6 +14481,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13817,6 +14502,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13837,6 +14523,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13849,6 +14536,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13871,6 +14559,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13891,6 +14580,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13911,6 +14601,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13931,6 +14622,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13951,6 +14643,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13971,6 +14664,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -13991,6 +14685,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14011,6 +14706,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14031,6 +14727,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14051,6 +14748,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14071,6 +14769,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14081,6 +14780,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14091,6 +14791,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14111,6 +14812,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14131,6 +14833,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14151,6 +14854,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14171,6 +14875,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14191,6 +14896,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14211,6 +14917,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14231,6 +14938,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14255,6 +14963,17 @@
       "hub": false
     },
     {
+      "id": "thomson-reuters-special-services",
+      "name": "Thomson Reuters Special Services",
+      "parent": null,
+      "kind": [],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 5,
+      "hub": false
+    },
+    {
       "id": "throtle",
       "name": "THROTLE INC",
       "parent": null,
@@ -14271,6 +14990,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14291,6 +15011,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14326,6 +15047,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14346,6 +15068,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14368,7 +15091,7 @@
         "url": "https://www.transunion.com/consumer-privacy",
         "notes": "Data privacy requests (opt out, limit, access, correct, delete) via a TransUnion Service Center account, or as a guest with results by mail. Live page returned HTTP 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-01 Wayback capture. The mission adds that TLO is included.",
         "status": "blocked",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "enterprise_data-fortify-property"
@@ -14388,7 +15111,8 @@
       ],
       "registries": {},
       "optOut": null,
-      "reach": 12,
+      "missions": [],
+      "reach": 19,
       "hub": true
     },
     {
@@ -14408,6 +15132,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14428,6 +15153,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14440,6 +15166,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14460,8 +15187,9 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
-      "reach": 1,
-      "hub": false
+      "missions": [],
+      "reach": 8,
+      "hub": true
     },
     {
       "id": "trelize",
@@ -14480,6 +15208,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14500,6 +15229,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14520,6 +15250,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14542,6 +15273,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14552,6 +15284,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14572,6 +15305,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14592,6 +15326,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14612,6 +15347,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14632,6 +15368,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14652,6 +15389,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14674,6 +15412,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14694,6 +15433,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14714,6 +15454,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14724,6 +15465,7 @@
       "kind": [],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14746,6 +15488,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14766,6 +15509,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14786,6 +15530,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14808,6 +15553,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14828,6 +15574,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14848,6 +15595,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14868,6 +15616,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14888,6 +15637,46 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-air-force",
+      "name": "Department of the Air Force",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-army",
+      "name": "Department of the Army",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-cbp",
+      "name": "U.S. Customs and Border Protection",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14908,6 +15697,124 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-dcsa",
+      "name": "Defense Counterintelligence and Security Agency",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-dea",
+      "name": "Drug Enforcement Administration",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-fbi",
+      "name": "Federal Bureau of Investigation",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-ice",
+      "name": "U.S. Immigration and Customs Enforcement",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-irs",
+      "name": "Internal Revenue Service",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-navy",
+      "name": "Department of the Navy",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-socom",
+      "name": "U.S. Special Operations Command",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-usms",
+      "name": "U.S. Marshals Service",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-usss",
+      "name": "U.S. Secret Service",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {},
+      "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14928,6 +15835,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14965,6 +15873,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -14985,6 +15894,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15007,6 +15917,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15027,6 +15938,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15047,6 +15959,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15067,6 +15980,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15087,6 +16001,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15108,9 +16023,10 @@
         "url": "https://www.venntel.com/opt-out",
         "notes": "'Opt Out & Delete Request' page (Venntel, Inc.). Its privacy policy uses the same template as Gravy/Unacast's but names no parent.",
         "status": "verified",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
-      "reach": 1,
+      "missions": [],
+      "reach": 4,
       "hub": false
     },
     {
@@ -15130,6 +16046,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15150,6 +16067,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15172,6 +16090,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15185,6 +16104,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15205,6 +16125,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15225,6 +16146,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15245,6 +16167,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15268,6 +16191,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15290,6 +16214,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15310,6 +16235,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15332,6 +16258,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15352,6 +16279,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15374,6 +16302,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15396,6 +16325,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15418,6 +16348,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15438,6 +16369,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15458,6 +16390,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15478,6 +16411,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15498,6 +16432,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15520,6 +16455,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15540,6 +16476,7 @@
         "status": "blocked",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15560,6 +16497,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15580,6 +16518,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15600,6 +16539,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15620,6 +16560,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15640,6 +16581,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15660,6 +16602,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15672,6 +16615,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15696,8 +16640,8 @@
         "enterprise_data-fortify-thomson",
         "enterprise_data-recon-supply-chain"
       ],
-      "reach": 1,
-      "hub": false
+      "reach": 7,
+      "hub": true
     },
     {
       "id": "west-publising",
@@ -15741,7 +16685,7 @@
         "url": "https://www.whitepages.com/suppression-requests",
         "notes": "5-step opt-out starting with your profile URL. Live page returned 403 to automated fetches on 2026-10-18; content confirmed from the 2026-10-14 Wayback capture.",
         "status": "blocked",
-        "verifiedAt": "2026-10-18"
+        "verifiedAt": "2026-10-19"
       },
       "missions": [
         "people_search-fortify-web-forms",
@@ -15767,6 +16711,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15787,6 +16732,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15807,6 +16753,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15827,6 +16774,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15847,6 +16795,7 @@
         "status": "dead",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15867,6 +16816,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15887,6 +16837,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15907,6 +16858,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15927,6 +16879,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15939,6 +16892,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15961,6 +16915,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15974,6 +16929,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -15994,6 +16950,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16014,6 +16971,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16034,6 +16992,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16054,6 +17013,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16074,6 +17034,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16094,6 +17055,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16116,6 +17078,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16138,6 +17101,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16161,6 +17125,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16181,6 +17146,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16201,6 +17167,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16221,6 +17188,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16241,6 +17209,7 @@
         "status": "verified",
         "verifiedAt": "2026-10-18"
       },
+      "missions": [],
       "reach": 1,
       "hub": false
     },
@@ -16253,6 +17222,7 @@
       ],
       "registries": {},
       "optOut": null,
+      "missions": [],
       "reach": 1,
       "hub": false
     }
@@ -17131,6 +18101,695 @@
         {
           "url": "https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf",
           "archived": "https://web.archive.org/web/20261019051259/https://files.consumerfinance.gov/f/documents/cfpb_transunion-rental-screening-solutions-inc-trans-union-llc_stip-final-judg-order.pdf"
+        }
+      ]
+    },
+    {
+      "from": "us-air-force",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Air Force award FA489017P0017 to BABEL STREET, INC. (period of performance 2017-07-28 to 2018-06-02, FY2017–FY2018; $333,214.00 obligated), described in the award record as \"BABEL X SUBSCRIPTION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019062611/https://www.usaspending.gov/award/CONT_AWD_FA489017P0017_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-air-force",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064702/https://www.usaspending.gov/award/CONT_AWD_FA701417P3000_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-air-force",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Air Force award FA701414P3005 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-01-01 to 2016-12-31, FY2014–FY2017; $39,900.00 obligated), described in the award record as \"LAW ENFORCEMENT DATABASE ACCESS\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019051440/https://www.usaspending.gov/award/CONT_AWD_FA701414P3005_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-army",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Army award W90BRJ15P0015 to BABEL STREET, INC. (period of performance 2015-04-05 to 2016-04-05, FY2015–FY2016; $246,000.00 obligated), described in the award record as \"BABEL SENTRY GLOBAL\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019062809/https://www.usaspending.gov/award/CONT_AWD_W90BRJ15P0015_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-army",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Army award W9124725PA010 to CLEARVIEW AI, INC. (period of performance 2025-03-20 to 2026-03-19, FY2025–FY2026; $75,000.00 obligated), described in the award record as \"CLEARVIEW AI IS A URL BASED INTELLIGENCE SERVICE THAT RUNS ON A TOOL CLOUD DATABASE AND PERMITS A USER ACCESS TO SYSTEM FOR A PERIOD OF 12 MONTHS.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20260403084644/https://www.usaspending.gov/award/CONT_AWD_W9124725PA010_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-army",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Army award W911SD21F0187 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2021-09-01 to 2024-08-31, FY2021–FY2024; $322,500.00 obligated), described in the award record as \"HISTORICAL CREDIT REPORT DATABASE\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730",
+          "archived": "https://web.archive.org/web/20261019065402/https://www.usaspending.gov/award/CONT_AWD_W911SD21F0187_9700_GS23F0356P_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-army",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Army award W15QKN19C0063 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2019-09-03 to 2023-09-02, FY2019–FY2023; $1,095,552.00 obligated), described in the award record as \"THIS CONTRACT IS ESTABLISHED TO PROCURE ACCESS FOR 288 USERS TO A WEB BASED PUBLIC DATA SITE.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064455/https://www.usaspending.gov/award/CONT_AWD_W15QKN19C0063_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-army",
+      "to": "thomson-reuters-special-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Army award W911NF25PA015 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2025-09-15 to 2026-09-14, FY2025–FY2026; $13,565.91 obligated), described in the award record as \"THOMPOSON REUTERS CLEAR LICENSE: CLEAR FOR GOVERNMENT FRAUD, CLEAR WORLD-CHECK ADDON, CLEAR ADVERSE MEDIA WITH SANCTIONS, BATCH DOCUMENT SEARCH ADVERSE FILINGS (3,000 ANNUAL INPUTS). UP TO 2 LICENSED USERS\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019063423/https://www.usaspending.gov/award/CONT_AWD_W911NF25PA015_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-cbp",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B03C25P00000321 to CLEARVIEW AI, INC. (period of performance 2025-06-25 to 2026-06-24, FY2025–FY2026; $30,000.00 obligated), described in the award record as \"FEDERAL INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSES IN SUPPORT OF THE USBP SPOKANE SECTOR\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019070206/https://www.usaspending.gov/award/CONT_AWD_70B03C25P00000321_7014_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-cbp",
+      "to": "thomson-reuters-special-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1015P00702 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2015-09-28 to 2018-09-27, FY2015–FY2018; $687,493.30 obligated), described in the award record as \"THOMSON REUTERS DATABASE ACCESS SUBSCRIPTION FOR THE WASHINGTON, DC LOCATION.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019063021/https://www.usaspending.gov/award/CONT_AWD_HSBP1015P00702_7014_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-cbp",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014P00718 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2014-10-01 to 2015-09-30, FY2015; $10,800.00 obligated), described in the award record as \"SUBSCRIPTION FOR TLO- ONLINE INVESTIGATION SYSTEM\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20251225224328/https://www.usaspending.gov/award/CONT_AWD_HSBP1014P00718_7014_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-cbp",
+      "to": "venntel",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Customs and Border Protection award 70B02C20P00000521 to VENNTEL INC (period of performance 2020-09-10 to 2021-09-09, FY2020–FY2021; $20,000.00 obligated), described in the award record as \"PURCHASE OF PORTAL (LICENSE) SEAT\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20250524093757/https://www.usaspending.gov/award/CONT_AWD_70B02C20P00000521_7014_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-cbp",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Customs and Border Protection award HSBP1014J00318 to WEST PUBLISHING CORPORATION (period of performance 2014-06-18 to 2015-03-31, FY2014–FY2015; $1,623,324.09 obligated), described in the award record as \"ACCESS TO CLEAR DATABASE - WEST PUBLISHING VERBAL AUTHORIZATION GIVEN BY DHS WCF FEDLINK TO CONTINUE SERVICES - DELIVERY ORDER COVERS DATES OF SERVICE COVERED BY AUTHORIZATION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300",
+          "archived": "https://web.archive.org/web/20250502052347/https://www.usaspending.gov/award/CONT_AWD_HSBP1014J00318_7014_LC09D7012_0300"
+        }
+      ]
+    },
+    {
+      "from": "us-dcsa",
+      "to": "equifax-workforce-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0047 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2023-06-21 to 2027-05-31, FY2023–FY2027; $6,312,163.20 obligated), described in the award record as \"EMPLOYMENT VERIFICATION SERVICES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732",
+          "archived": "https://web.archive.org/web/20250723145439/https://www.usaspending.gov/award/CONT_AWD_HS002123F0047_9700_GS02F0235X_4732"
+        }
+      ]
+    },
+    {
+      "from": "us-dcsa",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0058 to WEST PUBLISHING CORPORATION (period of performance 2023-08-01 to 2026-07-31, FY2023–FY2026; $495,050.76 obligated), described in the award record as \"CLEAR PRO PART NUMBER 41447595 ISD\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732",
+          "archived": "https://web.archive.org/web/20261019063804/https://www.usaspending.gov/award/CONT_AWD_HS002123F0058_9700_GS02F026DA_4732"
+        }
+      ]
+    },
+    {
+      "from": "us-dea",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDHQ20F00001467 to BABEL STREET, INC. (period of performance 2020-09-30 to 2021-09-29, FY2020–FY2021; $220,000.00 obligated), described in the award record as \"DATA COLLECTION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549",
+          "archived": "https://web.archive.org/web/20261019062010/https://www.usaspending.gov/award/CONT_AWD_15DDHQ20F00001467_1524_DJF161200S0009106_1549"
+        }
+      ]
+    },
+    {
+      "from": "us-dea",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Drug Enforcement Administration award DJD12HQG0018 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-11-01 to 2012-10-21, FY2012–FY2013; $3,332.80 obligated), described in the award record as \"CREDIT REPORTING SERVICES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730",
+          "archived": "https://web.archive.org/web/20261019065804/https://www.usaspending.gov/award/CONT_AWD_DJD12HQG0018_1524_GS23F0356P_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-dea",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDH022P00000051 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-10-01 to 2023-09-30, FY2023; $14,035.68 obligated), described in the award record as \"LEXIS NEXIS ACCURANT LE PLUS IDS WITH PHONE PLUS ACCOUNT #1357965 POP: 10/01/22-09/30/23. SUBJECT TO AVAILABILITY OF FY 2022/2023 FUNDS\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064357/https://www.usaspending.gov/award/CONT_AWD_15DDH022P00000051_1524_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-dea",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDSE18P00000061 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2018-09-07 to 2019-09-30, FY2018–FY2019; $14,217.70 obligated), described in the award record as \"SEATTLE HIDTA/TRANSUNION/DATABASE/RURR\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019065200/https://www.usaspending.gov/award/CONT_AWD_15DDSE18P00000061_1524_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-dea",
+      "to": "venntel",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Drug Enforcement Administration award 15DDST18P00000052 to VENNTEL INC (period of performance 2018-04-11 to 2019-04-11, FY2018–FY2019; $25,000.00 obligated), described in the award record as \"SOFTWARE LICENSE\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019045853/https://www.usaspending.gov/award/CONT_AWD_15DDST18P00000052_1524_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award DJF141200P0013007 to BABEL STREET, INC. (period of performance 2014-09-24 to 2014-10-31, FY2014–FY2015; $36,600.00 obligated), described in the award record as \"BABEL STREET PACIFIC LICENSE, MULTILINGUAL OPEN SOURCE DATA COLLECTION, ANALYSIS AND REPORTING.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019062218/https://www.usaspending.gov/award/CONT_AWD_DJF141200P0013007_1549_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06723P0001356 to CLEARVIEW AI, INC. (period of performance 2023-01-26 to 2026-01-25, FY2023–FY2026; $359,000.00 obligated), described in the award record as \"CLEARVIEW ACTS AS A SEARCH ENGINE OF PUBLICLY AVAILABLE IMAGES ON THE INTERNET. ITS AN INVESTIGATIVE TOOL DESIGNED TO BE USED IN WAYS THAT ULTIMATELY REDUCE CRIME, FRAUD, AND RISK IN ORDER TO MAKE COMMUNITIES SAFER.…\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019070003/https://www.usaspending.gov/award/CONT_AWD_15F06723P0001356_1549_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "equifax-workforce-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06721F0001429 to EQUIFAX WORKFORCE SOLUTIONS LLC (period of performance 2021-06-10 to 2022-07-07, FY2021–FY2022; $23,241.55 obligated), described in the award record as \"THE WORK NUMBER ONLINE EMPLOYMENT VERIFICATION SERVICE\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549",
+          "archived": "https://web.archive.org/web/20261019051838/https://www.usaspending.gov/award/CONT_AWD_15F06721F0001429_1549_15F06719A0000600_1549"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000693 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2014-11-17 to 2017-09-30, FY2015–FY2017; $1,725,000.00 obligated), described in the award record as \"EXPERIAN PROVIDES A FILLE WITH MORE THAN 300 MILLION RECORDS WITH NAMES, ADDRESSES, AND PHONE NUMBERS IN A FORMAT COMPATIBLE WITH FBI AND FTTTF SYSTEMS.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730",
+          "archived": "https://web.archive.org/web/20261019052225/https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000693_1549_GS23F0356P_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "thomson-reuters-special-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award 15F06726F0001553 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2026-09-16 to 2027-09-15, FY2026–FY2027; $4,105,534.56 obligated), described in the award record as \"PUBLIC SOURCE DATA EFFORT-PSP\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732",
+          "archived": "https://web.archive.org/web/20261019063221/https://www.usaspending.gov/award/CONT_AWD_15F06726F0001553_1549_47QRAA24D009W_4732"
+        }
+      ]
+    },
+    {
+      "from": "us-fbi",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Federal Bureau of Investigation award DJF151200G0000753 to WEST PUBLISHING CORPORATION (period of performance 2014-11-19 to 2017-09-30, FY2015–FY2017; $21,240,732.15 obligated), described in the award record as \"THE THOMSON REUTERS SERVICES CLEAR, CAIT, AND WESTLAW. CLEAR IS A PERSON SEARCH TOOL ALLOWING USERS TO LOCATE INDIVIDUALS. CAIT ASSISTS INVESTIGATORS WITH CHILD ABDUCTION CASES. WESTLAW IS A LEGAL RESEARCH TOOL USED…\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730",
+          "archived": "https://web.archive.org/web/20261019050628/https://www.usaspending.gov/award/CONT_AWD_DJF151200G0000753_1549_GS02F0405D_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD19FC0000052 to BABEL STREET, INC. (period of performance 2019-09-12 to 2024-09-29, FY2019–FY2024; $3,681,061.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012",
+          "archived": "https://web.archive.org/web/20251005001117/https://www.usaspending.gov/award/CONT_AWD_70CMSD19FC0000052_7012_70CMSD19A00000007_7012"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21P00000127 to CLEARVIEW AI, INC. (period of performance 2021-09-03 to 2024-09-03, FY2021–FY2024; $2,287,500.00 obligated), described in the award record as \"CLEARVIEW FACIAL RECOGNITION ENTERPRISE LICENSES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261010082347/https://www.usaspending.gov/award/CONT_AWD_70CMSD21P00000127_7012_-NONE-_-NONE-/"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "equifax-information-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEEH09F00025 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2009-09-25 to 2014-12-24, FY2009–FY2015; $111,930.04 obligated), described in the award record as \"PRE-EMPLOYMENT CREDIT INQUIRIES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730",
+          "archived": "https://web.archive.org/web/20261019052021/https://www.usaspending.gov/award/CONT_AWD_HSCEEH09F00025_7001_GS22F9663D_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000001 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-02-25 to 2026-08-31, FY2021–FY2026; $24,509,116.00 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS)\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20260928104747/https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000001_7012_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "thomson-reuters-special-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD21C00000002 to THOMSON REUTERS SPECIAL SERVICES LLC (period of performance 2021-05-28 to 2026-11-30, FY2021–FY2027; $25,218,959.64 obligated), described in the award record as \"LAW ENFORCEMENT INVESTIGATIVE DATABASE SUBSCRIPTION (LEIDS), TASKS 2/2A\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20260928104906/https://www.usaspending.gov/award/CONT_AWD_70CMSD21C00000002_7012_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD20P00000155 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2020-09-01 to 2021-08-31, FY2020–FY2021; $19,200.00 obligated), described in the award record as \"DATA SUBSCRIPTION SERVICE\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019051230/https://www.usaspending.gov/award/CONT_AWD_70CMSD20P00000155_7012_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "venntel",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award 70CMSD18P00000127 to VENNTEL INC (period of performance 2018-08-07 to 2019-09-29, FY2018–FY2019; $190,000.00 obligated), described in the award record as \"DATA SERVICES SUBSCRIPTION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20250127152528/https://www.usaspending.gov/award/CONT_AWD_70CMSD18P00000127_7012_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-ice",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Immigration and Customs Enforcement award HSCEMD17F00008 to WEST PUBLISHING CORPORATION (period of performance 2017-01-19 to 2021-02-28, FY2017–FY2021; $20,632,465.71 obligated), described in the award record as \"CONSOLIDATED LEAD EVALUATION AND REPORTING (CLEAR) SYSTEM ACCESS/SUBSCRIPTION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732",
+          "archived": "https://web.archive.org/web/20260928104946/https://www.usaspending.gov/award/CONT_AWD_HSCEMD17F00008_7012_GS02F026DA_4732"
+        }
+      ]
+    },
+    {
+      "from": "us-irs",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Internal Revenue Service award 2032H821C00039 to BABEL STREET, INC. (period of performance 2021-09-30 to 2021-10-29, FY2021–FY2022; $19,340.00 obligated), described in the award record as \"THIRD-PARTY MEDIA RESEARCH SOLUTION USED TO RECOGNIZE, COLLECT AND ARCHIVE CONTENT FROM PUBLIC FACING MEDIA PLATFORMS TO HELP EXPEDITE IRS CASE RESOLUTION FOR EXISTING TAX COMPLIANCE CASES.\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019062415/https://www.usaspending.gov/award/CONT_AWD_2032H821C00039_2050_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-irs",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Internal Revenue Service award 2023H226P00217 to CLEARVIEW AI, INC. (period of performance 2026-03-16 to 2027-03-15, FY2026–FY2027; $63,000.00 obligated), described in the award record as \"INVESTIGATOR TOOL WEB SUBSCRIPTION. BASE YEAR PERIOD OF PERFORMANCE: 03-16-26 TO 03-15-27\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019070712/https://www.usaspending.gov/award/CONT_AWD_2023H226P00217_2050_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-irs",
+      "to": "equifax-information-services",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Internal Revenue Service award TIRNO15Z000080004 to EQUIFAX INFORMATION SERVICES LLC (period of performance 2016-02-01 to 2017-08-25, FY2016–FY2017; $4,965,435.80 obligated), described in the award record as \"FOR CRITICAL FUNCTIONS - EQUIFAX TRANSACTIONS FOR IDENTITY VERIFICATION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730",
+          "archived": "https://web.archive.org/web/20260908090012/https://www.usaspending.gov/award/CONT_AWD_TIRNO15Z000080004_2050_GS22F9663D_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-irs",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Internal Revenue Service award 2032H519F00092 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2018-11-28 to 2019-08-27, FY2019; $1,237,595.13 obligated), described in the award record as \"EXPERIAN THIRD PARTY IDENTITY VERIFICATION ORDER\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050",
+          "archived": "https://web.archive.org/web/20261019052400/https://www.usaspending.gov/award/CONT_AWD_2032H519F00092_2050_2032H518A00033_2050"
+        }
+      ]
+    },
+    {
+      "from": "us-irs",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Internal Revenue Service award 2032H821F00127 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-05-27 to 2022-11-30, FY2021–FY2023; $2,246,999.76 obligated), described in the award record as \"ASSET LOCATOR SERVICES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050",
+          "archived": "https://web.archive.org/web/20261019064142/https://www.usaspending.gov/award/CONT_AWD_2032H821F00127_2050_TIRNO17D00006_2050"
+        }
+      ]
+    },
+    {
+      "from": "us-navy",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Navy award N0018923FZ089 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2022-12-06 to 2026-12-05, FY2023–FY2027; $55,600.00 obligated), described in the award record as \"CREDIT REPORTING SERVICES, CREDIT CHECKS FOR NAVY RECRUITING COMMAND (NRC)\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730",
+          "archived": "https://web.archive.org/web/20261019065609/https://www.usaspending.gov/award/CONT_AWD_N0018923FZ089_9700_GS23F0356P_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-navy",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Navy award N6311622P0525 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2022-08-16 to 2023-08-15, FY2022–FY2023; $89,370.00 obligated), described in the award record as \"EMAIL AND POST ADDRESS UPDATES FOR 270K\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064804/https://www.usaspending.gov/award/CONT_AWD_N6311622P0525_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-navy",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Navy award M6700117P1192 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2017-07-19 to 2020-09-22, FY2017–FY2020; $10,136.57 obligated), described in the award record as \"ONLINE INVESTIGATIVE SUBSCRIPTION\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019051709/https://www.usaspending.gov/award/CONT_AWD_M6700117P1192_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-navy",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records Department of the Navy award N0018909FZ076 to WEST PUBLISHING CORPORATION (period of performance 2009-01-01 to 2013-12-31, FY2009–FY2014; $600,000.00 obligated), described in the award record as \"CHOICEPOINT CLEAR ACCESS\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730",
+          "archived": "https://web.archive.org/web/20261019063624/https://www.usaspending.gov/award/CONT_AWD_N0018909FZ076_9700_GS23F0387K_4730"
+        }
+      ]
+    },
+    {
+      "from": "us-socom",
+      "to": "anomaly-six",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Special Operations Command award H9227620P0070 to ANOMALY 6 LLC (period of performance 2020-09-18 to 2021-09-17, FY2020–FY2021; $589,500.00 obligated), described in the award record as \"COMMERCIAL TELEMETRY FEED\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20260309182608/https://www.usaspending.gov/award/CONT_AWD_H9227620P0070_9700_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award DJM16A32P0045 to BABEL STREET, INC. (period of performance 2016-09-09 to 2017-06-28, FY2016–FY2017; $33,181.46 obligated), described in the award record as \"BABEL ANNUAL SUBSCRIPTION (1 USER) BABEL X DATA PACKAGE (30M DOCUMENTS) INITIAL OSINT&PLATFORM TRAINING 3 DAYS BABEL X READ ONLY ACCOUNTS (5)\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019045926/https://www.usaspending.gov/award/CONT_AWD_DJM16A32P0045_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "clearview-ai",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award 15M10224PA4700107 to CLEARVIEW AI, INC. (period of performance 2024-02-22 to 2026-02-21, FY2024–FY2026; $95,000.00 obligated), described in the award record as \"*LAW ENFORCEMENT SENSITIVE* (LES) IOD-TOG-ESB-(CIU) - INVESTIGATOR TOOL + CLOUD DATABASE LOCAL LICENSE CONTRACT FILE: APC-FY24-000032\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019070626/https://www.usaspending.gov/award/CONT_AWD_15M10224PA4700107_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "experian-information-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award DJMS12M0043 to EXPERIAN INFORMATION SOLUTIONS, INC. (period of performance 2011-10-01 to 2013-09-30, FY2012–FY2013; $33,167.75 obligated), described in the award record as \"AFD: VEHICLE HISTORY REPORTS\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019052532/https://www.usaspending.gov/award/CONT_AWD_DJMS12M0043_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "fog-data-science",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award 15M10318PA4100281 to FOG DATA SCIENCE LLC (period of performance 2018-09-21 to 2020-09-27, FY2018–FY2020; $120,000.00 obligated), described in the award record as \"2018 TOG FOG DATA LES (LAW ENFORCEMENT SENSITIVE) $60K\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20250505085513/https://www.usaspending.gov/award/CONT_AWD_15M10318PA4100281_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award DJM17D61P0001 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2016-09-27 to 2017-09-30, FY2016–FY2017; $4,684.52 obligated), described in the award record as \"FY2017 TLO INVESTIGATIVE SERVICES\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064954/https://www.usaspending.gov/award/CONT_AWD_DJM17D61P0001_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usms",
+      "to": "west-publishing",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Marshals Service award 15M10226PA4700366 to WEST PUBLISHING CORPORATION (period of performance 2026-09-01 to 2027-08-31, FY2026–FY2027; $230,664.00 obligated), described in the award record as \"MISSION CRITICAL - APPREHENDING FUGITIVES FY26-IOD: VIGILANT-CRIMETRACER CF: APC-FY26-000319\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019063949/https://www.usaspending.gov/award/CONT_AWD_15M10226PA4700366_1544_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usss",
+      "to": "babel-street",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Secret Service award HSSS0115C0040 to BABEL STREET, INC. (period of performance 2015-09-28 to 2018-11-27, FY2015–FY2019; $2,073,260.68 obligated), described in the award record as \"OPEN SOURCE INTELLIGENCE MONITORING SYSTEM\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20250418054118/https://www.usaspending.gov/award/CONT_AWD_HSSS0115C0040_7009_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usss",
+      "to": "lexisnexis-risk-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090081 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2021-09-30 to 2023-09-29, FY2021–FY2023; $1,052,828.00 obligated), described in the award record as \"DATABASE INFORMATION AND SUPPORT\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20261019064302/https://www.usaspending.gov/award/CONT_AWD_70US0921C70090081_7009_-NONE-_-NONE-"
+        }
+      ]
+    },
+    {
+      "from": "us-usss",
+      "to": "transunion-risk-and-alternative-data-solutions",
+      "type": "buys",
+      "tier": "A",
+      "claim": "USAspending.gov records U.S. Secret Service award 70US0921C70090014 to TRANSUNION RISK AND ALTERNATIVE DATA SOLUTIONS, INC. (period of performance 2021-02-03 to 2026-02-22, FY2021–FY2026; $261,080.00 obligated), described in the award record as \"PURCHASE OF TLO DATABASE\".",
+      "sources": [
+        {
+          "url": "https://www.usaspending.gov/award/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-",
+          "archived": "https://web.archive.org/web/20260106042943/https://www.usaspending.gov/award/CONT_AWD_70US0921C70090014_7009_-NONE-_-NONE-/"
         }
       ]
     }
