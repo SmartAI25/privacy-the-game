@@ -27,9 +27,5 @@
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18"
   ],
-  "website": "https://www.thomsonreuters.com",
-  "missions": [
-    "enterprise_data-fortify-thomson",
-    "enterprise_data-recon-supply-chain"
-  ]
+  "website": "https://www.thomsonreuters.com"
 }

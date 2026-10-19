@@ -43,6 +43,14 @@ describe('validateBroker', () => {
   it('valid broker passes', () => expect(v(broker())).toEqual([]));
   it('unknown kind fails', () => expect(v(broker({ kind: ['bogus'] })).length).toBeGreaterThan(0));
   it('optOut null is allowed', () => expect(v(broker({ optOut: null }))).toEqual([]));
+  it('optOut.alternates: http(s) url, site, and a known source', () => {
+    const oo = (alternates) => broker({ optOut: { method: 'web-form', url: 'https://acme.example/optout', alternates } });
+    expect(v(oo([{ site: 'dba.example', url: 'https://dba.example/remove', source: 's1' }]))).toEqual([]);
+    expect(v(oo([{ site: 'dba.example', url: 'ftp://dba.example/x', source: 's1' }])).length).toBe(1);
+    expect(v(oo([{ site: 'dba.example', url: 'https://dba.example/x', source: 'nope' }])).length).toBe(1);
+    expect(v(oo([{ url: 'https://dba.example/x', source: 's1' }])).length).toBe(1);
+    expect(v(oo('x')).length).toBe(1);
+  });
   it('optOut.method none needs no url', () => expect(v(broker({ optOut: { method: 'none' } }))).toEqual([]));
   it('web-form needs url', () => expect(v(broker({ optOut: { method: 'web-form' } })).length).toBeGreaterThan(0));
   it('email accepts email field or url', () => {

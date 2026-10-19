@@ -3,22 +3,17 @@
   "name": "BeenVerified, LLC",
   "aliases": [
     "BEEN VERIFIED LLC",
-    "www.beenverified.com",
-    "BeenVerified"
+    "www.beenverified.com"
   ],
   "parent": null,
-  "kind": [
-    "people-search"
-  ],
+  "kind": [],
   "registries": {
     "CA": null,
     "VT": null,
     "TX": "2026",
     "OR": "2026"
   },
-  "sells": [
-    "people search and background reports"
-  ],
+  "sells": [],
   "optOut": {
     "method": "web-form",
     "url": "https://www.beenverified.com/svc/optout/search/comprehensive_optouts",
@@ -31,11 +26,7 @@
   },
   "sources": [
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18",
-    "pol-beenverified-optout"
+    "registry-or-2026-10-18"
   ],
-  "website": "https://beenverified.com",
-  "missions": [
-    "people_search-fortify-web-forms"
-  ]
+  "website": "https://beenverified.com"
 }

@@ -1,10 +1,19 @@
 // Folds research/data-brokers/staging/<family>/ into the dataset.
+// Curation lives in build/ config, never in hand edits:
+//   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
+//   alias-blocklist.json { brokerId: [alias] }, removed after the merge
+//   link-overrides.json { drop: [{from,to,type,reason}], unpublish: [...] }
+//   record-overrides.json { brokerId: { name?, parent?, reason } }, applied after the merge
+// Same-tier claim conflicts go to the claim with the stronger source kind (sourceRank).
+// optOut: a generic existing URL (homepage, privacy page, blocked) is replaced by a staged URL
+// on the record's own domain; any other differing staged URL goes to optOut.alternates.
 // Rules: match by id (or a final id-map.json entry) then legalKey(name), then staged alias; never overwrite a non-null scalar (conflicts go to
 // `rejected`); arrays union; links dedupe on from|to|type; published is always tier === 'A'.
 // Usage: node research/data-brokers/build/merge-staging.js <family> [--dry-run]
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { legalKey } from './import-registry.js';
+import { registrableDomain } from './check-urls.js';
 import { KINDS, LINK_TYPES, TIERS, validateDataset, validateSource } from './schema.js';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
@@ -13,6 +22,35 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const TIER_RANK = { A: 3, B: 2, C: 1 };
 const fmt = (x) => `${JSON.stringify(x, null, 2)}\n`;
 const srcId = (s) => (typeof s === 'string' ? s : s?.id);
+const domainOf = (u) => { try { return registrableDomain(/^https?:/i.test(u) ? u : `https://${u}`); } catch { return null; } };
+const normUrl = (u) => String(u).toLowerCase().replace(/^https?:\/\/(www\.)?/, '').replace(/[/#?]+$/, '');
+const domainLike = (a) => /^[\w.-]+\.[a-z]{2,}$/i.test(String(a).trim());
+
+// Source-kind precedence for same-tier claim conflicts (higher wins):
+// regulator order/complaint > court record > issuer's own SEC/statutory annual report >
+// an SEC filing's summary of third-party allegations > anything else.
+const REGULATOR = /^(ftc|cfpb|fcc|sec-order|doj|state-ag|regulator)/;
+const ISSUER = new Set(['sec-10k', 'sec-20f', 'sec-40f', 'sec-8k', 'annual-report']);
+const THIRD_PARTY = /\b(alleg\w*|putative class|plaintiffs?|lawsuits?)\b/i;
+export function sourceRank(link, sources) {
+  const kinds = (link.sources ?? []).map((id) => sources[id]?.kind ?? '');
+  if (kinds.some((k) => REGULATOR.test(k))) return 5;
+  if (kinds.includes('court')) return 4;
+  if (kinds.some((k) => ISSUER.has(k))) return THIRD_PARTY.test(link.claim ?? '') ? 2 : 3;
+  return 1;
+}
+
+// An existing opt-out that isn't really an opt-out: no URL, a homepage, a privacy-policy page, or unverifiable.
+const PRIVACY_SEG = /^(privacy|privacy[-_]?(policy|notice|statement|center)(-\w+)?|[\w-]*-privacy-(policy|notice)|legal)$/;
+const FORM_WORD = /request|choice|opt-?out|rights|dsr|form|portal|remov|suppress/;
+export function isGenericOptOut(o) {
+  if (!o?.url || o.status === 'blocked') return true;
+  let u; try { u = new URL(o.url); } catch { return true; }
+  const segs = u.pathname.toLowerCase().split('/').filter(Boolean);
+  if (!segs.length) return true;
+  const last = segs[segs.length - 1].replace(/\.(html?|aspx?|page|php)$/, '');
+  return PRIVACY_SEG.test(last) && !FORM_WORD.test(last);
+}
 
 async function readJson(path, fallback) {
   const { readFile } = await import('node:fs/promises');
@@ -51,7 +89,16 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const existingBrokers = await readBrokers(join(datasetDir, 'brokers'));
   const links = await readJson(join(datasetDir, 'links.json'), []);
   const sources = await readJson(join(datasetDir, 'sources.json'), {});
-  const idMap = await readJson(join(datasetDir, 'build', 'id-map.json'), {});
+  const cfg = (f, fb) => readJson(join(datasetDir, 'build', f), fb);
+  const idMapAll = await cfg('id-map.json', {});
+  if (Object.values(idMapAll).some((v) => typeof v === 'string')) throw new Error('id-map.json must be family-scoped: { "<family>": { stagedId: canonicalId } }');
+  const idMap = idMapAll[family] ?? {};
+  const aliasBlock = await cfg('alias-blocklist.json', {});
+  const linkOv = await cfg('link-overrides.json', {});
+  const recordOv = await cfg('record-overrides.json', {});
+  const ovKey = (o) => `${o.from}|${o.to}|${o.type}`;
+  const dropOv = new Map((linkOv.drop ?? []).map((o) => [ovKey(o), o]));
+  const unpubOv = new Map((linkOv.unpublish ?? []).map((o) => [ovKey(o), o]));
   const stBrokers = await readBrokers(join(stDir, 'brokers'));
   const stLinks = await readJson(join(stDir, 'links.json'), []);
   const stSources = await readJson(join(stDir, 'sources.json'), {});
@@ -140,6 +187,35 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   }
   for (const id of droppedNew) { work.delete(id); isNew.delete(id); }
 
+  // ---- optOut: replace a generic existing URL with a staged one on the record's own domain;
+  // otherwise keep the existing one and record the staged URL as an alternate.
+  const stagedSourceFor = (sb, url) => {
+    const ok = (sb.sources ?? []).map(srcId).filter(okSource);
+    return ok.find((s) => domainOf(mergedSources[s]?.url) === domainOf(url)) ?? ok[0];
+  };
+  function mergeOptOut(w, sb, id) {
+    const o = sb.optOut;
+    if (w.optOut === null || w.optOut === undefined) { w.optOut = o; return; }
+    if (!isStr(o.url) || !/^https?:\/\//i.test(o.url)) {
+      if (!Object.entries(o).every(([k, v]) => same(w.optOut[k], v))) reject({ broker: id, field: 'optOut', existing: w.optOut, staged: o }, `${id}: optOut conflicts with existing value (staged has no web URL); existing kept`);
+      return;
+    }
+    if (w.optOut.url && normUrl(w.optOut.url) === normUrl(o.url)) return; // near-identical: leave alone
+    const own = new Set([domainOf(w.website ?? ''), domainOf(w.optOut.url ?? '')].filter(Boolean));
+    const d = domainOf(o.url);
+    const src = stagedSourceFor(sb, o.url);
+    if (isGenericOptOut(w.optOut) && own.has(d) && src) {
+      const prev = w.optOut;
+      w.optOut = { ...o, status: 'unchecked' };
+      if (prev.alternates) w.optOut.alternates = prev.alternates;
+      reject({ broker: id, field: 'optOut', existing: prev, staged: o }, `${id}: generic optOut ${prev.url ?? '(none)'} replaced by staged ${o.url}`);
+      return;
+    }
+    if (!src) { reject({ broker: id, field: 'optOut', staged: o }, `${id}: staged optOut has no usable source; not recorded`); return; }
+    const alts = w.optOut.alternates ?? [];
+    if (!alts.some((a) => normUrl(a.url) === normUrl(o.url))) w.optOut.alternates = [...alts, { site: new URL(o.url).hostname.replace(/^www\./, ''), url: o.url, source: src }];
+  }
+
   // ---- merge broker fields
   const touched = new Set();
   const added = new Set();
@@ -165,10 +241,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       if (w.registries[k] === null || w.registries[k] === undefined) w.registries[k] = v;
       else if (w.registries[k] !== v) conflict(`registries.${k}`, w.registries[k], v);
     }
-    if (isObj(sb.optOut)) {
-      if (w.optOut === null || w.optOut === undefined) w.optOut = sb.optOut;
-      else if (!Object.entries(sb.optOut).every(([k, v]) => same(w.optOut[k], v))) conflict('optOut', w.optOut, sb.optOut);
-    }
+    if (isObj(sb.optOut)) mergeOptOut(w, sb, id);
     if (isObj(sb.size) && Array.isArray(sb.size.signals)) {
       const keep = [];
       for (const s of sb.size.signals) {
@@ -191,7 +264,13 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const finalLinks = links.map((l) => ({ ...l }));
   const idx = new Map(finalLinks.map((l, i) => [`${l.from}|${l.to}|${l.type}`, i]));
   let linksAdded = 0; let linksUpdated = 0;
+  for (const [k, o] of dropOv) {
+    const i = finalLinks.findIndex((l) => `${l.from}|${l.to}|${l.type}` === k);
+    if (i >= 0) { reject(finalLinks[i], `link ${k}: dropped by link-overrides.json (${o.reason})`); finalLinks.splice(i, 1); }
+  }
+  idx.clear(); finalLinks.forEach((l, i) => idx.set(`${l.from}|${l.to}|${l.type}`, i));
   for (const l of cand) {
+    if (dropOv.has(`${l.from}|${l.to}|${l.type}`)) { reject(l, `link ${l.from}|${l.to}|${l.type}: dropped by link-overrides.json (${dropOv.get(`${l.from}|${l.to}|${l.type}`).reason})`); continue; }
     if (!work.has(l.from) || !work.has(l.to)) {
       reject(l, `link ${l.from}->${l.to} rejected: endpoint not in dataset or rejected`);
       continue;
@@ -204,17 +283,37 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       continue;
     }
     const cur = finalLinks[idx.get(key)];
-    const stronger = (TIER_RANK[l.tier] ?? 0) > (TIER_RANK[cur.tier] ?? 0);
-    if (!stronger && l.claim !== cur.claim) {
-      reject(l, `link ${key}: claim differs from existing at the same or stronger tier; existing kept`);
+    const tl = TIER_RANK[l.tier] ?? 0; const tc = TIER_RANK[cur.tier] ?? 0;
+    const sameTierStronger = tl === tc && l.claim !== cur.claim && sourceRank(l, mergedSources) > sourceRank(cur, mergedSources);
+    if (tl < tc || (tl === tc && l.claim !== cur.claim && !sameTierStronger)) {
+      reject(l, `link ${key}: claim differs from existing at the same or stronger tier and source precedence; existing kept`);
       continue;
     }
-    if (stronger) {
-      reject({ claim: cur.claim, tier: cur.tier, sources: cur.sources, link: key }, `link ${key}: superseded by stronger tier`);
+    if (tl > tc || sameTierStronger) {
+      reject({ claim: cur.claim, tier: cur.tier, sources: cur.sources, link: key }, `link ${key}: superseded by ${tl > tc ? 'stronger tier' : 'higher-precedence source kind'}`);
       cur.tier = l.tier; cur.claim = l.claim; cur.sources = [...l.sources];
     } else cur.sources = union(cur.sources, l.sources);
     cur.published = cur.tier === 'A';
     linksUpdated++;
+  }
+
+  for (const l of finalLinks) if (unpubOv.has(`${l.from}|${l.to}|${l.type}`)) l.published = false;
+
+  // ---- record overrides and alias blocklist (config, applied to every record every run)
+  for (const [id, ov] of Object.entries(recordOv)) {
+    const w = work.get(id);
+    if (!w) continue;
+    const before = JSON.stringify(w);
+    if (isStr(ov.name) && ov.name !== w.name) { w.aliases = union(w.aliases, [w.name]); w.name = ov.name; }
+    if (ov.parent !== undefined) w.parent = ov.parent;
+    w.aliases = w.aliases.filter((a) => a !== w.name);
+    if (JSON.stringify(w) !== before) touched.add(id);
+  }
+  for (const [id, list] of Object.entries(aliasBlock)) {
+    const w = work.get(id);
+    if (!w) continue;
+    const kept = w.aliases.filter((a) => !list.includes(a));
+    if (kept.length !== w.aliases.length) { w.aliases = kept; touched.add(id); }
   }
 
   // ---- validate in a scratch copy, then write

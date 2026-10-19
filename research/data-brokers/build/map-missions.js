@@ -21,7 +21,7 @@ const OVERRIDES = {
   'https://consumer.risk.lexisnexis.com/request': ['lexisnexis-risk-solutions', 'lexisnexis-risk-solutions-fl'],
   'https://optout.lexisnexis.com/': ['lexisnexis-risk-solutions', 'lexisnexis-risk-solutions-fl'],
   'https://legal.thomsonreuters.com/en/legal-notices/privacy-records': ['thomson-reuters', 'west-publishing', 'west-publising'],
-  'https://www.transunion.com/consumer-privacy': ['transunion', 'trans-union', 'tloxp'],
+  'https://www.transunion.com/consumer-privacy': ['trans-union', 'tloxp'],
   'https://www.beenverified.com/faq/opt-out/': ['beenverified', 'beenverified-llc-and-its-subsidiaries-and-affiliates'],
 };
 
@@ -30,8 +30,11 @@ const OVERRIDES = {
 const NAMED_STEPS = {
   'people_search-fortify-removal-links': ['intelius'],
   'people_search-fortify-privacy-portals': ['intelius'],
-  'people_search-reclaim-stragglers': ['mylife'],
+  'people_search-reclaim-stragglers': ['mylife', 'nuwber'],
+  'people_search-fortify-extended-sweep-2': ['peoplewhiz', 'quickpeopletrace', 'usatrace'],
+  'people_search-fortify-extended-sweep-3': ['rocketreach'],
   'enterprise_data-fortify-property': ['corelogic'],
+  'enterprise_data-reclaim-deep-layer': ['insurance-services-office'],
 };
 
 // Sweeps, tools, platforms and government sites: not brokers.

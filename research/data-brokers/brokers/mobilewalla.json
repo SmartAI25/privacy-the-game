@@ -7,8 +7,7 @@
   ],
   "parent": null,
   "kind": [
-    "location",
-    "marketing"
+    "location"
   ],
   "registries": {
     "CA": "2026",
@@ -16,9 +15,7 @@
     "TX": null,
     "OR": "2026"
   },
-  "sells": [
-    "audience segments derived from location data"
-  ],
+  "sells": [],
   "optOut": {
     "method": "web-form",
     "url": "https://www.mobilewalla.com/global-opt-out-request",
@@ -26,20 +23,12 @@
     "verifiedAt": "2026-10-18"
   },
   "size": {
-    "known": true,
-    "signals": [
-      {
-        "kind": "records-claimed",
-        "value": "FTC complaint (2025) says Mobilewalla estimates it collected more than 2 billion unique advertising identifiers from RTB exchanges (2018-2020)",
-        "source": "enf-ftc-mobilewalla-complaint-2025"
-      }
-    ]
+    "known": false,
+    "signals": []
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-or-2026-10-18",
-    "enf-ftc-mobilewalla-complaint-2025",
-    "enf-ftc-mobilewalla-order-2025"
+    "registry-or-2026-10-18"
   ],
   "website": "https://www.mobilewalla.com"
 }

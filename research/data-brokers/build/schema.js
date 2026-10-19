@@ -25,7 +25,7 @@ export function validateSource(id, s) {
   return errs;
 }
 
-function validateOptOut(o, p) {
+function validateOptOut(o, p, sourceIds) {
   if (o === null) return [];
   if (!isObj(o)) return [`${p}: optOut must be an object or null`];
   const errs = [];
@@ -40,6 +40,15 @@ function validateOptOut(o, p) {
   }
   if (o.status !== undefined && !OPT_OUT_STATUSES.includes(o.status)) errs.push(`${p}: optOut.status must be one of ${OPT_OUT_STATUSES.join('|')}`);
   if (o.verifiedAt !== undefined && o.verifiedAt !== null && !(isStr(o.verifiedAt) && DATE.test(o.verifiedAt))) errs.push(`${p}: optOut.verifiedAt must be YYYY-MM-DD`);
+  // Other opt-out routes a source documents (a DBA site's own form, a newer page) beside the main one.
+  if (o.alternates !== undefined) {
+    if (!Array.isArray(o.alternates)) errs.push(`${p}: optOut.alternates must be an array`);
+    else for (const [i, a] of o.alternates.entries()) {
+      if (!isObj(a) || !isStr(a.site)) errs.push(`${p}: optOut.alternates[${i}] needs site`);
+      if (!isStr(a?.url) || !/^https?:\/\/\S+$/i.test(a.url)) errs.push(`${p}: optOut.alternates[${i}].url must be an http(s) URL`);
+      if (!sourceIds.has(a?.source)) errs.push(`${p}: optOut.alternates[${i}] source "${a?.source}" not in sources.json`);
+    }
+  }
   return errs;
 }
 
@@ -63,7 +72,7 @@ export function validateBroker(b, { sourceIds = new Set() } = {}) {
   }
   if (!Array.isArray(b.sells) || !b.sells.every(isStr)) errs.push(`${p}: sells must be an array of strings`);
   if (b.optOut === undefined) errs.push(`${p}: optOut is required (use null if unknown)`);
-  else errs.push(...validateOptOut(b.optOut, p));
+  else errs.push(...validateOptOut(b.optOut, p, sourceIds));
   if (b.missions !== undefined && !(Array.isArray(b.missions) && b.missions.every(isStr))) errs.push(`${p}: missions must be an array of strings`);
 
   if (!isObj(b.size) || typeof b.size.known !== 'boolean' || !Array.isArray(b.size.signals)) errs.push(`${p}: size must be {known:boolean, signals:[]}`);

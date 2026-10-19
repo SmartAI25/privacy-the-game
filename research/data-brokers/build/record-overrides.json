@@ -1,0 +1,10 @@
+{
+  "insurance-services-office": { "name": "Insurance Services Office, Inc.", "reason": "FTC C-4828 complaint names 'Insurance Services Office, Inc., doing business as Verisk Analytics'; Verisk Analytics is the d/b/a" },
+  "transunion-rental-screening-solutions": { "parent": "trans-union", "reason": "CFPB/FTC 2023 complaint: a wholly owned subsidiary of Trans Union LLC (direct parent); TransUnion's Exhibit 21 lists it without hierarchy" },
+  "lexisnexis-risk-solutions": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "id-analytics": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-risk-data-management": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-special-services": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lexisnexis-coplogic-solutions": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" },
+  "lnrs-data-services": { "parent": null, "reason": "RELX Annual Report 2025 note 28 lists it as held indirectly by RELX PLC; its direct parent is not stated" }
+}

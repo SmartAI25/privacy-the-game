@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtemp, mkdir, writeFile, readFile, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { mergeStaging } from '../../research/data-brokers/build/merge-staging.js';
+import { mergeStaging, sourceRank } from '../../research/data-brokers/build/merge-staging.js';
 import { validateDataset } from '../../research/data-brokers/build/schema.js';
 
 const src = (extra = {}) => ({
@@ -16,7 +16,7 @@ const broker = (id, name, extra = {}) => ({
 const J = (x) => `${JSON.stringify(x, null, 2)}\n`;
 
 let dir;
-async function setup({ brokers = [], links = [], sources = { reg: src() }, staged = {}, idMap } = {}) {
+async function setup({ brokers = [], links = [], sources = { reg: src() }, staged = {}, idMap, config = {} } = {}) {
   dir = await mkdtemp(join(tmpdir(), 'merge-staging-'));
   await mkdir(join(dir, 'brokers'));
   for (const b of brokers) await writeFile(join(dir, 'brokers', `${b.id}.json`), J(b));
@@ -27,7 +27,9 @@ async function setup({ brokers = [], links = [], sources = { reg: src() }, stage
   for (const b of staged.brokers ?? []) await writeFile(join(st, 'brokers', `${b.id}.json`), J(b));
   await writeFile(join(st, 'links.json'), J(staged.links ?? []));
   await writeFile(join(st, 'sources.json'), J(staged.sources ?? {}));
-  if (idMap) { await mkdir(join(dir, 'build')); await writeFile(join(dir, 'build', 'id-map.json'), J(idMap)); }
+  if (idMap) config = { ...config, 'id-map.json': { fam: idMap } };
+  if (Object.keys(config).length) await mkdir(join(dir, 'build'));
+  for (const [f, v] of Object.entries(config)) await writeFile(join(dir, 'build', f), J(v));
 }
 const readB = async (id) => JSON.parse(await readFile(join(dir, 'brokers', `${id}.json`), 'utf8'));
 const readLinks = async () => JSON.parse(await readFile(join(dir, 'links.json'), 'utf8'));
@@ -76,7 +78,7 @@ describe('mergeStaging', () => {
     expect(r.rejected[0].reason).toMatch(/website/);
   });
 
-  it('optOut: takes staged when existing is null; keeps existing and rejects staged when they differ', async () => {
+  it('optOut: takes staged when existing is null; keeps a specific existing URL and records the staged one as an alternate', async () => {
     const oo = (url) => ({ method: 'web-form', url });
     await setup({
       brokers: [broker('a', 'A'), broker('b', 'B', { optOut: oo('https://b.example/x') })],
@@ -87,8 +89,37 @@ describe('mergeStaging', () => {
     });
     const r = await mergeStaging(dir, 'fam');
     expect((await readB('a')).optOut).toEqual(oo('https://a.example/o'));
-    expect((await readB('b')).optOut).toEqual(oo('https://b.example/x'));
-    expect(r.rejected.map((x) => x.reason).join()).toMatch(/optOut/);
+    expect((await readB('b')).optOut).toEqual({ ...oo('https://b.example/x'), alternates: [{ site: 'b.example', url: 'https://b.example/y', source: 's1' }] });
+    expect(r.rejected).toEqual([]);
+  });
+
+  it('optOut: a generic existing URL is replaced by a staged one on the same domain, unchecked', async () => {
+    const oo = (url, extra = {}) => ({ method: 'web-form', url, ...extra });
+    const s1 = src({ url: 'https://a.example/privacy' });
+    await setup({
+      brokers: [
+        broker('a', 'A', { website: 'https://a.example', optOut: oo('https://www.a.example/privacy-policy', { status: 'verified', verifiedAt: '2026-10-18' }) }),
+        broker('h', 'H', { optOut: oo('https://h.example', { status: 'verified' }) }),
+        broker('k', 'K', { optOut: oo('https://k.example/opt', { status: 'blocked' }) }),
+        broker('o', 'O', { optOut: oo('https://o.example/privacy') }),
+        broker('n', 'N', { optOut: oo('https://n.example/privacy/') }),
+      ],
+      staged: { sources: { s1 }, brokers: [
+        { id: 'a', name: 'A', optOut: oo('https://a.example/optout', { notes: 'form' }), sources: ['s1'] },
+        { id: 'h', name: 'H', optOut: oo('https://h.example/remove'), sources: ['s1'] },
+        { id: 'k', name: 'K', optOut: oo('https://k.example/opt-out-form'), sources: ['s1'] },
+        { id: 'o', name: 'O', optOut: oo('https://dba.example/removal'), sources: ['s1'] },
+        { id: 'n', name: 'N', optOut: oo('http://www.n.example/privacy'), sources: ['s1'] },
+      ] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readB('a')).optOut).toEqual(oo('https://a.example/optout', { notes: 'form', status: 'unchecked' }));
+    expect((await readB('h')).optOut.url).toBe('https://h.example/remove');
+    expect((await readB('k')).optOut.url).toBe('https://k.example/opt-out-form');
+    expect((await readB('o')).optOut).toEqual({ ...oo('https://o.example/privacy'), alternates: [{ site: 'dba.example', url: 'https://dba.example/removal', source: 's1' }] });
+    expect((await readB('n')).optOut).toEqual(oo('https://n.example/privacy/'));
+    expect(r.rejected.filter((x) => /replaced by staged/.test(x.reason))).toHaveLength(3);
   });
 
   it('duplicate link unions sources and keeps stronger tier', async () => {
@@ -239,6 +270,83 @@ describe('mergeStaging', () => {
     expect((await readB('acme-group')).name).toBe('Acme PLC');
     expect((await readB('acme')).aliases).toEqual([]);
     expect((await readLinks())[0]).toMatchObject({ from: 'acme-holdco', to: 'acme' });
+  });
+
+  it('id-map.json must be family-scoped, and another family\'s scope does not apply', async () => {
+    await setup({ config: { 'id-map.json': { x: 'y' } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/family-scoped/);
+    await setup({
+      config: { 'id-map.json': { other: { a: 'zzz' } } },
+      brokers: [broker('a', 'A')],
+      staged: { sources: { s1: src() }, brokers: [{ id: 'a', name: 'A', sells: ['x'], sources: ['s1'] }] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.matches).toEqual([{ stagedId: 'a', existingId: 'a', matchedBy: 'id' }]);
+  });
+
+  it('same-tier claim conflict goes to the higher-precedence source kind', async () => {
+    const sources = { reg: src(), tenk: src({ kind: 'sec-10k', url: 'https://sec.gov/x' }), ftc: src({ kind: 'ftc-complaint', url: 'https://ftc.gov/x' }), court: src({ kind: 'court', url: 'https://court.gov/x' }) };
+    await setup({
+      sources,
+      brokers: [broker('p', 'P'), broker('c', 'C'), broker('q', 'Q')],
+      links: [
+        { ...link('p', 'c', { type: 'supplies', claim: 'A 10-K says plaintiffs allege P sent data to C.', sources: ['tenk'] }), published: true },
+        { ...link('q', 'c', { type: 'supplies', claim: 'FTC says Q sent data to C.', sources: ['ftc'] }), published: true },
+      ],
+      staged: { links: [
+        link('p', 'c', { type: 'supplies', claim: 'Court record says P sent data to C.', sources: ['court'] }),
+        link('q', 'c', { type: 'supplies', claim: 'Court record says Q sent data to C.', sources: ['court'] }),
+      ] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    const L = await readLinks();
+    expect(L.find((l) => l.from === 'p').claim).toMatch(/^Court/);
+    expect(L.find((l) => l.from === 'p').sources).toEqual(['court']);
+    expect(L.find((l) => l.from === 'q').claim).toMatch(/^FTC/);
+    expect(r.rejected.some((x) => /higher-precedence/.test(x.reason))).toBe(true);
+    expect(r.rejected.some((x) => /source precedence; existing kept/.test(x.reason))).toBe(true);
+  });
+
+  it('sourceRank orders regulator > court > issuer statement > SEC summary of allegations > other', () => {
+    const S = { f: { kind: 'ftc-order' }, c: { kind: 'court' }, k: { kind: 'sec-10k' }, j: { kind: 'journalism' } };
+    const r = (sources, claim = 'x') => sourceRank({ sources, claim }, S);
+    expect([r(['f']), r(['c']), r(['k']), r(['k'], 'class actions alleging x'), r(['j'])]).toEqual([5, 4, 3, 2, 1]);
+  });
+
+  it('link-overrides.json drops and unpublishes links, staged or existing', async () => {
+    await setup({
+      config: { 'link-overrides.json': {
+        drop: [{ from: 'p', to: 'c', type: 'supplies', reason: 'succession' }, { from: 'q', to: 'c', type: 'owns', reason: 'old' }],
+        unpublish: [{ from: 'p', to: 'q', type: 'buys', reason: 'inference' }],
+      } },
+      brokers: [broker('p', 'P'), broker('c', 'C'), broker('q', 'Q')],
+      links: [{ ...link('q', 'c', { sources: ['reg'] }), published: true }],
+      staged: { sources: { s1: src() }, links: [link('p', 'c', { type: 'supplies' }), link('p', 'q', { type: 'buys' })] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(await readLinks()).toEqual([{ from: 'p', to: 'q', type: 'buys', tier: 'A', claim: 'c', sources: ['s1'], published: false }]);
+    expect(r.rejected.filter((x) => /link-overrides/.test(x.reason))).toHaveLength(2);
+  });
+
+  it('alias-blocklist.json and record-overrides.json apply after the merge', async () => {
+    await setup({
+      config: {
+        'alias-blocklist.json': { a: ['Bad Alias'] },
+        'record-overrides.json': { n: { name: 'Legal Name, Inc.', parent: 'a', reason: 'source names it' } },
+        'id-map.json': { fam: { n: 'n' } },
+      },
+      brokers: [broker('a', 'A')],
+      staged: { sources: { s1: src() }, brokers: [
+        { id: 'a', name: 'A', aliases: ['Bad Alias', 'Good Alias'], sources: ['s1'] },
+        { id: 'n', name: 'Brand', aliases: ['Legal Name, Inc.'], kind: ['marketing'], sources: ['s1'] },
+      ] },
+    });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect((await readB('a')).aliases).toEqual(['Good Alias']);
+    const n = await readB('n');
+    expect([n.name, n.aliases, n.parent]).toEqual(['Legal Name, Inc.', ['Brand'], 'a']);
   });
 
   it('unions size signals and rejects ones citing rejected sources', async () => {

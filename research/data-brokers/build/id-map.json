@@ -1,22 +1,35 @@
 {
-  "transunion": "transunion",
-  "dun-bradstreet": "dun-bradstreet",
-  "relx": "relx-plc",
-  "meta-platforms": "meta",
-  "lotame": "lotame-solutions",
-  "epsilon": "epsilon-data-management",
-  "the-work-number": "equifax-workforce-solutions",
-  "oracle": "oracle-advertising",
-  "foursquare": "foursquare-labs",
-  "openx": "openx-technologies",
-  "complementics": "econtextai",
-  "anywho": "spokeo",
-  "thatsthem": "spokeo",
-  "us-search": "intelius",
-  "truepeoplesearch": "free-data-services",
-  "fastpeoplesearch": "mississippi-tornado-alley",
-  "searchpeoplefree": "mississippi-tornado-alley",
-  "smartbackgroundchecks": "mississippi-tornado-alley",
-  "usphonebook": "mississippi-tornado-alley",
-  "advancedbackgroundchecks": "mississippi-tornado-alley"
+  "sec": {
+    "transunion": "transunion",
+    "dun-bradstreet": "dun-bradstreet",
+    "relx": "relx-plc"
+  },
+  "enforcement": {
+    "general-motors": "general-motors-company",
+    "verisk": "insurance-services-office",
+    "lotame": "lotame-solutions"
+  },
+  "policies": {
+    "transunion": "trans-union",
+    "relx": "relx-plc",
+    "lotame": "lotame-solutions",
+    "epsilon": "epsilon-data-management",
+    "the-work-number": "equifax-workforce-solutions",
+    "anywho": "spokeo",
+    "thatsthem": "spokeo",
+    "us-search": "intelius",
+    "truepeoplesearch": "free-data-services",
+    "fastpeoplesearch": "mississippi-tornado-alley",
+    "searchpeoplefree": "mississippi-tornado-alley",
+    "smartbackgroundchecks": "mississippi-tornado-alley",
+    "usphonebook": "mississippi-tornado-alley",
+    "advancedbackgroundchecks": "mississippi-tornado-alley"
+  },
+  "journalism": {
+    "meta-platforms": "meta",
+    "oracle": "oracle-advertising",
+    "foursquare": "foursquare-labs",
+    "openx": "openx-technologies",
+    "complementics": "econtextai"
+  }
 }

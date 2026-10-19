@@ -6,9 +6,7 @@
     "TRANS UNION LLC"
   ],
   "parent": null,
-  "kind": [
-    "risk-identity"
-  ],
+  "kind": [],
   "registries": {
     "CA": "2026",
     "VT": null,
@@ -29,12 +27,7 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18",
-    "enf-cfpb-turss-complaint-2023",
-    "enf-cfpb-turss-order-2023"
+    "registry-or-2026-10-18"
   ],
-  "website": "https://www.transunion.com",
-  "missions": [
-    "enterprise_data-fortify-property"
-  ]
+  "website": "https://www.transunion.com"
 }

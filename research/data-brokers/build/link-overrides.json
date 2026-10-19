@@ -1,0 +1,11 @@
+{
+  "drop": [
+    { "from": "x-mode-social", "to": "outlogic", "type": "supplies", "reason": "the FTC complaint describes a business and asset transfer to a successor, not a data flow" },
+    { "from": "general-motors", "to": "verisk", "type": "supplies", "reason": "rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> insurance-services-office, which names the recipient" },
+    { "from": "general-motors", "to": "lexisnexis-risk-solutions", "type": "supplies", "reason": "rests on the Verisk 10-K's summary of plaintiffs' allegations; superseded by the FTC C-4828 claim on general-motors-company -> lexisnexis-risk-solutions" }
+  ],
+  "unpublish": [
+    { "from": "equifax", "to": "experian", "type": "buys", "reason": "the 10-K says tri-merge reports 'combine information from' the bureaus, not that Equifax buys from them" },
+    { "from": "equifax", "to": "transunion", "type": "buys", "reason": "the 10-K says tri-merge reports 'combine information from' the bureaus, not that Equifax buys from them" }
+  ]
+}
