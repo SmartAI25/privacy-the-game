@@ -91,3 +91,23 @@ describe('opt-out links moved to the page that has the request', () => {
     expect(urls).toEqual(['https://www.placer.ai/privacy-policy/consumer-privacy-policy']);
   });
 });
+
+describe('copy that must be true for every player', () => {
+  // Not every player was scanned by DeleteMe; the sites commonly list people, and the
+  // player should check whether they're on them.
+  it('extended-sweep-1 does not claim the player was found in a scan', () => {
+    const all = everything('people_search-fortify-extended-sweep-1');
+    expect(all).not.toMatch(/DeleteMe/);
+    expect(all).not.toMatch(/your actual data|real scan|with your data/);
+    expect(mission('people_search-fortify-extended-sweep-1').briefing).toMatch(/Look yourself up/);
+  });
+
+  // California's Delete Act requires registered data brokers to process DROP requests.
+  // Scout says it the way the law does, without claiming a count or "every" broker.
+  it('Scout words DROP the way the Delete Act does', () => {
+    const m = mission('people_search-reclaim-stragglers');
+    expect(m.scoutDialog.briefing).not.toContain('every registered data broker has to process it');
+    expect(m.scoutDialog.briefing).toContain("California's Delete Act requires the registered data brokers to process it");
+    expect(JSON.stringify(m.scoutDialog)).not.toMatch(/every registered broker|\b600\b/);
+  });
+});

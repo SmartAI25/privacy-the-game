@@ -370,10 +370,10 @@ export const RECLAMATION_MISSIONS = [
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"MyLife publishes a public 'reputation score' for you that anyone can see -- get it removed. And if you live in California, DROP: one request, and every registered data broker has to process it. Nothing else in data broker defense reaches that far.\"",
+      briefing: "\"MyLife publishes a public 'reputation score' for you that anyone can see -- get it removed. And if you live in California, DROP: one request, and California's Delete Act requires the registered data brokers to process it. Nothing else in data broker defense reaches that far.\"",
       debrief: {
         "all-submitted": "\"People-Search Brokers: liberated. One opt-out at a time, plus DROP for the brokers registered in California. Your name is being scrubbed from the retail layer of the data economy. Brokers re-add you from public records over time -- check back every 3-6 months.\"",
-        "some-submitted": "\"If you're in California, DROP alone reaches every registered broker. If you can only do one thing in this batch, do that.\"",
+        "some-submitted": "\"If you're in California, DROP alone reaches the registered brokers -- the law says they have to process it. If you can only do one thing in this batch, do that.\"",
         "skip": "\"The DROP platform is the single highest-impact form in this whole district. Start there when you come back.\"",
       },
     },
@@ -381,14 +381,14 @@ export const RECLAMATION_MISSIONS = [
   },
 
   // ══════════════════════════════════════════════════════
-  // EXTENDED BROKER SWEEP (DeleteMe-identified brokers)
+  // EXTENDED BROKER SWEEP (smaller sites that commonly list people)
   // ══════════════════════════════════════════════════════
   {
     id: "people_search-fortify-extended-sweep-1",
     accountId: "people_search",
     phase: "fortify",
     title: "Extended Sweep: Background Check Sites",
-    briefing: "These background-check and people-search sites showed up in a DeleteMe scan with your data. They're smaller than Spokeo or WhitePages but still serve up your name, address, and phone number to anyone who searches. Most have their own opt-out page.",
+    briefing: "These background-check and people-search sites commonly list people's names, addresses, and phone numbers. They're smaller than Spokeo or WhitePages but still serve that up to anyone who searches. Look yourself up on each one first; most have their own opt-out page.",
     steps: [
       { text: "SmartBackgroundChecks: Submit opt-out", url: "https://www.smartbackgroundchecks.com/optout" },
       { text: 'AdvancedBackgroundChecks: use the removal link on its site' },
@@ -398,7 +398,7 @@ export const RECLAMATION_MISSIONS = [
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"These are the second-tier brokers. Fewer visitors than Spokeo, but they showed up in a real scan with your actual data. Every one you remove shrinks the footprint.\"",
+      briefing: "\"These are the second-tier brokers. Fewer visitors than Spokeo, but they list people all the same. Look yourself up on each one -- if you're there, take it down. Every one you remove shrinks the footprint.\"",
       debrief: {
         "all-submitted": "\"More brokers cleared. You're cutting deeper than most people ever get.\"",
         "some-submitted": "\"Every form counts. Come back for the rest.\"",
