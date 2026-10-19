@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { classifyResponse, registrableDomain } from '../../research/data-brokers/build/check-urls.js';
+import { classifyResponse, localDate, registrableDomain } from '../../research/data-brokers/build/check-urls.js';
 
 const c = (requestedUrl, finalUrl, status, error) => classifyResponse({ requestedUrl, finalUrl, status, error });
 
@@ -51,5 +51,12 @@ describe('registrableDomain', () => {
     expect(registrableDomain('https://www.foo.co.uk/')).toBe('foo.co.uk');
     expect(registrableDomain('https://x.foo.com.au/')).toBe('foo.com.au');
     expect(registrableDomain('https://foo.co.jp/')).toBe('foo.co.jp');
+  });
+});
+
+describe('localDate', () => {
+  it('uses local calendar fields, zero-padded', () => {
+    expect(localDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05');
+    expect(localDate(new Date(2026, 9, 18, 0, 1))).toBe('2026-10-18');
   });
 });

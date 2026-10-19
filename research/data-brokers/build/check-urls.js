@@ -11,6 +11,12 @@ export function registrableDomain(url) {
   return parts.slice(MULTI.has(tail2) ? -3 : -2).join('.');
 }
 
+// Local calendar date as YYYY-MM-DD (not UTC).
+export function localDate(d = new Date()) {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
 const isRoot = (url) => { const p = new URL(url).pathname; return p === '' || p === '/'; };
 
 const DNS_ERRORS = new Set(['ENOTFOUND', 'EAI_AGAIN']);
@@ -50,7 +56,7 @@ async function main() {
   const { fileURLToPath } = await import('node:url');
   const { dirname, join, resolve } = await import('node:path');
   const dir = join(resolve(dirname(fileURLToPath(import.meta.url)), '..'), 'brokers');
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDate();
   const files = (await readdir(dir)).filter((f) => f.endsWith('.json')).sort();
   const only = process.argv.find((a) => a.startsWith('--only='))?.slice(7);
   const jobs = [];
