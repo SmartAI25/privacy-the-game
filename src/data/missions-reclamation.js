@@ -315,7 +315,7 @@ export const RECLAMATION_MISSIONS = [
     accountId: "people_search",
     phase: "fortify",
     title: "The Big Purge: Removal Link Brokers",
-    briefing: "These brokers have dedicated removal pages. Intelius and TruePeopleSearch require you to find your listing first, then click through to their removal flow. FastPeopleSearch and Radaris have their own privacy/removal portals.",
+    briefing: "These brokers have dedicated removal pages. Intelius and TruePeopleSearch require you to find your listing first, then click through to their removal flow. FastPeopleSearch has its own removal portal.",
     steps: [
       { text: 'Intelius: use the suppression request in its privacy center' },
       { text: "TruePeopleSearch: Go to removal page, find your record, submit removal", url: "https://www.truepeoplesearch.com/removal" },
@@ -337,18 +337,18 @@ export const RECLAMATION_MISSIONS = [
     accountId: "people_search",
     phase: "fortify",
     title: "The Big Purge: Privacy Portal Brokers",
-    briefing: "The remaining people-search brokers. Radaris has a privacy control center. USPhonebook, ThatsThem, PeopleFinder, and Nuwber each have their own opt-out links. MyLife is the worst -- they assign you a public \"reputation score\" that needs to be removed separately.",
+    briefing: "The remaining people-search brokers. USPhonebook, ThatsThem and PeopleFinder each have their own opt-out links. Radaris used to have a privacy control center, but its site now shows a court-transfer notice instead.",
     steps: [
-      { text: "Radaris: Go to privacy control, search your name, request removal", url: "https://radaris.com/control/privacy" },
+      { text: 'Radaris: its site now shows a notice saying the domain was transferred by court order, and no opt-out is left there (checked October 2026). Nothing to submit' },
       { text: "USPhonebook: Submit opt-out", url: "https://www.usphonebook.com/opt-out" },
       { text: "ThatsThem: Submit opt-out", url: "https://thatsthem.com/optout" },
       { text: 'PeopleFinder: use the opt-out link on its site' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"The long tail. These individually get less traffic but collectively they're a big surface. Every one you remove is one fewer copy of your personal information floating around for anyone to find.\"",
+      briefing: "\"The long tail. These individually get less traffic but collectively they're a big surface. Every one you remove is one fewer copy of your personal information floating around for anyone to find. Radaris's site is just a court notice now -- one fewer form for you.\"",
       debrief: {
-        "all-submitted": "\"Ten brokers cleared. The retail layer is thinning out. A few more and we hit the nuclear option.\"",
+        "all-submitted": "\"Another batch cleared. The retail layer is thinning out. A few more and we hit the nuclear option.\"",
         "some-submitted": "\"Steady progress. Every form submitted is one fewer listing.\"",
         "skip": "\"Come back in small batches. Two or three at a time is fine.\"",
       },
@@ -370,10 +370,10 @@ export const RECLAMATION_MISSIONS = [
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"MyLife publishes a public 'reputation score' for you that anyone can see -- get it removed. And if you live in California, DROP: one request, and every registered data broker has to process it. Nothing else in data broker defense reaches that far.\"",
+      briefing: "\"MyLife publishes a public 'reputation score' for you that anyone can see -- get it removed. And if you live in California, DROP: one request, and California's Delete Act requires the registered data brokers to process it. Nothing else in data broker defense reaches that far.\"",
       debrief: {
-        "all-submitted": "\"People-Search Brokers: liberated. Thirteen individual opt-outs plus the DROP covering 600 more. Your name is being scrubbed from the retail layer of the data economy. Brokers re-add you from public records over time -- check back every 3-6 months.\"",
-        "some-submitted": "\"If you're in California, DROP alone reaches every registered broker. If you can only do one thing in this batch, do that.\"",
+        "all-submitted": "\"People-Search Brokers: liberated. One opt-out at a time, plus DROP for the brokers registered in California. Your name is being scrubbed from the retail layer of the data economy. Brokers re-add you from public records over time -- check back every 3-6 months.\"",
+        "some-submitted": "\"If you're in California, DROP alone reaches the registered brokers -- the law says they have to process it. If you can only do one thing in this batch, do that.\"",
         "skip": "\"The DROP platform is the single highest-impact form in this whole district. Start there when you come back.\"",
       },
     },
@@ -381,26 +381,26 @@ export const RECLAMATION_MISSIONS = [
   },
 
   // ══════════════════════════════════════════════════════
-  // EXTENDED BROKER SWEEP (DeleteMe-identified brokers)
+  // EXTENDED BROKER SWEEP (smaller sites that commonly list people)
   // ══════════════════════════════════════════════════════
   {
     id: "people_search-fortify-extended-sweep-1",
     accountId: "people_search",
     phase: "fortify",
     title: "Extended Sweep: Background Check Sites",
-    briefing: "These background-check and people-search sites showed up in a DeleteMe scan with your data. They're smaller than Spokeo or WhitePages but still serve up your name, address, and phone number to anyone who searches. Each has its own opt-out page.",
+    briefing: "These background-check and people-search sites commonly list people's names, addresses, and phone numbers. They're smaller than Spokeo or WhitePages but still serve that up to anyone who searches. Look yourself up on each one first; most have their own opt-out page.",
     steps: [
       { text: "SmartBackgroundChecks: Submit opt-out", url: "https://www.smartbackgroundchecks.com/optout" },
       { text: 'AdvancedBackgroundChecks: use the removal link on its site' },
       { text: 'AdvancedPeopleSearch: its domain is parked now, so there’s nothing left to remove there' },
-      { text: "Privateeye: Submit opt-out", url: "https://www.privateeye.com/static/view/optout" },
+      { text: 'PrivateEye: it now passes searches on to partner sites and has no removal form of its own (checked October 2026). Nothing to submit there' },
       { text: "SearchPeopleFree: Submit opt-out", url: "https://www.searchpeoplefree.com/opt-out" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"These are the second-tier brokers. Fewer visitors than Spokeo, but they showed up in a real scan with your actual data. Every one you remove shrinks the footprint.\"",
+      briefing: "\"These are the second-tier brokers. Fewer visitors than Spokeo, but they list people all the same. Look yourself up on each one -- if you're there, take it down. Every one you remove shrinks the footprint.\"",
       debrief: {
-        "all-submitted": "\"Five more brokers cleared. You're cutting deeper than most people ever get.\"",
+        "all-submitted": "\"More brokers cleared. You're cutting deeper than most people ever get.\"",
         "some-submitted": "\"Every form counts. Come back for the rest.\"",
         "skip": "\"These are quick — most take under two minutes each.\"",
       },
@@ -436,10 +436,10 @@ export const RECLAMATION_MISSIONS = [
     accountId: "people_search",
     phase: "fortify",
     title: "Extended Sweep: Professional & B2B",
-    briefing: "RocketReach scrapes LinkedIn and public records to build professional profiles — your email, phone, employer, and job title packaged for sales teams and recruiters. FindPeopleSearch and Findpeoplesearch aggregate public records into searchable profiles.",
+    briefing: "RocketReach scrapes LinkedIn and public records to build professional profiles — your email, phone, employer, and job title packaged for sales teams and recruiters. FindPeopleSearch used to aggregate public records into searchable profiles; its domain is parked now.",
     steps: [
       { text: 'RocketReach: use its profile removal option (it may ask you to create an account first)' },
-      { text: "FindPeopleSearch: Submit opt-out", url: "https://www.findpeoplesearch.com/opt-out" },
+      { text: 'FindPeopleSearch: its domain is parked now (checked October 2026), so there’s nothing left to remove there' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -659,7 +659,7 @@ export const RECLAMATION_MISSIONS = [
       { text: 'Opt out of LiveRamp -- they match your real name to your browser cookies', url: 'https://liveramp.com/privacy/my-privacy-choices/' },
       { text: "Opt out of Acxiom -- one of the oldest and largest consumer data brokers", url: "https://www.acxiom.com/opt-out/" },
       { text: 'Oracle Data Cloud / BlueKai: Oracle shut down its advertising business in 2024, so there’s no opt-out left to file' },
-      { text: "Opt out of Lotame (cross-device audience data)", url: "https://www.lotame.com/about-lotame/privacy/lotames-products-services-privacy-policy/" },
+      { text: "Opt out of Lotame (cross-device audience data): its privacy-choices page links the request form", url: "https://www.lotame.com/privacy/information-privacy-choices-services/" },
       { text: "Opt out of Epsilon (its email lists were breached in 2011)", url: "https://www.epsilon.com/us/consumer-information" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
@@ -743,16 +743,16 @@ export const RECLAMATION_MISSIONS = [
     briefing: "Individual opt-outs from the major location data brokers. Most require an email rather than a web form -- these companies don't make it easy. SafeGraph sells foot-traffic data. X-Mode (now Outlogic) sold prayer app data to the military. Gravy Analytics was breached in 2025.",
     steps: [
       { text: "Opt out of SafeGraph -- email privacy@safegraph.com citing your right to data deletion", url: "https://www.safegraph.com/privacy-policy" },
-      { text: 'X-Mode Social (later Outlogic): a 2024 FTC order bars it from selling sensitive location data, and its opt-out page no longer works' },
-      { text: 'Opt out of Placer.ai -- use the contact in its privacy policy', url: 'https://www.placer.ai/privacy-policy' },
-      { text: 'Gravy Analytics: a 2024 FTC order limits its use of sensitive location data. Its old privacy page no longer works' },
+      { text: 'X-Mode Social (later Outlogic): an FTC order bars it from selling sensitive location data, and its opt-out page no longer works' },
+      { text: 'Opt out of Placer.ai -- use the contact in its privacy policy', url: 'https://www.placer.ai/privacy-policy/consumer-privacy-policy' },
+      { text: 'Opt out of Gravy Analytics (it now does business as Unacast) -- use its Opt Out & Do Not Sell form. An FTC order also limits its use of sensitive location data', url: 'https://gravyanalytics.com/opt-out-do-not-sell' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
       briefing: "\"These companies buy your GPS data from apps, package it into movement profiles, and sell it. SafeGraph to businesses. X-Mode to US military contractors. Near Intelligence to anti-abortion groups. Most hide their opt-outs behind email addresses instead of web forms. They're betting you won't bother. Prove them wrong.\"",
       debrief: {
         "all-submitted": "\"Location broker opt-outs submitted. Email ones take longer -- follow up if you don't get confirmation within 30 days.\"",
-        "some-submitted": "\"Partial progress. SafeGraph and Placer.ai are the ones with a working route today.\"",
+        "some-submitted": "\"Partial progress. SafeGraph, Placer.ai and Gravy Analytics are the ones with a working route today.\"",
         "skip": "\"Location data is the most sensitive category. Come back when you can send a few emails.\"",
       },
     },
@@ -765,14 +765,14 @@ export const RECLAMATION_MISSIONS = [
     title: "Legal Tools: DROP + GDPR + Complaints",
     briefing: "For location brokers without opt-out pages -- or to catch ones you missed -- use the legal tools. If you're in California, DROP reaches the brokers registered there. GDPR erasure requests work for EU/UK data. And filing complaints creates the paper trail regulators use to build enforcement cases -- the FTC has brought cases against several location brokers since 2024.",
     steps: [
-      { text: "Submit through California DROP (covers Gravy Analytics and hundreds more)", url: "https://privacy.ca.gov/drop/" },
+      { text: "Submit through California DROP (covers Gravy Analytics, registered as Unacast, and its Venntel unit, and hundreds more)", url: "https://privacy.ca.gov/drop/" },
       { text: "Generate a GDPR erasure request if applicable (EU/UK)", url: "https://www.datarequests.org/generator/" },
       { text: "If any broker ignores your request: file an FTC complaint", url: "https://reportfraud.ftc.gov/" },
       { text: 'Also file with the California Privacy Protection Agency (CPPA)', url: 'https://cppa.ca.gov/webapplications/complaint' },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
-      briefing: "\"When there is no opt-out page, that does not mean no legal obligation to delete your data. Having no web form is a bet that you won't send a letter. Make them lose that bet. The FTC banned three location data brokers since 2024. Venntel was ordered to delete all previously collected data. Your request matters even when it's ignored -- it becomes evidence in the next enforcement case. Your letter is part of the paper trail that makes lawsuits and regulations possible.\"",
+      briefing: "\"When there is no opt-out page, that does not mean no legal obligation to delete your data. Having no web form is a bet that you won't send a letter. Make them lose that bet. The FTC has brought cases against several location data brokers since 2024, and its orders restrict selling sensitive location data and cover the location data they'd already collected. Your request matters even when it's ignored -- it becomes evidence in the next enforcement case. Your letter is part of the paper trail that makes lawsuits and regulations possible.\"",
       debrief: {
         "all-submitted": "\"Location Data Brokers: liberated. Phone permissions locked, individual opt-outs sent, legal tools deployed. You've dismantled the location tracking layer as thoroughly as an individual can. Check phone permissions whenever you install a new app.\"",
         "some-submitted": "\"California DROP is the highest leverage. One form, hundreds of brokers.\"",
