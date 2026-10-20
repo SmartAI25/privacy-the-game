@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { createInitialState, updateMission } from '../src/state.js';
+import { createInitialState, updateMission, toggleAccount } from '../src/state.js';
+const toggleOn = (s, id) => toggleAccount(s, id, true);
 import { getInterior } from '../src/data/interiors/index.js';
 import {
   freshness, recordDate, currentTwoFactor, entryState, checkupRows, sealedCount, isFullySealed,
@@ -87,9 +88,9 @@ describe('entryState on gmail', () => {
     const pw = byRule('password-unique');
     let s = file(createInitialState(), 'gmail-fortify-password', { action: 'already-strong' });
     expect(entryState(s, 'gmail', pw).state).toBe('sealed');
-    s = { ...createInitialState(), pmFlagged: ['gmail'] };
+    s = file({ ...createInitialState(), pmFlagged: ['gmail'] }, 'password_manager-recon-report', { action: 'flagged' }, daysAgo(5));
     expect(entryState(s, 'gmail', pw).state).toBe('open');
-    s = file(s, 'gmail-fortify-password', { action: 'reset-password' });
+    s = file(s, 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(1));
     expect(entryState(s, 'gmail', pw).state).toBe('sealed');
   });
 
@@ -174,5 +175,85 @@ describe('checkupRows only shows rows a mission can fill (fix round 1)', () => {
 
   it('gmail rows are unchanged and have no registration-lock row', () => {
     expect(checkupRows(createInitialState(), 'gmail', NOW).map((r) => r.id)).toEqual(['password', 'leak', 'two-factor', 'devices']);
+  });
+});
+
+describe('final fixes: password seal follows later flags', () => {
+  const pw = () => byRule('password-unique');
+  const report = (s, at) => file({ ...s, pmFlagged: ['gmail'] }, 'password_manager-recon-report', { action: 'flagged' }, at);
+
+  it('already-strong, then a password-manager flag: open, roof crit', () => {
+    let s = file(createInitialState(), 'gmail-fortify-password', { action: 'already-strong' }, daysAgo(10));
+    s = report(s, daysAgo(2));
+    expect(entryState(s, 'gmail', pw()).state).toBe('open');
+    expect(checkupRows(s, 'gmail', NOW).find((r) => r.id === 'password').status).toBe('crit');
+  });
+
+  it('pw-clean, then a later flag: open', () => {
+    let s = file(createInitialState(), 'gmail-recon-password', { pw_status: 'pw-clean' }, daysAgo(10));
+    s = report(s, daysAgo(2));
+    expect(entryState(s, 'gmail', pw()).state).toBe('open');
+  });
+
+  it('reset after the flag: sealed; reset before the flag: open', () => {
+    const flagged = report(createInitialState(), daysAgo(5));
+    expect(entryState(file(flagged, 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(1)), 'gmail', pw()).state).toBe('sealed');
+    const early = file(createInitialState(), 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(9));
+    expect(entryState(report(early, daysAgo(5)), 'gmail', pw()).state).toBe('open');
+  });
+
+  it('a login check with strangers filed after the reset: open', () => {
+    let s = file(createInitialState(), 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(9));
+    s = file(s, 'gmail-recon-login', { finding: '1-2-breaches' }, daysAgo(3));
+    expect(entryState(s, 'gmail', pw()).state).toBe('open');
+  });
+
+  it('no date to compare: not sealed', () => {
+    let s = report(createInitialState(), daysAgo(5));
+    s = file(s, 'gmail-fortify-password', { action: 'reset-password' });
+    delete s.missions['gmail-fortify-password'].completedAt;
+    expect(entryState(s, 'gmail', pw()).state).toBe('open');
+  });
+});
+
+describe('final fixes: pw-clean seal carries its recon mission and date', () => {
+  it('facebook: pw-clean gives a dated row on facebook-recon-password', () => {
+    const s = file(toggleOn(createInitialState(), 'facebook'), 'facebook-recon-password', { pw_status: 'pw-clean', service_breach: 'not-in-service-breach' }, daysAgo(4));
+    const row = checkupRows(s, 'facebook', NOW).find((r) => r.id === 'password');
+    expect(row.status).toBe('ok');
+    expect(row.missionId).toBe('facebook-recon-password');
+    expect(row.freshness).toBe('fresh');
+    const e = getInterior('facebook').entries.find((x) => x.rule === 'password-unique');
+    expect(entryState(s, 'facebook', e)).toMatchObject({ state: 'sealed', missionId: 'facebook-recon-password', date: daysAgo(4) });
+  });
+});
+
+describe('final fixes: skipped filings that say the door is open', () => {
+  const skip = (s, id, update) => updateMission(s, id, { status: 'skipped', ...update });
+  it('2FA "nothing yet" + "later": phone line and mail slot open, roof crit, START to the briefing', () => {
+    const s = skip(createInitialState(), 'gmail-fortify-2fa', { method: 'none', method_setup: 'later', action: 'later' });
+    expect(entryState(s, 'gmail', byRule('sim-swap')).state).toBe('open');
+    expect(entryState(s, 'gmail', byRule('phishing')).state).toBe('open');
+    const row = checkupRows(s, 'gmail', NOW).find((r) => r.id === 'two-factor');
+    expect(row).toMatchObject({ status: 'crit', label: 'No two-step sign-in', missionId: 'gmail-fortify-2fa' });
+  });
+  it('old-save 2FA "later" (action only) also reads open', () => {
+    const s = skip(createInitialState(), 'gmail-fortify-2fa', { action: 'later' });
+    expect(entryState(s, 'gmail', byRule('sim-swap')).state).toBe('open');
+  });
+  it('a skipped 2FA filing without "later" stays not-checked', () => {
+    const s = skip(createInitialState(), 'gmail-fortify-2fa', { method: 'skip' });
+    expect(entryState(s, 'gmail', byRule('sim-swap')).state).toBe('not-checked');
+    expect(checkupRows(s, 'gmail', NOW).find((r) => r.id === 'two-factor').status).toBe('not-checked');
+  });
+  it('Signal reglock "later" (skipped): open, roof "Registration lock is off" crit', () => {
+    const s = skip(toggleOn(createInitialState(), 'signal'), 'signal-fortify-reglock', { action: 'later' });
+    const e = getInterior('signal').entries.find((x) => x.rule === 'reglock');
+    expect(entryState(s, 'signal', e)).toMatchObject({ state: 'open', missionId: 'signal-fortify-reglock' });
+    expect(checkupRows(s, 'signal', NOW).find((r) => r.id === 'reglock')).toMatchObject({ status: 'crit', label: 'Registration lock is off' });
+  });
+  it('a reglock skipped some other way stays not-checked', () => {
+    const s = skip(createInitialState(), 'signal-fortify-reglock', { action: 'skip' });
+    expect(checkupRows(s, 'signal', NOW).find((r) => r.id === 'reglock').status).toBe('not-checked');
   });
 });

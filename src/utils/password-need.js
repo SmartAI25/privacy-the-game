@@ -68,12 +68,15 @@ function loginCheck(state, accountId) {
 // The new recon's answers for this account, merged.
 export const passwordEvidence = (state, accountId) => evidence(state, accountId);
 function evidence(state, accountId) {
-  const out = { pw: null, activity: null, service: null, changedSince: null, serviceHadPasswords: false, serviceName: null };
+  const out = { pw: null, pwFrom: null, activity: null, service: null, changedSince: null, serviceHadPasswords: false, serviceName: null };
   for (const suffix of NEW_RECON_SUFFIXES) {
     const id = `${accountId}${suffix}`;
     const r = filed(state, id);
     if (!r) continue;
-    if (r.pw_status) out.pw = r.pw_status;
+    if (r.pw_status) {
+      out.pw = r.pw_status;
+      out.pwFrom = id;
+    }
     if (r.activity) out.activity = r.activity;
     if (r.service_breach) {
       const m = MISSIONS.find((x) => x.id === id);
@@ -114,6 +117,26 @@ export function resetNeedSources(state, accountId) {
   if (ACTIVITY_BAD.has(ev.activity)) out.push('activity');
   if (serviceBreachNeeds(ev)) out.push('service');
   return out;
+}
+
+// The dates (recordDate, possibly undefined) of the filings behind each
+// reason a reset is needed, so a reset can be compared with them: a reset
+// filed before the newest of these doesn't answer it.
+export function resetNeedDates(state, accountId) {
+  const sources = resetNeedSources(state, accountId);
+  const dateOf = (r) => r?.rechecked ?? r?.completedAt;
+  const ev = evidence(state, accountId);
+  const recon = (pred) => NEW_RECON_SUFFIXES.map((x) => filed(state, `${accountId}${x}`)).filter((r) => r && pred(r));
+  const dates = [];
+  if (sources.includes('breach')) dates.push(dateOf(emailBreach(state, accountId)));
+  if (sources.includes('pm')) {
+    if ((state.pmFlagged || []).includes(accountId)) dates.push(dateOf(done(state, PM_MISSION_ID)));
+    if (PW_FLAGGED.has(ev.pw)) dates.push(dateOf(filed(state, ev.pwFrom)));
+  }
+  if (sources.includes('login')) dates.push(dateOf(loginCheck(state, accountId)));
+  if (sources.includes('activity')) for (const r of recon((x) => ACTIVITY_BAD.has(x.activity))) dates.push(dateOf(r));
+  if (sources.includes('service')) for (const r of recon((x) => x.service_breach)) dates.push(dateOf(r));
+  return dates;
 }
 
 // 'needed' | 'not-needed' | 'unknown'

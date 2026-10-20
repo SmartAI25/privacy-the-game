@@ -6,7 +6,7 @@ import { MISSIONS } from '../data/missions.js';
 import { EMAIL_ACCOUNT_IDS } from './calc.js';
 import { isMissionDoneIn } from './mission-status.js';
 import { twoFactorMethod, STRONG_METHODS } from './two-factor.js';
-import { passwordResetNeed, passwordEvidence, emailBreachRecord } from './password-need.js';
+import { passwordResetNeed, passwordEvidence, emailBreachRecord, resetNeedDates } from './password-need.js';
 
 const DAY = 864e5;
 const SIM_NOTE = 'Sign-in codes no longer travel by text. A recovery phone number can still reopen this door: check under recovery options and remove it, or keep it only if the carrier account has a PIN.';
@@ -45,7 +45,20 @@ const time = (iso) => {
   return Number.isNaN(t) ? 0 : t;
 };
 
+// A 2FA filing the player skipped because nothing protects the account yet
+// ("Nothing yet", then "I'll come back"; or the old "later"). It is still a
+// filing, and what it says is that the door is open.
+function twoFactorLeftOpen(rec) {
+  if (rec?.status !== 'skipped') return false;
+  if (rec.method === 'none') return rec.method_setup === 'later';
+  return !rec.method && rec.action === 'later';
+}
+
 export function currentTwoFactor(state, accountId) {
+  // The base mission is filed again only after any upgrade (the upgrade needs
+  // it filed with codes), so a skipped "nothing yet" on it is the newest word.
+  const baseId = `${accountId}-fortify-2fa`;
+  if (twoFactorLeftOpen(state?.missions?.[baseId])) return { method: 'none', missionId: baseId, date: undefined, skipped: true };
   const ids = [`${accountId}-fortify-2fa`, `${accountId}-fortify-2fa-upgrade`];
   let best = null;
   for (const id of ids) {
@@ -66,13 +79,42 @@ function devicesMissionId(accountId) {
   return accountId === 'signal' ? 'signal-recon-devices' : `${accountId}-recon-login`;
 }
 
+// A reset answers the need only when it came after every filing behind it.
+// No date to compare: not sealed (seals lean strict).
+function resetAfterNeed(state, accountId, rec) {
+  const at = Date.parse(recordDate(rec));
+  if (Number.isNaN(at)) return false;
+  const dates = resetNeedDates(state, accountId);
+  return dates.length > 0 && dates.every((d) => {
+    const t = Date.parse(d);
+    return !Number.isNaN(t) && t < at;
+  });
+}
+
 function passwordSeal(state, accountId) {
-  const rec = doneRecord(state, `${accountId}-fortify-password`);
-  if (rec && ['reset-password', 'already-strong'].includes(rec.action)) {
-    return { sealed: true, missionId: `${accountId}-fortify-password`, date: recordDate(rec) };
+  const id = `${accountId}-fortify-password`;
+  const rec = doneRecord(state, id);
+  const needed = passwordResetNeed(state, accountId) === 'needed';
+  if (rec?.action === 'reset-password' && (!needed || resetAfterNeed(state, accountId, rec))) {
+    return { sealed: true, missionId: id, date: recordDate(rec) };
   }
-  if (passwordEvidence(state, accountId).pw === 'pw-clean') return { sealed: true, missionId: null, date: undefined };
+  if (needed) return { sealed: false };
+  if (rec?.action === 'already-strong') return { sealed: true, missionId: id, date: recordDate(rec) };
+  // The password manager's verdict, from the recon that recorded it.
+  const ev = passwordEvidence(state, accountId);
+  if (ev.pw === 'pw-clean') {
+    return { sealed: true, missionId: ev.pwFrom, date: recordDate(state?.missions?.[ev.pwFrom]) };
+  }
   return { sealed: false };
+}
+
+// Signal's registration lock: the completed record, or a skipped "I'll come
+// back" (which says the lock is off). Other skips stay not-checked.
+function reglockRecord(state, id) {
+  const rec = doneRecord(state, id);
+  if (rec) return rec;
+  const own = state?.missions?.[id];
+  return own?.status === 'skipped' && own.action === 'later' ? own : null;
 }
 
 export function entryState(state, accountId, entry) {
@@ -112,7 +154,7 @@ export function entryState(state, accountId, entry) {
     }
     case 'reglock': {
       const id = 'signal-fortify-reglock';
-      const rec = doneRecord(state, id);
+      const rec = reglockRecord(state, id);
       if (!rec) return nc;
       const date = recordDate(rec);
       if (['enabled-2fa', 'already-enabled'].includes(rec.action)) return { state: 'sealed', missionId: id, date, note: REGLOCK_NOTE };
@@ -134,7 +176,7 @@ export function checkupRows(state, accountId, now = new Date()) {
   const pwId = `${accountId}-fortify-password`;
   if (hasMission(pwId)) {
     const seal = passwordSeal(state, accountId);
-    if (seal.sealed) rows.push(row('password', 'ok', 'Password is unique', pwId, seal.date));
+    if (seal.sealed) rows.push(row('password', 'ok', 'Password is unique', seal.missionId ?? pwId, seal.date));
     else if (passwordResetNeed(state, accountId) === 'needed') rows.push(row('password', 'crit', 'Password needs a reset', pwId));
     else rows.push(row('password', 'not-checked', 'Password not checked', pwId));
   }
@@ -160,7 +202,7 @@ export function checkupRows(state, accountId, now = new Date()) {
 
   const lockId = `${accountId}-fortify-reglock`;
   if (hasMission(lockId)) {
-    const rec = doneRecord(state, lockId);
+    const rec = reglockRecord(state, lockId);
     if (rec && ['enabled-2fa', 'already-enabled'].includes(rec.action)) rows.push(row('reglock', 'ok', 'Registration lock is on', lockId, recordDate(rec)));
     else if (rec?.action === 'later') rows.push(row('reglock', 'crit', 'Registration lock is off', lockId, recordDate(rec)));
     else rows.push(row('reglock', 'not-checked', 'Registration lock not checked', lockId));
