@@ -3,7 +3,7 @@ import { ACCOUNTS } from '../data/accounts.js';
 import { renderHud } from '../components/hud.js';
 import { DISTRICT_DIALOGUE, PASSWORD_DIALOGUE, TWO_FA_DIALOGUE, pick } from '../data/dialogue.js';
 import { calcDistrictProgress, isEmailBreachCheck } from '../utils/calc.js';
-import { questionOptions, prefillAnswer, visibleQuestions } from '../utils/debrief.js';
+import { questionOptions, prefillAnswer, visibleQuestions, canRecheck } from '../utils/debrief.js';
 import { renderPasswordProgress } from '../components/password-progress.js';
 import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
@@ -287,7 +287,7 @@ function recheckUnavailable(state, mission) {
 export function renderDebrief(state, missionId, { recheck = false } = {}) {
   const mission = MISSIONS.find((m) => m.id === missionId);
   if (!mission) return notFound(state);
-  if (recheck && state.missions[missionId]?.status !== 'completed') return recheckUnavailable(state, mission);
+  if (recheck && (state.missions[missionId]?.status !== 'completed' || !canRecheck(mission))) return recheckUnavailable(state, mission);
 
   const districtId = missionDistrict(mission) || '';
   const stored = state.missions[missionId] || {};

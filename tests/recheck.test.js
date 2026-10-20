@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { MISSIONS } from '../src/data/missions.js';
-import { applyRecheck } from '../src/utils/debrief.js';
+import { applyRecheck, missionEventData } from '../src/utils/debrief.js';
 import { createInitialState } from '../src/state.js';
 import { renderDebrief } from '../src/screens/debrief.js';
 
@@ -63,9 +63,37 @@ describe('applyRecheck', () => {
   it('returns null for incomplete answers or a skip answer, leaving the record alone', () => {
     const state = completedState();
     expect(applyRecheck(state, mission, {})).toBeNull();
-    const skipQ = mission.debriefQs.find((q) => !q.showIf);
-    const skipOpt = skipQ.options.find((o) => o.value === 'skip' || o.value === 'later' || o.severity === 'skip');
-    if (skipOpt) expect(applyRecheck(state, mission, { ...good(), [skipQ.id]: skipOpt.value })).toBeNull();
+    const skipQ = mission.debriefQs.find((q) => !q.showIf && q.options.some((o) => o.severity === 'skip'));
+    expect(skipQ).toBeTruthy();
+    const skipOpt = skipQ.options.find((o) => o.severity === 'skip');
+    expect(applyRecheck(state, mission, { ...good(), [skipQ.id]: skipOpt.value })).toBeNull();
+  });
+
+  it('breach to clean re-check drops the hidden password_exposed answer', () => {
+    const breach = MISSIONS.find((m) => m.id === 'gmail-recon-breach');
+    const s = createInitialState();
+    s.missions = { ...s.missions, [breach.id]: { status: 'completed', completedAt: '2026-01-01T00:00:00.000Z', finding: '1-2-breaches', password_exposed: 'no', action: 'x' } };
+    const clean = breach.debriefQs[0].options.find((o) => o.value === 'no-breaches');
+    expect(clean).toBeTruthy();
+    const next = applyRecheck(s, breach, { [breach.debriefQs[0].id]: 'no-breaches' });
+    const rec = next.missions[breach.id];
+    expect(rec.finding).toBe('no-breaches');
+    expect('password_exposed' in rec).toBe(false);
+    expect(rec.action).not.toBe('x');
+    expect(missionEventData(breach, rec).password_exposed).toBeUndefined();
+  });
+
+  it('is blocked for the password-manager report and burst missions', () => {
+    for (const id of ['password_manager-recon-report', 'password_manager-fortify-burst']) {
+      const m = MISSIONS.find((x) => x.id === id);
+      expect(m).toBeTruthy();
+      const s = createInitialState();
+      s.missions = { ...s.missions, [id]: { status: 'completed', completedAt: 'x' } };
+      expect(applyRecheck(s, m, { changed: '1', junk: 'no', flagged: ['none'], flagged_count: 0, throwaway_count: 0 })).toBeNull();
+      const html = renderDebrief(s, id, { recheck: true });
+      expect(html).toContain(`#/mission/${id}/briefing`);
+      expect(html).not.toContain('submit-recheck');
+    }
   });
 
   it('never reaches analytics: no track calls, and the action path has no track or filing tail', () => {

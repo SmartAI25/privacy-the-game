@@ -240,14 +240,28 @@ export function applyDebrief(state, mission, answers) {
 // completed and the answers are a valid, still-completed debrief.
 export function applyRecheck(state, mission, answers, now = new Date().toISOString()) {
   const stored = state?.missions?.[mission.id];
-  if (stored?.status !== 'completed') return null;
+  if (stored?.status !== 'completed' || !canRecheck(mission)) return null;
   const r = debriefRecord(mission, answers);
-  if (!r || r.status !== 'completed') return null;
+  // The password-manager missions carry numbers and flags a re-check can't redo.
+  if (!r || r.status !== 'completed' || r.burst || r.pmFlagged) return null;
   const { status: _status, ...fresh } = r.record;
+  // Drop every earlier answer first (as fileDebrief does), so a follow-up the
+  // new answers hide, like password_exposed, doesn't linger.
+  const kept = { ...stored };
+  for (const k of ANSWER_KEYS) delete kept[k];
+  for (const q of mission.debriefQs) {
+    delete kept[q.id];
+    if (q.legacy) delete kept[q.legacy.id];
+  }
   return {
     ...state,
-    missions: { ...state.missions, [mission.id]: { ...stored, ...fresh, rechecked: now } },
+    missions: { ...state.missions, [mission.id]: { ...kept, ...fresh, rechecked: now } },
   };
+}
+
+// Password-manager report and burst keep their own numbers: no re-check.
+export function canRecheck(mission) {
+  return mission.id !== PM_MISSION_ID && mission.stepsBuilder !== 'pm-burst';
 }
 
 // "GOT IT" on a password reset the player's recon showed isn't needed.
