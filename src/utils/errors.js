@@ -1,4 +1,5 @@
 import { eventHasOnlyThirdPartyFrames } from './errorNoise.js';
+import { scrubEventUrls } from './pageview-url.js';
 
 const GLITCHTIP_DSN = 'https://23700b2a5cf74033b50abee4f4a43851@errors.multiversegames.ai/2';
 
@@ -16,7 +17,7 @@ export function initErrorTracking() {
           (b) => b.category !== 'console' || !b.message?.includes('localStorage'),
         );
       }
-      return event;
+      return scrubEventUrls(event);
     },
   });
 

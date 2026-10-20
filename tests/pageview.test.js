@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { pageviewUrl, sanitizeHref, errorContext, scrubEventUrls } from '../src/utils/pageview-url.js';
 
 describe('trackPageview', () => {
   beforeEach(() => {
@@ -25,5 +26,47 @@ describe('trackPageview', () => {
     setAnalyticsOff(true);
     trackPageview('b', 'stats');
     expect(umami.track).not.toHaveBeenCalled();
+  });
+});
+
+describe('pageviewUrl', () => {
+  it('pageviewUrl strips the account from building routes only', () => {
+    expect(pageviewUrl({ screen: 'building' }, 'https://x/reclaim-city/#/building/gmail')).toBe('https://x/reclaim-city/#/building');
+    expect(pageviewUrl({ screen: 'district' }, 'https://x/#/district/vault')).toBe('https://x/#/district/vault');
+  });
+
+  it('strips the mission id from re-check routes', () => {
+    expect(pageviewUrl({ screen: 'recheck' }, 'https://x/reclaim-city/#/mission/gmail-recon-login/recheck')).toBe('https://x/reclaim-city/#/mission/recheck');
+    expect(pageviewUrl({ screen: 'briefing' }, 'https://x/#/mission/gmail-recon-login/briefing')).toBe('https://x/#/mission/gmail-recon-login/briefing');
+  });
+
+  it('sanitizeHref applies the same rule from the URL alone (error reports)', () => {
+    expect(sanitizeHref('https://x/#/building/gmail')).toBe('https://x/#/building');
+    expect(sanitizeHref('https://x/#/mission/gmail-recon-login/recheck')).toBe('https://x/#/mission/recheck');
+    expect(sanitizeHref('https://x/#/district/vault')).toBe('https://x/#/district/vault');
+    expect(sanitizeHref('https://x/')).toBe('https://x/');
+    expect(sanitizeHref(undefined)).toBe(undefined);
+  });
+
+  it('error context for building and re-check screens carries no params', () => {
+    expect(errorContext({ screen: 'building', params: { id: 'gmail' } })).toEqual({ screen: 'building' });
+    expect(errorContext({ screen: 'recheck', params: { id: 'gmail-recon-login' } })).toEqual({ screen: 'recheck' });
+    expect(errorContext({ screen: 'district', params: { id: 'vault' } })).toEqual({ screen: 'district', params: { id: 'vault' } });
+  });
+
+  it('error reports lose the account from the page URL and navigation breadcrumbs', () => {
+    const event = {
+      request: { url: 'https://x/#/building/gmail' },
+      breadcrumbs: [
+        { category: 'navigation', data: { from: 'https://x/#/district/master-keys', to: 'https://x/#/building/gmail' } },
+        { category: 'navigation', data: { from: '/#/mission/gmail-recon-login/recheck', to: '/#/city' } },
+        { category: 'console', message: 'hi' },
+      ],
+    };
+    const out = scrubEventUrls(event);
+    expect(out.request.url).toBe('https://x/#/building');
+    expect(out.breadcrumbs[0].data).toEqual({ from: 'https://x/#/district/master-keys', to: 'https://x/#/building' });
+    expect(out.breadcrumbs[1].data.from).toBe('/#/mission/recheck');
+    expect(JSON.stringify(out)).not.toContain('gmail');
   });
 });

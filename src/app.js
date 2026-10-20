@@ -20,6 +20,8 @@ import { hasInterior } from './data/interiors/index.js';
 import { generateMilestoneCard, shareMilestoneCard, shareStatCard } from './utils/milestone-card.js';
 import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
+import { renderBuildingInterior } from './screens/building.js';
+import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
 import { renderStats } from './screens/stats.js';
@@ -99,6 +101,7 @@ const screens = {
   district: ({ id, tab }) => renderDistrict(state, id, tab, {
     reaction: landingReaction?.landed && landingReaction.districtId === id ? landingReaction.reaction : null,
   }),
+  building: ({ id }) => renderBuildingInterior(state, id),
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
   recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
@@ -140,7 +143,7 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
   try {
     const renderFn = screens[route.screen] || screens.city;
     app.innerHTML = renderFn(route.params);
-    if (tracksPageview(cause)) trackPageview(location.href, route.screen);
+    if (tracksPageview(cause)) trackPageview(pageviewUrl(route, location.href), route.screen);
     // Landing after SUBMIT REPORT: start at Scout's reaction, not the debrief's scroll position.
     if (tracksPageview(cause) && route.screen === 'district' && landingReaction?.landed) app.querySelector('[data-scout-reaction]')?.scrollIntoView({ block: 'start' });
     if (route.screen === 'city') {
@@ -148,7 +151,7 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
       setState(state);
     }
   } catch (error) {
-    captureError(error, { screen: route.screen, params: route.params });
+    captureError(error, errorContext(route));
     app.innerHTML = `<div style="padding: 40px; text-align: center;">
       <h2 style="color: var(--magenta);">Something broke</h2>
       <p>The error has been reported. <a href="#/city">Return to city</a></p>

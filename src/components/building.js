@@ -1,6 +1,8 @@
 import { ACCOUNTS } from '../data/accounts.js';
 
-export function renderBuilding(accountId, buildingState, size = 64) {
+// href makes the building tappable (its interior); glow 0..1 adds a cyan
+// drop-shadow. With neither, the markup is exactly what it always was.
+export function renderBuilding(accountId, buildingState, size = 64, { href, glow = 0 } = {}) {
   const account = ACCOUNTS[accountId];
   const scarred = buildingState === 'liberated-scarred';
   const liberated = buildingState === 'liberated' || scarred;
@@ -21,14 +23,25 @@ export function renderBuilding(accountId, buildingState, size = 64) {
     filter = 'brightness(0.5)';
   }
 
+  const g = Math.min(1, Math.max(0, Number(glow) || 0));
+  if (g > 0) filter += ` drop-shadow(0 0 10px rgba(0,229,255,${Math.round(g * 0.6 * 100) / 100}))`;
+
   const scar = scarred
     ? `<div style="position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; background: var(--magenta); border-radius: 50%; box-shadow: 0 0 6px rgba(255,45,155,0.8), 0 0 12px rgba(255,45,155,0.4);"></div>`
     : '';
 
-  return `
+  const building = `
   <div style="position: relative; display: inline-block; text-align: center;">
     <img src="${src}" style="display: block; margin: 0 auto; width: ${size}px; height: auto; filter: ${filter};">
     ${scar}
     <div style="font-family: var(--font-display); font-size: 8px; letter-spacing: 1px; text-align: center; color: rgba(237,239,243,0.7); margin-top: 4px;">${account?.name || accountId}</div>
   </div>`;
+  if (!href) return building;
+  const name = account?.name || accountId;
+  return `
+  <a class="building-link" href="${esc(href)}" aria-label="${esc(name)}: see inside">${building}</a>`;
+}
+
+function esc(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

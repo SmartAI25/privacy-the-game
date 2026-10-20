@@ -5,6 +5,7 @@ import { calcDistrictProgress, getAccountPhaseGate, getBuildingState } from '../
 import { renderHud } from '../components/hud.js';
 import { renderScout } from '../components/scout.js';
 import { renderBuilding } from '../components/building.js';
+import { hasInterior } from '../data/interiors/index.js';
 import { DISTRICT_DIALOGUE, PASSWORD_DIALOGUE, pick } from '../data/dialogue.js';
 import { PASSWORD_MANAGERS } from '../data/missions-passwords.js';
 import { isMissionDone, isMissionDoneIn, isMissionInPlay } from '../utils/mission-status.js';
@@ -59,6 +60,11 @@ const PHASES = [
   { id: 'fortify', label: 'FORTIFY' },
   { id: 'reclaim', label: 'RECLAIM' },
 ];
+
+// A building is tappable when it has an interior and the player has it.
+function interiorHref(state, id) {
+  return hasInterior(id) && state.accounts?.[id]?.enabled ? `#/building/${id}` : undefined;
+}
 
 function esc(value) {
   return String(value)
@@ -429,7 +435,7 @@ function renderFacilityDistrict(state, district, reaction) {
   const progress = calcDistrictProgress(state, district.id);
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id)))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id) }))
     .join('');
 
   const facilityOrder = district.facilityOrder || districtAccounts.map(([id]) => id);
@@ -496,7 +502,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
   }
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id)))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id) }))
     .join('');
 
   let content;

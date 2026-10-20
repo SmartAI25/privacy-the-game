@@ -202,3 +202,88 @@ img { image-rendering: pixelated; }
   .scout-sprite__sheet { animation: none !important; }
   .scout-sprite__sheet:not(:last-child) { display: none; }
 }
+/* Tappable buildings (district strip) */
+.building-link { display: inline-block; min-width: 44px; min-height: 44px; text-decoration: none; color: inherit; }
+.building-link:focus-visible { outline: 1px solid var(--cyan); outline-offset: 2px; }
+
+/* Building interior: a cutaway, one column, top to bottom */
+.interior { padding: 12px 16px 24px; font-family: var(--font-mono); color: var(--offwhite); }
+.interior-back { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 14px; text-decoration: none; }
+.interior-title { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--cyan); letter-spacing: 3px; margin-top: 14px; text-shadow: 0 0 12px rgba(0,229,255,0.45); overflow-wrap: anywhere; }
+.interior-sub { font-size: 11px; color: rgba(237,239,243,0.5); margin-top: 4px; }
+.interior-meter { display: flex; flex-wrap: wrap; gap: 6px 8px; font-size: 10px; letter-spacing: 1px; margin: 10px 0 14px; color: rgba(237,239,243,0.7); }
+.interior-meter b { color: #fff; }
+.interior .dim { color: rgba(237,239,243,0.45); }
+.interior .ok { color: var(--lime); }
+.interior-meter .fresh-fresh { color: var(--lime); }
+.interior-meter .fresh-aging { color: var(--amber); }
+.interior-meter .fresh-stale, .interior-meter .fresh-unknown { color: rgba(237,239,243,0.5); }
+.interior-note { font-size: 12px; line-height: 1.5; margin-top: 4px; }
+
+.floor { margin-bottom: 10px; border: 1px solid rgba(0,229,255,0.18); border-left: 4px solid var(--cyan); background: rgba(26,31,43,0.55); }
+.floor--roof { border-left-color: var(--lime); }
+.floor--desk { border-left-color: #9FB6FF; }
+.floor--ground { border-left-color: var(--magenta); }
+.floor--alcove { border-left-color: #FFD76A; background: rgba(40,32,12,0.45); }
+.floor-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.floor-head::-webkit-details-marker { display: none; }
+.floor-chev { color: rgba(237,239,243,0.45); transition: transform 150ms ease; }
+.floor:not([open]) .floor-chev { transform: rotate(-90deg); }
+.floor--roof .floor-head { color: var(--lime); }
+.floor--desk .floor-head { color: #9FB6FF; }
+.floor--ground .floor-head { color: var(--magenta); }
+.floor--alcove .floor-head { color: #FFD76A; }
+.floor-body { padding: 0 12px 12px; font-size: 12px; line-height: 1.5; font-family: var(--font-body); }
+
+.ant { display: flex; flex-direction: column; gap: 6px; }
+.ant-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; }
+.ant-label { min-width: 0; overflow-wrap: anywhere; }
+.ant-bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
+.ant-bars .bar { width: 4px; background: rgba(237,239,243,0.15); }
+.ant-bars .bar:nth-child(1) { height: 5px; }
+.ant-bars .bar:nth-child(2) { height: 8px; }
+.ant-bars .bar:nth-child(3) { height: 11px; }
+.ant-bars .bar:nth-child(4) { height: 14px; }
+.ant-bars--ok .bar.on { background: var(--lime); }
+.ant-bars--warn .bar.on { background: var(--amber); }
+.ant-bars--crit .bar.on { background: var(--magenta); }
+
+.interior-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; margin-top: 6px; padding: 6px 12px; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 2px; background: var(--cyan); color: var(--midnight); text-decoration: none; }
+.interior-btn--quiet { margin-top: 0; background: rgba(0,229,255,0.08); color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+
+.slip { border: 1px dashed rgba(159,182,255,0.4); background: rgba(13,20,32,0.8); padding: 8px 10px; margin-top: 8px; }
+.slip-stamp { display: inline-block; max-width: 100%; margin: 0 0 6px; padding: 1px 5px; border: 1px solid #9FB6FF; color: #9FB6FF; font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; transform: rotate(-3deg); overflow-wrap: anywhere; }
+.slip-who { color: #9FB6FF; font-weight: 700; }
+.slip-note { font-size: 11px; }
+.slip-gets { margin-top: 4px; }
+
+.entry { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; margin-top: 12px; align-items: start; }
+.entry-lock { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 1px solid currentColor; }
+.entry--sealed .entry-lock { color: var(--lime); }
+.entry--open .entry-lock { color: var(--amber); }
+.entry--beyond .entry-lock, .entry--not-checked .entry-lock { color: rgba(237,239,243,0.45); }
+.entry-where { font-family: var(--font-display); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,239,243,0.55); }
+.entry-actors { display: flex; flex-direction: column; color: #fff; font-weight: 700; }
+.entry-actor { overflow-wrap: anywhere; }
+.entry-note { font-size: 11px; }
+.entry-how { margin: 4px 0; color: rgba(237,239,243,0.75); }
+.entry-fix { color: var(--amber); }
+
+.interior-sources { margin-top: 4px; font-size: 11px; }
+.interior-sources summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; color: rgba(0,229,255,0.7); list-style: none; }
+.interior-sources summary::-webkit-details-marker { display: none; }
+.interior-sources summary::before { content: '▸ '; }
+.interior-sources[open] summary::before { content: '▾ '; }
+.interior-sources a { display: flex; align-items: center; min-height: 44px; color: rgba(0,229,255,0.75); overflow-wrap: anywhere; }
+
+.alcove-tribute { color: #E8D9A8; display: flex; gap: 10px; align-items: flex-start; }
+.alcove-title { margin-top: 6px; font-size: 11px; }
+.alcove-story { margin-top: 4px; color: rgba(237,239,243,0.7); }
+.candle { flex-shrink: 0; display: inline-block; width: 8px; height: 16px; margin-top: 10px; background: #E8D9A8; position: relative; }
+.candle--lit::after { content: ''; position: absolute; left: 1px; top: -9px; width: 6px; height: 9px; border-radius: 50% 50% 40% 40%; background: var(--amber); box-shadow: 0 0 10px #FFD76A; }
+.interior-empty { margin-top: 24px; font-family: var(--font-body); color: rgba(237,239,243,0.65); }
+.interior-empty p { margin-top: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .floor-chev { transition: none; }
+}
