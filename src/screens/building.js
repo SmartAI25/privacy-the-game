@@ -15,6 +15,7 @@ const DAY = 864e5;
 const LIT = { ok: 4, warn: 2, crit: 1, 'not-checked': 0 };
 const DIM = { fresh: 1, aging: 0.6, stale: 0.35, unknown: 0.35 };
 const ICON = { sealed: '🔒', open: '◇', beyond: '◌', 'not-checked': '?' };
+const STATE_LABEL = { sealed: 'Sealed', open: 'Open', beyond: 'Beyond your control', 'not-checked': 'Not checked yet' };
 const METAPHOR = {
   'front-door': 'Front door',
   'phone-line': 'Phone line',
@@ -147,11 +148,11 @@ function entry(state, accountId, e) {
   } else if (s.state === 'beyond') {
     status = `<div class="dim">Beyond your control.${e.narrows ? ` ${esc(e.narrows)}` : ''}</div>`;
   } else {
-    status = `<div class="dim">Not checked yet.</div>${target ? `<a class="interior-btn interior-btn--quiet" href="${briefingHref(target)}">START</a>` : ''}`;
+    status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${briefingHref(target)}">START</a>` : ''}`;
   }
   return `
       <div class="entry entry--${s.state}" data-entry="${esc(e.id)}" data-state="${s.state}">
-        <div class="entry-lock" aria-label="${s.state}">${ICON[s.state] ?? '?'}</div>
+        <div class="entry-lock" role="img" aria-label="${STATE_LABEL[s.state] ?? 'Not checked yet'}">${ICON[s.state] ?? '?'}</div>
         <div class="entry-text">
           <div class="entry-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</div>
           <div class="entry-actors">${actorLines(e.actor)}</div>

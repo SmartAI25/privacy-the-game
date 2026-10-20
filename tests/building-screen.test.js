@@ -165,6 +165,33 @@ describe('building screen', () => {
     }
   });
 
+  it('not-checked entries show the fix beside START; the state icon has a readable label', () => {
+    const html = render(createInitialState());
+    const fix = getInterior('gmail').entries.find((e) => e.id === 'near-you').fix;
+    expect(entryHtml(html, 'near-you')).toContain(fix.replace(/’/g, '’'));
+    expect(entryHtml(html, 'near-you')).toContain('aria-label="Not checked yet"');
+    expect(entryHtml(html, 'state')).toContain('aria-label="Beyond your control"');
+    const s = file(createInitialState(), 'gmail-fortify-2fa', { method: 'sms' });
+    expect(entryHtml(render(s), 'sim-swap')).toContain('aria-label="Open"');
+    const p = file(createInitialState(), 'gmail-fortify-2fa', { method: 'passkey' });
+    expect(entryHtml(render(p), 'phishing')).toContain('aria-label="Sealed"');
+  });
+
+  it('no rendered state says "they", including notes and narrows', () => {
+    const passkey = file(createInitialState(), 'gmail-fortify-2fa', { method: 'passkey' });
+    const auth = file(createInitialState(), 'gmail-fortify-2fa', { method: 'authenticator' });
+    let mixed = file(createInitialState(), 'gmail-fortify-2fa', { method: 'sms' });
+    mixed = file(mixed, 'gmail-recon-login', { finding: '1-2-breaches' });
+    for (const st of [createInitialState(), passkey, auth, mixed, { ...createInitialState(), pmFlagged: ['gmail'] }]) {
+      const html = render(st);
+      const text = html.replace(renderHud(st), '').replace(/<[^>]+>/g, ' ');
+      expect(text).not.toMatch(/\bthey\b/i);
+    }
+    // The states above do reach the note and narrows copy.
+    expect(render(auth)).toContain('Sealed once text-message backup is off.');
+    expect(render(passkey)).toContain('Advanced Protection Program');
+  });
+
   it('source links open in a new tab with noopener; no "they" in the static labels', () => {
     const html = render(createInitialState());
     const links = [...html.matchAll(/<a [^>]*href="https?:[^"]*"[^>]*>/g)].map((m) => m[0]);
