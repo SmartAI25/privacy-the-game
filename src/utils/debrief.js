@@ -234,6 +234,22 @@ export function applyDebrief(state, mission, answers) {
   return fileDebrief(state, mission, answers)?.state ?? null;
 }
 
+// Re-checking a completed mission: the answers are checked again so the
+// building's freshness bars refresh. Writes the record directly (updateMission
+// would clear completedAt) and sends nothing. null unless the mission is
+// completed and the answers are a valid, still-completed debrief.
+export function applyRecheck(state, mission, answers, now = new Date().toISOString()) {
+  const stored = state?.missions?.[mission.id];
+  if (stored?.status !== 'completed') return null;
+  const r = debriefRecord(mission, answers);
+  if (!r || r.status !== 'completed') return null;
+  const { status: _status, ...fresh } = r.record;
+  return {
+    ...state,
+    missions: { ...state.missions, [mission.id]: { ...stored, ...fresh, rechecked: now } },
+  };
+}
+
 // "GOT IT" on a password reset the player's recon showed isn't needed.
 export function recordNotNeeded(state, missionId) {
   const mission = MISSIONS.find((m) => m.id === missionId);

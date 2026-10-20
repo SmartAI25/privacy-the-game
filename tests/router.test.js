@@ -2,6 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { parseRoute } from '../src/router.js';
 
 describe('parseRoute', () => {
+  it('the recheck route parses', () => {
+    expect(parseRoute('#/mission/gmail-recon-login/recheck')).toEqual({ screen: 'recheck', params: { id: 'gmail-recon-login' } });
+  });
+
   it('parses city map route', () => {
     expect(parseRoute('#/city')).toEqual({ screen: 'city', params: {} });
   });

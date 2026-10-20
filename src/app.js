@@ -9,13 +9,14 @@ import { initRouter, navigate, parseRoute, tracksPageview, RENDER_CAUSE } from '
 import { hasSavedState, loadState, saveState, updateMission, updateStreak, streakAfterFiling, toggleAccount, markMissionStarted } from './state.js';
 import { calcDistrictProgress, calcIntegrity, districtBreachedAddresses } from './utils/calc.js';
 import { MISSIONS, missionDistrict } from './data/missions.js';
-import { fileDebrief, recordNotNeeded, missionEventData, visibleQuestions } from './utils/debrief.js';
+import { fileDebrief, applyRecheck, recordNotNeeded, missionEventData, visibleQuestions } from './utils/debrief.js';
 import { ensureBurst, startBurst } from './utils/bursts.js';
 import { applyCategoryAction } from './utils/pm-categories.js';
 import { isMissionDone } from './utils/mission-status.js';
 import { keyActivationTarget } from './utils/keyboard.js';
 import { ACCOUNTS } from './data/accounts.js';
 import { DISTRICTS } from './data/districts.js';
+import { hasInterior } from './data/interiors/index.js';
 import { generateMilestoneCard, shareMilestoneCard, shareStatCard } from './utils/milestone-card.js';
 import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
@@ -100,6 +101,7 @@ const screens = {
   }),
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
+  recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
   milestone: ({ districtId }) => renderMilestone(state, districtId),
   quickquest: () => renderQuickQuest(state),
   phishing: () => renderPhishingQuiz(state),
@@ -207,6 +209,17 @@ function submitDebrief(missionId) {
   if (!filed) return;
   setState(ensureBurst(streakAfterFiling(noteFirstTwoFactor(filed.state, mission, filed.state.missions[missionId]), filed.event)));
   afterMissionRecorded(mission, filed.event);
+}
+
+// Re-check: the answers are confirmed again, nothing is reopened or sent.
+// No afterMissionRecorded, no track.
+function submitRecheck(missionId) {
+  const mission = MISSIONS.find((m) => m.id === missionId);
+  if (!mission) return navigate('#/city');
+  const next = applyRecheck(state, mission, readAnswers(app, mission));
+  if (!next) return;
+  setState(next);
+  navigate(hasInterior(mission.accountId) ? `#/building/${mission.accountId}` : `#/district/${missionDistrict(mission)}`);
 }
 
 // What the debrief form says now: radio values, pick-all lists, numbers
@@ -432,6 +445,8 @@ app.addEventListener('click', async (e) => {
     setTimeout(() => renderCurrentRoute(), 0);
   } else if (action === 'submit-debrief') {
     submitDebrief(el.dataset.mission);
+  } else if (action === 'submit-recheck') {
+    submitRecheck(el.dataset.mission);
   } else if (action === 'password-not-needed') {
     markNotNeeded(el.dataset.mission);
   } else if (action === 'reset-anyway') {

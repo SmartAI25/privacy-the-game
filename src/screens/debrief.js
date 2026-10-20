@@ -62,14 +62,18 @@ function showIfAttrs(q, shown) {
 }
 
 // A number answer: typed in, with any options (like "couldn't check") beside it.
-function numberInput(q) {
+function numberInput(q, value) {
   const max = q.max !== undefined ? ` max="${q.max}"` : '';
   return `
-      <input type="number" name="q_${q.id}" min="${q.min ?? 0}"${max} inputmode="numeric" step="1" aria-label="${q.label}" style="width: 140px; max-width: 100%; background: transparent; border: 1px solid rgba(0,229,255,0.3); color: var(--offwhite); font-size: 18px; padding: 10px 12px; font-family: var(--font-mono);">`;
+      <input type="number" name="q_${q.id}" min="${q.min ?? 0}"${max} inputmode="numeric" step="1"${value !== undefined ? ` value="${value}"` : ''} aria-label="${q.label}" style="width: 140px; max-width: 100%; background: transparent; border: 1px solid rgba(0,229,255,0.3); color: var(--offwhite); font-size: 18px; padding: 10px 12px; font-family: var(--font-mono);">`;
 }
 
-function questionGroup(q, state, mission, shown = false) {
+// `given` is a stored answer to show again (re-check); it wins over a pre-fill.
+function questionGroup(q, state, mission, shown = false, given = undefined) {
   const pre = mission ? prefillAnswer(q, mission, state) : undefined;
+  const has = given !== undefined && given !== null;
+  const isPicked = (v) => (has ? (Array.isArray(given) ? given.includes(v) : given === v) : pre !== undefined && v === pre);
+  const typed = has && q.type === 'number' && /^\d+$/.test(String(given)) ? String(given) : undefined;
   const preNote = q.prefill === 'same-address'
     ? 'Filled in from your breach check. Change it if that’s wrong.'
     : 'Filled in from your password manager report. Change it if the report says something else.';
@@ -78,14 +82,14 @@ function questionGroup(q, state, mission, shown = false) {
     <div class="section-label" style="color: rgba(0,229,255,0.5); margin-bottom: 14px;">${q.label.toUpperCase()}</div>
     ${q.hint ? `<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">${q.hint}</div>` : ''}
     ${q.multi ? `<div style="font-size: 12px; color: rgba(237,239,243,0.5); margin: -6px 0 12px;">Pick all that apply.</div>` : ''}
-    ${pre ? `<div data-prefilled="${q.id}" style="font-size: 12px; color: var(--cyan); line-height: 1.5; margin: -6px 0 12px;">${preNote}</div>` : ''}
+    ${pre && !has ? `<div data-prefilled="${q.id}" style="font-size: 12px; color: var(--cyan); line-height: 1.5; margin: -6px 0 12px;">${preNote}</div>` : ''}
     ${q.scout ? `<div style="display: flex; gap: 10px; align-items: flex-start; margin: -4px 0 12px;">
       <img src="assets/characters/scout_0.png" alt="" style="width: 28px; height: 28px; flex-shrink: 0;">
       <div style="font-size: 13px; color: rgba(237,239,243,0.65); line-height: 1.6; font-style: italic;">${q.scout}</div>
     </div>` : ''}
     <div style="display: flex; flex-direction: column; gap: 6px;">
-      ${q.type === 'number' ? numberInput(q) : ''}
-      ${questionOptions(q, state).map((opt) => optionRow(q.type === 'number' ? { ...q, multi: true } : q, opt, pre !== undefined && opt.value === pre)).join('')}
+      ${q.type === 'number' ? numberInput(q, typed) : ''}
+      ${questionOptions(q, state).map((opt) => optionRow(q.type === 'number' ? { ...q, multi: true } : q, opt, isPicked(opt.value))).join('')}
     </div>
   </div>`;
 }
@@ -254,23 +258,40 @@ export function debriefReaction(state, mission) {
 }
 
 // The open form. Follow-ups a pre-filled answer already shows start shown.
-function debriefForm(state, mission) {
+// Re-check: the stored answers come back as the starting point.
+function debriefForm(state, mission, given = null) {
   const pre = {};
   for (const q of mission.debriefQs) {
-    const v = prefillAnswer(q, mission, state);
+    const v = given?.[q.id] ?? prefillAnswer(q, mission, state);
     if (v !== undefined) pre[q.id] = v;
   }
   const shown = new Set(visibleQuestions(mission, pre).map((q) => q.id));
-  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id))).join('')}</div>`;
+  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id])).join('')}</div>`;
 }
 
-export function renderDebrief(state, missionId) {
+// A re-check of a mission that was never filed as done: no form, the way in.
+function recheckUnavailable(state, mission) {
+  return `
+  <div class="scanlines" style="min-height: 100vh; display: flex; flex-direction: column;">
+    ${renderHud(state)}
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px;">
+      <div class="panel" style="padding: 36px 40px; text-align: center; max-width: 440px;">
+        <div class="section-label" style="color: var(--cyan); margin-bottom: 14px;">RE-CHECK</div>
+        <div style="font-size: 13px; color: rgba(237,239,243,0.6); line-height: 1.6; margin-bottom: 24px;">There is nothing to re-check yet. Run the mission first.</div>
+        <a href="#/mission/${mission.id}/briefing" class="btn-primary" style="text-decoration: none;">${mission.title}</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+export function renderDebrief(state, missionId, { recheck = false } = {}) {
   const mission = MISSIONS.find((m) => m.id === missionId);
   if (!mission) return notFound(state);
+  if (recheck && state.missions[missionId]?.status !== 'completed') return recheckUnavailable(state, mission);
 
   const districtId = missionDistrict(mission) || '';
   const stored = state.missions[missionId] || {};
-  const completed = stored.status === 'completed';
+  const completed = stored.status === 'completed' && !recheck;
 
   let scoutLine;
   let progressLine = '';
@@ -283,7 +304,7 @@ export function renderDebrief(state, missionId) {
   const progressPanel = mission.id === PM_MISSION_ID || mission.id === PM_BURST_ID ? renderPasswordProgress(state) : '';
   const questions = completed
     ? `<div class="completed-marker">${completedQuestions(mission, stored, state)}</div>${upgradeOffer(mission, stored)}${progressPanel}`
-    : debriefForm(state, mission);
+    : debriefForm(state, mission, recheck ? stored : null);
 
   const targetTab = mission.phase ? `?tab=${mission.phase}` : '';
   const footer = completed
@@ -292,7 +313,9 @@ export function renderDebrief(state, missionId) {
       <span class="badge badge--safe">SECURED</span>
       <a href="#/district/${districtId}${targetTab}" class="btn-primary" style="text-decoration: none;">BACK TO DISTRICT</a>
     </div>`
-    : `<button class="btn-primary" data-action="submit-debrief" data-mission="${mission.id}">SUBMIT REPORT</button>`;
+    : recheck
+      ? `<button class="btn-primary" data-action="submit-recheck" data-mission="${mission.id}">SAVE RE-CHECK</button>`
+      : `<button class="btn-primary" data-action="submit-debrief" data-mission="${mission.id}">SUBMIT REPORT</button>`;
 
   return `
   <div class="scanlines" style="min-height: 100vh; display: flex; flex-direction: column; background: linear-gradient(180deg, #090B10 0%, #0d1018 40%, #121828 100%);">
@@ -303,7 +326,7 @@ export function renderDebrief(state, missionId) {
     </style>
     ${renderHud(state)}
     <div style="display: flex; align-items: center; gap: 12px; padding: 14px 24px; background: rgba(9,11,16,0.97); border-bottom: 1px solid rgba(0,229,255,0.15);">
-      <div style="font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--cyan); letter-spacing: 3px; text-shadow: 0 0 10px rgba(0,229,255,0.3);">MISSION DEBRIEF</div>
+      <div style="font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--cyan); letter-spacing: 3px; text-shadow: 0 0 10px rgba(0,229,255,0.3);">${recheck ? 'RE-CHECK' : 'MISSION DEBRIEF'}</div>
       <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,229,255,0.2), transparent);"></div>
       <a href="#/mission/${mission.id}/briefing" style="font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.4); text-decoration: none;">&#8592; ${mission.title}</a>
     </div>
@@ -313,7 +336,7 @@ export function renderDebrief(state, missionId) {
           ${debriefScout(state, mission, stored)}
         </div>
         <div style="background: rgba(26,31,43,0.7); border: 1px solid rgba(0,229,255,0.15); padding: 12px 16px; flex: 1;">
-          <div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.6;">${completed ? 'Report filed. Good work, agent.' : 'Welcome back, agent. What did you find?'}</div>
+          <div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.6;">${completed ? 'Report filed. Good work, agent.' : recheck ? 'Still true? Confirm each answer, or change it.' : 'Welcome back, agent. What did you find?'}</div>
           <div style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLine}</div>
         </div>
       </div>
