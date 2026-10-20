@@ -56,19 +56,27 @@ export function allControllableSealed(state, accountId) {
   return sealed > 0 && sealed === controllable;
 }
 
+const sealedIds = (state, accountId) => (getInterior(accountId)?.entries ?? [])
+  .filter((e) => entryState(state, accountId, e).state === 'sealed')
+  .map((e) => e.id);
+
 // Entries that are sealed right now but whose seal the player has not watched.
+// None on the first visit: doors sealed before it are simply sealed, and the
+// animation is for seals that happen after a visit.
 export function newlySealed(state, accountId) {
-  const seen = new Set(interiorOf(state, accountId).sealedSeen ?? []);
-  return (getInterior(accountId)?.entries ?? [])
-    .filter((e) => entryState(state, accountId, e).state === 'sealed' && !seen.has(e.id))
-    .map((e) => e.id);
+  const cur = interiorOf(state, accountId);
+  if (!cur.visited) return [];
+  const seen = new Set(cur.sealedSeen ?? []);
+  return sealedIds(state, accountId).filter((id) => !seen.has(id));
 }
 
-// Call after the render that showed the animation and Scout's line.
+// Call after the render that showed the animation and Scout's line. The
+// first visit quietly marks every door already sealed as seen.
 export function markSealedSeen(state, accountId, entryIds = []) {
   const cur = interiorOf(state, accountId);
   const seen = new Set(cur.sealedSeen ?? []);
-  const grown = entryIds.filter((id) => !seen.has(id));
+  const ids = cur.visited ? entryIds : [...entryIds, ...sealedIds(state, accountId)];
+  const grown = [...new Set(ids)].filter((id) => !seen.has(id));
   const full = allControllableSealed(state, accountId);
   if (!grown.length && cur.visited && (!full || cur.fullySealedSeen)) return state;
   return withInterior(state, accountId, {
@@ -88,12 +96,12 @@ export function setFloorOpen(state, accountId, floorId, open) {
   return withInterior(state, accountId, { floors: { ...cur.floors, [floorId]: Boolean(open) } });
 }
 
-// Scout's line for this render: fully sealed (once) > a new seal > first visit (once).
+// Scout's line for this render: first visit (once) > fully sealed (once) > a new seal.
 export function interiorLineKind(state, accountId) {
   const cur = interiorOf(state, accountId);
+  if (!cur.visited) return 'firstVisit';
   if (allControllableSealed(state, accountId) && !cur.fullySealedSeen) return 'fullySealed';
   if (newlySealed(state, accountId).length) return 'newSeal';
-  if (!cur.visited) return 'firstVisit';
   return null;
 }
 
