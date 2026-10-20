@@ -308,3 +308,16 @@ img { image-rendering: pixelated; }
 @media (prefers-reduced-motion: reduce) {
   .entry--sealing .entry-lock { animation: none; }
 }
+
+/* Saints: candles and gallery */
+.candle-btn { display: flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 8px; padding: 6px 12px; background: transparent; color: #E8D9A8; border: 1px solid rgba(255,215,106,0.35); font: inherit; cursor: pointer; }
+.candle-btn .candle { margin-top: 10px; margin-right: 0; }
+.candle-btn--lit { border-color: #FFD76A; background: rgba(255,215,106,0.08); }
+.candle--lit::after { animation: candle-flicker 2.4s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes candle-flicker { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.92, 1.08); opacity: 0.85; } }
+.saints-link { margin-top: 8px; }
+.saint-card { margin-top: 18px; padding: 12px; border-left: 3px solid #FFD76A; background: rgba(40,32,12,0.45); }
+.saint-name { margin: 0 0 4px; font-family: var(--font-display); font-size: 14px; color: #FFD76A; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) {
+  .candle--lit::after { animation: none; }
+}

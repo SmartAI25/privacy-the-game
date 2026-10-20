@@ -13,6 +13,7 @@ const ROUTES = [
   { pattern: /^#\/mission\/([^/]+)\/recheck$/, screen: 'recheck', params: (m) => ({ id: m[1] }) },
   { pattern: /^#\/building\/([^/]+)$/, screen: 'building', params: (m) => ({ id: m[1] }) },
   { pattern: /^#\/milestone\/([^/]+)$/, screen: 'milestone', params: (m) => ({ districtId: m[1] }) },
+  { pattern: /^#\/saints$/, screen: 'saints', params: () => ({}) },
   { pattern: /^#\/garage$/, screen: 'garage', params: () => ({}) },
   { pattern: /^#\/timeline$/, screen: 'timeline', params: () => ({}) },
   { pattern: /^#\/quiz\/phishing$/, screen: 'phishing', params: () => ({}) },

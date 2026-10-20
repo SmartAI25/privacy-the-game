@@ -21,7 +21,8 @@ import { generateMilestoneCard, shareMilestoneCard, shareStatCard } from './util
 import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
-import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen } from './utils/interior-state.js';
+import { renderSaints } from './screens/saints.js';
+import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
@@ -103,6 +104,7 @@ const screens = {
     reaction: landingReaction?.landed && landingReaction.districtId === id ? landingReaction.reaction : null,
   }),
   building: ({ id }) => renderBuildingInterior(state, id),
+  saints: () => renderSaints(state),
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
   recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
@@ -443,6 +445,14 @@ app.addEventListener('click', async (e) => {
     if (next !== state) setState(next);
     renderCurrentRoute();
     app.querySelector('[data-device-input]')?.focus();
+  } else if (action === 'light-candle') {
+    // Local only: no track(); which saints you honor stays on this phone.
+    const next = lightCandle(state, el.dataset.saint);
+    if (next !== state) {
+      setState(next);
+      renderCurrentRoute();
+      app.querySelector(`[data-action="light-candle"][data-saint="${CSS.escape(el.dataset.saint)}"]`)?.focus();
+    }
   } else if (action === 'remove-device') {
     setState(removeDevice(state, el.dataset.building, Number(el.dataset.index)));
     renderCurrentRoute();

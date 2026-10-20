@@ -12,6 +12,7 @@ import { isMissionDoneIn, isMissionAvailable } from '../utils/mission-status.js'
 import { canRecheck } from '../utils/debrief.js';
 import { renderScout } from '../components/scout.js';
 import { INTERIOR_LINES, pick } from '../data/dialogue.js';
+import { renderCandle } from './saints.js';
 import { devicesOf, isFloorOpen, newlySealed, interiorLineKind } from '../utils/interior-state.js';
 
 const DAY = 864e5;
@@ -197,10 +198,12 @@ function ground(ctx, interior, sealing) {
 
 function alcove(ctx, saint) {
   return floor(ctx, 'alcove', `✦ Alcove · ${esc(saint.name)}`, `
-      <div class="alcove-tribute"><span class="candle" aria-hidden="true"></span><span>Scout: “${esc(saint.tribute)}”</span></div>
+      <div class="alcove-tribute"><span>Scout: “${esc(saint.tribute)}”</span></div>
+      ${renderCandle(ctx.state, saint)}
       <div class="dim alcove-title">${esc(saint.title)} · ${esc(saint.years)}</div>
       <div class="alcove-story">${esc(saint.story)}</div>
-      ${sourceLinks(saint.sources)}`);
+      ${sourceLinks(saint.sources)}
+      <a class="interior-btn interior-btn--quiet saints-link" href="#/saints">All saints →</a>`);
 }
 
 function renderNoPlan(state, accountId) {

@@ -5,6 +5,7 @@
 // anywhere: no analytics, no error context.
 import { entryState } from './interior.js';
 import { getInterior } from '../data/interiors/index.js';
+import { SAINTS } from '../data/interiors/saints.js';
 
 const MAX_DEVICES = 12;
 const MAX_LABEL = 40;
@@ -94,4 +95,14 @@ export function interiorLineKind(state, accountId) {
   if (newlySealed(state, accountId).length) return 'newSeal';
   if (!cur.visited) return 'firstVisit';
   return null;
+}
+
+export function isCandleLit(state, saintId) {
+  return state?.candles?.[saintId] === true;
+}
+
+// Local only. Idempotent; unknown saints are ignored.
+export function lightCandle(state, saintId) {
+  if (!Object.hasOwn(SAINTS, saintId) || isCandleLit(state, saintId)) return state;
+  return { ...state, candles: { ...state.candles, [saintId]: true } };
 }
