@@ -230,8 +230,8 @@ export function renderBuildingInterior(state, accountId, { now = new Date() } = 
   const rows = checkupRows(state, accountId, now);
   const saints = (interior.saints ?? []).map((id) => SAINTS[id]).filter(Boolean);
   const ctx = { state, accountId };
-  const sealing = new Set(newlySealed(state, accountId, now));
-  const kind = interiorLineKind(state, accountId, now);
+  const sealing = new Set(newlySealed(state, accountId));
+  const kind = interiorLineKind(state, accountId);
   const scout = kind
     ? `<div class="interior-scout" data-scout="interior">${renderScout(esc(pick(INTERIOR_LINES[kind]).replace(/\{name\}/g, account.name)))}</div>`
     : '';

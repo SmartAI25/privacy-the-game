@@ -6,7 +6,7 @@ import { renderHud } from '../components/hud.js';
 import { renderScout } from '../components/scout.js';
 import { renderBuilding } from '../components/building.js';
 import { hasInterior } from '../data/interiors/index.js';
-import { sealedCount } from '../utils/interior.js';
+import { controllableProgress } from '../utils/interior-state.js';
 import { DISTRICT_DIALOGUE, PASSWORD_DIALOGUE, pick } from '../data/dialogue.js';
 import { PASSWORD_MANAGERS } from '../data/missions-passwords.js';
 import { isMissionDone, isMissionDoneIn, isMissionInPlay } from '../utils/mission-status.js';
@@ -67,11 +67,11 @@ function interiorHref(state, id) {
   return hasInterior(id) && state.accounts?.[id]?.enabled ? `#/building/${id}` : undefined;
 }
 
-// Building glow follows its sealed share; purely visual (0 when nothing is checked).
+// Building glow follows the share of doors within reach that are sealed; purely visual.
 function glowFor(state, id) {
   if (!hasInterior(id) || !state.accounts?.[id]?.enabled) return 0;
-  const { sealed, total } = sealedCount(state, id);
-  return total > 0 ? sealed / total : 0;
+  const { sealed, controllable } = controllableProgress(state, id);
+  return controllable > 0 ? sealed / controllable : 0;
 }
 
 function esc(value) {

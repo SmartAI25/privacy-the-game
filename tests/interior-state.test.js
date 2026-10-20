@@ -5,6 +5,8 @@ import { INTERIOR_LINES } from '../src/data/dialogue.js';
 import { renderBuildingInterior } from '../src/screens/building.js';
 import { renderDistrict } from '../src/screens/district.js';
 import { sealedCount } from '../src/utils/interior.js';
+import { controllableProgress } from '../src/utils/interior-state.js';
+import { districtLights } from '../src/utils/lights.js';
 
 const NOW = new Date('2026-10-20T00:00:00Z');
 const render = (s, id = 'gmail') => renderBuildingInterior(s, id, { now: NOW });
@@ -64,23 +66,23 @@ describe('devices', () => {
 describe('sealing moments', () => {
   it('newlySealed reports an entry once; after markSealedSeen it is empty', () => {
     const s = withPasskey(createInitialState());
-    const fresh = newlySealed(s, 'gmail', NOW);
+    const fresh = newlySealed(s, 'gmail');
     expect(fresh.length).toBeGreaterThan(0);
     expect(render(s)).toContain('entry--sealing');
     const seen = markSealedSeen(s, 'gmail', fresh);
-    expect(newlySealed(seen, 'gmail', NOW)).toEqual([]);
+    expect(newlySealed(seen, 'gmail')).toEqual([]);
     expect(render(seen)).not.toContain('entry--sealing');
   });
   it('a device add after the animation does not replay it', () => {
     let s = withPasskey(createInitialState());
-    s = markSealedSeen(s, 'gmail', newlySealed(s, 'gmail', NOW));
+    s = markSealedSeen(s, 'gmail', newlySealed(s, 'gmail'));
     expect(render(addDevice(s, 'gmail', 'Laptop'))).not.toContain('entry--sealing');
   });
   it('Scout shows fullySealed once, then newSeal on a later seal, else nothing on repeat visits', () => {
     const lineOf = (html) => html.includes('data-scout="interior"');
     let s = createInitialState();
     expect(lineOf(render(s))).toBe(true); // first visit
-    s = markSealedSeen(s, 'gmail', newlySealed(s, 'gmail', NOW));
+    s = markSealedSeen(s, 'gmail', newlySealed(s, 'gmail'));
     expect(lineOf(render(s))).toBe(false); // repeat visit
     const part = file(s, 'gmail-fortify-2fa', { method: 'authenticator' });
     const html = render(part);
@@ -94,7 +96,7 @@ describe('sealing moments', () => {
     full = { ...full, interior: { gmail: { visited: true, sealedSeen: [] } } };
     const fh = render(full);
     expect(INTERIOR_LINES.fullySealed.some((l) => fh.includes(l.replace('{name}', 'Gmail')))).toBe(true);
-    full = markSealedSeen(full, 'gmail', newlySealed(full, 'gmail', NOW));
+    full = markSealedSeen(full, 'gmail', newlySealed(full, 'gmail'));
     expect(full.interior.gmail.fullySealedSeen).toBe(true);
     expect(lineOf(render(full))).toBe(false);
   });
@@ -123,11 +125,37 @@ describe('floors remember open/closed', () => {
   });
 });
 
+describe('fullySealed only when every controllable door is sealed', () => {
+  it('passkey-only Gmail is not fullySealed and does not spend fullySealedSeen', () => {
+    const s = withPasskey(createInitialState());
+    const html = render(s);
+    expect(INTERIOR_LINES.fullySealed.some((l) => html.includes(l.replace('{name}', 'Gmail')))).toBe(false);
+    const seen = markSealedSeen(s, 'gmail', newlySealed(s, 'gmail'));
+    expect(seen.interior.gmail.fullySealedSeen).toBeUndefined();
+  });
+  it('every controllable entry sealed -> fullySealed', () => {
+    const full = sealedState();
+    const p = controllableProgress(full, 'gmail');
+    expect(p.sealed).toBe(p.controllable);
+    const html = render(full);
+    expect(INTERIOR_LINES.fullySealed.some((l) => html.includes(l.replace('{name}', 'Gmail')))).toBe(true);
+  });
+});
+
 describe('district glow', () => {
   it('glow is sealed/total and 0 with nothing checked; tiers unchanged', () => {
     const none = renderDistrict(createInitialState(), 'master-keys');
     const sealed = renderDistrict(withPasskey(createInitialState()), 'master-keys');
     expect(none).not.toMatch(/drop-shadow\(0 0 10px rgba\(0,229,255/);
     expect(sealed).toMatch(/drop-shadow\(0 0 10px rgba\(0,229,255/);
+  });
+  it('glow is sealed / controllable: passkey-only < 1, all controllable sealed = 1, none = 0', () => {
+    const p = controllableProgress(withPasskey(createInitialState()), 'gmail');
+    expect(p.sealed / p.controllable).toBeLessThan(1);
+    expect(p.sealed).toBeGreaterThan(0);
+    const f = controllableProgress(sealedState(), 'gmail');
+    expect(f.sealed / f.controllable).toBe(1);
+    expect(controllableProgress(createInitialState(), 'gmail').sealed).toBe(0);
+    expect(districtLights({ percent: 40, bonusCompleted: 0, bonusTotal: 3 })).toEqual(districtLights({ percent: 40, bonusCompleted: 0, bonusTotal: 3 }));
   });
 });

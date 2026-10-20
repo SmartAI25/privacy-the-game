@@ -129,6 +129,9 @@ function renderWelcome() {
   </div>`;
 }
 
+// The building screen only counts as visited when it drew an actual interior.
+const hasInteriorScreen = (route) => route.screen === 'building' && hasInterior(route.params.id) && state.accounts?.[route.params.id]?.enabled;
+
 function render(route, cause = RENDER_CAUSE.REFRESH) {
   if (!started) {
     app.innerHTML = renderWelcome();
@@ -145,9 +148,9 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     const renderFn = screens[route.screen] || screens.city;
     // The seal animation and Scout's line are in this render; remember they were seen
     // so a later re-render (a device add) does not replay them.
-    const watched = route.screen === 'building' && started ? newlySealed(state, route.params.id) : null;
+    const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
     app.innerHTML = renderFn(route.params);
-    if (route.screen === 'building') {
+    if (watched) {
       const seen = markSealedSeen(state, route.params.id, watched ?? []);
       if (seen !== state) setState(seen);
     }
@@ -439,6 +442,7 @@ app.addEventListener('click', async (e) => {
     const next = addDevice(state, el.dataset.building, input?.value);
     if (next !== state) setState(next);
     renderCurrentRoute();
+    app.querySelector('[data-device-input]')?.focus();
   } else if (action === 'remove-device') {
     setState(removeDevice(state, el.dataset.building, Number(el.dataset.index)));
     renderCurrentRoute();
