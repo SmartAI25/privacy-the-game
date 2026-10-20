@@ -141,3 +141,25 @@ describe('checkupRows', () => {
     expect(rows.leak.status).toBe('crit');
   });
 });
+
+describe('checkupRows only shows rows a mission can fill (fix round 1)', () => {
+  it('signal: no password or two-factor rows; a registration-lock row instead', () => {
+    const s = createInitialState();
+    const rows = checkupRows(s, 'signal', NOW);
+    expect(rows.map((r) => r.id)).toEqual(['reglock', 'devices']);
+    const lock = rows.find((r) => r.id === 'reglock');
+    expect(lock).toMatchObject({ status: 'not-checked', missionId: 'signal-fortify-reglock' });
+    expect(lock.label).not.toMatch(/\bthey\b/i);
+  });
+
+  it('registration-lock row status follows the filed action', () => {
+    const st = (action) => checkupRows(file(createInitialState(), 'signal-fortify-reglock', { action }, daysAgo(3)), 'signal', NOW).find((r) => r.id === 'reglock');
+    expect(st('enabled-2fa')).toMatchObject({ status: 'ok', freshness: 'fresh' });
+    expect(st('already-enabled').status).toBe('ok');
+    expect(st('later').status).toBe('crit');
+  });
+
+  it('gmail rows are unchanged and have no registration-lock row', () => {
+    expect(checkupRows(createInitialState(), 'gmail', NOW).map((r) => r.id)).toEqual(['password', 'leak', 'two-factor', 'devices']);
+  });
+});

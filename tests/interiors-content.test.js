@@ -253,5 +253,14 @@ describe('Master Keys and Signal interiors (task 7)', () => {
 
   it('Snowden’s alcove is in every PRISM-named account, Zimmermann’s in protonmail and signal', () => {
     for (const id of ['gmail', 'google', 'outlook', 'microsoft', 'yahoo', 'icloud', 'apple_id', 'facebook']) expect(getInterior(id).saints, id).toEqual(['snowden']);
+    for (const id of ['protonmail', 'signal']) expect(getInterior(id).saints, id).toEqual(['zimmermann']);
+  });
+
+  it('protonmail says subject lines are not end-to-end encrypted, and never that the desk cannot reach your mail at all', () => {
+    const p = getInterior('protonmail');
+    const text = p.deskIntro + JSON.stringify(p.desk);
+    expect(text).toMatch(/Subject lines aren’t end-to-end encrypted/);
+    expect(text).not.toMatch(/can’t reach your mail/);
+    expect(text).not.toMatch(/can’t hand over what you wrote/);
   });
 });

@@ -79,7 +79,9 @@
 //    appeal possible; Proton "can be legally compelled to log your IP
 //    address"; no messages handed over. Wikipedia: the Swiss order answered
 //    an international request (French activists). Mail encryption page:
-//    body and attachments stored with zero-access, end-to-end encryption.
+//    body and attachments stored with zero-access, end-to-end encryption;
+//    subject lines are not end-to-end encrypted, and access needs a court
+//    order approved by a Swiss judge.
 //    2FA: authenticator app or U2F/FIDO2 security key; with username and
 //    password, a 2FA recovery code can be sent to a saved recovery phone.
 import { localPolice, fbi, nsa702, iceHsi, ukCloudAct, withSources, withLine } from './lanes.js';
@@ -467,7 +469,7 @@ const facebook = {
       subpoena: 'A subpoena gets Meta to hand over your name, email address, card details, how long you’ve had the account, and recent sign-in IP addresses.',
       order: 'A 2703(d) court order adds message headers: who you wrote to and when.',
       content: 'Meta requires a search warrant, signed by a judge, before handing over your messages, photos, videos and posts.',
-      extra: 'Chats that are end-to-end encrypted are the exception: Meta can’t provide what was said in them, only message and call logs.',
+      extra: 'Chats that are end-to-end encrypted are the exception: Meta can’t provide what was said in them, only message and call logs, and IP data.',
     },
     lines: {
       'local-police': { text: '', sources: [META_E2EE] },
@@ -504,13 +506,13 @@ const facebook = {
 const protonmail = {
   accountId: 'protonmail',
   company: 'Proton',
-  deskIntro: 'Proton is a Swiss company, so only a Swiss order can make it hand anything over. Your mail is stored encrypted with keys Proton doesn’t have, so the desk can’t hand over what you wrote. Nothing you do changes this floor. It’s here so you know exactly who can ask, and with what.',
+  deskIntro: 'Proton is a Swiss company, so only a Swiss order can make it hand anything over. The bodies and attachments of your mail are stored encrypted with keys Proton doesn’t have, so the desk can’t hand those over. Subject lines aren’t end-to-end encrypted. Nothing you do changes this floor. It’s here so you know exactly who can ask, and with what.',
   desk: [
     {
       id: 'swiss-order',
       actor: 'Swiss prosecutors and courts',
       tool: 'Swiss legal order',
-      gets: 'A binding Swiss order can make Proton hand over the account details it has, and can make Proton start logging the IP address you connect from. It can’t reach your mail: the bodies and attachments are end-to-end encrypted, and Proton has no way to decrypt them.',
+      gets: 'A binding Swiss order can make Proton hand over the account details it has, and can make Proton start logging the IP address you connect from. It can’t reach the bodies and attachments of your mail: those are end-to-end encrypted, and Proton has no way to decrypt them. Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge.',
       sources: [PROTON_TRANSPARENCY, PROTON_PRIVACY, PROTON_CLIMATE, PROTON_ENCRYPTION],
     },
     {
@@ -518,7 +520,7 @@ const protonmail = {
       actor: 'Foreign police and agencies, through Swiss authorities',
       actorNote: 'Swiss law bars Proton from handing data to foreign authorities directly, so FBI or French police requests have to go through Switzerland.',
       tool: 'International legal assistance request, then a Swiss order',
-      gets: 'Proton rejects requests sent straight from other countries. Swiss authorities can take one up if it meets Swiss law, and then it arrives as a Swiss order. In 2021, an order issued that way at France’s request had Proton collect information on a French climate activist’s account. Proton has said such an order can make it log your IP address; no messages were handed over.',
+      gets: 'Proton rejects requests sent straight from other countries. Swiss authorities can take one up if it meets Swiss law, and then it arrives as a Swiss order. In 2021, in a case against French activists, an order issued that way had Proton collect information on a French climate activist’s account. Proton has said such an order can make it log your IP address; no messages were handed over.',
       sources: [PROTON_TRANSPARENCY, PROTON_CLIMATE, WIKI_PROTON],
     },
   ],

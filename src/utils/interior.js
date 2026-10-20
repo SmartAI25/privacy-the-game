@@ -55,6 +55,9 @@ export function currentTwoFactor(state, accountId) {
   return { method, missionId: best.id, date: recordDate(best.r) };
 }
 
+const MISSION_IDS = new Set(MISSIONS.map((m) => m.id));
+const hasMission = (id) => MISSION_IDS.has(id);
+
 function devicesMissionId(accountId) {
   return accountId === 'signal' ? 'signal-recon-devices' : `${accountId}-recon-login`;
 }
@@ -121,11 +124,14 @@ export function checkupRows(state, accountId, now = new Date()) {
   });
   const rows = [];
 
+  // A row shows only when a mission for this account can fill it.
   const pwId = `${accountId}-fortify-password`;
-  const seal = passwordSeal(state, accountId);
-  if (seal.sealed) rows.push(row('password', 'ok', 'Password is unique', pwId, seal.date));
-  else if (passwordResetNeed(state, accountId) === 'needed') rows.push(row('password', 'crit', 'Password needs a reset', pwId));
-  else rows.push(row('password', 'not-checked', 'Password not checked', pwId));
+  if (hasMission(pwId)) {
+    const seal = passwordSeal(state, accountId);
+    if (seal.sealed) rows.push(row('password', 'ok', 'Password is unique', pwId, seal.date));
+    else if (passwordResetNeed(state, accountId) === 'needed') rows.push(row('password', 'crit', 'Password needs a reset', pwId));
+    else rows.push(row('password', 'not-checked', 'Password not checked', pwId));
+  }
 
   if (EMAIL_ACCOUNT_IDS.has(accountId)) {
     const id = `${accountId}-recon-breach`;
@@ -137,14 +143,25 @@ export function checkupRows(state, accountId, now = new Date()) {
     } else rows.push(row('leak', 'not-checked', 'Leaks not checked', id));
   }
 
-  const tf = currentTwoFactor(state, accountId);
-  const tfId = tf.missionId ?? `${accountId}-fortify-2fa`;
-  if (!tf.method) rows.push(row('two-factor', 'not-checked', 'Two-step sign-in not checked', tfId));
-  else if (STRONG_METHODS.includes(tf.method)) rows.push(row('two-factor', 'ok', 'Strong two-step sign-in', tfId, tf.date));
-  else if (tf.method === 'none') rows.push(row('two-factor', 'crit', 'No two-step sign-in', tfId, tf.date));
-  else rows.push(row('two-factor', 'warn', 'Two-step sign-in by code only', tfId, tf.date));
+  if (hasMission(`${accountId}-fortify-2fa`) || hasMission(`${accountId}-fortify-2fa-upgrade`)) {
+    const tf = currentTwoFactor(state, accountId);
+    const tfId = tf.missionId ?? `${accountId}-fortify-2fa`;
+    if (!tf.method) rows.push(row('two-factor', 'not-checked', 'Two-step sign-in not checked', tfId));
+    else if (STRONG_METHODS.includes(tf.method)) rows.push(row('two-factor', 'ok', 'Strong two-step sign-in', tfId, tf.date));
+    else if (tf.method === 'none') rows.push(row('two-factor', 'crit', 'No two-step sign-in', tfId, tf.date));
+    else rows.push(row('two-factor', 'warn', 'Two-step sign-in by code only', tfId, tf.date));
+  }
+
+  const lockId = `${accountId}-fortify-reglock`;
+  if (hasMission(lockId)) {
+    const rec = doneRecord(state, lockId);
+    if (rec && ['enabled-2fa', 'already-enabled'].includes(rec.action)) rows.push(row('reglock', 'ok', 'Registration lock is on', lockId, recordDate(rec)));
+    else if (rec?.action === 'later') rows.push(row('reglock', 'crit', 'Registration lock is off', lockId, recordDate(rec)));
+    else rows.push(row('reglock', 'not-checked', 'Registration lock not checked', lockId));
+  }
 
   const dId = devicesMissionId(accountId);
+  if (!hasMission(dId)) return rows;
   const dRec = doneRecord(state, dId);
   const dDate = recordDate(dRec);
   if (dRec?.finding === 'no-breaches') rows.push(row('devices', 'ok', 'Sign-ins look like yours', dId, dDate));

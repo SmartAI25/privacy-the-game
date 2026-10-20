@@ -256,3 +256,16 @@ describe('the single-lane desk (task 7)', () => {
     expect(html).not.toContain('desk--note');
   });
 });
+
+describe('signal roof (fix round 1)', () => {
+  it('has a registration-lock row with START, and no password or two-factor rows', () => {
+    const s = toggleAccount(createInitialState(), 'signal', true);
+    const html = renderBuildingInterior(s, 'signal', { now: NOW });
+    expect(rowHtml(html, 'password')).toBe('');
+    expect(rowHtml(html, 'two-factor')).toBe('');
+    const lock = rowHtml(html, 'reglock');
+    expect(lock).toContain('Registration lock');
+    expect(lock).toContain('START');
+    expect(lock).toContain('#/mission/signal-fortify-reglock/briefing');
+  });
+});
