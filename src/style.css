@@ -256,6 +256,13 @@ img { image-rendering: pixelated; }
 .slip-who { color: #9FB6FF; font-weight: 700; }
 .slip-note { font-size: 11px; }
 .slip-gets { margin-top: 4px; }
+/* One-lane desk: a single sticky note pinned to the counter (Signal). */
+.desk--note .slip { max-width: 340px; margin: 12px auto 4px; padding: 12px 14px 14px; border: 0; background: #FFE98A; color: #1A1F2B; box-shadow: 2px 3px 0 rgba(0,0,0,0.45); transform: rotate(-1.5deg); }
+.desk--note .slip-stamp { border-color: #1A1F2B; color: #1A1F2B; transform: none; }
+.desk--note .slip-who { color: #1A1F2B; }
+.desk--note .slip-note, .desk--note .dim { color: rgba(26,31,43,0.7); }
+.desk--note .interior-sources summary, .desk--note .interior-sources a { color: #1A1F2B; }
+@media (prefers-reduced-motion: reduce) { .desk--note .slip { transform: none; } }
 
 .entry { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; margin-top: 12px; align-items: start; }
 .entry-lock { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 1px solid currentColor; }

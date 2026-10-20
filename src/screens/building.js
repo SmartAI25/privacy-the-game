@@ -144,8 +144,11 @@ function desk(ctx, interior) {
         <div class="slip-gets">${esc(lane.gets)}</div>
         ${sourceLinks(lane.sources)}
       </div>`).join('');
+  // A desk with one lane (Signal's) is a single sticky note, not a stack of slips.
+  const note = interior.desk.length === 1 ? ' desk--note' : '';
   return floor(ctx, 'desk', `▣ Records desk · ${esc(interior.company)}’s`, `
-      <div class="dim interior-note">${esc(interior.deskIntro)}</div>${slips}`);
+      <div class="dim interior-note">${esc(interior.deskIntro)}</div>
+      <div class="desk${note}">${slips}</div>`);
 }
 
 // Where SEAL IT (or START) goes. The 2FA upgrade only unlocks after the base

@@ -232,9 +232,27 @@ describe('tappable buildings', () => {
     const s = createInitialState();
     const html = renderDistrict(s, 'master-keys', 'survey');
     const links = [...html.matchAll(/class="building-link" href="([^"]+)"/g)].map((m) => m[1]);
-    expect(links).toEqual(['#/building/gmail']);
+    expect(links).toEqual(['gmail', 'outlook', 'icloud', 'yahoo', 'protonmail', 'apple_id', 'google', 'microsoft', 'facebook'].map((id) => `#/building/${id}`));
     const off = renderDistrict(toggleAccount(s, 'gmail', false), 'master-keys', 'survey');
-    expect(off).not.toContain('building-link');
+    expect(off).not.toContain('href="#/building/gmail"');
+    const square = [...renderDistrict(s, 'square', 'survey').matchAll(/class="building-link" href="([^"]+)"/g)].map((m) => m[1]);
+    expect(square).toEqual(['#/building/signal']);
     expect(renderDistrict(s, 'vault', 'survey')).not.toContain('building-link');
+  });
+});
+
+describe('the single-lane desk (task 7)', () => {
+  it('signal desk is a single lane and renders as a note', () => {
+    let s = createInitialState();
+    if (!s.accounts.signal?.enabled) s = toggleAccount(s, 'signal', true);
+    const html = renderBuildingInterior(s, 'signal', { now: NOW });
+    expect(html).toContain('desk--note');
+    expect(html.match(/class="slip[ "]/g)).toHaveLength(1);
+    expect(html).toContain('Any agency, any legal process');
+  });
+
+  it('a desk with several lanes is not a note', () => {
+    const html = renderBuildingInterior(createInitialState(), 'gmail', { now: NOW });
+    expect(html).not.toContain('desk--note');
   });
 });

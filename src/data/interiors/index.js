@@ -3,6 +3,7 @@
 // in, sealed by the player's own filings), and the saint's alcove.
 // Spec: docs/superpowers/specs/2026-10-20-building-interiors-design.md
 import { MASTER_KEYS_INTERIORS } from './master-keys.js';
+import { SQUARE_INTERIORS } from './square.js';
 
 /** @typedef {{ label: string, url: string }} Source */
 /** @typedef {'password-unique'|'sim-swap'|'phishing'|'devices'|'reglock'|'beyond'} RuleId */
@@ -17,7 +18,7 @@ import { MASTER_KEYS_INTERIORS } from './master-keys.js';
  */
 
 /** @type {Record<string, Interior>} */
-export const INTERIORS = { ...MASTER_KEYS_INTERIORS };
+export const INTERIORS = { ...MASTER_KEYS_INTERIORS, ...SQUARE_INTERIORS };
 
 export function hasInterior(accountId) {
   return Object.hasOwn(INTERIORS, accountId);

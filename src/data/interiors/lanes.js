@@ -54,14 +54,28 @@ const DOJ_CLOUD_ACT = { label: 'US Department of Justice: CLOUD Act resources', 
 /** @typedef {{ label: string, url: string }} Source */
 /** @typedef {{ id: string, actor: string, actorNote?: string, tool: string, gets: string, sources: Source[] }} DeskLane */
 
-/** @returns {DeskLane} */
-export function localPolice(company) {
+// Each sentence can be replaced, because companies list different things. The
+// defaults were checked against Google's page; any other company passes the
+// wording its own page supports (a "requires a search warrant" claim only
+// where that company's page says so).
+/**
+ * @param {string} company
+ * @param {{ subpoena?: string, order?: string, content?: string, extra?: string }} [wording]
+ * @returns {DeskLane}
+ */
+export function localPolice(company, wording = {}) {
+  const {
+    subpoena = `A subpoena gets ${company} to hand over your name, phone number and sign-in IP addresses.`,
+    order = 'A 2703(d) court order adds who you wrote to and when.',
+    content = `${company} requires a search warrant, signed by a judge, before handing over what you actually wrote.`,
+    extra = '',
+  } = wording;
   return {
     id: 'local-police',
     actor: 'Your local police department',
     actorNote: 'State police and prosecutors use the same tools.',
     tool: 'Subpoena · 2703(d) court order · search warrant · emergency request',
-    gets: `A subpoena gets ${company} to hand over your name, phone number and sign-in IP addresses. A 2703(d) court order adds who you wrote to and when. ${company} requires a search warrant, signed by a judge, before handing over what you actually wrote. An emergency request needs no judge at all, and ${company} decides whether to answer it.`,
+    gets: `${subpoena} ${order} ${content}${extra ? ` ${extra}` : ''} An emergency request needs no judge at all, and ${company} decides whether to answer it.`,
     sources: [SCA_2703, SCA_2702],
   };
 }
@@ -118,4 +132,10 @@ export function ukCloudAct(company) {
 // of that company's desk.
 export function withSources(lane, ...extra) {
   return { ...lane, sources: [...lane.sources, ...extra] };
+}
+
+// One company-specific sentence on the end of a lane's `gets`, with the
+// sources behind it (an empty line adds only the sources).
+export function withLine(lane, line, ...sources) {
+  return { ...lane, gets: line ? `${lane.gets} ${line}` : lane.gets, sources: [...lane.sources, ...sources] };
 }

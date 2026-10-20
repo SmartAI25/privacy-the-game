@@ -143,3 +143,115 @@ describe('interior content', () => {
     for (const agency of ['GCHQ', 'CSE', 'ASD', 'GCSB']) expect(JSON.stringify(nsa), agency).toContain(agency);
   });
 });
+
+describe('Master Keys and Signal interiors (task 7)', () => {
+  const MASTER_KEYS = ['gmail', 'outlook', 'icloud', 'yahoo', 'protonmail', 'apple_id', 'google', 'microsoft', 'facebook'];
+  const COMPANY = { gmail: 'Google', google: 'Google', outlook: 'Microsoft', microsoft: 'Microsoft', icloud: 'Apple', apple_id: 'Apple', yahoo: 'Yahoo', facebook: 'Meta', protonmail: 'Proton', signal: 'Signal' };
+  const US_LANES = ['local-police', 'fbi', 'nsa-702', 'ice-hsi', 'uk-cloud-act'];
+
+  it('all nine Master Keys accounts and signal have interiors', () => {
+    for (const id of [...MASTER_KEYS, 'signal']) {
+      expect(hasInterior(id), id).toBe(true);
+      expect(getInterior(id).accountId).toBe(id);
+      expect(getInterior(id).company, id).toBe(COMPANY[id]);
+    }
+  });
+
+  it('every US company desk has the five lanes, and every PRISM-named one says so', () => {
+    for (const id of MASTER_KEYS.filter((a) => a !== 'protonmail')) {
+      const desk = getInterior(id).desk;
+      expect(desk.map((l) => l.id), id).toEqual(US_LANES);
+      const nsa = desk.find((l) => l.id === 'nsa-702');
+      expect(nsa.gets, id).toMatch(/named in the 2013 PRISM documents/);
+      expect(nsa.gets, id).toMatch(/has let/);
+      for (const lane of desk) expect(lane.gets, `${id}/${lane.id}`).toContain(COMPANY[id]);
+    }
+  });
+
+  it('each company desk cites that company’s own page on government requests', () => {
+    const own = {
+      Google: 'https://policies.google.com/terms/information-requests',
+      Microsoft: 'https://www.microsoft.com/en-us/corporate-responsibility/reports/government-requests/customer-data',
+      Apple: 'https://www.apple.com/legal/privacy/law-enforcement-guidelines-us.pdf',
+      Yahoo: 'https://www.yahooinc.com/transparency/about/faq-glossary.html',
+      Meta: 'https://www.meta.com/safety/communities/law/guidelines/',
+    };
+    for (const id of MASTER_KEYS.filter((a) => a !== 'protonmail')) {
+      for (const lane of getInterior(id).desk) {
+        expect(lane.sources.map((s) => s.url), `${id}/${lane.id}`).toContain(own[COMPANY[id]]);
+      }
+    }
+  });
+
+  it('the warrant line claims "requires" only where the company’s page says it', () => {
+    const police = (id) => getInterior(id).desk.find((l) => l.id === 'local-police').gets;
+    for (const id of ['gmail', 'google', 'outlook', 'microsoft', 'icloud', 'apple_id', 'facebook']) expect(police(id), id).toMatch(/requires a search warrant/);
+    expect(police('yahoo')).not.toMatch(/requires/);
+    expect(police('yahoo')).toMatch(/search warrant/);
+    expect(police('facebook')).toMatch(/end-to-end encrypt/);
+  });
+
+  it('protonmail desk has no FBI/NSA/ICE/UK lanes and has a Swiss lane', () => {
+    const p = getInterior('protonmail');
+    const ids = p.desk.map((l) => l.id);
+    for (const banned of US_LANES) expect(ids, banned).not.toContain(banned);
+    for (const l of p.desk) expect(l.actor.trim(), l.id).not.toMatch(/^(FBI|NSA|ICE \/ HSI|UK investigators)/);
+    const swiss = p.desk.find((l) => /swiss/.test(l.id));
+    expect(swiss).toBeTruthy();
+    expect(swiss.actor).toMatch(/Swiss/);
+    expect(JSON.stringify(p.desk)).toMatch(/2021/);
+    expect(JSON.stringify(p.desk)).toMatch(/climate activist/);
+    expect(JSON.stringify(p.desk)).toMatch(/IP address/);
+    expect(JSON.stringify(p.desk)).toMatch(/encrypt/);
+    const urls = p.desk.flatMap((l) => l.sources.map((s) => s.url));
+    expect(urls).toContain('https://proton.me/legal/transparency');
+    expect(urls).toContain('https://proton.me/blog/climate-activist-arrest');
+    expect(p.saints).toEqual(['zimmermann']);
+  });
+
+  it('iCloud and Apple ID say what Advanced Data Protection moves off the desk, and that iCloud Mail is not covered', () => {
+    for (const id of ['icloud', 'apple_id']) {
+      const i = getInterior(id);
+      const text = JSON.stringify(i.desk) + i.deskIntro;
+      expect(text, id).toMatch(/Advanced Data Protection/);
+      expect(text, id).toMatch(/iCloud Mail/);
+      expect(i.desk.flatMap((l) => l.sources.map((s) => s.url)), id).toContain('https://support.apple.com/en-us/102651');
+    }
+  });
+
+  it('facebook is Meta and PRISM-named, with Snowden in the alcove', () => {
+    const f = getInterior('facebook');
+    expect(f.company).toBe('Meta');
+    expect(f.saints).toEqual(['snowden']);
+    expect(f.desk.find((l) => l.id === 'nsa-702').sources.map((s) => s.url)).toContain('https://www.theguardian.com/world/2013/jun/06/us-tech-giants-nsa-data');
+  });
+
+  it('signal desk is a single lane sourced to Signal’s subpoena responses', () => {
+    const s = getInterior('signal');
+    expect(s.desk).toHaveLength(1);
+    const [lane] = s.desk;
+    expect(lane.actor).toBe('Any agency, any legal process');
+    expect(lane.gets).toMatch(/account/i);
+    expect(lane.gets).toMatch(/last connect/i);
+    expect(lane.sources.map((x) => x.url)).toContain('https://signal.org/bigbrother/');
+    expect(s.deskIntro).toMatch(/devices/);
+    expect(s.deskIntro).toMatch(/not on Signal’s servers/);
+    expect(s.saints).toEqual(['zimmermann']);
+  });
+
+  it('signal entries: number/reglock, back-room/devices, vents/beyond, and the unlocked phone', () => {
+    const e = getInterior('signal').entries;
+    const by = Object.fromEntries(e.map((x) => [x.metaphor + '/' + x.rule, x]));
+    expect(by['number/reglock']?.fixMission).toBe('signal-fortify-reglock');
+    expect(by['back-room/devices']?.fixMission).toBe('signal-recon-devices');
+    expect(by['vents/beyond']).toBeTruthy();
+    expect(JSON.stringify(by['vents/beyond'])).toMatch(/spyware/i);
+    const unlocked = e.find((x) => x.id === 'unlocked-phone');
+    expect(unlocked.rule).toBe('beyond');
+    expect(unlocked.narrows).toBe('Disappearing messages limit what is there.');
+  });
+
+  it('Snowden’s alcove is in every PRISM-named account, Zimmermann’s in protonmail and signal', () => {
+    for (const id of ['gmail', 'google', 'outlook', 'microsoft', 'yahoo', 'icloud', 'apple_id', 'facebook']) expect(getInterior(id).saints, id).toEqual(['snowden']);
+  });
+});
