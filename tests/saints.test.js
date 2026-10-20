@@ -85,7 +85,8 @@ describe('lighting a candle never reaches analytics', () => {
     expect(body).toContain('lightCandle(');
     expect(body).not.toMatch(/\btrack|afterMissionRecorded|captureError/);
     for (const f of ['src/screens/saints.js', 'src/utils/interior-state.js', 'src/data/interiors/saints.js']) {
-      expect(readFileSync(f, 'utf8')).not.toMatch(/analytics|track\(/);
+      const code = readFileSync(f, 'utf8').replace(/\/\/.*$/gm, '');
+      expect(code).not.toMatch(/analytics|track\(/);
     }
   });
 });
