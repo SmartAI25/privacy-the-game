@@ -127,6 +127,13 @@ describe('interior content', () => {
     expect(text).toMatch(/CIA/);
     expect(text).toMatch(/Aurora/);
     expect(text).toMatch(/Pegasus/);
+    const urls = vents.flatMap((e) => e.sources.map((s) => s.url));
+    expect(urls).toContain('https://wikileaks.org/ciav7p1/');
+    expect(urls).toContain('https://en.wikipedia.org/wiki/Vault_7');
+    expect(urls).toContain('https://googleblog.blogspot.com/2010/01/new-approach-to-china.html');
+    expect(urls).toContain('https://en.wikipedia.org/wiki/Operation_Aurora');
+    expect(urls).toContain('https://citizenlab.ca/tag/nso-group/');
+    expect(urls).toContain('https://en.wikipedia.org/wiki/Pegasus_(spyware)');
   });
 
   it('the NSA lane words 702 as "has let", never as settled law in 2026', () => {

@@ -10,7 +10,9 @@
 //    documents to Greenwald, Poitras, Gellman and MacAskill in June 2013;
 //    charged under the Espionage Act; passport revoked; in Russia since
 //    2013-06-23, a Russian citizen since 2022 (Wikipedia, the Guardian).
-//  - Klein (1945–2025): AT&T technician; in early 2006 brought EFF evidence
+//  - Klein (1945–2025): at AT&T 22+ years (New York, then California, San
+//    Francisco from 1998; Wikipedia; EFF's obituary says "most of that in San
+//    Francisco", so the copy only claims his last years there); in early 2006 brought EFF evidence
 //    that AT&T routed copies of internet traffic to an NSA-controlled room
 //    (641A) in San Francisco; Hepting v. AT&T; Congress granted the telecoms
 //    retroactive immunity in 2008; died 2025-03-08 (EFF, Wikipedia).
@@ -63,7 +65,7 @@ export const SAINTS = {
     name: 'Saint Edward Snowden',
     title: 'The 2013 NSA disclosures',
     years: 'born 1983',
-    tribute: 'Edward is the reason this desk can be drawn at all. Every slip on it got easier to name after 2013.',
+    tribute: 'Much of this desk got easier to name after 2013, because of Edward. I think of him every time I draw it.',
     story: 'Edward was an NSA contractor. In June 2013 he gave journalists, among them Glenn Greenwald, Laura Poitras and Ewen MacAskill, documents describing programs like PRISM, which collected data from the biggest email and cloud companies. The US charged him under the Espionage Act and revoked his passport. He has lived in exile in Russia ever since.',
     sources: [
       wiki('Edward Snowden', 'Edward_Snowden'),
@@ -78,7 +80,7 @@ export const SAINTS = {
     title: 'AT&T Room 641A',
     years: '1945–2025',
     tribute: 'Mark was a technician who knew what the wires in that room were for, and said so. Quiet work, and brave.',
-    story: 'Mark spent 22 years as an AT&T technician, most of it in San Francisco. In 2006 he brought the Electronic Frontier Foundation evidence that AT&T was routing copies of internet traffic into a secret room there controlled by the NSA: Room 641A. His documents were key evidence in EFF’s lawsuit, Hepting v. AT&T. In 2008 Congress gave the phone companies retroactive immunity, and the case was dismissed. He died in March 2025, at 79.',
+    story: 'Mark worked at AT&T for more than 22 years, his last years in San Francisco. In 2006 he brought the Electronic Frontier Foundation evidence that AT&T was routing copies of internet traffic into a secret room there controlled by the NSA: Room 641A. His documents were key evidence in EFF’s lawsuit, Hepting v. AT&T. In 2008 Congress gave the phone companies retroactive immunity, and the case was dismissed. He died in March 2025, at 79.',
     sources: [
       wiki('Mark Klein', 'Mark_Klein'),
       wiki('Room 641A', 'Room_641A'),

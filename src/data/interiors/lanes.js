@@ -12,12 +12,13 @@
 //  - Company pages (added per interior with withSources), e.g. Google's "How
 //    Google handles government requests for user information": subpoena →
 //    basic subscriber info and certain IP addresses; court order → non-content
-//    records; search warrant → content; emergency → Google decides; an NSL
+//    records; Google requires a search warrant for content; emergency → Google decides; an NSL
 //    "doesn't require judicial authorization" and reaches "limited subscriber
 //    information"; FISA can compel content.
 //  - 18 U.S.C. 2709 and EFF: the FBI issues National Security Letters with
 //    no court approval and can gag the recipient.
-//  - 50 U.S.C. 1881a (FISA Section 702), EFF's 702 page, Wikipedia: targets
+//  - 50 U.S.C. 1881a (FISA Section 702), EFF's 702 page, Wikipedia: directives
+//    come from the Attorney General and the DNI (1881a(i)(1)); targets
 //    non-US persons abroad; Americans' messages with them are collected; the
 //    FBI searches the collected data. The Guardian, 2013-06-06 (Greenwald and
 //    MacAskill): PRISM names Google, Facebook, Apple and others.
@@ -60,7 +61,7 @@ export function localPolice(company) {
     actor: 'Your local police department',
     actorNote: 'State police and prosecutors use the same tools.',
     tool: 'Subpoena · 2703(d) court order · search warrant · emergency request',
-    gets: `A subpoena gets ${company} to hand over your name, phone number and sign-in IP addresses. A 2703(d) court order adds who you wrote to and when. Only a search warrant, signed by a judge, reaches what you actually wrote. An emergency request needs no judge at all, and ${company} decides whether to answer it.`,
+    gets: `A subpoena gets ${company} to hand over your name, phone number and sign-in IP addresses. A 2703(d) court order adds who you wrote to and when. ${company} requires a search warrant, signed by a judge, before handing over what you actually wrote. An emergency request needs no judge at all, and ${company} decides whether to answer it.`,
     sources: [SCA_2703, SCA_2702],
   };
 }
@@ -84,7 +85,7 @@ export function nsa702(company, { prismNamed = false } = {}) {
     actor: 'NSA',
     actorNote: 'Shares signals intelligence with its Five Eyes partners: GCHQ (UK), CSE (Canada), ASD (Australia) and GCSB (New Zealand).',
     tool: 'FISA Section 702 directive (PRISM)',
-    gets: `Section 702 has let the NSA order ${company} to hand over the messages of people outside the US who aren’t Americans, without a warrant for each one. Your messages with those people get collected too.${prism} Its 2026 status is unsettled: a lapse was reported in June 2026, and the court-approved certifications behind it reportedly run to March 2027.`,
+    gets: `Section 702 has let the Attorney General and the Director of National Intelligence order ${company} to hand over, for the NSA, the messages of people outside the US who aren’t Americans, without a warrant for each one. Your messages with those people get collected too.${prism} Its 2026 status is unsettled: a lapse was reported in June 2026, and the court-approved certifications behind it reportedly run to March 2027.`,
     sources: [FISA_702, EFF_702, ...(prismNamed ? [GUARDIAN_PRISM, WIKI_PRISM] : []), WIKI_702, BRENNAN_702, WIKI_FIVE_EYES],
   };
 }
