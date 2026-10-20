@@ -534,9 +534,11 @@ const protonmail = {
       fix: 'Use an authenticator app or a security key for two-step sign-in, and take the phone number out of your recovery methods (a recovery phrase can stand in).',
       sources: [{ label: 'Proton Support: Two-factor authentication (2FA)', url: 'https://proton.me/support/two-factor-authentication-2fa' }],
     }),
-    phishing('Proton', 'Add a security key to your Proton account.', 'protonmail-fortify-2fa-upgrade', [
+    // A FIDO key signs only for Proton's real site, after the password: a
+    // captured password alone can't pass it, so no backdoor note.
+    { ...phishing('Proton', 'Add a security key to your Proton account.', 'protonmail-fortify-2fa-upgrade', [
       { label: 'Proton Support: Set up two-factor authentication with a security key', url: 'https://proton.me/support/2fa-security-key' },
-    ], 'a security key'),
+    ], 'a security key'), sealedNote: null },
     nearYou(
       'A phone, laptop or tablet that’s still signed in opens your mail with no password at all, already decrypted. Old devices and borrowed ones count.',
       'Check Session management in your Proton settings and revoke any session that isn’t yours.',
