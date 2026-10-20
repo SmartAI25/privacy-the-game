@@ -57,6 +57,9 @@ let notice = { hash: null, text: '' };
 let restoring = false;
 // "Reset it anyway" on a password recon showed is fine (until the page reloads).
 let resetAnywayMission = null;
+// The last route drawn, and the building #/saints was opened from (memory only).
+let lastRoute = null;
+let saintsFrom = null;
 // When the player last saw the city map before this visit (Scout waves after a while away).
 let cityArrival;
 // The first-2FA hug was on screen this visit; it counts as seen once they leave.
@@ -104,7 +107,7 @@ const screens = {
     reaction: landingReaction?.landed && landingReaction.districtId === id ? landingReaction.reaction : null,
   }),
   building: ({ id }) => renderBuildingInterior(state, id),
-  saints: () => renderSaints(state),
+  saints: () => renderSaints(state, { from: saintsFrom }),
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
   recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
@@ -147,6 +150,11 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
   // A screen visit is what a pageview counts: arriving, not a re-draw.
   if (tracksPageview(cause)) startScreenVisit(route);
   try {
+    // The saints gallery's back link: the building it was opened from. Kept
+    // in memory only, never in the URL (pageviews read the URL).
+    if (route.screen !== 'saints') saintsFrom = null;
+    else if (lastRoute?.screen === 'building') saintsFrom = lastRoute.params.id;
+    lastRoute = route;
     const renderFn = screens[route.screen] || screens.city;
     // The seal animation and Scout's line are in this render; remember they were seen
     // so a later re-render (a device add) does not replay them.

@@ -58,7 +58,7 @@ export const SAINTS = {
     title: 'Public access to research and court records',
     years: '1986–2013',
     tribute: 'Aaron spent his short life opening up knowledge that sat behind paywalls. I keep his name close.',
-    story: 'At 14, Aaron was part of the working group that wrote RSS 1.0, an early version of the web-feed format. In 2008 he downloaded about 2.7 million federal court records from PACER, the courts’ paid records system; the FBI looked into it and filed no charges. In 2011 federal prosecutors charged him over downloading academic articles from JSTOR at MIT, with a possible sentence of up to 35 years, and later charges raised it further. He died by suicide in January 2013, at 26, before the case went to trial.',
+    story: 'At 14, Aaron was part of the working group that wrote RSS 1.0, an early version of the web-feed format. In 2008 he downloaded about 2.7 million federal court records from PACER, the courts’ paid records system; federal prosecutors brought no charges. In 2011 federal prosecutors charged him over downloading academic articles from JSTOR at MIT, with a possible sentence of up to 35 years, and later charges raised it further. He died by suicide in January 2013, at 26, before the case went to trial.',
     sources: [wiki('Aaron Swartz', 'Aaron_Swartz')],
     accounts: [],
   },

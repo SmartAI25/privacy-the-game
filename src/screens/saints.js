@@ -3,6 +3,8 @@
 import { SAINTS } from '../data/interiors/saints.js';
 import { renderHud } from '../components/hud.js';
 import { isCandleLit } from '../utils/interior-state.js';
+import { ACCOUNTS } from '../data/accounts.js';
+import { hasInterior } from '../data/interiors/index.js';
 
 export const SAINT_ORDER = ['swartz', 'snowden', 'klein', 'zimmermann', 'ellsberg', 'manning', 'drake', 'binney', 'poitras'];
 
@@ -39,13 +41,22 @@ function card(state, s) {
       </section>`;
 }
 
-export function renderSaints(state) {
+// Back to the building the player came from (app memory, never the URL),
+// else the city.
+function backLink(state, from) {
+  if (from && hasInterior(from) && ACCOUNTS[from] && state.accounts?.[from]?.enabled) {
+    return `<a class="btn-secondary interior-back" href="#/building/${esc(from)}">← ${esc(ACCOUNTS[from].name.toUpperCase())}</a>`;
+  }
+  return '<a class="btn-secondary interior-back" href="#/city">← CITY</a>';
+}
+
+export function renderSaints(state, { from = null } = {}) {
   const saints = SAINT_ORDER.map((id) => SAINTS[id]).filter(Boolean);
   return `
   <div class="scanlines">
     ${renderHud(state)}
     <div class="interior saints" data-saints>
-      <a class="btn-secondary interior-back" href="#/city">← CITY</a>
+      ${backLink(state, from)}
       <div class="interior-title">SAINTS</div>
       <div class="interior-sub">People whose work made this map knowable</div>
       <div class="dim interior-note">Candles stay on this phone. Nothing here is sent anywhere.</div>

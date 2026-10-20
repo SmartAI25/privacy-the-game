@@ -90,3 +90,24 @@ describe('lighting a candle never reaches analytics', () => {
     }
   });
 });
+
+describe('saints back link', () => {
+  it('goes back to the building it came from, else the city', () => {
+    const s = toggleAccount(createInitialState(), 'gmail', true);
+    expect(renderSaints(s, { from: 'gmail' })).toContain('href="#/building/gmail">← GMAIL');
+    expect(renderSaints(s)).toContain('href="#/city">← CITY');
+    expect(renderSaints(toggleAccount(s, 'gmail', false), { from: 'gmail' })).toContain('href="#/city"'); // not enabled
+    expect(renderSaints(s, { from: '<x>' })).toContain('href="#/city"');
+  });
+  it('app keeps the origin in memory, never in the URL', async () => {
+    const { readFileSync } = await import('node:fs');
+    const app = readFileSync('src/app.js', 'utf8');
+    expect(app).toMatch(/renderSaints\(state, \{ from: saintsFrom \}\)/);
+    expect(app).not.toMatch(/#\/saints\?/);
+    expect(readFileSync('src/screens/building.js', 'utf8')).toContain('href="#/saints"');
+  });
+  it('Swartz: federal prosecutors brought no charges over PACER', () => {
+    expect(SAINTS.swartz.story).toContain('federal prosecutors brought no charges');
+    expect(SAINTS.swartz.story).not.toContain('the FBI looked into it');
+  });
+});
