@@ -139,6 +139,8 @@ describe('interior content', () => {
   it('the NSA lane words 702 as "has let", never as settled law in 2026', () => {
     const nsa = getInterior('gmail').desk.find((l) => l.id === 'nsa-702');
     expect(nsa.gets).toMatch(/has let/);
+    expect(nsa.gets).toMatch(/specific targets/);
+    expect(nsa.gets).toMatch(/your side of the conversation/);
     expect(JSON.stringify(nsa)).toMatch(/PRISM/);
     for (const agency of ['GCHQ', 'CSE', 'ASD', 'GCSB']) expect(JSON.stringify(nsa), agency).toContain(agency);
   });
@@ -185,7 +187,11 @@ describe('Master Keys and Signal interiors (task 7)', () => {
 
   it('the warrant line claims "requires" only where the company’s page says it', () => {
     const police = (id) => getInterior(id).desk.find((l) => l.id === 'local-police').gets;
-    for (const id of ['gmail', 'google', 'outlook', 'microsoft', 'icloud', 'apple_id', 'facebook']) expect(police(id), id).toMatch(/requires a search warrant/);
+    for (const id of ['gmail', 'google', 'outlook', 'microsoft', 'icloud', 'apple_id']) {
+      expect(police(id), id).toMatch(/police need a search warrant signed by a judge/);
+      expect(police(id), id).not.toMatch(/requires/);
+    }
+    expect(police('facebook')).toMatch(/requires a search warrant/);
     expect(police('yahoo')).not.toMatch(/requires/);
     expect(police('yahoo')).toMatch(/search warrant/);
     expect(police('facebook')).toMatch(/end-to-end encrypt/);

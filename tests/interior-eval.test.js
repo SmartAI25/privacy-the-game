@@ -50,11 +50,23 @@ describe('entryState on gmail', () => {
     s = file(createInitialState(), 'gmail-fortify-2fa', { method: 'authenticator' });
     const r = entryState(s, 'gmail', sim);
     expect(r.state).toBe('sealed');
-    expect(r.note).toBe('Sealed once text-message backup is off. Check under recovery options.');
+    expect(r.note).toBe('Sign-in codes no longer travel by text. A recovery phone number can still reopen this door: check under recovery options and remove it, or keep it only if the carrier account has a PIN.');
     expect(entryState(s, 'gmail', ph).state).toBe('open');
     s = file(createInitialState(), 'gmail-fortify-2fa', { method: 'passkey' });
     expect(entryState(s, 'gmail', sim).state).toBe('sealed');
     expect(entryState(s, 'gmail', ph).state).toBe('sealed');
+    expect(entryState(s, 'gmail', ph).note).toBe('Sealed while you sign in with the passkey. Your password still works as a backup, so a page that asks for your password and a code is the tell.');
+  });
+
+  it('a sealed Apple mail slot carries no password-backup note (security keys replace the password)', () => {
+    for (const id of ['apple_id', 'icloud']) {
+      const ph = getInterior(id).entries.find((e) => e.rule === 'phishing');
+      const r = entryState(file(createInitialState(), `${id}-fortify-2fa`, { method: 'passkey' }), id, ph);
+      expect(r.state, id).toBe('sealed');
+      expect(r.note, id).toBeUndefined();
+    }
+    const g = getInterior('google').entries.find((e) => e.rule === 'phishing');
+    expect(entryState(file(createInitialState(), 'google-fortify-2fa', { method: 'passkey' }), 'google', g).note).toBe('Sealed while you sign in with the passkey. Your password still works as a backup, so a page that asks for your password and a code is the tell.');
   });
 
   it('2FA upgrade filed later wins over the original', () => {
@@ -111,6 +123,7 @@ describe('devices and reglock (synthetic entries)', () => {
     for (const [a, st] of [['enabled-2fa', 'sealed'], ['already-enabled', 'sealed'], ['later', 'open']]) {
       const s = file(createInitialState(), 'signal-fortify-reglock', { action: a });
       expect(entryState(s, 'signal', reg).state).toBe(st);
+      expect(entryState(s, 'signal', reg).note).toBe(st === 'sealed' ? 'Sealed while you use Signal at least once a week. After 7 days without use, the lock expires.' : undefined);
     }
   });
 });

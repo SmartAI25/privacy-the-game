@@ -4,7 +4,8 @@
 // Order is the spec's. Facts checked 2026-10-20 against the linked sources:
 //  - Swartz (1986–2013): at 14, in the working group that wrote RSS 1.0;
 //    downloaded about 2.7 million PACER court records in 2008 (no charges);
-//    charged in 2011 over JSTOR downloads at MIT, facing up to 35 years; died
+//    charged in 2011 over JSTOR downloads at MIT, facing up to 35 years, raised by the September 2012
+//    superseding indictment; died
 //    by suicide on 2013-01-11, at 26 (Wikipedia).
 //  - Snowden (born 1983): NSA contractor at Booz Allen Hamilton; gave
 //    documents to Greenwald, Poitras, Gellman and MacAskill in June 2013;
@@ -30,7 +31,8 @@
 //  - Drake (born 1957): NSA senior executive; raised Trailblazer waste with
 //    his bosses, the inspectors general and Congress; indicted 2010 under the
 //    Espionage Act; the ten charges were dropped in 2011, a misdemeanor plea,
-//    probation; the judge called the prosecution "unconscionable" (Wikipedia).
+//    probation; the judge called it "unconscionable" to bring such charges
+//    and drop them on the eve of trial (Wikipedia).
 //  - Binney (born 1943): NSA technical director, 30+ years; ThinThread
 //    encrypted Americans' identifying information and needed a court order to
 //    decrypt; retired 2001-10-31; joined a 2002 inspector-general complaint;
@@ -56,7 +58,7 @@ export const SAINTS = {
     title: 'Public access to research and court records',
     years: '1986–2013',
     tribute: 'Aaron spent his short life opening up knowledge that sat behind paywalls. I keep his name close.',
-    story: 'At 14, Aaron was part of the working group that wrote RSS 1.0, an early version of the web-feed format. In 2008 he downloaded about 2.7 million federal court records from PACER, the courts’ paid records system; the FBI looked into it and filed no charges. In 2011 federal prosecutors charged him over downloading academic articles from JSTOR at MIT, with a possible sentence of up to 35 years. He died by suicide in January 2013, at 26, before the case went to trial.',
+    story: 'At 14, Aaron was part of the working group that wrote RSS 1.0, an early version of the web-feed format. In 2008 he downloaded about 2.7 million federal court records from PACER, the courts’ paid records system; the FBI looked into it and filed no charges. In 2011 federal prosecutors charged him over downloading academic articles from JSTOR at MIT, with a possible sentence of up to 35 years, and later charges raised it further. He died by suicide in January 2013, at 26, before the case went to trial.',
     sources: [wiki('Aaron Swartz', 'Aaron_Swartz')],
     accounts: [],
   },
@@ -107,7 +109,7 @@ export const SAINTS = {
     name: 'Saint Daniel Ellsberg',
     title: 'The Pentagon Papers',
     years: '1931–2023',
-    tribute: 'Daniel showed the country the study its own government had kept from it, and spent the rest of his life standing beside the next ones.',
+    tribute: 'Daniel showed the country the Pentagon’s own secret history of the war, and spent the rest of his life standing beside the next ones.',
     story: 'Daniel was a military analyst at RAND. In 1971 he gave the Pentagon Papers, a secret history of US decisions in the Vietnam War, to The New York Times, The Washington Post and other papers. He was charged under the Espionage Act, and in 1973 a judge dismissed every charge because of government misconduct, including a break-in at his psychiatrist’s office. He spoke up for later whistleblowers until his death in 2023, at 92.',
     sources: [
       wiki('Daniel Ellsberg', 'Daniel_Ellsberg'),
@@ -132,7 +134,7 @@ export const SAINTS = {
     title: 'NSA whistleblower before Snowden',
     years: 'born 1957',
     tribute: 'Thomas tried every proper door first. That counts for a lot with me.',
-    story: 'Thomas was a senior executive at the NSA. He raised concerns about waste in a program called Trailblazer with his bosses, the inspectors general and the intelligence committees in Congress, and later spoke with a reporter. In 2010 he was indicted under the Espionage Act. In 2011 all ten charges were dropped; he pleaded to one misdemeanor and got probation, and the judge called the prosecution “unconscionable.”',
+    story: 'Thomas was a senior executive at the NSA. He raised concerns about waste in a program called Trailblazer with his bosses, the inspectors general and the intelligence committees in Congress, and later spoke with a reporter. In 2010 he was indicted under the Espionage Act. In 2011 all ten charges were dropped; he pleaded to one misdemeanor and got probation, and the judge called it ‘unconscionable’ to bring such heavy charges and then drop them on the eve of trial.',
     sources: [wiki('Thomas Drake', 'Thomas_Andrews_Drake')],
     accounts: [],
   },
@@ -141,7 +143,7 @@ export const SAINTS = {
     name: 'Saint William Binney',
     title: 'NSA whistleblower before Snowden',
     years: 'born 1943',
-    tribute: 'Bill built a system that kept Americans’ names locked unless a court said otherwise. Privacy can be designed in. He proved it.',
+    tribute: 'Bill built a system that kept Americans’ names locked unless a court said otherwise. Privacy can be designed in. He showed how.',
     story: 'Bill spent more than 30 years at the NSA and served as a technical director. His team’s system, ThinThread, encrypted Americans’ identifying details and needed a court order to unlock them. He retired in October 2001 and joined a 2002 complaint to the Defense Department’s inspector general. In 2007 FBI agents raided his home. He was never charged.',
     sources: [wiki('William Binney', 'William_Binney_(intelligence_official)')],
     accounts: [],

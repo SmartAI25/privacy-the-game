@@ -12,7 +12,8 @@
 //  - Company pages (added per interior with withSources), e.g. Google's "How
 //    Google handles government requests for user information": subpoena →
 //    basic subscriber info and certain IP addresses; court order → non-content
-//    records; Google requires a search warrant for content; emergency → Google decides; an NSL
+//    records; "Get a search warrant to compel disclosure of the content of
+//    communications"; emergency → Google decides; an NSL
 //    "doesn't require judicial authorization" and reaches "limited subscriber
 //    information"; FISA can compel content.
 //  - 18 U.S.C. 2709 and EFF: the FBI issues National Security Letters with
@@ -67,7 +68,7 @@ export function localPolice(company, wording = {}) {
   const {
     subpoena = `A subpoena gets ${company} to hand over your name, phone number and sign-in IP addresses.`,
     order = 'A 2703(d) court order adds who you wrote to and when.',
-    content = `${company} requires a search warrant, signed by a judge, before handing over what you actually wrote.`,
+    content = `To force ${company} to hand over what you actually wrote, police need a search warrant signed by a judge.`,
     extra = '',
   } = wording;
   return {
@@ -86,7 +87,7 @@ export function fbi(company) {
     id: 'fbi',
     actor: 'FBI',
     tool: 'National Security Letter · the police tools · searches of 702 data',
-    gets: `Everything on the police slip, plus National Security Letters: subscriber records with no judge involved, usually with a gag order so ${company} can’t tell you. The FBI also searches what the NSA collected under Section 702.`,
+    gets: `Everything on the police slip, plus National Security Letters: subscriber records with no judge involved, often with a gag order so ${company} can’t tell you. The FBI has also searched what the NSA collected under Section 702.`,
     sources: [NSL_2709, EFF_NSL, EFF_702],
   };
 }
@@ -99,7 +100,7 @@ export function nsa702(company, { prismNamed = false } = {}) {
     actor: 'NSA',
     actorNote: 'Shares signals intelligence with its Five Eyes partners: GCHQ (UK), CSE (Canada), ASD (Australia) and GCSB (New Zealand).',
     tool: 'FISA Section 702 directive (PRISM)',
-    gets: `Section 702 has let the Attorney General and the Director of National Intelligence order ${company} to hand over, for the NSA, the messages of people outside the US who aren’t Americans, without a warrant for each one. Your messages with those people get collected too.${prism} Its 2026 status is unsettled: a lapse was reported in June 2026, and the court-approved certifications behind it reportedly run to March 2027.`,
+    gets: `Section 702 has let the Attorney General and the Director of National Intelligence order ${company} to hand over, for the NSA, the messages of specific targets: people outside the US who aren’t Americans. No warrant is needed for each one. If you write to one of those targets, your side of the conversation gets collected too.${prism} Its 2026 status is unsettled: a lapse was reported in June 2026, and the court-approved certifications behind it reportedly run to March 2027.`,
     sources: [FISA_702, EFF_702, ...(prismNamed ? [GUARDIAN_PRISM, WIKI_PRISM] : []), WIKI_702, BRENNAN_702, WIKI_FIVE_EYES],
   };
 }
@@ -121,7 +122,6 @@ export function ukCloudAct(company) {
   return {
     id: 'uk-cloud-act',
     actor: 'UK investigators, through the Home Office',
-    actorNote: 'Orders go through the Home Office’s Investigatory Powers Unit.',
     tool: 'CLOUD Act order (US–UK Data Access Agreement)',
     gets: `Since October 2022, UK orders in serious-crime cases can go straight to ${company}, which may answer without a US court being involved. An order can’t target a US person or anyone in the US.`,
     sources: [DOJ_UK_AGREEMENT, DOJ_CLOUD_ACT],

@@ -19,7 +19,9 @@
 //    computers and TVs; encrypted apps were reached by compromising the
 //    device, not by breaking the apps (Wikipedia, WikiLeaks).
 //  - Operation Aurora: Google, 2010-01-12, "a primary goal of the attackers
-//    was accessing the Gmail accounts of Chinese human rights activists".
+//    was accessing the Gmail accounts of Chinese human rights activists";
+//    "only two Gmail accounts appear to have been accessed", limited to
+//    account information and subject lines.
 //    Wikipedia: traced to the Beijing-based Elderwood group, "with
 //    associations with the People's Liberation Army".
 //  - Pegasus: NSO Group supplies "authorized governments" (Wikipedia); Citizen
@@ -211,7 +213,7 @@ const googleState = () => ({
   metaphor: 'vents',
   actor: 'CIA · Chinese state hackers (Operation Aurora, 2010) · a spyware vendor’s government customer (NSO Group’s Pegasus)',
   actorNote: 'Security researchers traced Aurora to Elderwood, a Beijing-based group with ties to China’s military. NSO Group sells Pegasus to government agencies.',
-  how: 'These go around the locks: into the phone or laptop itself, or into the company. The CIA’s phone and computer hacking tools were exposed in the Vault 7 leak (2017). In 2010 Google said the Aurora attackers had gone after the Gmail accounts of Chinese human rights activists. Citizen Lab has found Pegasus on the phones of journalists and activists.',
+  how: 'These go around the locks: into the phone or laptop itself, or into the company. The CIA’s phone and computer hacking tools were exposed in the Vault 7 leak (2017). In 2010 Google said the Aurora attackers had gone after the Gmail accounts of Chinese human rights activists. Google also said only two Gmail accounts appeared to have been accessed, and only their account information and subject lines, not the emails themselves. Citizen Lab has found Pegasus on the phones of journalists and activists.',
   rule: 'beyond',
   narrows: 'For people at higher risk, Google’s Advanced Protection Program requires a passkey or security key to sign in and is stricter about risky downloads.',
   sources: STATE_SOURCES,
@@ -251,7 +253,7 @@ const gmail = {
       actor: 'A phishing-kit operator',
       how: 'A ready-made kit clones the Google sign-in page. You type your password and code into the copy, and the operator uses both on the real page. Codes from a text or an app can be passed along like that; a passkey only answers Google’s real site.',
       rule: 'phishing',
-      fix: 'Add a passkey to your Google account.',
+      fix: 'Add a passkey to your Google account and sign in with it every time.',
       fixMission: 'gmail-fortify-2fa-upgrade',
       sources: PHISHING_SOURCES,
     },
@@ -278,7 +280,7 @@ const google = {
   entries: [
     stuffing('Google Account', 'google-fortify-password'),
     simSwap('google-fortify-2fa-upgrade'),
-    phishing('Google', 'Add a passkey to your Google account.', 'google-fortify-2fa-upgrade'),
+    phishing('Google', 'Add a passkey to your Google account and sign in with it every time.', 'google-fortify-2fa-upgrade'),
     nearYou(
       'A phone, laptop or tablet that’s still signed in to your Google Account opens your mail, files and everything you sign in to with Google, with no password at all. Old devices and borrowed ones count.',
       'Check the devices signed in to your Google account and sign out of any that aren’t yours.',
@@ -304,7 +306,7 @@ const msState = () => ({
   metaphor: 'vents',
   actor: `CIA · Chinese state hackers (Storm-0558, 2023) · ${PEGASUS_ACTOR}`,
   actorNote: `Microsoft calls Storm-0558 a China-based group with espionage aims. ${PEGASUS_NOTE}`,
-  how: `${AROUND} ${CIA_LINE} In 2023 Microsoft said Storm-0558 had forged sign-in tokens with a stolen Microsoft key and got into email at about 25 organizations, government agencies among them, and a small number of related personal accounts, Outlook.com included. ${PEGASUS_LINE}`,
+  how: `${AROUND} ${CIA_LINE} In 2023 Microsoft said Storm-0558 had obtained a Microsoft signing key, forged sign-in tokens with it, and read email at about 25 organizations, government agencies among them, plus some related personal accounts, through Outlook on the web and Outlook.com. ${PEGASUS_LINE}`,
   rule: 'beyond',
   sources: [
     ...VAULT7,
@@ -322,7 +324,7 @@ const outlook = {
   entries: [
     stuffing('Outlook', 'outlook-fortify-password'),
     simSwap('outlook-fortify-2fa-upgrade', { how: MS_SIM_HOW, sources: [MS_SMS] }),
-    phishing('Microsoft', 'Add a passkey to your Microsoft account.', 'outlook-fortify-2fa-upgrade', MS_PASSKEY),
+    phishing('Microsoft', 'Add a passkey to your Microsoft account and sign in with it every time.', 'outlook-fortify-2fa-upgrade', MS_PASSKEY),
     nearYou(
       'A phone, laptop or tablet that’s still signed in opens your mail with no password at all. Old devices and borrowed ones count. Microsoft’s Recent activity page shows the last 30 days of sign-ins.',
       'Check your Microsoft account’s Recent activity and mark anything that wasn’t you.',
@@ -342,7 +344,7 @@ const microsoft = {
   entries: [
     stuffing('Microsoft account', 'microsoft-fortify-password'),
     simSwap('microsoft-fortify-2fa-upgrade', { how: MS_SIM_HOW, sources: [MS_SMS] }),
-    phishing('Microsoft', 'Add a passkey to your Microsoft account.', 'microsoft-fortify-2fa-upgrade', MS_PASSKEY),
+    phishing('Microsoft', 'Add a passkey to your Microsoft account and sign in with it every time.', 'microsoft-fortify-2fa-upgrade', MS_PASSKEY),
     nearYou(
       'A phone, laptop or tablet that’s still signed in to your Microsoft account opens your files, mail and anything you sign in to with Microsoft, with no password at all. Microsoft’s Recent activity page shows the last 30 days of sign-ins.',
       'Check your Microsoft account’s Recent activity and mark anything that wasn’t you.',
@@ -405,7 +407,8 @@ const appleInterior = (accountId, product) => ({
   entries: [
     stuffing(product, `${accountId}-fortify-password`),
     simSwap(`${accountId}-fortify-2fa-upgrade`, APPLE_SIM),
-    phishing('Apple', APPLE_PHISH_FIX, `${accountId}-fortify-2fa-upgrade`, APPLE_KEYS, 'a security key'),
+    // With security keys on, keys are the only way in (Apple 102637): no backdoor note.
+    { ...phishing('Apple', APPLE_PHISH_FIX, `${accountId}-fortify-2fa-upgrade`, APPLE_KEYS, 'a security key'), sealedNote: null },
     nearYou(APPLE_DEVICES_HOW, APPLE_DEVICES_FIX, `${accountId}-recon-login`, APPLE_DEVICES),
     appleState(),
   ],
@@ -430,7 +433,7 @@ const yahoo = {
   entries: [
     stuffing('Yahoo Mail', 'yahoo-fortify-password'),
     simSwap('yahoo-fortify-2fa-upgrade'),
-    phishing('Yahoo', 'Add a passkey or a security key to your Yahoo account.', 'yahoo-fortify-2fa-upgrade', [
+    phishing('Yahoo', 'Add a passkey to your Yahoo account and sign in with it every time.', 'yahoo-fortify-2fa-upgrade', [
       { label: 'Yahoo Help: Create or remove a passkey from your Yahoo account', url: 'https://help.yahoo.com/kb/SLN35635.html' },
       { label: 'Yahoo Help: 2-Step Verification with a security key', url: 'https://help.yahoo.com/kb/SLN35380.html' },
     ]),
@@ -479,7 +482,7 @@ const facebook = {
   entries: [
     stuffing('Facebook', 'facebook-fortify-password'),
     simSwap('facebook-fortify-2fa-upgrade'),
-    phishing('Facebook', 'Add a passkey to Facebook in Accounts Center.', 'facebook-fortify-2fa-upgrade', [
+    phishing('Facebook', 'Add a passkey to your Facebook account and sign in with it every time.', 'facebook-fortify-2fa-upgrade', [
       { label: 'Meta (2025): Introducing passkeys on Facebook for an easier sign-in', url: 'https://about.fb.com/news/2025/06/introducing-passkeys-facebook-easier-sign-in/' },
     ]),
     nearYou(

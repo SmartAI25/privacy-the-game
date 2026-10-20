@@ -9,7 +9,11 @@ import { twoFactorMethod, STRONG_METHODS } from './two-factor.js';
 import { passwordResetNeed, passwordEvidence, emailBreachRecord } from './password-need.js';
 
 const DAY = 864e5;
-const SIM_NOTE = 'Sealed once text-message backup is off. Check under recovery options.';
+const SIM_NOTE = 'Sign-in codes no longer travel by text. A recovery phone number can still reopen this door: check under recovery options and remove it, or keep it only if the carrier account has a PIN.';
+// A passkey seals the mail slot only while it's the way in; the password
+// still works. An entry can override (Apple: security keys replace it).
+const PHISH_NOTE = 'Sealed while you sign in with the passkey. Your password still works as a backup, so a page that asks for your password and a code is the tell.';
+const REGLOCK_NOTE = 'Sealed while you use Signal at least once a week. After 7 days without use, the lock expires.';
 const BREACHED = new Set(['1-2-breaches', '3plus-breaches']);
 
 export function freshness(iso, now = new Date()) {
@@ -89,7 +93,9 @@ export function entryState(state, accountId, entry) {
       const { method, missionId, date } = currentTwoFactor(state, accountId);
       if (!method) return nc;
       if (entry.rule === 'phishing') {
-        return { state: method === 'passkey' ? 'sealed' : 'open', missionId, date };
+        if (method !== 'passkey') return { state: 'open', missionId, date };
+        const note = Object.hasOwn(entry, 'sealedNote') ? entry.sealedNote : PHISH_NOTE;
+        return note ? { state: 'sealed', missionId, date, note } : { state: 'sealed', missionId, date };
       }
       if (STRONG_METHODS.includes(method)) return { state: 'sealed', missionId, date, note: SIM_NOTE };
       if (['sms', 'email', 'none'].includes(method)) return { state: 'open', missionId, date };
@@ -109,7 +115,7 @@ export function entryState(state, accountId, entry) {
       const rec = doneRecord(state, id);
       if (!rec) return nc;
       const date = recordDate(rec);
-      if (['enabled-2fa', 'already-enabled'].includes(rec.action)) return { state: 'sealed', missionId: id, date };
+      if (['enabled-2fa', 'already-enabled'].includes(rec.action)) return { state: 'sealed', missionId: id, date, note: REGLOCK_NOTE };
       if (rec.action === 'later') return { state: 'open', missionId: id, date };
       return nc;
     }

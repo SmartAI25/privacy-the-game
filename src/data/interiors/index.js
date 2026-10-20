@@ -10,7 +10,8 @@ import { SQUARE_INTERIORS } from './square.js';
 /**
  * @typedef {{ id: string, metaphor: 'front-door'|'phone-line'|'mail-slot'|'back-room'|'vents'|'number',
  *   actor: string, actorNote?: string, how: string, rule: RuleId, fix?: string, fixMission?: string,
- *   narrows?: string, sources: Source[] }} Entry
+ *   narrows?: string, sealedNote?: string|null, sources: Source[] }} Entry
+ * sealedNote overrides the evaluator's note under a sealed entry; null shows none.
  */
 /**
  * @typedef {{ accountId: string, company: string, deskIntro: string,

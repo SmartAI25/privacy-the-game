@@ -97,7 +97,7 @@ describe('building screen', () => {
   it('sealed entries show the evaluator note; beyond shows what narrows it; vents actors wrap', () => {
     const s = file(createInitialState(), 'gmail-fortify-2fa', { method: 'authenticator' });
     const html = render(s);
-    expect(entryHtml(html, 'sim-swap')).toContain('Sealed once text-message backup is off.');
+    expect(entryHtml(html, 'sim-swap')).toContain('A recovery phone number can still reopen this door');
     const vents = entryHtml(html, 'state');
     expect(vents).toContain('Advanced Protection');
     expect(vents).toContain('NSO Group’s Pegasus');
@@ -188,7 +188,7 @@ describe('building screen', () => {
       expect(text).not.toMatch(/\bthey\b/i);
     }
     // The states above do reach the note and narrows copy.
-    expect(render(auth)).toContain('Sealed once text-message backup is off.');
+    expect(render(auth)).toContain('A recovery phone number can still reopen this door');
     expect(render(passkey)).toContain('Advanced Protection Program');
   });
 
