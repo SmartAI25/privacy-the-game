@@ -270,3 +270,13 @@ describe('Master Keys and Signal interiors (task 7)', () => {
     expect(text).not.toMatch(/can’t hand over what you wrote/);
   });
 });
+
+describe('final fixes: Proton phishing seal caveat', () => {
+  it('a sealed Proton mail slot notes the authenticator backup, citing Proton support', async () => {
+    const { getInterior } = await import('../src/data/interiors/index.js');
+    const e = getInterior('protonmail').entries.find((x) => x.rule === 'phishing');
+    expect(e.sealedNote).toBe('Sealed while you sign in with the security key. If an authenticator code still works as a backup, a page that asks for your password and a code is the tell.');
+    expect(e.sources.map((x) => x.url)).toContain('https://proton.me/support/two-factor-authentication-2fa');
+    expect(e.sealedNote).not.toMatch(/\bthey\b/i);
+  });
+});

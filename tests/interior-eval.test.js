@@ -59,8 +59,10 @@ describe('entryState on gmail', () => {
     expect(entryState(s, 'gmail', ph).note).toBe('Sealed while you sign in with the passkey. Your password still works as a backup, so a page that asks for your password and a code is the tell.');
   });
 
-  it('a sealed Apple or Proton mail slot carries no password-backup note (security keys)', () => {
-    for (const id of ['apple_id', 'icloud', 'protonmail']) {
+  it('a sealed Apple mail slot carries no note; Proton notes the authenticator backup (security keys)', () => {
+    const pp = getInterior('protonmail').entries.find((e) => e.rule === 'phishing');
+    expect(entryState(file(createInitialState(), 'protonmail-fortify-2fa', { method: 'passkey' }), 'protonmail', pp).note).toMatch(/^Sealed while you sign in with the security key\. If an authenticator code still works/);
+    for (const id of ['apple_id', 'icloud']) {
       const ph = getInterior(id).entries.find((e) => e.rule === 'phishing');
       const r = entryState(file(createInitialState(), `${id}-fortify-2fa`, { method: 'passkey' }), id, ph);
       expect(r.state, id).toBe('sealed');
