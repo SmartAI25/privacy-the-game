@@ -66,6 +66,7 @@ function loginCheck(state, accountId) {
 }
 
 // The new recon's answers for this account, merged.
+export const passwordEvidence = (state, accountId) => evidence(state, accountId);
 function evidence(state, accountId) {
   const out = { pw: null, activity: null, service: null, changedSince: null, serviceHadPasswords: false, serviceName: null };
   for (const suffix of NEW_RECON_SUFFIXES) {
