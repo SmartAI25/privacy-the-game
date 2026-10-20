@@ -7,7 +7,7 @@ import { MISSIONS } from '../data/missions.js';
 import { getInterior } from '../data/interiors/index.js';
 import { SAINTS } from '../data/interiors/saints.js';
 import { renderHud } from '../components/hud.js';
-import { checkupRows, entryState, sealedCount, recordDate, freshness } from '../utils/interior.js';
+import { checkupRows, entryState, sealedCount, recordDate, freshness, currentTwoFactor } from '../utils/interior.js';
 import { isMissionDoneIn, isMissionAvailable } from '../utils/mission-status.js';
 import { canRecheck } from '../utils/debrief.js';
 import { renderScout } from '../components/scout.js';
@@ -39,6 +39,7 @@ function esc(value) {
 
 const missionById = (id) => MISSIONS.find((m) => m.id === id);
 const briefingHref = (id) => `#/mission/${esc(id)}/briefing`;
+const recheckHref = (id) => `#/mission/${esc(id)}/recheck`;
 
 function sourceLinks(sources = []) {
   if (!sources.length) return '';
@@ -63,6 +64,16 @@ function filedRecord(state, id) {
   if (own?.status === 'completed') return own;
   const old = missionById(id)?.replaces;
   return old && state.missions?.[old]?.status === 'completed' ? state.missions[old] : null;
+}
+
+// The mission a re-check refreshes: this one when it is filed as completed,
+// else the old mission it replaces (Facebook's breach check). null when
+// neither can be re-checked.
+function recheckableId(state, mission) {
+  if (!mission || !canRecheck(mission)) return null;
+  if (state.missions?.[mission.id]?.status === 'completed') return mission.id;
+  const old = mission.replaces ? missionById(mission.replaces) : null;
+  return old && canRecheck(old) && state.missions?.[old.id]?.status === 'completed' ? old.id : null;
 }
 
 // LAST SWEEP: the newest dated filing behind the roof rows.
@@ -95,11 +106,12 @@ function roofRow(state, row) {
   const checked = row.status !== 'not-checked';
   const bars = [0, 1, 2, 3].map((i) => `<span class="bar${i < lit ? ' on' : ''}"></span>`).join('');
   const mission = row.missionId ? missionById(row.missionId) : null;
-  const sweepable = checked && mission && state.missions?.[mission.id]?.status === 'completed' && canRecheck(mission);
+  const sweepId = checked ? recheckableId(state, mission) : null;
   let action = '';
-  if (sweepable) action = `<a class="interior-btn interior-btn--quiet" href="#/mission/${esc(mission.id)}/recheck">SWEEP</a>`;
+  if (sweepId) action = `<a class="interior-btn interior-btn--quiet" href="${recheckHref(sweepId)}">SWEEP</a>`;
   else if (mission) action = `<a class="interior-btn interior-btn--quiet" href="${briefingHref(mission.id)}">START</a>`;
-  const when = checked && row.freshness === 'unknown' ? '<span class="dim"> · date unknown</span>' : '';
+  // A skipped filing ("I'll come back") never had a date to lose.
+  const when = checked && row.freshness === 'unknown' && row.missionId && filedRecord(state, row.missionId) ? '<span class="dim"> · date unknown</span>' : '';
   return `
         <div class="ant-row" data-row="${esc(row.id)}" data-status="${esc(row.status)}" data-fresh="${esc(row.freshness)}">
           <span class="ant-label">${esc(row.label)}${when}</span>
@@ -151,16 +163,26 @@ function desk(ctx, interior) {
       <div class="desk${note}">${slips}</div>`);
 }
 
-// Where SEAL IT (or START) goes. The 2FA upgrade only unlocks after the base
-// 2FA mission is filed with text or email codes; until then, the base mission.
-function entryMission(state, accountId, entry) {
-  const id = entry.fixMission;
-  if (!id || !missionById(id)) return null;
-  if (id === `${accountId}-fortify-2fa-upgrade`) {
+// Where SEAL IT (or START) goes: { href, recheck }, or null for no button.
+//  - the mission is available and not done yet: its briefing;
+//  - it is filed and can be re-checked: its re-check (a new answer there,
+//    like a passkey, seals the entry);
+//  - otherwise no button, just the fix.
+// The 2FA upgrade only unlocks after the base 2FA mission is filed with text
+// or email codes. When it is locked or done: the base mission while that is
+// not filed, else the mission that records the current method.
+function entryTarget(state, accountId, entry) {
+  let mission = missionById(entry.fixMission);
+  if (!mission) return null;
+  if (mission.id === `${accountId}-fortify-2fa-upgrade`) {
+    if (isMissionAvailable(state, mission) && !isMissionDoneIn(state, mission)) return { href: briefingHref(mission.id), recheck: false };
     const base = missionById(`${accountId}-fortify-2fa`);
-    if (base && (!isMissionDoneIn(state, base) || !isMissionAvailable(state, missionById(id)))) return base.id;
+    mission = base && !isMissionDoneIn(state, base) ? base : missionById(currentTwoFactor(state, accountId).missionId ?? base?.id);
+    if (!mission) return null;
   }
-  return id;
+  if (!isMissionDoneIn(state, mission)) return isMissionAvailable(state, mission) ? { href: briefingHref(mission.id), recheck: false } : null;
+  const id = recheckableId(state, mission);
+  return id ? { href: recheckHref(id), recheck: true } : null;
 }
 
 function actorLines(actor) {
@@ -169,16 +191,16 @@ function actorLines(actor) {
 
 function entry(state, accountId, e, sealing) {
   const s = entryState(state, accountId, e);
-  const target = entryMission(state, accountId, e);
+  const target = entryTarget(state, accountId, e);
   let status = '';
   if (s.state === 'sealed') {
     status = `<div class="ok">Sealed.</div>${s.note ? `<div class="dim">${esc(s.note)}</div>` : ''}`;
   } else if (s.state === 'open') {
-    status = `${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn" href="${briefingHref(target)}">SEAL IT ▸</a>` : ''}`;
+    status = `${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn" href="${target.href}">${target.recheck ? 'SEAL IT ▸ RE-CHECK' : 'SEAL IT ▸'}</a>` : ''}`;
   } else if (s.state === 'beyond') {
     status = `<div class="dim">Beyond your control.${e.narrows ? ` ${esc(e.narrows)}` : ''}</div>`;
   } else {
-    status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${briefingHref(target)}">START</a>` : ''}`;
+    status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${target.href}">${target.recheck ? 'RE-CHECK' : 'START'}</a>` : ''}`;
   }
   return `
       <div class="entry entry--${s.state}${sealing.has(e.id) ? ' entry--sealing' : ''}" data-entry="${esc(e.id)}" data-state="${s.state}">

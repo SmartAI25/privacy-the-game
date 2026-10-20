@@ -88,10 +88,47 @@ describe('building screen', () => {
     expect(entryHtml(html, 'sim-swap')).toContain('data-state="open"');
     expect(entryHtml(html, 'sim-swap')).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
     expect(entryHtml(html, 'phishing')).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
-    // Authenticator: the upgrade stays locked, so the open mail slot points at the base mission.
+  });
+
+  it('SEAL IT never dead-ends on a completed briefing (final review item 2)', () => {
+    // Authenticator filer: the upgrade stays locked; the mail slot re-checks the base 2FA filing.
     const auth = render(file(createInitialState(), 'gmail-fortify-2fa', { method: 'authenticator' }));
     expect(entryHtml(auth, 'phishing')).toContain('data-state="open"');
-    expect(entryHtml(auth, 'phishing')).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
+    expect(entryHtml(auth, 'phishing')).toContain('href="#/mission/gmail-fortify-2fa/recheck"');
+    expect(entryHtml(auth, 'phishing')).toContain('SEAL IT ▸ RE-CHECK');
+    expect(entryHtml(auth, 'phishing')).not.toContain('/briefing"');
+    // Upgrade filed (sms, then authenticator): the mission that records the method is re-checked.
+    let up = file(createInitialState(), 'gmail-fortify-2fa', { method: 'sms' }, daysAgo(9));
+    up = file(up, 'gmail-fortify-2fa-upgrade', { method: 'authenticator' }, daysAgo(2));
+    expect(entryHtml(render(up), 'phishing')).toContain('href="#/mission/gmail-fortify-2fa-upgrade/recheck"');
+    // Completed login check with strangers: the back room re-checks it.
+    const strangers = render(file(createInitialState(), 'gmail-recon-login', { finding: '1-2-breaches' }));
+    expect(entryHtml(strangers, 'near-you')).toContain('data-state="open"');
+    expect(entryHtml(strangers, 'near-you')).toContain('href="#/mission/gmail-recon-login/recheck"');
+    expect(entryHtml(strangers, 'near-you')).toContain('SEAL IT ▸ RE-CHECK');
+  });
+
+  it('SEAL IT shows the fix with no button when the target is unavailable', () => {
+    // Password-manager missions can't be re-checked; an entry pointing at one has no button.
+    const interior = getInterior('gmail');
+    const e = interior.entries.find((x) => x.id === 'near-you');
+    const orig = e.fixMission;
+    try {
+      e.fixMission = 'password_manager-recon-report';
+      let s = file(createInitialState(), 'gmail-recon-login', { finding: '3plus-breaches' });
+      s = file(s, 'password_manager-recon-report', { action: 'none-flagged' });
+      const html = entryHtml(render(s), 'near-you');
+      expect(html).toContain('data-state="open"');
+      expect(html).toContain('entry-fix');
+      expect(html).not.toContain('interior-btn');
+      // An unavailable (locked) briefing: no button either.
+      e.fixMission = 'password_manager-fortify-burst';
+      const locked = entryHtml(render(file(createInitialState(), 'gmail-recon-login', { finding: '3plus-breaches' })), 'near-you');
+      expect(locked).toContain('entry-fix');
+      expect(locked).not.toContain('interior-btn');
+    } finally {
+      e.fixMission = orig;
+    }
   });
 
   it('sealed entries show the evaluator note; beyond shows what narrows it; vents actors wrap', () => {
@@ -267,5 +304,27 @@ describe('signal roof (fix round 1)', () => {
     expect(lock).toContain('Registration lock');
     expect(lock).toContain('START');
     expect(lock).toContain('#/mission/signal-fortify-reglock/briefing');
+  });
+});
+
+describe('final fixes: pw-clean row on a recon mission', () => {
+  it('facebook pw-clean from facebook-recon-password: dated row with SWEEP on that mission', () => {
+    let s = toggleAccount(createInitialState(), 'facebook', true);
+    s = file(s, 'facebook-recon-password', { pw_status: 'pw-clean', service_breach: 'not-in-service-breach' }, daysAgo(4));
+    const row = rowHtml(renderBuildingInterior(s, 'facebook', { now: NOW }), 'password');
+    expect(row).toContain('data-status="ok"');
+    expect(row).toContain('data-fresh="fresh"');
+    expect(row).not.toContain('date unknown');
+    expect(row).toContain('SWEEP');
+    expect(row).toContain('href="#/mission/facebook-recon-password/recheck"');
+  });
+  it('a skipped 2FA "later" row is crit and STARTs the briefing (no re-check of a skip)', () => {
+    const s = updateMission(createInitialState(), 'gmail-fortify-2fa', { status: 'skipped', method: 'none', method_setup: 'later', action: 'later' });
+    const html = render(s);
+    const row = rowHtml(html, 'two-factor');
+    expect(row).toContain('data-status="crit"');
+    expect(row).toContain('START');
+    expect(row).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
+    expect(entryHtml(html, 'phishing')).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
   });
 });
