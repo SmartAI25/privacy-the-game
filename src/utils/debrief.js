@@ -253,10 +253,18 @@ export function applyRecheck(state, mission, answers, now = new Date().toISOStri
     delete kept[q.id];
     if (q.legacy) delete kept[q.legacy.id];
   }
-  return {
+  // A re-check can turn up something new (a stranger in the login history):
+  // a "no reset needed" it contradicts reopens, as after any filing. Local only.
+  return reopenStaleNotNeeded({
     ...state,
     missions: { ...state.missions, [mission.id]: { ...kept, ...fresh, rechecked: now } },
-  };
+  });
+}
+
+// A re-check confirms a filing: "skip" / "later" / severity-skip answers
+// would un-file it, so the re-check form leaves them out.
+export function isSkipOption(opt) {
+  return DEFERRED.has(opt?.value) || opt?.severity === 'skip';
 }
 
 // Password-manager report and burst keep their own numbers: no re-check.

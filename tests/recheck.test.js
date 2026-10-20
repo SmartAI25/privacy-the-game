@@ -139,3 +139,59 @@ describe('recheck screen', () => {
     expect(html).not.toContain('submit-recheck');
   });
 });
+
+describe('final fixes: re-check reopens a stale "not needed"', () => {
+  it('re-checking a login check to a stranger reopens the account password reset', () => {
+    const s = createInitialState();
+    s.missions = {
+      ...s.missions,
+      'gmail-recon-breach': { status: 'completed', completedAt: '2026-09-01T00:00:00.000Z', finding: 'no-breaches' },
+      'gmail-recon-login': { status: 'completed', completedAt: '2026-09-01T00:00:00.000Z', finding: 'no-breaches' },
+      'gmail-fortify-password': { status: 'not-needed' },
+    };
+    const next = applyRecheck(s, mission, { finding: '1-2-breaches' }, '2026-10-20T00:00:00.000Z');
+    expect(next.missions['gmail-recon-login'].finding).toBe('1-2-breaches');
+    expect(next.missions['gmail-fortify-password'].status).not.toBe('not-needed');
+    expect(next.missions['gmail-fortify-password'].reopened).toContain('login');
+    // A clean re-check leaves it alone.
+    const same = applyRecheck(s, mission, { finding: 'no-breaches' }, '2026-10-20T00:00:00.000Z');
+    expect(same.missions['gmail-fortify-password'].status).toBe('not-needed');
+  });
+});
+
+describe('final fixes: re-check hides skip answers', () => {
+  it('the recheck form has no skip-severity, skip or later options; the plain form still does', () => {
+    const s = completedState({ finding: 'no-breaches' });
+    const html = renderDebrief(s, mission.id, { recheck: true });
+    expect(html).not.toMatch(/value="skip"/);
+    expect(html).not.toContain('badge--skip');
+    expect(html).toContain('value="no-breaches"');
+    expect(html).toContain('data-recheck-msg');
+    expect(html).toContain('A re-check keeps this filed as it was. Pick an answer, or go back.');
+    const fresh = createInitialState();
+    expect(renderDebrief(fresh, mission.id)).toMatch(/value="skip"/);
+  });
+  it('2FA and reglock re-checks drop "later" too', () => {
+    for (const [id, rec] of [['gmail-fortify-2fa', { method: 'sms' }], ['signal-fortify-reglock', { action: 'enabled-2fa' }], ['gmail-fortify-2fa-upgrade', { method: 'authenticator' }]]) {
+      const s = createInitialState();
+      s.missions = { ...s.missions, [id]: { status: 'completed', completedAt: 'x', ...rec } };
+      const html = renderDebrief(s, id, { recheck: true });
+      expect(html).toContain('submit-recheck');
+      expect(html).not.toMatch(/value="(later|skip)"/);
+    }
+  });
+  it('submitRecheck shows the message instead of doing nothing', () => {
+    const app = readFileSync('src/app.js', 'utf8');
+    const body = app.slice(app.indexOf('function submitRecheck'), app.indexOf('function readAnswers'));
+    expect(body).toMatch(/data-recheck-msg[\s\S]*hidden = false/);
+  });
+});
+
+describe('final fixes: recheck-unavailable panel fits a phone', () => {
+  it('uses 16px gutters and no 440px panel', () => {
+    const html = renderDebrief(createInitialState(), mission.id, { recheck: true });
+    expect(html).toContain('padding: 24px 16px;');
+    expect(html).not.toContain('max-width: 440px');
+    expect(html).not.toContain('padding: 40px');
+  });
+});

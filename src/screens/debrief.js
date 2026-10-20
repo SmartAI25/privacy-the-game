@@ -3,7 +3,7 @@ import { ACCOUNTS } from '../data/accounts.js';
 import { renderHud } from '../components/hud.js';
 import { DISTRICT_DIALOGUE, PASSWORD_DIALOGUE, TWO_FA_DIALOGUE, pick } from '../data/dialogue.js';
 import { calcDistrictProgress, isEmailBreachCheck } from '../utils/calc.js';
-import { questionOptions, prefillAnswer, visibleQuestions, canRecheck } from '../utils/debrief.js';
+import { questionOptions, prefillAnswer, visibleQuestions, canRecheck, isSkipOption } from '../utils/debrief.js';
 import { renderPasswordProgress } from '../components/password-progress.js';
 import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
@@ -69,7 +69,8 @@ function numberInput(q, value) {
 }
 
 // `given` is a stored answer to show again (re-check); it wins over a pre-fill.
-function questionGroup(q, state, mission, shown = false, given = undefined) {
+// recheck: leave out the answers that would un-file it (skip / later).
+function questionGroup(q, state, mission, shown = false, given = undefined, recheck = false) {
   const pre = mission ? prefillAnswer(q, mission, state) : undefined;
   const has = given !== undefined && given !== null;
   const isPicked = (v) => (has ? (Array.isArray(given) ? given.includes(v) : given === v) : pre !== undefined && v === pre);
@@ -89,7 +90,7 @@ function questionGroup(q, state, mission, shown = false, given = undefined) {
     </div>` : ''}
     <div style="display: flex; flex-direction: column; gap: 6px;">
       ${q.type === 'number' ? numberInput(q, typed) : ''}
-      ${questionOptions(q, state).map((opt) => optionRow(q.type === 'number' ? { ...q, multi: true } : q, opt, isPicked(opt.value))).join('')}
+      ${questionOptions(q, state).filter((opt) => !recheck || !isSkipOption(opt)).map((opt) => optionRow(q.type === 'number' ? { ...q, multi: true } : q, opt, isPicked(opt.value))).join('')}
     </div>
   </div>`;
 }
@@ -259,14 +260,14 @@ export function debriefReaction(state, mission) {
 
 // The open form. Follow-ups a pre-filled answer already shows start shown.
 // Re-check: the stored answers come back as the starting point.
-function debriefForm(state, mission, given = null) {
+function debriefForm(state, mission, given = null, recheck = false) {
   const pre = {};
   for (const q of mission.debriefQs) {
     const v = given?.[q.id] ?? prefillAnswer(q, mission, state);
     if (v !== undefined) pre[q.id] = v;
   }
   const shown = new Set(visibleQuestions(mission, pre).map((q) => q.id));
-  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id])).join('')}</div>`;
+  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id], recheck)).join('')}</div>`;
 }
 
 // A re-check of a mission that was never filed as done: no form, the way in.
@@ -274,8 +275,8 @@ function recheckUnavailable(state, mission) {
   return `
   <div class="scanlines" style="min-height: 100vh; display: flex; flex-direction: column;">
     ${renderHud(state)}
-    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px;">
-      <div class="panel" style="padding: 36px 40px; text-align: center; max-width: 440px;">
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 16px;">
+      <div class="panel" style="padding: 28px 16px; text-align: center; width: 100%; max-width: 360px; box-sizing: border-box;">
         <div class="section-label" style="color: var(--cyan); margin-bottom: 14px;">RE-CHECK</div>
         <div style="font-size: 13px; color: rgba(237,239,243,0.6); line-height: 1.6; margin-bottom: 24px;">There is nothing to re-check yet. Run the mission first.</div>
         <a href="#/mission/${mission.id}/briefing" class="btn-primary" style="text-decoration: none;">${mission.title}</a>
@@ -304,7 +305,7 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
   const progressPanel = mission.id === PM_MISSION_ID || mission.id === PM_BURST_ID ? renderPasswordProgress(state) : '';
   const questions = completed
     ? `<div class="completed-marker">${completedQuestions(mission, stored, state)}</div>${upgradeOffer(mission, stored)}${progressPanel}`
-    : debriefForm(state, mission, recheck ? stored : null);
+    : debriefForm(state, mission, recheck ? stored : null, recheck);
 
   const targetTab = mission.phase ? `?tab=${mission.phase}` : '';
   const footer = completed
@@ -314,7 +315,8 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
       <a href="#/district/${districtId}${targetTab}" class="btn-primary" style="text-decoration: none;">BACK TO DISTRICT</a>
     </div>`
     : recheck
-      ? `<button class="btn-primary" data-action="submit-recheck" data-mission="${mission.id}">SAVE RE-CHECK</button>`
+      ? `<div data-recheck-msg role="status" hidden style="font-size: 13px; color: var(--amber); line-height: 1.6; margin-bottom: 12px;">A re-check keeps this filed as it was. Pick an answer, or go back.</div>
+    <button class="btn-primary" data-action="submit-recheck" data-mission="${mission.id}">SAVE RE-CHECK</button>`
       : `<button class="btn-primary" data-action="submit-debrief" data-mission="${mission.id}">SUBMIT REPORT</button>`;
 
   return `

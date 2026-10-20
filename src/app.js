@@ -233,7 +233,12 @@ function submitRecheck(missionId) {
   const mission = MISSIONS.find((m) => m.id === missionId);
   if (!mission) return navigate('#/city');
   const next = applyRecheck(state, mission, readAnswers(app, mission));
-  if (!next) return;
+  if (!next) {
+    // Unanswered, or an answer that would un-file it: say so, change nothing.
+    const msg = app.querySelector('[data-recheck-msg]');
+    if (msg) msg.hidden = false;
+    return;
+  }
   setState(next);
   navigate(hasInterior(mission.accountId) ? `#/building/${mission.accountId}` : `#/district/${missionDistrict(mission)}`);
 }
