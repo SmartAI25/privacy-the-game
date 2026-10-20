@@ -88,3 +88,19 @@ export function eventHasOnlyThirdPartyFrames(event, pageOrigin) {
   }
   return framesSeen > 0;
 }
+
+// Click and input breadcrumbs record the element's selector, aria-label and
+// title. Inside a building or the saints gallery those name the player's
+// devices, the building opened and the saints honored: drop them before an
+// error report is built. Lean strict: any labelled element goes too.
+const PRIVATE_UI = /aria-label=|title=|device-x|devices?-input|building-link|candle-btn|interior|saint/;
+
+export function isPrivateBreadcrumb(b) {
+  if (!b || typeof b.category !== 'string' || !b.category.startsWith('ui.')) return false;
+  return PRIVATE_UI.test(String(b.message ?? ''));
+}
+
+// Sentry's beforeBreadcrumb: null drops the breadcrumb.
+export function scrubBreadcrumb(b) {
+  return isPrivateBreadcrumb(b) ? null : b;
+}

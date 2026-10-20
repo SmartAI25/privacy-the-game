@@ -1,4 +1,4 @@
-import { eventHasOnlyThirdPartyFrames } from './errorNoise.js';
+import { eventHasOnlyThirdPartyFrames, scrubBreadcrumb, isPrivateBreadcrumb } from './errorNoise.js';
 import { scrubEventUrls } from './pageview-url.js';
 
 const GLITCHTIP_DSN = 'https://23700b2a5cf74033b50abee4f4a43851@errors.multiversegames.ai/2';
@@ -10,11 +10,13 @@ export function initErrorTracking() {
     dsn: GLITCHTIP_DSN,
     environment: location.hostname === 'localhost' ? 'development' : 'production',
     sendDefaultPii: false,
+    // No device labels, buildings or candles in click/input breadcrumbs.
+    beforeBreadcrumb: scrubBreadcrumb,
     beforeSend(event) {
       if (eventHasOnlyThirdPartyFrames(event, location.origin)) return null;
       if (event.breadcrumbs) {
         event.breadcrumbs = event.breadcrumbs.filter(
-          (b) => b.category !== 'console' || !b.message?.includes('localStorage'),
+          (b) => (b.category !== 'console' || !b.message?.includes('localStorage')) && !isPrivateBreadcrumb(b),
         );
       }
       return scrubEventUrls(event);

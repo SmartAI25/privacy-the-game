@@ -91,3 +91,34 @@ describe('eventHasOnlyThirdPartyFrames', () => {
     expect(eventHasOnlyThirdPartyFrames(event, PAGE)).toBe(false);
   });
 });
+
+describe('private breadcrumbs (interiors, saints)', () => {
+  it('drops ui breadcrumbs that name devices, buildings or candles', async () => {
+    const { scrubBreadcrumb } = await import('../src/utils/errorNoise.js');
+    const cases = [
+      { category: 'ui.click', message: 'div.devices > ul.devices-list > li.device > button.device-x[aria-label="Remove Mom’s iPad"]' },
+      { category: 'ui.click', message: 'div.district-buildings > a.building-link[aria-label="Gmail: see inside"]' },
+      { category: 'ui.click', message: 'section.saint-card > button.candle-btn[aria-label="Light a candle for Saint Aaron Swartz"]' },
+      { category: 'ui.input', message: 'div.devices-add > input.devices-input[aria-label="Add a device"]' },
+      { category: 'ui.input', message: 'input.device-input' },
+      { category: 'ui.click', message: 'div.interior > details.floor > summary.floor-head' },
+    ];
+    for (const b of cases) expect(scrubBreadcrumb(b)).toBeNull();
+  });
+  it('lets unrelated breadcrumbs through untouched', async () => {
+    const { scrubBreadcrumb } = await import('../src/utils/errorNoise.js');
+    const nav = { category: 'navigation', data: { from: '/', to: '/#/city' } };
+    const click = { category: 'ui.click', message: 'div.hud > a.btn-secondary' };
+    const log = { category: 'console', message: 'hello' };
+    expect(scrubBreadcrumb(nav)).toBe(nav);
+    expect(scrubBreadcrumb(click)).toBe(click);
+    expect(scrubBreadcrumb(log)).toBe(log);
+  });
+  it('errors.js wires it as beforeBreadcrumb and in beforeSend, and keeps scrubEventUrls', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync('src/utils/errors.js', 'utf8');
+    expect(src).toMatch(/beforeBreadcrumb:\s*scrubBreadcrumb/);
+    expect(src).toMatch(/isPrivateBreadcrumb\(b\)/);
+    expect(src).toMatch(/return scrubEventUrls\(event\)/);
+  });
+});
