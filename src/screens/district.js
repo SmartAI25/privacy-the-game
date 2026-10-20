@@ -6,6 +6,7 @@ import { renderHud } from '../components/hud.js';
 import { renderScout } from '../components/scout.js';
 import { renderBuilding } from '../components/building.js';
 import { hasInterior } from '../data/interiors/index.js';
+import { sealedCount } from '../utils/interior.js';
 import { DISTRICT_DIALOGUE, PASSWORD_DIALOGUE, pick } from '../data/dialogue.js';
 import { PASSWORD_MANAGERS } from '../data/missions-passwords.js';
 import { isMissionDone, isMissionDoneIn, isMissionInPlay } from '../utils/mission-status.js';
@@ -64,6 +65,13 @@ const PHASES = [
 // A building is tappable when it has an interior and the player has it.
 function interiorHref(state, id) {
   return hasInterior(id) && state.accounts?.[id]?.enabled ? `#/building/${id}` : undefined;
+}
+
+// Building glow follows its sealed share; purely visual (0 when nothing is checked).
+function glowFor(state, id) {
+  if (!hasInterior(id) || !state.accounts?.[id]?.enabled) return 0;
+  const { sealed, total } = sealedCount(state, id);
+  return total > 0 ? sealed / total : 0;
 }
 
 function esc(value) {
@@ -435,7 +443,7 @@ function renderFacilityDistrict(state, district, reaction) {
   const progress = calcDistrictProgress(state, district.id);
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id) }))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id), glow: glowFor(state, id) }))
     .join('');
 
   const facilityOrder = district.facilityOrder || districtAccounts.map(([id]) => id);
@@ -502,7 +510,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
   }
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id) }))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id), glow: glowFor(state, id) }))
     .join('');
 
   let content;

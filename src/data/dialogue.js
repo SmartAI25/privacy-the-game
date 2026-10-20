@@ -408,3 +408,21 @@ export const RESTORE_DIALOGUE = {
   checking: `Checking whether tonight's run has happened…`,
   checkFailed: `We couldn't check whether tonight's run has happened.`,
 };
+
+// Scout inside a building. Short, warm, understated. {name} is the account name.
+export const INTERIOR_LINES = {
+  firstVisit: [
+    'This is {name} from the inside. Take your time. Every floor folds up if you want it quiet.',
+    'Here is how {name} looks from the inside. Nothing here asks you to hurry.',
+    'Step in. The roof is yours, the desk is the company\u2019s, and the doors on the ground floor are the ones worth knowing.',
+  ],
+  newSeal: [
+    'That one is shut now. Listen. It is quieter in here.',
+    'A door like that stays shut. Nicely done.',
+    'One more lock turned in {name}. I felt it from here.',
+  ],
+  fullySealed: [
+    'Every door you can reach in {name} is sealed. The rest is beyond us, and that is all right.',
+    '{name} is sealed up as far as one person can do it. I am proud of this one.',
+  ],
+};

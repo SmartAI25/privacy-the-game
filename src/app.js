@@ -21,6 +21,7 @@ import { generateMilestoneCard, shareMilestoneCard, shareStatCard } from './util
 import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
+import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
@@ -142,7 +143,14 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
   if (tracksPageview(cause)) startScreenVisit(route);
   try {
     const renderFn = screens[route.screen] || screens.city;
+    // The seal animation and Scout's line are in this render; remember they were seen
+    // so a later re-render (a device add) does not replay them.
+    const watched = route.screen === 'building' && started ? newlySealed(state, route.params.id) : null;
     app.innerHTML = renderFn(route.params);
+    if (route.screen === 'building') {
+      const seen = markSealedSeen(state, route.params.id, watched ?? []);
+      if (seen !== state) setState(seen);
+    }
     if (tracksPageview(cause)) trackPageview(pageviewUrl(route, location.href), route.screen);
     // Landing after SUBMIT REPORT: start at Scout's reaction, not the debrief's scroll position.
     if (tracksPageview(cause) && route.screen === 'district' && landingReaction?.landed) app.querySelector('[data-scout-reaction]')?.scrollIntoView({ block: 'start' });
@@ -425,7 +433,16 @@ app.addEventListener('click', async (e) => {
     e.preventDefault();
     return;
   }
-  if (action === 'go-do-it') {
+  if (action === 'add-device') {
+    // Local only: no track(), nothing about devices leaves this phone.
+    const input = el.closest('[data-devices]')?.querySelector('[data-device-input]');
+    const next = addDevice(state, el.dataset.building, input?.value);
+    if (next !== state) setState(next);
+    renderCurrentRoute();
+  } else if (action === 'remove-device') {
+    setState(removeDevice(state, el.dataset.building, Number(el.dataset.index)));
+    renderCurrentRoute();
+  } else if (action === 'go-do-it') {
     const mission = MISSIONS.find((m) => m.id === el.dataset.mission);
     // Save first: on phones the new tab can get this one reloaded.
     setState(markMissionStarted(state, el.dataset.mission));
@@ -703,9 +720,25 @@ app.addEventListener('click', async (e) => {
   }
 });
 
+// A building floor folded or unfolded. <details> toggle does not bubble, so
+// listen in the capture phase. Local state only: no track().
+app.addEventListener('toggle', (e) => {
+  const details = e.target;
+  if (!(details instanceof HTMLDetailsElement) || !details.dataset.floor) return;
+  const id = details.closest('[data-building]')?.dataset.building;
+  if (!id) return;
+  const next = setFloorOpen(state, id, details.dataset.floor, details.open);
+  if (next !== state) setState(next);
+}, true);
+
 // role="button" actions answer Enter and Space like real buttons.
 app.addEventListener('keydown', (e) => {
   // Enter in a per-category number box files it, like its button.
+  if (e.key === 'Enter' && e.target?.matches?.('[data-device-input]')) {
+    e.preventDefault();
+    e.target.closest('[data-devices]')?.querySelector('[data-action="add-device"]')?.click();
+    return;
+  }
   if (e.key === 'Enter' && e.target?.id?.startsWith?.('pm-cat-num-')) {
     const btn = e.target.closest('[data-pm-category]')?.querySelector('[data-action="pm-cat-flag"], [data-action="pm-cat-changed"]');
     if (btn) { e.preventDefault(); btn.click(); }

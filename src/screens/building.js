@@ -10,6 +10,9 @@ import { renderHud } from '../components/hud.js';
 import { checkupRows, entryState, sealedCount, recordDate, freshness } from '../utils/interior.js';
 import { isMissionDoneIn, isMissionAvailable } from '../utils/mission-status.js';
 import { canRecheck } from '../utils/debrief.js';
+import { renderScout } from '../components/scout.js';
+import { INTERIOR_LINES, pick } from '../data/dialogue.js';
+import { devicesOf, isFloorOpen, newlySealed, interiorLineKind } from '../utils/interior-state.js';
 
 const DAY = 864e5;
 const LIT = { ok: 4, warn: 2, crit: 1, 'not-checked': 0 };
@@ -43,9 +46,11 @@ function sourceLinks(sources = []) {
     .join('')}</details>`;
 }
 
-function floor(kind, title, body) {
+// Floors remember whether the player folded them (state.interior[id].floors).
+function floor(ctx, kind, title, body) {
+  const open = isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
   return `
-    <details class="floor floor--${kind}" open>
+    <details class="floor floor--${kind}"${open} data-floor="${kind}">
       <summary class="floor-head"><span>${title}</span><span class="floor-chev" aria-hidden="true">▾</span></summary>
       <div class="floor-body">${body}</div>
     </details>`;
@@ -102,13 +107,34 @@ function roofRow(state, row) {
         </div><!-- /row -->`;
 }
 
-function roof(state, rows) {
-  return floor('roof', '▲ Roof · Signal check', `
+// The player's own list of where they are signed in. Stays on this device.
+function deviceList(state, accountId) {
+  const list = devicesOf(state, accountId);
+  const items = list.length
+    ? list.map((d, i) => `
+        <li class="device"><span class="device-name">${esc(d)}</span><button type="button" class="device-x" data-action="remove-device" data-building="${esc(accountId)}" data-index="${i}" aria-label="Remove ${esc(d)}">×</button></li>`).join('')
+    : '<li class="device dim">not listed</li>';
+  return `
+      <div class="devices" data-devices>
+        <div class="devices-title">Your devices</div>
+        <ul class="devices-list">${items}</ul>
+        <div class="devices-add">
+          <input class="devices-input" type="text" maxlength="40" autocomplete="off" data-device-input aria-label="Add a device" placeholder="e.g. old tablet">
+          <button type="button" class="interior-btn interior-btn--quiet" data-action="add-device" data-building="${esc(accountId)}">ADD</button>
+        </div>
+        <div class="dim interior-note">Kept on this phone only. Nothing here is sent anywhere.</div>
+      </div>`;
+}
+
+function roof(ctx, rows) {
+  const { state, accountId } = ctx;
+  return floor(ctx, 'roof', '▲ Roof · Signal check', `
       <div class="ant">${rows.map((r) => roofRow(state, r)).join('')}</div>
+      ${deviceList(state, accountId)}
       <div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div>`);
 }
 
-function desk(interior) {
+function desk(ctx, interior) {
   const slips = interior.desk.map((lane) => `
       <div class="slip" data-lane="${esc(lane.id)}">
         <div class="slip-stamp">${esc(lane.tool)}</div>
@@ -117,7 +143,7 @@ function desk(interior) {
         <div class="slip-gets">${esc(lane.gets)}</div>
         ${sourceLinks(lane.sources)}
       </div>`).join('');
-  return floor('desk', `▣ Records desk · ${esc(interior.company)}’s`, `
+  return floor(ctx, 'desk', `▣ Records desk · ${esc(interior.company)}’s`, `
       <div class="dim interior-note">${esc(interior.deskIntro)}</div>${slips}`);
 }
 
@@ -137,7 +163,7 @@ function actorLines(actor) {
   return String(actor).split(' · ').map((a) => `<span class="entry-actor">${esc(a)}</span>`).join('');
 }
 
-function entry(state, accountId, e) {
+function entry(state, accountId, e, sealing) {
   const s = entryState(state, accountId, e);
   const target = entryMission(state, accountId, e);
   let status = '';
@@ -151,7 +177,7 @@ function entry(state, accountId, e) {
     status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${briefingHref(target)}">START</a>` : ''}`;
   }
   return `
-      <div class="entry entry--${s.state}" data-entry="${esc(e.id)}" data-state="${s.state}">
+      <div class="entry entry--${s.state}${sealing.has(e.id) ? ' entry--sealing' : ''}" data-entry="${esc(e.id)}" data-state="${s.state}">
         <div class="entry-lock" role="img" aria-label="${STATE_LABEL[s.state] ?? 'Not checked yet'}">${ICON[s.state] ?? '?'}</div>
         <div class="entry-text">
           <div class="entry-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</div>
@@ -164,12 +190,13 @@ function entry(state, accountId, e) {
       </div><!-- /entry -->`;
 }
 
-function ground(state, accountId, interior) {
-  return floor('ground', '▼ Ground floor · Entries', interior.entries.map((e) => entry(state, accountId, e)).join(''));
+function ground(ctx, interior, sealing) {
+  const { state, accountId } = ctx;
+  return floor(ctx, 'ground', '▼ Ground floor · Entries', interior.entries.map((e) => entry(state, accountId, e, sealing)).join(''));
 }
 
-function alcove(saint) {
-  return floor('alcove', `✦ Alcove · ${esc(saint.name)}`, `
+function alcove(ctx, saint) {
+  return floor(ctx, 'alcove', `✦ Alcove · ${esc(saint.name)}`, `
       <div class="alcove-tribute"><span class="candle" aria-hidden="true"></span><span>Scout: “${esc(saint.tribute)}”</span></div>
       <div class="dim alcove-title">${esc(saint.title)} · ${esc(saint.years)}</div>
       <div class="alcove-story">${esc(saint.story)}</div>
@@ -202,18 +229,25 @@ export function renderBuildingInterior(state, accountId, { now = new Date() } = 
   const district = DISTRICTS.find((d) => d.id === account.district);
   const rows = checkupRows(state, accountId, now);
   const saints = (interior.saints ?? []).map((id) => SAINTS[id]).filter(Boolean);
+  const ctx = { state, accountId };
+  const sealing = new Set(newlySealed(state, accountId, now));
+  const kind = interiorLineKind(state, accountId, now);
+  const scout = kind
+    ? `<div class="interior-scout" data-scout="interior">${renderScout(esc(pick(INTERIOR_LINES[kind]).replace(/\{name\}/g, account.name)))}</div>`
+    : '';
   return `
   <div class="scanlines">
     ${renderHud(state)}
-    <div class="interior">
+    <div class="interior" data-building="${esc(accountId)}">
       <a class="btn-secondary interior-back" href="#/district/${esc(account.district)}">← ${esc((district?.name ?? 'DISTRICT').toUpperCase())}</a>
       <div class="interior-title">${esc(account.name.toUpperCase())}</div>
       <div class="interior-sub">${esc(district?.name ?? '')} · tap a floor to fold it</div>
       ${meter(state, accountId, rows, now)}
-      ${roof(state, rows)}
-      ${desk(interior)}
-      ${ground(state, accountId, interior)}
-      ${saints.map(alcove).join('')}
+      ${scout}
+      ${roof(ctx, rows)}
+      ${desk(ctx, interior)}
+      ${ground(ctx, interior, sealing)}
+      ${saints.map((sa) => alcove(ctx, sa)).join('')}
     </div>
   </div>`;
 }
