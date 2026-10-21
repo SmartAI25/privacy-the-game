@@ -71,12 +71,14 @@ export function saveState(state, storage = localStorage) {
 }
 
 export function updateMission(state, missionId, update) {
+  // A new filing supersedes any re-check of the old one (its dates included).
+  const { rechecked: _r, findingAt: _f, ...prev } = state.missions[missionId] || {};
   return {
     ...state,
     missions: {
       ...state.missions,
       [missionId]: {
-        ...state.missions[missionId],
+        ...prev,
         ...update,
         completedAt: update.status === 'completed' ? new Date().toISOString() : undefined,
       },

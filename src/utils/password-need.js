@@ -121,10 +121,12 @@ export function resetNeedSources(state, accountId) {
 
 // The dates (recordDate, possibly undefined) of the filings behind each
 // reason a reset is needed, so a reset can be compared with them: a reset
-// filed before the newest of these doesn't answer it.
+// filed before the newest of these doesn't answer it. A re-check moves a
+// filing's date only when it found something different (findingAt), so a
+// sweep that turns up nothing new doesn't make an earlier reset look stale.
 export function resetNeedDates(state, accountId) {
   const sources = resetNeedSources(state, accountId);
-  const dateOf = (r) => r?.rechecked ?? r?.completedAt;
+  const dateOf = (r) => r?.findingAt ?? r?.completedAt;
   const ev = evidence(state, accountId);
   const recon = (pred) => NEW_RECON_SUFFIXES.map((x) => filed(state, `${accountId}${x}`)).filter((r) => r && pred(r));
   const dates = [];

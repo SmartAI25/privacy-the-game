@@ -248,16 +248,24 @@ export function applyRecheck(state, mission, answers, now = new Date().toISOStri
   // Drop every earlier answer first (as fileDebrief does), so a follow-up the
   // new answers hide, like password_exposed, doesn't linger.
   const kept = { ...stored };
-  for (const k of ANSWER_KEYS) delete kept[k];
+  const answerKeys = new Set(ANSWER_KEYS);
   for (const q of mission.debriefQs) {
-    delete kept[q.id];
-    if (q.legacy) delete kept[q.legacy.id];
+    answerKeys.add(q.id);
+    if (q.legacy) answerKeys.add(q.legacy.id);
   }
+  for (const k of answerKeys) delete kept[k];
+  // findingAt dates what the filing says: it moves only when an answer
+  // changed, so a sweep that found the same thing leaves a later password
+  // reset still answering it.
+  const changed = [...answerKeys].some((k) => JSON.stringify(stored[k]) !== JSON.stringify(fresh[k]));
+  const findingAt = changed ? now : stored.findingAt;
   // A re-check can turn up something new (a stranger in the login history):
   // a "no reset needed" it contradicts reopens, as after any filing. Local only.
+  const record = { ...kept, ...fresh, rechecked: now };
+  if (findingAt) record.findingAt = findingAt;
   return reopenStaleNotNeeded({
     ...state,
-    missions: { ...state.missions, [mission.id]: { ...kept, ...fresh, rechecked: now } },
+    missions: { ...state.missions, [mission.id]: record },
   });
 }
 

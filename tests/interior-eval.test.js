@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { createInitialState, updateMission, toggleAccount } from '../src/state.js';
 const toggleOn = (s, id) => toggleAccount(s, id, true);
 import { getInterior } from '../src/data/interiors/index.js';
+import { MISSIONS } from '../src/data/missions.js';
+import { applyRecheck } from '../src/utils/debrief.js';
 import {
   freshness, recordDate, currentTwoFactor, entryState, checkupRows, sealedCount, isFullySealed,
 } from '../src/utils/interior.js';
@@ -257,5 +259,48 @@ describe('final fixes: skipped filings that say the door is open', () => {
   it('a reglock skipped some other way stays not-checked', () => {
     const s = skip(createInitialState(), 'signal-fortify-reglock', { action: 'skip' });
     expect(checkupRows(s, 'signal', NOW).find((r) => r.id === 'reglock').status).toBe('not-checked');
+  });
+});
+
+describe('residual fixes: sweeps and undated filings', () => {
+  const pw = () => byRule('password-unique');
+  const login = MISSIONS.find((m) => m.id === 'gmail-recon-login');
+  const answersFrom = (rec) => Object.fromEntries(login.debriefQs.filter((q) => rec[q.id] !== undefined).map((q) => [q.id, rec[q.id]]));
+
+  it('a sweep with the same answers keeps a later reset sealed', () => {
+    let s = file(createInitialState(), 'gmail-recon-login', { finding: '1-2-breaches' }, daysAgo(10));
+    s = file(s, 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(5));
+    expect(entryState(s, 'gmail', pw()).state).toBe('sealed');
+    const swept = applyRecheck(s, login, answersFrom(s.missions['gmail-recon-login']), daysAgo(1));
+    expect(swept.missions['gmail-recon-login'].rechecked).toBe(daysAgo(1));
+    expect(entryState(swept, 'gmail', pw()).state).toBe('sealed');
+  });
+
+  it('a sweep that finds something new opens the door again', () => {
+    let s = file(createInitialState(), 'gmail-recon-login', { finding: '1-2-breaches' }, daysAgo(10));
+    s = file(s, 'gmail-fortify-password', { action: 'reset-password' }, daysAgo(5));
+    const answers = { ...answersFrom(s.missions['gmail-recon-login']), finding: '3plus-breaches' };
+    const swept = applyRecheck(s, login, answers, daysAgo(1));
+    expect(swept.missions['gmail-recon-login'].findingAt).toBe(daysAgo(1));
+    expect(entryState(swept, 'gmail', pw()).state).toBe('open');
+  });
+
+  it('an undated skipped recon behind the need: a dated reset seals', () => {
+    const fbPw = getInterior('facebook').entries.find((e) => e.rule === 'password-unique');
+    let s = updateMission(toggleOn(createInitialState(), 'facebook'), 'facebook-recon-password', { status: 'skipped', pw_status: 'pw-leaked' });
+    expect(s.missions['facebook-recon-password'].completedAt).toBeUndefined();
+    expect(entryState(s, 'facebook', fbPw).state).toBe('open');
+    s = file(s, 'facebook-fortify-password', { action: 'reset-password' }, daysAgo(1));
+    expect(entryState(s, 'facebook', fbPw).state).toBe('sealed');
+  });
+
+  it('filing again clears an earlier sweep’s dates', () => {
+    let s = file(createInitialState(), 'gmail-recon-login', { finding: 'no-breaches' }, daysAgo(40));
+    s.missions['gmail-recon-login'].rechecked = daysAgo(30);
+    s.missions['gmail-recon-login'].findingAt = daysAgo(30);
+    s = updateMission(s, 'gmail-recon-login', { status: 'completed', finding: '1-2-breaches' });
+    expect(s.missions['gmail-recon-login'].rechecked).toBeUndefined();
+    expect(s.missions['gmail-recon-login'].findingAt).toBeUndefined();
+    expect(recordDate(s.missions['gmail-recon-login'])).toBe(s.missions['gmail-recon-login'].completedAt);
   });
 });

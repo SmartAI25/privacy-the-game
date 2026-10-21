@@ -79,15 +79,17 @@ function devicesMissionId(accountId) {
   return accountId === 'signal' ? 'signal-recon-devices' : `${accountId}-recon-login`;
 }
 
-// A reset answers the need only when it came after every filing behind it.
-// No date to compare: not sealed (seals lean strict).
+// A reset answers the need only when it came after every dated filing behind
+// it. An undated reset doesn't seal (seals lean strict); an undated filing
+// (an older save's skipped recon) can't be shown newer, so any dated reset
+// answers it. Otherwise nothing could ever seal that door.
 function resetAfterNeed(state, accountId, rec) {
   const at = Date.parse(recordDate(rec));
   if (Number.isNaN(at)) return false;
   const dates = resetNeedDates(state, accountId);
   return dates.length > 0 && dates.every((d) => {
     const t = Date.parse(d);
-    return !Number.isNaN(t) && t < at;
+    return Number.isNaN(t) || t < at;
   });
 }
 
