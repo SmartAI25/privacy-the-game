@@ -339,3 +339,10 @@ img { image-rendering: pixelated; }
 @media (prefers-reduced-motion: reduce) {
   .candle--lit::after { animation: none; }
 }
+
+/* Scout's district welcome: the lead line, then MORE for the rest */
+.intro-more > summary { list-style: none; cursor: pointer; }
+.intro-more > summary::-webkit-details-marker { display: none; }
+.intro-more-toggle { font-family: var(--font-display); font-style: normal; font-size: 8px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.35); padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
+.intro-more-toggle::before { content: 'MORE ▾'; }
+.intro-more[open] .intro-more-toggle::before { content: 'LESS ▴'; }

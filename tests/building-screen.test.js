@@ -367,3 +367,25 @@ describe('final fixes: pw-clean row on a recon mission', () => {
     expect(entryHtml(html, 'phishing')).toContain('href="#/mission/gmail-fortify-2fa/briefing"');
   });
 });
+
+describe('district balance: Scout’s welcome opens with its lead', () => {
+  it('every intro splits into a short lead and the rest, losing nothing', async () => {
+    const { DISTRICT_DIALOGUE } = await import('../src/data/dialogue.js');
+    const { splitIntro } = await import('../src/screens/district.js');
+    for (const d of Object.values(DISTRICT_DIALOGUE)) {
+      if (!d.intro) continue;
+      const { lead, rest } = splitIntro(d.intro);
+      expect(lead.length).toBeGreaterThan(20);
+      expect(lead.length).toBeLessThanOrEqual(200);
+      expect(`${lead} ${rest}`.replace(/\s+/g, ' ').trim()).toBe(d.intro.replace(/\s+/g, ' ').trim());
+    }
+  });
+
+  it('the district page shows the lead with MORE, the rest inside, DISMISS kept', () => {
+    const html = renderDistrict(createInitialState(), 'master-keys', 'survey');
+    expect(html).toContain('<details class="intro-more">');
+    expect(html).toMatch(/<summary[^>]*>Welcome to The Master Keys\. This is where it all starts — and I do mean all of it\. <span class="intro-more-toggle">/);
+    expect(html).toContain('Control these and you control the city.');
+    expect(html).toContain('data-action="dismiss-intro"');
+  });
+});
