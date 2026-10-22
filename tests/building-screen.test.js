@@ -269,15 +269,23 @@ describe('tappable buildings', () => {
     expect(renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail' })).not.toContain('🔒');
   });
 
-  it('district strip: badges, counts, pulse stops once visited, and the hint', () => {
+  it('district strip: small tiles until a building is cleared, then the full card and hint', () => {
     let s = createInitialState();
     const html = renderDistrict(s, 'master-keys', 'survey');
-    expect(html).toContain('class="skyline-hint"');
-    expect((html.match(/building-badge--new/g) || []).length).toBe(9);
+    expect((html.match(/building-link building-link--compact/g) || []).length).toBe(9);
+    expect(html).not.toContain('building-badge');
+    expect(html).not.toContain('class="skyline-hint"');
     expect(html).toMatch(/aria-label="Gmail: see inside\. 0 of \d+ doors sealed\."/);
+    // Gmail's Recon and Fortify done: it takes centre stage.
+    s = file(s, 'gmail-recon-breach', { finding: 'no-breaches' });
+    s = file(s, 'gmail-fortify-password', { action: 'already-strong' });
+    s = file(s, 'gmail-fortify-2fa', { action: 'enabled-2fa', method: 'authenticator' });
+    const cleared = renderDistrict(s, 'master-keys', 'survey');
+    expect(cleared).toContain('class="skyline-hint"');
+    expect((cleared.match(/building-badge--new/g) || []).length).toBe(1);
+    expect((cleared.match(/building-link--compact/g) || []).length).toBe(8);
     s = { ...s, interior: { gmail: { visited: true } } };
-    const after = renderDistrict(s, 'master-keys', 'survey');
-    expect((after.match(/building-badge--new/g) || []).length).toBe(8);
+    expect(renderDistrict(s, 'master-keys', 'survey')).not.toContain('building-badge--new');
     expect(renderDistrict(createInitialState(), 'vault', 'survey')).not.toContain('skyline-hint');
   });
 
@@ -299,11 +307,11 @@ describe('tappable buildings', () => {
   it('district strip links enabled buildings with interiors, and only those', () => {
     const s = createInitialState();
     const html = renderDistrict(s, 'master-keys', 'survey');
-    const links = [...html.matchAll(/class="building-link" href="([^"]+)"/g)].map((m) => m[1]);
+    const links = [...html.matchAll(/class="building-link[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
     expect(links).toEqual(['gmail', 'outlook', 'icloud', 'yahoo', 'protonmail', 'apple_id', 'google', 'microsoft', 'facebook'].map((id) => `#/building/${id}`));
     const off = renderDistrict(toggleAccount(s, 'gmail', false), 'master-keys', 'survey');
     expect(off).not.toContain('href="#/building/gmail"');
-    const square = [...renderDistrict(s, 'square', 'survey').matchAll(/class="building-link" href="([^"]+)"/g)].map((m) => m[1]);
+    const square = [...renderDistrict(s, 'square', 'survey').matchAll(/class="building-link[^"]*" href="([^"]+)"/g)].map((m) => m[1]);
     expect(square).toEqual(['#/building/signal']);
     expect(renderDistrict(s, 'vault', 'survey')).not.toContain('building-link');
   });

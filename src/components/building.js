@@ -4,8 +4,8 @@ import { ACCOUNTS } from '../data/accounts.js';
 // drop-shadow. With neither, the markup is exactly what it always was.
 // A tappable building wears an INSIDE badge on top (pulsing while isNew, so
 // until its first visit) and, when sealed/controllable are given, a lock
-// count under its name.
-export function renderBuilding(accountId, buildingState, size = 64, { href, glow = 0, sealed, controllable, isNew = false } = {}) {
+// count under its name. A compact one is a small tile: no badge, no pulse.
+export function renderBuilding(accountId, buildingState, size = 64, { href, glow = 0, sealed, controllable, isNew = false, compact = false } = {}) {
   const account = ACCOUNTS[accountId];
   const scarred = buildingState === 'liberated-scarred';
   const liberated = buildingState === 'liberated' || scarred;
@@ -46,8 +46,9 @@ export function renderBuilding(accountId, buildingState, size = 64, { href, glow
   const lock = counted
     ? `<span class="building-seals${sealed === controllable ? ' building-seals--all' : ''}" aria-hidden="true">🔒 ${sealed}/${controllable}</span>`
     : '';
+  const badge = compact ? '' : `<span class="building-badge${isNew ? ' building-badge--new' : ''}" aria-hidden="true">INSIDE ▸</span>`;
   return `
-  <a class="building-link" href="${esc(href)}" aria-label="${esc(label)}"><span class="building-badge${isNew ? ' building-badge--new' : ''}" aria-hidden="true">INSIDE ▸</span>${building}${lock}</a>`;
+  <a class="building-link${compact ? ' building-link--compact' : ''}" href="${esc(href)}" aria-label="${esc(label)}">${badge}${building}${lock}</a>`;
 }
 
 function esc(value) {

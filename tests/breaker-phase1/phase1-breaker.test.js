@@ -254,7 +254,7 @@ describe("Scout's reaction after non-email checks", () => {
         }
       }
     });
-  });
+  }, 20000); // every mission x 9 states x 25 draws: slow under a loaded full run
 
   it('facility districts (no district dialogue) react without throwing', () => {
     const facility = MISSIONS.filter((m) => !ACCOUNTS[m.accountId]?.district || m.district);

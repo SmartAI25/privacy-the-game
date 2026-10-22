@@ -67,25 +67,36 @@ function interiorHref(state, id) {
   return hasInterior(id) && state.accounts?.[id]?.enabled ? `#/building/${id}` : undefined;
 }
 
-// Everything a tappable building's badges need; nothing for the rest. Its
+// A building takes centre stage once the player has it (Survey) and has
+// finished its Recon and Fortify missions; until then the phase work is the
+// main thing on the screen and the building stays a small tile (Liz, 2026-10-21).
+function isBuildingCleared(state, districtId, id) {
+  if (!state.accounts?.[id]?.enabled) return false;
+  return ['recon', 'fortify'].every((phase) => getAccountPhaseGate(state, districtId, id, phase).unlocked);
+}
+
+// One building in the skyline: a full card once cleared, else a small tile.
+// Everything the badges need comes along only when it can be entered; its
 // glow follows the share of doors within reach that are sealed.
-function buildingOpts(state, id) {
+function skylineBuilding(state, districtId, id) {
+  const cleared = isBuildingCleared(state, districtId, id);
   const href = interiorHref(state, id);
-  if (!href) return {};
+  if (!href) return renderBuilding(id, getBuildingState(state, id), cleared ? 64 : 32);
   const { sealed, controllable } = controllableProgress(state, id);
-  return {
+  return renderBuilding(id, getBuildingState(state, id), cleared ? 64 : 32, {
     href,
     glow: controllable > 0 ? sealed / controllable : 0,
     sealed,
     controllable,
     isNew: !state.interior?.[id]?.visited,
-  };
+    compact: !cleared,
+  });
 }
 
-// Shown over a skyline with at least one building you can go inside.
-function skylineHint(state, accountIds) {
-  if (!accountIds.some((id) => interiorHref(state, id))) return '';
-  return `<div class="skyline-hint">Tap a building marked <b>INSIDE ▸</b> to walk through it: your checkup, who can ask the company for your data, and which doors you’ve sealed.</div>`;
+// Shown over a skyline with at least one cleared building you can go inside.
+function skylineHint(state, districtId, accountIds) {
+  if (!accountIds.some((id) => interiorHref(state, id) && isBuildingCleared(state, districtId, id))) return '';
+  return `<div class="skyline-hint">Buildings you’ve cleared open up. Tap <b>INSIDE ▸</b> to walk through one.</div>`;
 }
 
 function esc(value) {
@@ -457,7 +468,7 @@ function renderFacilityDistrict(state, district, reaction) {
   const progress = calcDistrictProgress(state, district.id);
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, buildingOpts(state, id)))
+    .map(([id]) => skylineBuilding(state, district.id, id))
     .join('');
 
   const facilityOrder = district.facilityOrder || districtAccounts.map(([id]) => id);
@@ -487,7 +498,7 @@ function renderFacilityDistrict(state, district, reaction) {
     ${categoryAskBlock(state, district.id)}
     <div style="padding: 20px 24px 16px; border-bottom: 1px solid rgba(0,229,255,0.08); background: rgba(26,31,43,0.3);">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 14px;">DISTRICT FACILITIES</div>
-      ${skylineHint(state, districtAccounts.map(([id]) => id))}
+      ${skylineHint(state, district.id, districtAccounts.map(([id]) => id))}
       <div style="display: flex; gap: 8px; align-items: flex-end; justify-content: center; flex-wrap: wrap; padding-bottom: 4px;">
         ${buildings}
       </div>
@@ -525,7 +536,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
   }
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, buildingOpts(state, id)))
+    .map(([id]) => skylineBuilding(state, districtId, id))
     .join('');
 
   let content;
@@ -585,7 +596,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
     ${categoryAskBlock(state, district.id)}
     <div style="padding: 20px 24px 16px; border-bottom: 1px solid rgba(0,229,255,0.08); background: rgba(26,31,43,0.3);">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 14px;">DISTRICT BUILDINGS</div>
-      ${skylineHint(state, districtAccounts.map(([id]) => id))}
+      ${skylineHint(state, district.id, districtAccounts.map(([id]) => id))}
       <div style="display: flex; gap: 8px; align-items: flex-end; justify-content: center; flex-wrap: wrap; padding-bottom: 4px;">
         ${buildings}
       </div>
