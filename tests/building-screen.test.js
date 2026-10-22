@@ -250,6 +250,37 @@ describe('building screen', () => {
 });
 
 describe('tappable buildings', () => {
+  it('a tappable building wears an INSIDE badge, pulsing until its first visit', () => {
+    const fresh = renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail', isNew: true });
+    expect(fresh).toContain('class="building-badge building-badge--new"');
+    expect(fresh).toContain('INSIDE ▸');
+    const seen = renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail' });
+    expect(seen).toContain('class="building-badge"');
+    expect(seen).not.toContain('building-badge--new');
+    expect(renderBuilding('gmail', 'occupied', 64)).not.toContain('INSIDE');
+  });
+
+  it('the lock count shows sealed of controllable doors, lime when all are sealed', () => {
+    const some = renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail', sealed: 2, controllable: 4 });
+    expect(some).toContain('🔒 2/4');
+    expect(some).toContain('aria-label="Gmail: see inside. 2 of 4 doors sealed."');
+    expect(some).not.toContain('building-seals--all');
+    expect(renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail', sealed: 4, controllable: 4 })).toContain('building-seals--all');
+    expect(renderBuilding('gmail', 'occupied', 64, { href: '#/building/gmail' })).not.toContain('🔒');
+  });
+
+  it('district strip: badges, counts, pulse stops once visited, and the hint', () => {
+    let s = createInitialState();
+    const html = renderDistrict(s, 'master-keys', 'survey');
+    expect(html).toContain('class="skyline-hint"');
+    expect((html.match(/building-badge--new/g) || []).length).toBe(9);
+    expect(html).toMatch(/aria-label="Gmail: see inside\. 0 of \d+ doors sealed\."/);
+    s = { ...s, interior: { gmail: { visited: true } } };
+    const after = renderDistrict(s, 'master-keys', 'survey');
+    expect((after.match(/building-badge--new/g) || []).length).toBe(8);
+    expect(renderDistrict(createInitialState(), 'vault', 'survey')).not.toContain('skyline-hint');
+  });
+
   it('glow 0 and no href leave the markup byte-identical', () => {
     for (const st of ['occupied', 'in-progress', 'liberated', 'liberated-scarred']) {
       expect(renderBuilding('gmail', st, 64, {})).toBe(renderBuilding('gmail', st, 64));

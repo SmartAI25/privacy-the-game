@@ -67,11 +67,25 @@ function interiorHref(state, id) {
   return hasInterior(id) && state.accounts?.[id]?.enabled ? `#/building/${id}` : undefined;
 }
 
-// Building glow follows the share of doors within reach that are sealed; purely visual.
-function glowFor(state, id) {
-  if (!hasInterior(id) || !state.accounts?.[id]?.enabled) return 0;
+// Everything a tappable building's badges need; nothing for the rest. Its
+// glow follows the share of doors within reach that are sealed.
+function buildingOpts(state, id) {
+  const href = interiorHref(state, id);
+  if (!href) return {};
   const { sealed, controllable } = controllableProgress(state, id);
-  return controllable > 0 ? sealed / controllable : 0;
+  return {
+    href,
+    glow: controllable > 0 ? sealed / controllable : 0,
+    sealed,
+    controllable,
+    isNew: !state.interior?.[id]?.visited,
+  };
+}
+
+// Shown over a skyline with at least one building you can go inside.
+function skylineHint(state, accountIds) {
+  if (!accountIds.some((id) => interiorHref(state, id))) return '';
+  return `<div class="skyline-hint">Tap a building marked <b>INSIDE ▸</b> to walk through it: your checkup, who can ask the company for your data, and which doors you’ve sealed.</div>`;
 }
 
 function esc(value) {
@@ -443,7 +457,7 @@ function renderFacilityDistrict(state, district, reaction) {
   const progress = calcDistrictProgress(state, district.id);
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id), glow: glowFor(state, id) }))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, buildingOpts(state, id)))
     .join('');
 
   const facilityOrder = district.facilityOrder || districtAccounts.map(([id]) => id);
@@ -473,6 +487,7 @@ function renderFacilityDistrict(state, district, reaction) {
     ${categoryAskBlock(state, district.id)}
     <div style="padding: 20px 24px 16px; border-bottom: 1px solid rgba(0,229,255,0.08); background: rgba(26,31,43,0.3);">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 14px;">DISTRICT FACILITIES</div>
+      ${skylineHint(state, districtAccounts.map(([id]) => id))}
       <div style="display: flex; gap: 8px; align-items: flex-end; justify-content: center; flex-wrap: wrap; padding-bottom: 4px;">
         ${buildings}
       </div>
@@ -510,7 +525,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
   }
 
   const buildings = districtAccounts
-    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, { href: interiorHref(state, id), glow: glowFor(state, id) }))
+    .map(([id]) => renderBuilding(id, getBuildingState(state, id), 64, buildingOpts(state, id)))
     .join('');
 
   let content;
@@ -570,6 +585,7 @@ export function renderDistrict(state, districtId, activeTab, { reaction = null }
     ${categoryAskBlock(state, district.id)}
     <div style="padding: 20px 24px 16px; border-bottom: 1px solid rgba(0,229,255,0.08); background: rgba(26,31,43,0.3);">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 14px;">DISTRICT BUILDINGS</div>
+      ${skylineHint(state, districtAccounts.map(([id]) => id))}
       <div style="display: flex; gap: 8px; align-items: flex-end; justify-content: center; flex-wrap: wrap; padding-bottom: 4px;">
         ${buildings}
       </div>

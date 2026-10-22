@@ -2,7 +2,10 @@ import { ACCOUNTS } from '../data/accounts.js';
 
 // href makes the building tappable (its interior); glow 0..1 adds a cyan
 // drop-shadow. With neither, the markup is exactly what it always was.
-export function renderBuilding(accountId, buildingState, size = 64, { href, glow = 0 } = {}) {
+// A tappable building wears an INSIDE badge on top (pulsing while isNew, so
+// until its first visit) and, when sealed/controllable are given, a lock
+// count under its name.
+export function renderBuilding(accountId, buildingState, size = 64, { href, glow = 0, sealed, controllable, isNew = false } = {}) {
   const account = ACCOUNTS[accountId];
   const scarred = buildingState === 'liberated-scarred';
   const liberated = buildingState === 'liberated' || scarred;
@@ -38,8 +41,13 @@ export function renderBuilding(accountId, buildingState, size = 64, { href, glow
   </div>`;
   if (!href) return building;
   const name = account?.name || accountId;
+  const counted = Number.isInteger(sealed) && Number.isInteger(controllable) && controllable > 0;
+  const label = counted ? `${name}: see inside. ${sealed} of ${controllable} doors sealed.` : `${name}: see inside`;
+  const lock = counted
+    ? `<span class="building-seals${sealed === controllable ? ' building-seals--all' : ''}" aria-hidden="true">🔒 ${sealed}/${controllable}</span>`
+    : '';
   return `
-  <a class="building-link" href="${esc(href)}" aria-label="${esc(name)}: see inside">${building}</a>`;
+  <a class="building-link" href="${esc(href)}" aria-label="${esc(label)}"><span class="building-badge${isNew ? ' building-badge--new' : ''}" aria-hidden="true">INSIDE ▸</span>${building}${lock}</a>`;
 }
 
 function esc(value) {
