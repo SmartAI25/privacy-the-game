@@ -28,14 +28,45 @@ function renderDistrictIntro(state, districtId) {
         <div style="font-family: var(--font-display); font-size: 7px; font-weight: 700; color: var(--cyan); margin-top: 3px; letter-spacing: 2px;">SCOUT</div>
       </div>
       <div style="flex: 1; background: rgba(26,31,43,0.8); border: 1px solid rgba(0,229,255,0.2); padding: 14px 16px;">
-        <div style="font-size: 13px; color: rgba(237,239,243,0.7); line-height: 1.7; font-style: italic;">${dialogue.intro}</div>
-        ${dialogue.introLore ? `<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.6; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,229,255,0.1);">${dialogue.introLore}</div>` : ''}
+        ${introBody(dialogue)}
       </div>
     </div>
     <div style="text-align: right; margin-top: 8px;">
       <span data-action="dismiss-intro" data-district="${districtId}" style="cursor: pointer; font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.35); letter-spacing: 1px;">DISMISS</span>
     </div>
   </div>`;
+}
+
+// Scout's welcome opens with its first line or two; the rest (and any lore)
+// waits behind MORE, so the phase work stays on the first screen (Liz,
+// 2026-10-21). A lead ends at a paragraph break, or at the first sentence
+// end once it has run 60 characters.
+export function splitIntro(text) {
+  const para = text.indexOf('\n\n');
+  const re = /[.!?]["”’]?(?=\s)/g;
+  let end = -1;
+  let m;
+  while ((m = re.exec(text))) {
+    if (m.index + m[0].length >= 60) { end = m.index + m[0].length; break; }
+  }
+  if (para !== -1 && (end === -1 || para < end)) end = para;
+  if (end === -1) return { lead: text, rest: '' };
+  return { lead: text.slice(0, end), rest: text.slice(end).trim() };
+}
+
+const INTRO_TEXT = 'font-size: 13px; color: rgba(237,239,243,0.7); line-height: 1.7; font-style: italic;';
+const INTRO_LORE = 'font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.6; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,229,255,0.1);';
+
+function introBody(dialogue) {
+  const { lead, rest } = splitIntro(dialogue.intro);
+  const lore = dialogue.introLore ? `<div style="${INTRO_LORE}">${dialogue.introLore}</div>` : '';
+  if (!rest && !lore) return `<div style="${INTRO_TEXT}">${dialogue.intro}</div>`;
+  return `
+        <details class="intro-more">
+          <summary style="${INTRO_TEXT}">${lead} <span class="intro-more-toggle"></span></summary>
+          ${rest ? `<div style="${INTRO_TEXT} margin-top: 8px;">${rest}</div>` : ''}
+          ${lore}
+        </details>`;
 }
 
 function renderAlliesSection(districtId) {
@@ -157,10 +188,10 @@ function renderTabs(districtId, activeTab) {
   const tabs = PHASES.map((phase) => {
     const active = phase.id === activeTab;
     return `
-    <a href="#/district/${districtId}?tab=${phase.id}" class="panel${active ? ' panel--active' : ''}" style="padding: 10px 18px; font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 1px; text-decoration: none; border-bottom: 2px solid ${active ? 'var(--cyan)' : 'transparent'}; color: ${active ? 'var(--cyan)' : 'rgba(237,239,243,0.25)'}; background: ${active ? 'rgba(0,229,255,0.04)' : 'transparent'};">${phase.label}</a>`;
+    <a href="#/district/${districtId}?tab=${phase.id}" class="panel${active ? ' panel--active' : ''}" style="flex: 1 1 0; min-width: 0; text-align: center; padding: 10px 4px; font-family: var(--font-display); font-size: 9px; font-weight: 600; letter-spacing: 1px; text-decoration: none; border-bottom: 2px solid ${active ? 'var(--cyan)' : 'transparent'}; color: ${active ? 'var(--cyan)' : 'rgba(237,239,243,0.25)'}; background: ${active ? 'rgba(0,229,255,0.04)' : 'transparent'};">${phase.label}</a>`;
   });
   return `
-  <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px 0;">
+  <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 16px 24px 0;">
     ${tabs.join('')}
   </div>`;
 }
