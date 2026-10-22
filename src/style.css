@@ -210,6 +210,8 @@ img { image-rendering: pixelated; }
 .building-badge--new { animation: building-badge-pulse 1.8s ease-in-out infinite; }
 @keyframes building-badge-pulse { 0%, 100% { box-shadow: 0 0 4px rgba(0,229,255,0.3); } 50% { box-shadow: 0 0 14px rgba(0,229,255,0.85); } }
 @media (prefers-reduced-motion: reduce) { .building-badge--new { animation: none; } }
+.building-link--compact { gap: 2px; padding: 4px 4px 5px; border-color: rgba(0,229,255,0.16); background: rgba(0,229,255,0.02); }
+.building-link--compact .building-seals { font-size: 9px; }
 .building-seals { font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.7); }
 .building-seals--all { color: var(--lime); }
 .skyline-hint { font-size: 12px; line-height: 1.5; color: rgba(237,239,243,0.6); text-align: center; margin: -6px auto 12px; max-width: 34em; }
