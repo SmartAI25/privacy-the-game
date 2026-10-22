@@ -310,9 +310,9 @@ export const RECLAMATION_MISSIONS = [
     briefing: "The remaining people-search brokers. Radaris has a privacy control center. USPhonebook, ThatsThem, PeopleFinder, and Nuwber each have their own opt-out links. MyLife is the worst -- they assign you a public \"reputation score\" that needs to be removed separately.",
     steps: [
       { text: "Radaris: Go to privacy control, search your name, request removal", url: "https://radaris.com/control/privacy" },
-      { text: "USPhonebook: Submit opt-out", url: "https://www.usphonebook.com/opt-out" },
-      { text: "ThatsThem: Submit opt-out", url: "https://thatsthem.com/optout" },
-      { text: "PeopleFinder: Submit opt-out", url: "https://www.peoplefinder.com/optout" },
+      { text: "USPhonebook: Open the opt-out page. Search your name to find your listing. Tap it, then tap **Remove**. You'll need to verify with a CAPTCHA.", url: "https://www.usphonebook.com/opt-out" },
+      { text: "ThatsThem: Open the opt-out page. Enter your name, city, and state to find your record. Tap **Remove My Listing** and confirm.", url: "https://thatsthem.com/optout" },
+      { text: "PeopleFinder: Open the opt-out page. Search your name and state. Find your listing, tap it, then follow the removal steps — they'll email you a confirmation link.", url: "https://www.peoplefinder.com/optout" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -333,8 +333,8 @@ export const RECLAMATION_MISSIONS = [
     briefing: "The last individual brokers -- including MyLife, which publishes a public \"reputation score\" for you -- plus the nuclear option: California's DELETE Act (DROP) platform. DROP sends a single deletion request to 600+ registered data brokers at once. It works even if you're not in California.",
     steps: [
       { text: "MyLife: Request opt-out and removal of your \"reputation score\"", url: "https://www.mylife.com/privacy-policy#opt-out" },
-      { text: "Nuwber: Submit removal request", url: "https://nuwber.com/removal/link" },
-      { text: "ClustrMaps: Submit opt-out", url: "https://clustrmaps.com/bl/opt-out" },
+      { text: "Nuwber: Open the removal page. Search your name. Find your listing and tap **Remove**. They'll send a verification email — check your inbox and click the link.", url: "https://nuwber.com/removal/link" },
+      { text: "ClustrMaps: Open the opt-out page. Enter the URL of your ClustrMaps listing (search your name on clustrmaps.com first to find it). Submit the opt-out form.", url: "https://clustrmaps.com/bl/opt-out" },
       { text: "California DROP: Submit one request covering 600+ registered brokers", url: "https://privacy.ca.gov/drop/" },
       { text: "Google Results About You: Request removal of personal info from search results", url: "https://support.google.com/websearch/troubleshooter/9685456" },
     ],
@@ -360,11 +360,11 @@ export const RECLAMATION_MISSIONS = [
     title: "Extended Sweep: Background Check Sites",
     briefing: "These background-check and people-search sites showed up in a DeleteMe scan with your data. They're smaller than Spokeo or WhitePages but still serve up your name, address, and phone number to anyone who searches. Each has its own opt-out page.",
     steps: [
-      { text: "SmartBackgroundChecks: Submit opt-out", url: "https://www.smartbackgroundchecks.com/optout" },
-      { text: "AdvancedBackgroundChecks: Submit removal", url: "https://www.advancedbackgroundchecks.com/removal" },
-      { text: "AdvancedPeopleSearch: Submit opt-out", url: "https://www.advancedpeoplesearch.com/opt-out" },
-      { text: "Privateeye: Submit opt-out", url: "https://www.privateeye.com/static/view/optout" },
-      { text: "SearchPeopleFree: Submit opt-out", url: "https://www.searchpeoplefree.com/opt-out" },
+      { text: "SmartBackgroundChecks: Open the opt-out page. Search your name and state. Find your listing, tap it, then tap **Opt Out** and confirm.", url: "https://www.smartbackgroundchecks.com/optout" },
+      { text: "AdvancedBackgroundChecks: Open the removal page. Search your name. Find your listing and tap **Remove This Record**. Solve the CAPTCHA to confirm.", url: "https://www.advancedbackgroundchecks.com/removal" },
+      { text: "AdvancedPeopleSearch: Open the opt-out page. Search your name. Find your listing and follow the removal steps — they typically email a confirmation link.", url: "https://www.advancedpeoplesearch.com/opt-out" },
+      { text: "Privateeye: Open the opt-out page. Enter your name and state. Find your record and tap **Opt Out**.", url: "https://www.privateeye.com/static/view/optout" },
+      { text: "SearchPeopleFree: Open the opt-out page. Search your name. Find your listing and tap the opt-out link. Check your email for a confirmation.", url: "https://www.searchpeoplefree.com/opt-out" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -384,11 +384,11 @@ export const RECLAMATION_MISSIONS = [
     title: "Extended Sweep: Phone & People Lookup",
     briefing: "Phone-lookup and people-finder sites that aggregate public records. PeopleWhiz runs a whole network of mirror sites (Peoplewhizr, Peoplewiz, Peoplewizard, etc.) — one opt-out covers them all. SpyDialer, Anywho, and QuickPeopleTrace each need their own removal.",
     steps: [
-      { text: "PeopleWhiz (covers all Peoplewiz* mirrors): Submit removal", url: "https://www.peoplewhiz.com/remove-my-info" },
-      { text: "SpyDialer: Submit opt-out", url: "https://www.spydialer.com/optout.aspx" },
-      { text: "Anywho: Submit opt-out", url: "https://www.anywho.com/opt-out" },
-      { text: "QuickPeopleTrace: Submit opt-out", url: "https://www.quickpeopletrace.com/opt-out" },
-      { text: "Usatrace: Submit opt-out", url: "https://www.usatrace.com/optout" },
+      { text: "PeopleWhiz: Open the removal page. This one opt-out covers a dozen mirror sites (Peoplewiz, Peoplewhizr, Peoplewizard, etc.). Enter your info and submit — one form, twelve sites gone.", url: "https://www.peoplewhiz.com/remove-my-info" },
+      { text: "SpyDialer: Open the opt-out page. Enter your phone number in the search box. If your number appears, tap **Remove** and confirm with the CAPTCHA.", url: "https://www.spydialer.com/optout.aspx" },
+      { text: "Anywho: Open the opt-out page. Search your name and state. Find your listing and tap **Remove Me**. Some listings take 24-48 hours to disappear.", url: "https://www.anywho.com/opt-out" },
+      { text: "QuickPeopleTrace: Open the opt-out page. Search your name. Find your listing and follow the opt-out steps.", url: "https://www.quickpeopletrace.com/opt-out" },
+      { text: "Usatrace: Open the opt-out page. Search your name. Find your listing and submit the removal request.", url: "https://www.usatrace.com/optout" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -408,8 +408,8 @@ export const RECLAMATION_MISSIONS = [
     title: "Extended Sweep: Professional & B2B",
     briefing: "RocketReach scrapes LinkedIn and public records to build professional profiles — your email, phone, employer, and job title packaged for sales teams and recruiters. FindPeopleSearch and Findpeoplesearch aggregate public records into searchable profiles.",
     steps: [
-      { text: "RocketReach: Submit opt-out (may need to create account first)", url: "https://rocketreach.co/person/optout" },
-      { text: "FindPeopleSearch: Submit opt-out", url: "https://www.findpeoplesearch.com/opt-out" },
+      { text: "RocketReach: Open the opt-out page. You may need to create a free account first. Once signed in, go to your profile and tap **Opt Out** or **Remove My Info**. This removes your professional contact info from sales/recruiter lookups.", url: "https://rocketreach.co/person/optout" },
+      { text: "FindPeopleSearch: Open the opt-out page. Search your name and state. Find your listing and tap the removal link. Check your email for confirmation.", url: "https://www.findpeoplesearch.com/opt-out" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {

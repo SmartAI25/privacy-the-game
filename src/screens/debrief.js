@@ -103,6 +103,35 @@ function getProgressCheckIn(state, districtId, percent, dialogue) {
   return '';
 }
 
+function renderStepChecklist(mission, state) {
+  if (!mission.steps || mission.steps.length === 0) return '';
+  const checked = state.missions[mission.id]?.checkedSteps || [];
+  const total = mission.steps.length;
+  const done = checked.length;
+  const items = mission.steps.map((step, i) => {
+    const isChecked = checked.includes(i);
+    const link = step.url
+      ? ` <a href="${step.url}" target="_blank" rel="noopener" style="color: var(--cyan); font-weight: 600; word-break: break-all;">[open &rarr;]</a>`
+      : '';
+    return `
+    <div data-action="toggle-step" data-mission="${mission.id}" data-step="${i}" class="debrief-step" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; background: ${isChecked ? 'rgba(198,255,0,0.04)' : 'rgba(26,31,43,0.4)'}; border: 1px solid ${isChecked ? 'rgba(198,255,0,0.15)' : 'rgba(0,229,255,0.06)'}; cursor: pointer; margin-bottom: 4px;">
+      <div style="width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; border: 2px solid ${isChecked ? 'var(--lime)' : 'rgba(0,229,255,0.3)'}; display: flex; align-items: center; justify-content: center; background: ${isChecked ? 'rgba(198,255,0,0.1)' : 'transparent'};">${isChecked ? '<span style="color: var(--lime); font-size: 12px; font-weight: 700;">✓</span>' : ''}</div>
+      <div style="flex: 1; font-size: 13px; color: ${isChecked ? 'rgba(237,239,243,0.45)' : 'rgba(237,239,243,0.75)'}; line-height: 1.6; ${isChecked ? 'text-decoration: line-through; text-decoration-color: rgba(198,255,0,0.3);' : ''}">${step.text}${link}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div style="margin-bottom: 28px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+      <div class="section-label" style="color: rgba(0,229,255,0.5);">YOUR CHECKLIST</div>
+      <div style="font-family: var(--font-mono); font-size: 10px; color: ${done === total ? 'var(--lime)' : 'rgba(0,229,255,0.5)'}; font-weight: 600;">${done}/${total}</div>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      ${items}
+    </div>
+  </div>`;
+}
+
 export function renderDebrief(state, missionId) {
   const mission = MISSIONS.find((m) => m.id === missionId);
   if (!mission) return notFound(state);
@@ -153,7 +182,7 @@ export function renderDebrief(state, missionId) {
       <a href="#/mission/${mission.id}/briefing" style="font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.4); text-decoration: none;">&#8592; ${mission.title}</a>
     </div>
     <div style="flex: 1; padding: 24px;">
-      <div style="display: flex; gap: 14px; align-items: flex-start; margin-bottom: 32px;">
+      <div style="display: flex; gap: 14px; align-items: flex-start; margin-bottom: 24px;">
         <div style="flex-shrink: 0;">
           <img src="assets/characters/scout_0.png" style="width: 52px; height: 52px; filter: drop-shadow(0 0 6px rgba(0,229,255,0.3));">
         </div>
@@ -162,6 +191,8 @@ export function renderDebrief(state, missionId) {
           <div style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLine}</div>
         </div>
       </div>
+      ${!completed ? renderStepChecklist(mission, state) : ''}
+      ${progressLine}
       ${questions}
       ${progressLine}
       ${footer}

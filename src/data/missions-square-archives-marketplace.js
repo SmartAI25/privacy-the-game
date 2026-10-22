@@ -241,9 +241,9 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: 'Breach Recon: Twitter / X',
     briefing: `Twitter has had multiple data incidents, including a 2023 leak of 200 million email addresses scraped via an API vulnerability they ignored for months. If you've ever had a Twitter account, your email was likely exposed.`,
     steps: [
-      { text: 'Open haveibeenpwned.com', url: 'https://haveibeenpwned.com' },
-      { text: "Enter the email linked to your Twitter / X account" },
-      { text: "Look for the Twitter breach specifically -- it's one of the most common hits" },
+      { text: 'Open Have I Been Pwned', url: 'https://haveibeenpwned.com' },
+      { text: 'Type the email linked to your X/Twitter account into the search box. Hit "pwned?"' },
+      { text: 'Green = clean. Red = breaches found. Look specifically for "Twitter" in the list — the 2023 scrape exposed 200 million email addresses. If it\'s there, your email has been in lists used for phishing and credential stuffing.' },
     ],
     debriefQs: BREACH_DEBRIEF,
     scoutDialog: {
@@ -263,10 +263,10 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: 'Connected Apps Audit: Twitter / X',
     briefing: `Over the years you've probably authorized dozens of Twitter apps -- scheduling tools, analytics, games, "What Hogwarts house are you" quizzes. Each one still has access to your account unless you revoke it.`,
     steps: [
-      { text: 'Open Twitter Connected Apps', url: 'https://x.com/settings/connected_apps' },
-      { text: 'Review every app in the list -- check what permissions each has (read, write, DMs)' },
-      { text: `Click "Revoke access" on anything you don't actively use or recognize` },
-      { text: `While you're there, check "Sessions" for any you don't recognize` },
+      { text: 'Open X Connected Apps — you\'ll need to be signed in', url: 'https://x.com/settings/connected_apps' },
+      { text: 'You\'ll see a list of apps that have access to your X account. Each one shows its name and what it can do: **Read** (see your tweets), **Write** (post as you), or **Read and Write + DMs** (full access including your private messages).' },
+      { text: 'For each app: do you still use it? If not, tap the app name, then tap **Revoke access**. Pay special attention to anything with "Write" or "DM" access — those can post as you or read your messages.' },
+      { text: 'Now check active sessions: go to Settings > Security and account access > Sessions. Each entry shows a device and location. Tap any you don\'t recognize and tap **Log out**.', url: 'https://x.com/settings/sessions' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -336,8 +336,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     briefing: "TikTok collects more data than most platforms -- keystroke patterns, clipboard contents, device identifiers, face and voice data from your videos. An unauthorized device gets access to all of it, plus your DMs and drafts.",
     steps: [
       { text: 'In TikTok app: Profile → ☰ → Settings and privacy → Security → Devices' },
-      { text: `Tap "Manage devices" -- review every device listed` },
-      { text: "Remove any device you don't recognize or no longer use" },
+      { text: 'Tap **Manage devices**. You\'ll see a list of phones and tablets logged into your TikTok. Each shows a device name, model, and when it was last active.' },
+      { text: 'See a device you don\'t recognize or one you no longer use? Tap it and tap **Remove**. Old devices you sold or gave away still have access until you remove them.' },
       { text: `While you're here, check haveibeenpwned.com for the email/phone linked to TikTok`, url: `https://haveibeenpwned.com` },
     ],
     debriefQs: LOGIN_DEBRIEF,
@@ -432,8 +432,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     steps: [
       { text: 'Open LinkedIn Settings', url: 'https://www.linkedin.com/psettings/sign-in-and-security' },
       { text: `Click "Where you're signed in"` },
-      { text: "Review every session -- end any you don't recognize" },
-      { text: `Also check "Permitted services" for old app integrations and revoke unused ones` },
+      { text: 'You\'ll see a list of devices with locations and dates. Each entry shows the device type (e.g. "Chrome on Mac"), approximate location, and when it was last active. Tap any you don\'t recognize and tap **End session**.' },
+      { text: 'Now tap **Permitted services** on the settings page. You\'ll see apps and services that can access your LinkedIn data. Tap **Remove** on any you don\'t actively use — old CRM tools, recruiting platforms, or scheduling apps you tried once.' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -504,8 +504,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     steps: [
       { text: 'Open WhatsApp on your phone' },
       { text: 'Tap "Settings" (gear icon) → "Linked Devices"' },
-      { text: 'Review every linked device listed -- each one can see all your messages in real time' },
-      { text: `Tap any device you don't recognize → "Log Out"` },
+      { text: 'You\'ll see a list of linked devices — each one shows a name like "Chrome (Mac)" or "Windows" and when it was last active. Every device on this list can see ALL your messages in real time.' },
+      { text: 'See a device you don\'t recognize, or one from a computer you no longer use? Tap it, then tap **Log Out**. If you\'re not sure, log it out anyway — you can always re-link by scanning the QR code again.' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -525,10 +525,10 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: 'Registration Lock: WhatsApp',
     briefing: `WhatsApp doesn't use passwords -- it uses your phone number. Without a registration lock PIN, anyone who SIM-swaps your phone number can steal your WhatsApp account in seconds. The PIN blocks this.`,
     steps: [
-      { text: 'Open WhatsApp → Settings → Account → Two-Step Verification' },
-      { value: 'later', text: `I'll come back to this`, severity: 'skip' },
-      { text: 'Add a recovery email address -- this lets you reset the PIN if you forget it' },
-      { text: 'Done -- this PIN is now required any time someone tries to register your number on a new device' },
+      { text: 'Open WhatsApp on your phone. Tap **Settings** (gear icon) → **Account** → **Two-Step Verification**.' },
+      { text: 'Tap **Enable** (or **Turn On**). WhatsApp will ask you to create a 6-digit PIN. Pick something you\'ll remember but that\'s NOT your phone unlock PIN or bank PIN.' },
+      { text: 'WhatsApp will ask for a recovery email address — enter one. This lets you reset the PIN if you forget it. Without it, you could lose access to your account.' },
+      { text: 'Done — this PIN is now required any time someone tries to register your phone number on a new device. Even if they SIM-swap your number, they can\'t steal your WhatsApp without this PIN.' },
     ],
     debriefQs: REGISTRATION_LOCK_DEBRIEF,
     scoutDialog: {
@@ -576,7 +576,7 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     steps: [
       { text: 'Open Signal on your phone' },
       { text: 'Tap your profile icon → "Linked Devices"' },
-      { text: `Review every linked device -- remove any you don't use or recognize` },
+      { text: 'You\'ll see a list of linked devices (like "Signal Desktop" or "iPad"). Each one sees all your new messages in real time. Remove any you don\'t recognize or no longer use — tap it, then tap **Unlink**.' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -596,10 +596,10 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: 'Registration Lock: Signal',
     briefing: 'Signal uses a registration lock PIN to prevent someone from re-registering your number on a new device. Without it, a SIM-swap gives an attacker your Signal identity -- on the most secure messenger available.',
     steps: [
-      { text: 'Open Signal → tap your profile icon → Settings → Account' },
-      { text: 'Tap "Registration Lock" → toggle it ON' },
-      { value: 'later', text: `I'll come back to this`, severity: 'skip' },
-      { text: 'Signal will remind you of the PIN periodically to help you remember it' },
+      { text: 'Open Signal on your phone. Tap your **profile icon** (top left), then tap **Settings** → **Account**.' },
+      { text: 'Find **Registration Lock** and toggle it **ON**. Signal will confirm that a PIN is now required to re-register your number.' },
+      { text: 'If you haven\'t set a Signal PIN yet, it\'ll ask you to create one. Pick something memorable but different from your phone unlock PIN.' },
+      { text: 'Signal will periodically ask you to re-enter the PIN to help you remember it — don\'t skip those reminders.' },
     ],
     debriefQs: REGISTRATION_LOCK_DEBRIEF,
     scoutDialog: {
@@ -644,8 +644,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     briefing: "Discord token-stealing malware is an entire genre. A stolen token gives full account access without needing your password -- it bypasses 2FA entirely. The fix is checking active sessions and authorized apps, then changing your password (which invalidates all tokens).",
     steps: [
       { text: 'Open Discord Settings', url: 'https://discord.com/channels/@me' },
-      { text: `Click the gear icon → "Devices" → review all active sessions and remove unknowns` },
-      { text: `Go to "Authorized Apps" → review every app with access → click "Deauthorize" on anything you don't actively use` },
+      { text: 'Tap the **gear icon** (bottom left). Go to **Devices** or **Active Sessions**. You\'ll see a list of devices logged into your Discord — each shows a device name, browser, and location. Tap any you don\'t recognize and tap **Log Out**.' },
+      { text: 'Now go to **Authorized Apps** (same settings area). You\'ll see every bot, app, and service that has access to your Discord account. Tap any you don\'t actively use and tap **Deauthorize** — old bots and game integrations accumulate over years.' },
       { text: "If you found anything suspicious, change your password immediately -- this kills all stolen tokens" },
     ],
     debriefQs: LOGIN_DEBRIEF,
@@ -763,8 +763,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     steps: [
       { text: 'Open Reddit Safety & Privacy', url: 'https://www.reddit.com/settings/privacy' },
       { text: 'Under "Privacy" → disable "Personalization based on general location" and "Personalization based on activity"' },
-      { text: `Review your profile visibility -- what's shown to strangers` },
-      { text: 'Consider whether your post/comment history across subreddits reveals more than you intend' },
+      { text: 'Look at your profile page as a stranger would: Open your profile, then check "**Profile visibility**". Toggle off anything that exposes your active communities, post history, or online status to non-logged-in users.' },
+      { text: 'Scroll through your recent comment history. Think about what pattern emerges across subreddits — your location, profession, political views, health conditions, hobbies. Would you be comfortable if someone you know found this profile?' },
     ],
     debriefQs: PRIVACY_DEBRIEF,
     scoutDialog: {
@@ -786,10 +786,10 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: "Active Sessions: Telegram",
     briefing: "Telegram shows all active sessions with device, IP, and location. Unlike Signal, Telegram cloud chats are NOT end-to-end encrypted by default -- so an unauthorized session gets full access to your message history.",
     steps: [
-      { text: "Open Telegram on your phone or desktop" },
-      { text: `Go to Settings → Devices (or "Active Sessions")` },
-      { text: "Review every session listed -- each one can read your entire cloud chat history" },
-      { text: `Tap "Terminate" on any session you don't recognize` },
+      { text: 'Open Telegram on your phone. Tap **Settings** (gear icon).' },
+      { text: 'Tap **Devices** (or **Active Sessions** — the name varies by version). You\'ll see every phone, computer, and tablet logged into your Telegram.' },
+      { text: 'Each session shows a device name, app version, IP address, and location. Unlike Signal, Telegram cloud chats are NOT end-to-end encrypted — so every session here can read your FULL message history, not just new messages.' },
+      { text: 'See a session you don\'t recognize? Tap it and tap **Terminate**. If in doubt, terminate it — you can always log back in on your own devices.' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -809,10 +809,10 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     title: 'Two-Step Password: Telegram',
     briefing: `Telegram relies on SMS codes by default. Anyone who can intercept your texts -- through SIM-swapping, SS7 attacks, or a compromised carrier employee -- can take over your account instantly. The two-step password blocks this. It's Telegram's single most important security setting.`,
     steps: [
-      { text: 'Open Telegram → Settings → Privacy and Security → Two-Step Verification' },
-      { value: 'later', text: `I'll come back to this`, severity: 'skip' },
-      { text: `Add a recovery email address -- use one you've already secured` },
-      { text: 'Check the confirmation email Telegram sends to verify the recovery address' },
+      { text: 'Open Telegram. Tap **Settings** → **Privacy and Security** → **Two-Step Verification**.' },
+      { text: 'Tap **Set Password**. Choose a strong password — this is separate from your phone\'s passcode. Save it in your password manager.' },
+      { text: 'Telegram will ask for a **recovery email address**. Enter one you\'ve already secured (like the email you locked down in Chapter 1). This is your backup if you forget the password.' },
+      { text: 'Check your email inbox — Telegram sends a confirmation link. Click it to verify the recovery address. Without verifying, you can\'t recover if you forget the password.' },
     ],
     debriefQs: REGISTRATION_LOCK_DEBRIEF,
     scoutDialog: {
@@ -860,8 +860,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     steps: [
       { text: `Open your Slack workspace in a browser → click your workspace name → "Settings & administration" → "Manage apps"` },
       { text: "Or go to your-workspace.slack.com/apps/manage" },
-      { text: `Review every app and integration -- remove anything you don't actively use` },
-      { text: 'Pay special attention to apps with "Read messages" permissions' },
+      { text: 'You\'ll see a list of installed apps and integrations. For each one: do you still use it? If not, tap **Remove** or **Revoke**. Old project bots, test integrations, and one-off tools accumulate quietly.' },
+      { text: 'Pay special attention to apps that say **"Read messages"** in their permissions — these can see conversations in the channels where they\'re installed. A dead integration with read access is a data leak.' },
     ],
     debriefQs: PRIVACY_DEBRIEF,
     scoutDialog: {
@@ -889,9 +889,9 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     briefing: `Every "Anyone with the link" share in Google Drive is a public URL to your file. Over years of collaboration, you've probably shared tax returns, contracts, or ID scans with links that are still active. If that link ends up in a search index or a Slack channel that gets scraped, the file is effectively public.`,
     steps: [
       { text: 'Open Google Drive', url: 'https://drive.google.com' },
-      { text: `In the search bar, type "type:document" or "type:spreadsheet" and click the sharing icon to filter shared files` },
-      { text: `Look for files shared as "Anyone with the link" -- right-click → "Share" → change to "Restricted" for sensitive ones` },
-      { text: `Check "Shared with me" for files others shared that you may have reshared` },
+      { text: 'In the search bar, type **"to:anyone"** — this filters for files you\'ve shared with "Anyone with the link". You can also try **"visibility:anyoneWithLink"**.' },
+      { text: 'For each file that comes up: is it something sensitive (tax returns, contracts, ID scans)? If so, right-click → tap **Share** → change "Anyone with the link" to **Restricted**. Only people you explicitly add can access it now.' },
+      { text: 'Now tap **Shared with me** in the left sidebar. Look for files others shared that you may have reshared or copied sensitive data into.' },
     ],
     debriefQs: LOGIN_DEBRIEF,
     scoutDialog: {
@@ -959,8 +959,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     briefing: "Dropbox syncs files across linked devices. An unauthorized device silently downloads everything. Changing your password, enabling 2FA, and unlinking unknown devices closes every door at once.",
     steps: [
       { text: 'Open Dropbox Security', url: 'https://www.dropbox.com/account/security' },
-      { text: `Under "Devices" → review every linked device → click the X to unlink any you don't use or recognize` },
-      { text: `Under "Web sessions" → end any unfamiliar sessions` },
+      { text: 'Scroll to **Devices**. You\'ll see every computer and phone linked to your Dropbox — each shows a device name and when it last synced. Any device here has a full copy of your files. Click the **X** next to any device you don\'t use or recognize to unlink it.' },
+      { text: 'Below that, check **Web sessions** — these are active browser logins. End any session you don\'t recognize by clicking the **X**.' },
       { text: `Click "Change password" -- open your password manager, generate a random 20+ character password, save it, paste in` },
       { text: `Enable "Two-step verification" → choose "Use a mobile app" → scan the QR code with your authenticator` },
     ],
@@ -984,8 +984,8 @@ export const MISSIONS_SQUARE_ARCHIVES_MARKETPLACE = [
     briefing: `Shared Dropbox folders from old projects are still syncing to other people's computers. If you've since added sensitive files to those folders, those collaborators still have access. Old shares accumulate silently.`,
     steps: [
       { text: 'Open Dropbox Sharing', url: 'https://www.dropbox.com/share' },
-      { text: 'Review every shared folder -- click each one to see who has access' },
-      { text: 'Remove old collaborators from folders they no longer need' },
+      { text: 'You\'ll see every folder and file you\'ve shared. Tap each one to see who has access — names and email addresses of everyone who can view or edit. Look for old collaborators from projects that ended.' },
+      { text: 'For each old collaborator: hover over their name and click **Remove**. They\'ll lose access to that folder and any new files you add to it.' },
       { text: 'Check "Shared links" tab → revoke links to any sensitive files' },
       { text: `Review 'Connected apps" and remove any you don't use` },
     ],

@@ -188,11 +188,25 @@ app.addEventListener('click', async (e) => {
   if (!el || !app.contains(el)) return;
   const action = el.dataset.action;
 
-  if (action === 'go-do-it') {
+  if (action === 'toggle-step') {
+    const missionId = el.dataset.mission;
+    const stepIndex = parseInt(el.dataset.step, 10);
+    if (!state.missions[missionId]) state.missions[missionId] = {};
+    if (!state.missions[missionId].checkedSteps) state.missions[missionId].checkedSteps = [];
+    const steps = state.missions[missionId].checkedSteps;
+    const idx = steps.indexOf(stepIndex);
+    if (idx === -1) steps.push(stepIndex);
+    else steps.splice(idx, 1);
+    setState(state);
+    renderCurrentRoute();
+    return;
+  } else if (action === 'go-do-it') {
     const mission = MISSIONS.find((m) => m.id === el.dataset.mission);
-    if (el.dataset.url) window.open(el.dataset.url, '_blank', 'noopener');
     if (typeof umami !== 'undefined' && umami.track) umami.track('mission-started', { mission: el.dataset.mission, phase: mission?.phase });
     navigate(`#/mission/${el.dataset.mission}/debrief`);
+    if (el.dataset.url) {
+      window.open(el.dataset.url, '_blank', 'noopener,noreferrer');
+    }
   } else if (action === 'submit-debrief') {
     submitDebrief(el.dataset.mission);
   } else if (action === 'toggle-account') {

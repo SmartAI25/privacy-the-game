@@ -65,9 +65,9 @@ export const CLINIC_MISSIONS = [
     briefing: "Your fitness tracker records your heart rate, sleep patterns, stress levels, menstrual cycles, GPS routes, and how many steps you take to the bathroom at 3 AM. That data goes somewhere. If you use Fitbit, it goes to Google -- they acquired Fitbit in 2021, and a decade of health data for 31 million users transferred to the largest advertising company on Earth. Apple Watch data stays on-device by default, but third-party apps can request access to all of it. Garmin, Whoop, and Oura each have their own data-sharing policies that most users never read.",
     steps: [
       { text: "Fitbit: Open the Fitbit app > tap your profile > scroll to Manage Data > review what Google accesses", url: "https://www.fitbit.com/settings/data" },
-      { text: "Apple Watch: On your iPhone, open Settings > Privacy & Security > Health > review each app listed" },
-      { text: "Garmin: Open Garmin Connect > Settings > Account Information > Privacy Settings", url: "https://connect.garmin.com/modern/settings" },
-      { text: "Any tracker: Check which third-party apps have been granted access to your health data" },
+      { text: "Apple Watch: On your iPhone, open **Settings** → **Privacy & Security** → **Health**. You'll see every app that has access to your health data — heart rate, steps, sleep, etc. Tap each one to see exactly what data it reads and writes." },
+      { text: "Garmin: Open Garmin Connect app or website → **Settings** → **Account Information** → **Privacy Settings**. Check what's shared publicly vs. privately.", url: "https://connect.garmin.com/modern/settings" },
+      { text: "For any tracker: look in the app's settings for **Connected Apps** or **Third-Party Access**. You'll see which apps (Strava, MyFitnessPal, insurance wellness programs) are pulling your health data. Note which ones — we'll revoke access in the next mission." },
     ],
     debriefQs: HEALTH_AUDIT_DEBRIEF,
     scoutDialog: {

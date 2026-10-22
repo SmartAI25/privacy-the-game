@@ -46,10 +46,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'AI Training Audit: Meta',
     briefing: "Meta uses your public Facebook posts, Instagram photos, comments, and Meta AI conversations to train their AI models. In the US, there is no toggle to opt out — but you can limit exposure by making accounts private and avoiding Meta AI. EU/UK users have a 'Right to object' form in the Privacy Centre.",
     steps: [
-      { text: 'Open Meta Privacy Centre', url: 'https://www.facebook.com/privacy/center/' },
-      { text: 'Check your Instagram privacy: Settings > Account > Data use for AI improvement' },
-      { text: 'Review if your posts are set to Public (these feed the AI)' },
-      { text: 'Note whether you have opt-out options (varies by region)' },
+      { text: 'Open Meta Privacy Centre — sign in with your Facebook or Instagram account if prompted', url: 'https://www.facebook.com/privacy/center/' },
+      { text: 'On your phone, open Instagram → **Settings** → **Account** → look for **"Data use for AI improvement"**. If you see it, check whether it\'s enabled. (US users may not see this option at all — Meta doesn\'t offer US opt-out.)' },
+      { text: 'Check if your Instagram and Facebook posts are set to **Public**. Public posts are training data. Go to Instagram Settings → **Account privacy** to check. Facebook: **Settings → Audience** to check your default.' },
+      { text: 'Note what you found — if you\'re in the EU/UK, there\'s a "Right to object" form in the Privacy Centre. In the US, making accounts private is the main defense.' },
     ],
     debriefQs: AI_AUDIT_DEBRIEF,
     scoutDialog: {
@@ -97,10 +97,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'AI Training Audit: Google',
     briefing: "Google uses your Gemini prompts, shared files, and connected app data to train their AI models. The 'Gemini Apps Activity' setting controls whether your conversations are reviewed and used for training. Even when turned off, chats are still saved for 72 hours for safety.",
     steps: [
-      { text: 'Open Gemini Activity settings', url: 'https://myactivity.google.com/product/gemini' },
-      { text: 'Check if "Gemini Apps Activity" is on or off' },
-      { text: 'Review your stored Gemini conversations' },
-      { text: 'Check Google Account > Data & privacy for broader AI settings' },
+      { text: 'Open Gemini Activity settings — you\'ll need to be signed into your Google account', url: 'https://myactivity.google.com/product/gemini' },
+      { text: 'You\'ll see **"Gemini Apps Activity"** with a toggle. If it says **ON**, your Gemini conversations are being stored and may be used for training. If **OFF**, they\'re still kept for 72 hours for safety but not used for training.' },
+      { text: 'Scroll down to see your stored Gemini conversations — you might be surprised how much is there. Each one shows the date and your prompts.' },
+      { text: 'For broader AI settings: go to your Google Account → **Data & privacy** → look for **"Web & App Activity"** and **"Ad personalization"**. These feed Google\'s AI systems beyond just Gemini.' },
     ],
     debriefQs: AI_AUDIT_DEBRIEF,
     scoutDialog: {
@@ -148,10 +148,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'AI Training Audit: ChatGPT',
     briefing: "OpenAI uses your ChatGPT conversations to improve their models unless you opt out. Every prompt, every uploaded file, every code snippet you paste — it all potentially feeds the next training run. Business and API users are excluded by default, but consumer users are opted in.",
     steps: [
-      { text: 'Open ChatGPT Settings', url: 'https://chat.openai.com/settings' },
-      { text: 'Go to Data controls' },
-      { text: 'Check if "Improve the model for everyone" is toggled on' },
-      { text: 'Review what data ChatGPT stores about you' },
+      { text: 'Open ChatGPT and sign in. Tap your **profile icon** (bottom left on desktop, top right on mobile), then tap **Settings**.', url: 'https://chat.openai.com/settings' },
+      { text: 'Tap **Data controls**. You\'ll see a toggle called **"Improve the model for everyone"**.' },
+      { text: 'If it\'s toggled **ON** (green/blue): every conversation you\'ve had with ChatGPT has potentially been used to train future models. Note this — we\'ll turn it off in the next mission.' },
+      { text: 'While you\'re here, look at **Chat history** — you can see all your past conversations. Anything sensitive in there (passwords, personal details, work documents you pasted in) has been stored.' },
     ],
     debriefQs: AI_AUDIT_DEBRIEF,
     scoutDialog: {
@@ -199,10 +199,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'Manage Copilot Privacy',
     briefing: "Microsoft Copilot processes your prompts and connected documents. The Microsoft Privacy Dashboard lets you review and delete stored data. For Copilot in Office 365, your organization's admin controls data usage — but personal Copilot data is yours to manage.",
     steps: [
-      { text: 'Open Microsoft Privacy Dashboard', url: 'https://account.microsoft.com/privacy/' },
-      { text: 'Review "Browsing history" and "Search history" sections' },
-      { text: 'Clear Copilot conversation history' },
-      { text: 'Check Bing/Edge settings for AI data sharing toggles' },
+      { text: 'Open Microsoft Privacy Dashboard — sign in with your Microsoft account if prompted', url: 'https://account.microsoft.com/privacy/' },
+      { text: 'You\'ll see categories like **Browsing history**, **Search history**, **App activity**, etc. Tap each one to see what Microsoft has collected. The **Clear** button at the top of each section deletes that data.' },
+      { text: 'Look for **Copilot** or **AI activity** — tap it and clear your conversation history if you want it gone.' },
+      { text: 'If you use Edge browser: open Edge → **Settings** → **Privacy, search, and services** → look for **"Improve Microsoft products"** and **"Personalization & advertising"** toggles. Turn them off.' },
     ],
     debriefQs: AI_OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -226,10 +226,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'Disable LinkedIn AI Training',
     briefing: "LinkedIn silently opted everyone in to AI training in 2024, before most people noticed. Your profile, posts, articles, and engagement data are used to train their generative AI. There's a toggle — but they buried it. Turning it off doesn't affect your visibility to recruiters.",
     steps: [
-      { text: 'Open LinkedIn Privacy Settings', url: 'https://www.linkedin.com/mypreferences/d/categories/privacy' },
-      { text: 'Find "Data for Generative AI Improvement"' },
-      { text: 'Toggle it OFF' },
-      { text: 'Confirm the change saved' },
+      { text: 'Open LinkedIn Privacy Settings — sign in if prompted', url: 'https://www.linkedin.com/mypreferences/d/categories/privacy' },
+      { text: 'Scroll through the settings. Look for **"Data for Generative AI Improvement"** — LinkedIn buried it in the middle of the page. It might also be under **"Data privacy"** in the sidebar.' },
+      { text: 'Tap the toggle to turn it **OFF**. When it\'s off, LinkedIn stops using your profile, posts, and articles to train their AI models.' },
+      { text: 'Verify it saved by backing out and coming back — the toggle should still be off. Note: LinkedIn turned this on for everyone silently in 2024, so it\'s almost certainly enabled right now.' },
     ],
     debriefQs: AI_OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -253,10 +253,10 @@ export const FOUNDRY_MISSIONS = [
     title: 'Disable Adobe AI Training',
     briefing: "Adobe's Content Analysis setting lets them analyze your creative work to train Firefly and other AI models. If you use Photoshop, Illustrator, or Lightroom with cloud storage, your art could be training data. Adobe reversed some policies after backlash, but the settings still need checking.",
     steps: [
-      { text: 'Open Adobe Account Privacy', url: 'https://account.adobe.com/privacy' },
-      { text: 'Find "Content analysis" settings' },
-      { text: 'Disable content analysis for AI training' },
-      { text: 'Check Creative Cloud app settings for local analysis toggles' },
+      { text: 'Open Adobe Account Privacy — sign in with your Adobe ID if prompted', url: 'https://account.adobe.com/privacy' },
+      { text: 'Look for **"Content analysis"** or **"Machine learning"**. This is the setting that lets Adobe analyze your creative work (Photoshop files, Lightroom photos, Illustrator projects) to train their AI models.' },
+      { text: 'Toggle it **OFF** or tap **"Don\'t allow"**. Your creative work should train your skills, not their models.' },
+      { text: 'If you use Photoshop, Lightroom, or Illustrator on desktop: open the app → **Preferences** → **Privacy** or **General** → look for **"Content analysis"** or **"Machine learning"** toggles there too. Desktop apps sometimes have separate settings.' },
     ],
     debriefQs: AI_OPTOUT_DEBRIEF,
     scoutDialog: {

@@ -67,10 +67,10 @@ function makeManufacturerMissions(accountId) {
       title: `Data Audit: ${name}`,
       briefing: `${name}${subtitle} collects ${dataList} from your connected vehicle.${insuranceLine} Before you can opt out, you need to know what they have on you. This mission walks you through requesting your data.`,
       steps: [
-        { text: `Open ${name}'s privacy portal`, url: acct.securityUrl },
-        { text: 'Submit a "Right to Know" or data access request' },
-        { text: 'Enter your VIN or account email to verify identity' },
-        { text: 'Note which data categories they report collecting' },
+        { text: `Open ${name}'s privacy portal — you may need to create an account or sign in first`, url: acct.securityUrl },
+        { text: 'Look for a button or link that says **"Right to Know"**, **"Request My Data"**, **"Data Access"**, or **"Privacy Request"**. Tap it.' },
+        { text: 'You\'ll need to verify your identity. They\'ll usually ask for your **VIN** (on your registration card, or inside the driver-side door jamb) and/or the **email** you used when you bought the car.' },
+        { text: 'Once submitted, they have 45 days to respond. Note which data categories they say they collect — location, driving behavior, voice, contacts, etc.' },
       ],
       debriefQs: CAR_AUDIT_DEBRIEF,
       scoutDialog: {
@@ -94,10 +94,10 @@ function makeManufacturerMissions(accountId) {
       title: `Insurance Scan: ${name}`,
       briefing: `${name}'s "${acct.insuranceProgram}" program shares your driving behavior with insurance companies and data brokers like LexisNexis and Verisk. Your premiums can go up based on hard braking, late-night driving, or frequent short trips — and you may have consented without realizing it during the purchase process.`,
       steps: [
-        { text: `Check your ${name} app for "${acct.insuranceProgram}" or similar`, url: acct.securityUrl },
-        { text: 'Look under Settings > Privacy or Connected Services' },
-        { text: 'Check if insurance data sharing is enabled' },
-        { text: 'Note which insurance features are active' },
+        { text: `Open the ${name} app on your phone (if you have it). If not, open their website.`, url: acct.securityUrl },
+        { text: `Look for **Settings** → **Privacy** or **Connected Services**. Search for anything called "${acct.insuranceProgram}" or "driving data" or "insurance". It might be buried.` },
+        { text: 'If you find the feature: check if it says **Enabled** or **Active**. This means your driving data (speed, braking, time of day) is being sent to insurance companies right now.' },
+        { text: 'Note what you find — we\'ll disable it in the Opt-Out phase. If you can\'t find the setting, it may only be accessible from the car\'s infotainment screen.' },
       ],
       debriefQs: CAR_AUDIT_DEBRIEF,
       scoutDialog: {
@@ -120,10 +120,10 @@ function makeManufacturerMissions(accountId) {
     title: `Privacy Opt-Out: ${name}`,
     briefing: `Time to cut the data pipeline. ${name}'s privacy portal lets you request they stop selling or sharing your personal information. This covers CCPA and state-level privacy rights. They have 45 days to comply.`,
     steps: [
-      { text: `Open ${name}'s privacy request form`, url: acct.securityUrl },
-      { text: 'Select "Do Not Sell or Share My Personal Information"' },
-      { text: 'Enter your VIN and verify your identity' },
-      { text: 'Submit the request — save your confirmation number' },
+      { text: `Open ${name}'s privacy request form — you may need to sign in or create an account`, url: acct.securityUrl },
+      { text: 'Look for an option that says **"Do Not Sell or Share My Personal Information"** or **"Opt Out of Data Sharing"**. Different manufacturers word it differently. Tap it.' },
+      { text: 'They\'ll ask for your **VIN** to verify you\'re the vehicle owner. Your VIN is on your registration card, insurance card, or the metal plate inside the driver-side door jamb (17 characters, letters and numbers).' },
+      { text: 'Submit the request. **Screenshot or save the confirmation number/email** — you\'ll need it if you have to follow up. They have 45 days to comply by law.' },
     ],
     debriefQs: CAR_OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -145,10 +145,10 @@ function makeManufacturerMissions(accountId) {
       title: `Disable ${acct.insuranceProgram}: ${name}`,
       briefing: `${name}'s "${acct.insuranceProgram}" feature is the pipeline sending your driving data to insurance companies. Disabling it in the app stops the flow at the source. You keep navigation, Bluetooth, and safety features.`,
       steps: [
-        { text: `Open the ${name} app on your phone` },
-        { text: `Go to Settings > Privacy or Connected Services` },
-        { text: `Find "${acct.insuranceProgram}" and disable it` },
-        { text: 'Confirm the change is saved' },
+        { text: `Open the ${name} app on your phone. If you don't have it installed, search "${name} app" in your phone's app store — some settings are only accessible through the app.` },
+        { text: 'Tap **Settings** or the gear icon, then look for **Privacy**, **Connected Services**, or **Data Sharing**.' },
+        { text: `Find anything called **"${acct.insuranceProgram}"** and tap it. You should see a toggle or an option to disable/opt out. Turn it OFF.` },
+        { text: 'Verify the change saved by backing out and going back in — the toggle should still be off. You keep navigation, Bluetooth, CarPlay/Android Auto, and safety features. Only the insurance data sharing stops.' },
       ],
       debriefQs: APP_DISABLE_DEBRIEF,
       scoutDialog: {
@@ -170,10 +170,10 @@ function makeManufacturerMissions(accountId) {
     title: `Delete Data: ${name}`,
     briefing: `The final step: request ${name} delete the historical data they've already collected. This includes past location history, driving behavior records, and any data shared with partners. Under CCPA and similar state laws, they must comply.`,
     steps: [
-      { text: `Open ${name}'s privacy portal`, url: acct.securityUrl },
-      { text: 'Select "Delete My Personal Information"' },
-      { text: 'Verify your identity with VIN or account credentials' },
-      { text: 'Submit the deletion request and save confirmation' },
+      { text: `Open ${name}'s privacy portal — same one from the opt-out mission`, url: acct.securityUrl },
+      { text: 'This time, look for **"Delete My Personal Information"**, **"Data Deletion Request"**, or **"Right to Delete"**. It may be on the same form as the opt-out, just a different option.' },
+      { text: 'Verify your identity again with your **VIN** and/or account email. Same process as before.' },
+      { text: 'Submit the deletion request. **Screenshot the confirmation** — you\'ll need proof if the data shows up again. The opt-out stops new collection; this wipes what they already had.' },
     ],
     debriefQs: CAR_OPTOUT_DEBRIEF,
     scoutDialog: {
