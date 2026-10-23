@@ -23,18 +23,19 @@ command -v gh >/dev/null || { echo "gh not found on PATH" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh is not logged in" >&2; exit 1; }
 
 git -C "$repo" fetch origin
+rev=$(git -C "$repo" rev-parse --short "$ref")
 mkdir -p "$dir" "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
 chmod 0755 "$dir"
-[ -f "$dir/guard.mjs" ] && chmod 0644 "$dir/guard.mjs"
-git -C "$repo" show "$ref:scripts/bounty-guard/guard.mjs" > "$dir/guard.mjs"
+# Write to a temp file and rename, so launchd never runs a half-written guard.
+git -C "$repo" show "$ref:scripts/bounty-guard/guard.mjs" > "$dir/guard.mjs.tmp"
+chmod 0444 "$dir/guard.mjs.tmp"
+mv -f "$dir/guard.mjs.tmp" "$dir/guard.mjs"
 template=$(git -C "$repo" show "$ref:scripts/bounty-guard/com.multiverse.bounty-guard.plist")
-# State and status are rewritten in place, so they can live in a read-only dir.
-[ -s "$dir/state.json" ] || echo '{}' > "$dir/state.json"
-touch "$dir/status.txt"
-chmod 0644 "$dir/state.json" "$dir/status.txt"
-chmod 0444 "$dir/guard.mjs"
+# state/ is the only writable place: state.json and status.txt are replaced atomically there.
+mkdir -p "$dir/state"
+chmod 0700 "$dir/state"
 chmod 0555 "$dir"
-echo "Installed guard from $ref ($(git -C "$repo" rev-parse --short "$ref")) into $dir"
+echo "Installed guard from $ref ($rev) into $dir"
 
 echo "--- dry run ---"
 "$node_bin" "$dir/guard.mjs"
@@ -42,8 +43,9 @@ echo "--- end dry run ---"
 
 if [ "${BOUNTY_GUARD_NO_LOAD:-}" = 1 ]; then echo "BOUNTY_GUARD_NO_LOAD=1: not loading"; exit 0; fi
 
-printf '%s\n' "$template" | sed -e "s|__NODE__|$node_bin|g" -e "s|__DIR__|$dir|g" -e "s|__LOG__|$log|g" > "$plist"
-plutil -lint "$plist" >/dev/null
+printf '%s\n' "$template" | sed -e "s|__NODE__|$node_bin|g" -e "s|__DIR__|$dir|g" -e "s|__LOG__|$log|g" > "$plist.tmp"
+plutil -lint "$plist.tmp" >/dev/null
+mv -f "$plist.tmp" "$plist"
 launchctl bootout "gui/$(id -u)/$label" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$plist"
-echo "Loaded $plist (node: $node_bin). Log: $log  Status: $dir/status.txt"
+echo "Loaded $plist (node: $node_bin). Log: $log  Status: $dir/state/status.txt"

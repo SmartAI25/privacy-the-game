@@ -10,8 +10,9 @@
 // It runs on Liz's Mac from launchd (no CI runner ever executes fork code),
 // talks to GitHub only through the `gh` CLI, and never reads git state.
 // install.sh copies this file from origin/main into
-// ~/Library/Application Support/bounty-guard/ and runs it from there; state
-// (markers, evidence-request times) and a one-line status file live beside it.
+// ~/Library/Application Support/bounty-guard/ (read-only) and runs it from
+// there; state (markers, evidence-request times, last run) and a one-line
+// status file live in the writable state/ directory beside it.
 //
 //   node guard.mjs                 # dry run: print decisions, change nothing
 //   node guard.mjs --apply         # act on them
@@ -33,6 +34,12 @@ export const TEST_NET_REMOVAL_LIMIT = 20;
 /** A run planning more than this many writes is aborted untouched: something is off. */
 export const WRITE_CAP = { closes: 10, comments: 20 };
 export const LOG_MAX_BYTES = 1024 * 1024;
+/** Most actions one author can cause per run, so one account can't use up the write cap. */
+export const PER_AUTHOR_CAP = 3;
+/** GitHub's pulls/N/files endpoint lists at most this many files. */
+export const FILES_API_LIMIT = 3000;
+/** Comments are fetched from the last good run minus this margin. */
+export const COMMENT_SINCE_MARGIN_MS = 6 * 3600 * 1000;
 export const LABELS = {
   karmaFarming: 'karma-farming',
   karmaApproved: 'karma-approved',
@@ -126,45 +133,51 @@ export const sanitizePath = (p) => {
   return s || '(unprintable path)';
 };
 
-/** Test files deleted, renamed away from a test path, or net lines removed past the limit. */
+/**
+ * Test files deleted, renamed away from a test path, or lines removed past the
+ * limit. Only files that already existed count, each on its own: new files, or
+ * lines added to one test file, can't offset what was cut from another.
+ */
 export function testDamage(files) {
-  const touched = files.filter((f) => filePaths(f).some(isTestPath));
-  const deleted = touched.filter(
+  const existing = files.filter((f) => f.changeType !== 'ADDED' && filePaths(f).some(isTestPath));
+  const deleted = existing.filter(
     (f) => f.changeType === 'DELETED' || (f.changeType === 'RENAMED' && isTestPath(f.previousPath || '') && !isTestPath(f.path)),
   );
-  const net = touched.reduce((n, f) => n + (Number(f.deletions) || 0) - (Number(f.additions) || 0), 0);
-  const paths = [...new Set(touched.filter((f) => f.changeType !== 'ADDED').flatMap(filePaths).filter(isTestPath))];
+  const removed = existing.reduce((n, f) => n + Math.max(0, (Number(f.deletions) || 0) - (Number(f.additions) || 0)), 0);
+  const paths = [...new Set(existing.flatMap(filePaths).filter(isTestPath))];
   if (deleted.length) return { reason: 'Deletes or renames away existing tests.', paths };
-  if (net > TEST_NET_REMOVAL_LIMIT) return { reason: `Removes ${net} net lines from existing tests.`, paths };
+  if (removed > TEST_NET_REMOVAL_LIMIT) return { reason: `Removes ${removed} net lines from existing tests.`, paths };
   return null;
 }
 
 const issueInfo = (bounty, n) => (bounty instanceof Map ? bounty.get(n) : null) || { labels: [], comments: [] };
 
-// ---------------------------------------------------------------------------
+/** Public wording only: fetch details (gh stderr) go to the log, never into a comment. */
+export const FILES_UNREADABLE = "The bounty guard couldn't read this PR's full file list, so a maintainer will review it by hand.";
 
 /**
  * Decide what to do with one PR.
- * pr:  {number, title, body, author, authorAssociation, isBot?, createdAt, labels?,
+ * pr:  {number, title, body, author, authorAssociation, isBot?, createdAt, labels?, changedFiles?,
  *       files: [{path, previousPath?, additions, deletions, changeType}], filesError?,
- *       closingIssues: [n], comments?: [{author, body}],
- *       maintainerUnlabeled?: [label], maintainerReopened?: bool}
+ *       closingIssues: [n], comments?: [{author, body}], maintainerReopened?: bool}
  * ctx: {bountyIssues: Set<n> | Map<n, {labels, comments}>, flaggedAuthors: Set<lowercase login>,
  *       now: Date, evidenceRequestedAt?: ISO, repo?}
- * Returns {action: 'close'|'flag'|'ok', reasons, paths, karmaFarming, labels,
- *          needsEvidence, needsMaintainer, closingKeyword, bountyRefs}.
+ * Returns {action: 'close'|'flag'|'ok', reasons, paths, karmaFarming, severity,
+ *          labels, needsEvidence, needsMaintainer, closingKeyword, bountyRefs, cleanupOk}.
+ * cleanupOk: the PR was fully assessed, so stale guard labels may be removed.
  */
 export function assessPr(pr, ctx) {
   const repo = ctx.repo || DEFAULT_REPO;
   const prLabels = pr.labels || [];
-  const unlabeled = new Set(pr.maintainerUnlabeled || []);
   const result = (action, extra = {}) => ({
-    action, reasons: [], paths: [], karmaFarming: false, labels: [], needsEvidence: false,
-    needsMaintainer: false, closingKeyword: [], bountyRefs: [], ...extra,
+    action, reasons: [], paths: [], karmaFarming: false, severity: 'normal', labels: [], needsEvidence: false,
+    needsMaintainer: false, closingKeyword: [], bountyRefs: [], cleanupOk: false, ...extra,
   });
 
   // Collaborators are trusted. GitHub Apps (dependabot) are installed by a
-  // maintainer and can't claim karma. Maintainer overrides win.
+  // maintainer and can't claim karma. The only maintainer overrides are labels
+  // a maintainer adds on purpose; nothing is inferred from label removals,
+  // because the guard itself runs as a maintainer.
   if (isMaintainer(pr.authorAssociation) || pr.isBot) return result('ok');
   if (prLabels.includes(LABELS.karmaApproved) || prLabels.includes(LABELS.guardSkip)) return result('ok', { reasons: ['maintainer override label'] });
 
@@ -174,34 +187,40 @@ export function assessPr(pr, ctx) {
   const closingKeyword = [...new Set([...closingKeywordRefs(pr.body, repo), ...(pr.closingIssues || [])])].filter((n) => bounty.has(n));
   const base = { bountyRefs, closingKeyword };
 
-  // Without a trustworthy file list nothing can be decided either way.
-  if (pr.filesError) {
-    return result('flag', { ...base, reasons: [`Couldn't read the full file list (${pr.filesError}); a maintainer will review this PR by hand.`], needsMaintainer: true, labels: [LABELS.needsMaintainer] });
-  }
-
+  // A partial file list still gets every check; it just can never pass as ok.
   const files = pr.files || [];
+  const partial = Boolean(pr.filesError);
   const karma = [];
+  const high = [];
   const close = [];
   const flags = [];
   const paths = new Set();
   const note = (list) => list.forEach((p) => paths.add(sanitizePath(p)));
-  let needsMaintainer = false;
+  let needsMaintainer = partial;
 
   if ((ctx.flaggedAuthors || new Set()).has(String(pr.author || '').toLowerCase())) {
     karma.push(`@${sanitizePath(pr.author)} was already labelled \`${LABELS.karmaFarming}\` on an earlier PR, so later claims are closed automatically.`);
+    high.push('flagged-author');
+  }
+
+  if (Number(pr.changedFiles) > FILES_API_LIMIT) {
+    close.push(`Changes ${Number(pr.changedFiles)} files, more than GitHub lets the guard list (${FILES_API_LIMIT}). Split it up, or ask a maintainer.`);
   }
 
   const protectedFiles = files.flatMap(filePaths).filter(isProtectedPath);
   if (protectedFiles.length) {
     note(protectedFiles);
     karma.push("Touches `collective/`, which runs the nightly job that deletes opted-out players' data. Changes there need a maintainer and their own issue.");
+    high.push('collective');
   }
 
   const damage = testDamage(files);
   if (damage) {
     note(damage.paths);
-    if (isBountyPr) karma.push(damage.reason);
-    else {
+    if (isBountyPr) {
+      karma.push(damage.reason);
+      high.push('tests');
+    } else {
       needsMaintainer = true;
       flags.push(`${damage.reason} A maintainer will review this PR.`);
     }
@@ -219,10 +238,11 @@ export function assessPr(pr, ctx) {
   if (generated.length) {
     note(generated);
     close.push('Hand-edits generated files. They are rebuilt from `research/data-brokers/build/`; see "How to rebuild" in research/data-brokers/README.md.');
+    high.push('generated');
   }
 
   let needsEvidence = false;
-  if (isBountyPr && !unlabeled.has(LABELS.needsEvidence) && !hasEvidence(pr, bountyRefs, bounty)) {
+  if (isBountyPr && !hasEvidence(pr, bountyRefs, bounty)) {
     needsEvidence = true;
     const asked = ctx.evidenceRequestedAt ? new Date(ctx.evidenceRequestedAt).getTime() : null;
     if (asked !== null && (ctx.now || new Date()).getTime() - asked >= EVIDENCE_GRACE_MS) {
@@ -232,29 +252,28 @@ export function assessPr(pr, ctx) {
     }
   }
 
-  if (closingKeyword.length && !unlabeled.has(LABELS.refsNotFixes)) {
+  if (closingKeyword.length) {
     flags.push(`Uses a closing keyword on bounty issue ${closingKeyword.map((n) => `#${n}`).join(', ')}; please write \`Refs #N\` instead. A maintainer closes bounty issues after checking the evidence.`);
   }
+  if (partial) flags.push(FILES_UNREADABLE);
 
   const outPaths = [...paths].sort();
-  const flagLabels = () => {
-    const l = [];
-    if (needsEvidence) l.push(LABELS.needsEvidence);
-    if (needsMaintainer) l.push(LABELS.needsMaintainer);
-    if (closingKeyword.length && !unlabeled.has(LABELS.refsNotFixes)) l.push(LABELS.refsNotFixes);
-    return l.filter((x) => !unlabeled.has(x));
-  };
+  const common = { ...base, paths: outPaths, needsEvidence, needsMaintainer, cleanupOk: !partial, detail: pr.filesError || null };
 
   if (karma.length || close.length) {
-    // A maintainer who reopened the PR or took the karma-farming label off has decided.
-    if (pr.maintainerReopened || unlabeled.has(LABELS.karmaFarming)) {
-      return result('ok', { ...base, reasons: ['maintainer reopened or unlabelled this PR; not re-closing'], paths: outPaths });
-    }
+    // A maintainer reopened a PR the guard closed: that is a decision (the guard never reopens PRs).
+    if (pr.maintainerReopened) return result('ok', { ...common, reasons: ['a maintainer reopened this PR; not re-closing'], cleanupOk: false });
     const karmaFarming = karma.length > 0;
-    return result('close', { ...base, reasons: [...karma, ...close], paths: outPaths, karmaFarming, labels: karmaFarming ? [LABELS.karmaFarming] : [], needsEvidence });
+    return result('close', { ...common, reasons: [...karma, ...close], karmaFarming, severity: high.length ? 'high' : 'normal', labels: karmaFarming ? [LABELS.karmaFarming] : [] });
   }
-  if (flags.length) return result('flag', { ...base, reasons: flags, paths: outPaths, labels: flagLabels(), needsEvidence, needsMaintainer });
-  return result('ok', base);
+  if (flags.length) {
+    const labels = [];
+    if (needsEvidence) labels.push(LABELS.needsEvidence);
+    if (needsMaintainer) labels.push(LABELS.needsMaintainer);
+    if (closingKeyword.length) labels.push(LABELS.refsNotFixes);
+    return result('flag', { ...common, reasons: flags, labels });
+  }
+  return result('ok', common);
 }
 
 /** Wayback evidence in the PR body, or in a comment by the PR author on the PR or a referenced bounty issue. */
@@ -357,8 +376,8 @@ export function ineligibleComment(login) {
 
 /**
  * prs, issues as fetched; state = {prs: {N: {markers, evidenceRequestedAt}}, issues: {N: {markers}}}.
- * Returns {actions, errors}. One bad PR or issue becomes an error (or a
- * needs-maintainer flag), never an aborted run.
+ * Returns {actions, errors}. One bad PR or issue becomes an error, never an aborted run.
+ * Every action carries `author` (whose behaviour caused it) and `priority` (lower first).
  */
 export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, state = {}, repo = DEFAULT_REPO }) {
   const bountyIssues = new Map(issues.map((i) => [i.number, i]));
@@ -373,22 +392,26 @@ export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, st
       for (const m of st.markers || []) if (!done.has(m)) done.set(m, null);
       const asked = [st.evidenceRequestedAt, done.get('needs-evidence')].filter(Boolean).sort()[0] || null;
       const d = assessPr(pr, { bountyIssues, flaggedAuthors, now, evidenceRequestedAt: asked, repo });
-      const unlabeled = new Set(pr.maintainerUnlabeled || []);
-      const newLabels = d.labels.filter((l) => !(pr.labels || []).includes(l) && !unlabeled.has(l));
+      if (d.detail) errors.push(`${ref}: file list: ${d.detail} (assessed on the partial list)`);
+      const newLabels = d.labels.filter((l) => !(pr.labels || []).includes(l));
+      const author = String(pr.author || '').toLowerCase();
       if (d.action === 'close') {
-        actions.push({ kind: 'close-pr', number: pr.number, ref, reasons: d.reasons, paths: d.paths, labels: newLabels, comments: done.has('close') ? [] : [{ marker: 'close', body: closeComment(d) }] });
+        actions.push({ kind: 'close-pr', number: pr.number, ref, author, priority: d.severity === 'high' ? 1 : 2, reasons: d.reasons, paths: d.paths, labels: newLabels, comments: done.has('close') ? [] : [{ marker: 'close', body: closeComment(d) }] });
       } else if (d.action === 'flag') {
         const comments = [];
         if (d.needsEvidence && !done.has('needs-evidence')) comments.push({ marker: 'needs-evidence', body: needsEvidenceComment() });
         if (d.needsMaintainer && !done.has('needs-maintainer')) comments.push({ marker: 'needs-maintainer', body: needsMaintainerComment(d) });
-        if (d.closingKeyword.length && !unlabeled.has(LABELS.refsNotFixes) && !done.has('refs')) comments.push({ marker: 'refs', body: refsComment(d.closingKeyword) });
-        if (comments.length || newLabels.length) actions.push({ kind: 'flag-pr', number: pr.number, ref, reasons: d.reasons, paths: d.paths, labels: newLabels, comments });
+        if (d.closingKeyword.length && !done.has('refs')) comments.push({ marker: 'refs', body: refsComment(d.closingKeyword) });
+        if (comments.length || newLabels.length) actions.push({ kind: 'flag-pr', number: pr.number, ref, author, priority: 3, reasons: d.reasons, paths: d.paths, labels: newLabels, comments });
       }
-      // Evidence or Refs added since we flagged it: take the stale labels off.
-      const stale = [];
-      if ((pr.labels || []).includes(LABELS.needsEvidence) && !d.needsEvidence) stale.push(LABELS.needsEvidence);
-      if ((pr.labels || []).includes(LABELS.refsNotFixes) && !d.closingKeyword.length) stale.push(LABELS.refsNotFixes);
-      if (stale.length && d.action !== 'close') actions.push({ kind: 'unlabel', number: pr.number, ref, reasons: ['resolved'], labels: stale, comments: [] });
+      // Evidence or Refs added since we flagged it: take the stale labels off,
+      // but only when the PR was fully assessed and isn't under an override.
+      if (d.cleanupOk && d.action !== 'close') {
+        const stale = [];
+        if ((pr.labels || []).includes(LABELS.needsEvidence) && !d.needsEvidence) stale.push(LABELS.needsEvidence);
+        if ((pr.labels || []).includes(LABELS.refsNotFixes) && !d.closingKeyword.length) stale.push(LABELS.refsNotFixes);
+        if (stale.length) actions.push({ kind: 'unlabel', number: pr.number, ref, author, priority: 5, reasons: ['resolved'], labels: stale, comments: [] });
+      }
     } catch (err) {
       errors.push(`${ref}: ${err.message}`);
     }
@@ -411,13 +434,14 @@ export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, st
           const marker = `reopen:${ev.createdAt}`;
           const done = guardComments(issue.comments, viewer);
           const posted = done.has(marker) || (st.markers || []).includes(marker);
-          actions.push({ kind: 'reopen-issue', number: issue.number, ref, reasons: d.reasons, labels: [], comments: posted ? [] : [{ marker, body: reopenComment(d.reasons, ev.createdAt) }] });
+          const author = String(ev.closer?.author || ev.actor || '').toLowerCase();
+          actions.push({ kind: 'reopen-issue', number: issue.number, ref, author, priority: 0, reasons: d.reasons, labels: [], comments: posted ? [] : [{ marker, body: reopenComment(d.reasons, ev.createdAt) }] });
         }
       }
       if (!(issue.labels || []).includes(LABELS.guardSkip)) {
         for (const login of assessIssueComments(issue, flaggedAuthors, viewer, st.markers || [])) {
           const body = ineligibleComment(login);
-          actions.push({ kind: 'ineligible-reply', number: issue.number, ref, reasons: [`comment from flagged @${sanitizePath(login)}`], labels: [], comments: [{ marker: `ineligible:${sanitizePath(login).toLowerCase()}`, body }] });
+          actions.push({ kind: 'ineligible-reply', number: issue.number, ref, author: login.toLowerCase(), priority: 4, reasons: [`comment from flagged @${sanitizePath(login)}`], labels: [], comments: [{ marker: `ineligible:${sanitizePath(login).toLowerCase()}`, body }] });
         }
       }
     } catch (err) {
@@ -427,28 +451,68 @@ export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, st
   return { actions, errors };
 }
 
-/** Writes a plan would make; if over WRITE_CAP the whole --apply run is refused. */
+const isCloseLike = (a) => a.kind === 'close-pr' || a.kind === 'reopen-issue';
+
+/** Writes a list of actions would make. */
 export function writeCount(actions) {
-  const closes = actions.filter((a) => a.kind === 'close-pr' || a.kind === 'reopen-issue').length;
+  const closes = actions.filter(isCloseLike).length;
   const comments = actions.reduce((n, a) => n + (a.comments || []).length, 0);
   return { closes, comments, exceeded: closes > WRITE_CAP.closes || comments > WRITE_CAP.comments };
 }
 
+/**
+ * Pick what to do this run. Highest priority first (reopening bounty issues,
+ * then closes for collective/, generated files, gutted tests and flagged
+ * authors); at most WRITE_CAP closes/reopens and comments and PER_AUTHOR_CAP
+ * actions per author. Everything else waits for the next run, so a flood
+ * delays enforcement instead of switching it off.
+ */
+export function selectWithinCap(actions) {
+  const order = actions.map((a, i) => [a, i]).sort((x, y) => (x[0].priority ?? 9) - (y[0].priority ?? 9) || x[1] - y[1]).map(([a]) => a);
+  const run = [];
+  const deferred = [];
+  let closes = 0;
+  let comments = 0;
+  const perAuthor = new Map();
+  for (const a of order) {
+    const c = (a.comments || []).length;
+    const k = isCloseLike(a) ? 1 : 0;
+    const n = perAuthor.get(a.author) || 0;
+    const counts = k || c;
+    if (closes + k > WRITE_CAP.closes || comments + c > WRITE_CAP.comments || (counts && a.author && n >= PER_AUTHOR_CAP)) {
+      deferred.push(a);
+      continue;
+    }
+    closes += k;
+    comments += c;
+    if (counts && a.author) perAuthor.set(a.author, n + 1);
+    run.push(a);
+  }
+  return { run, deferred };
+}
+
 // ---------------------------------------------------------------------------
-// State, status and log files (beside guard.mjs unless BOUNTY_GUARD_HOME is set).
+// State, status and log files. They live in state/ next to guard.mjs (or in
+// BOUNTY_GUARD_HOME): install.sh keeps the guard's own directory read-only
+// and only state/ writable.
 
 export function loadState(file) {
-  if (!existsSync(file)) return { prs: {}, issues: {} };
+  const empty = { prs: {}, issues: {}, lastRunAt: null, flaggedAuthorsSeen: [] };
+  if (!existsSync(file)) return empty;
   const text = readFileSync(file, 'utf8').trim();
-  if (!text) return { prs: {}, issues: {} };
+  if (!text) return empty;
   const s = JSON.parse(text);
-  return { prs: s.prs || {}, issues: s.issues || {} };
+  return { ...empty, ...s, prs: s.prs || {}, issues: s.issues || {} };
 }
 
-/** Written in place, not renamed, so the install directory can stay read-only. */
-export function saveState(file, state) {
-  writeFileSync(file, `${JSON.stringify(state, null, 1)}\n`);
+/** Atomic: write a temp file beside it, then rename over. */
+export function writeAtomic(file, text) {
+  const tmp = `${file}.${process.pid}.tmp`;
+  writeFileSync(tmp, text);
+  renameSync(tmp, file);
 }
+
+export const saveState = (file, state) => writeAtomic(file, `${JSON.stringify(state, null, 1)}\n`);
 
 export function recordMarker(state, a, marker, now) {
   const bucket = a.kind.endsWith('-pr') || a.kind === 'unlabel' ? 'prs' : 'issues';
@@ -456,6 +520,19 @@ export function recordMarker(state, a, marker, now) {
   entry.markers ||= [];
   if (!entry.markers.includes(marker)) entry.markers.push(marker);
   if (marker === 'needs-evidence' && !entry.evidenceRequestedAt) entry.evidenceRequestedAt = now.toISOString();
+}
+
+/**
+ * Where to start the repo-wide comment fetch. Everything the guard needs from
+ * older comments is either in state (its own markers) or fetched in full per
+ * PR and per referenced bounty issue. A full fetch happens on the first run
+ * and whenever a newly flagged author appears (their old claims need replies).
+ */
+export function commentsSince(state, flaggedAuthors) {
+  if (!state.lastRunAt) return null;
+  const seen = new Set(state.flaggedAuthorsSeen || []);
+  if ([...flaggedAuthors].some((a) => !seen.has(a))) return null;
+  return new Date(new Date(state.lastRunAt).getTime() - COMMENT_SINCE_MARGIN_MS).toISOString();
 }
 
 /** Keep the launchd log bounded: past LOG_MAX_BYTES it becomes <log>.1 (one generation). */
@@ -484,16 +561,26 @@ function graphql(query, vars) {
 }
 
 const jsonLines = (out) => out.split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
+const COMMENT_JQ = '.[] | {n: (.issue_url | split("/") | last | tonumber), author: .user.login, body, createdAt: .created_at}';
 
-/** Every issue and PR conversation comment in the repo, fully paged, grouped by number. */
-function fetchAllComments(repo) {
-  const rows = jsonLines(gh(['api', '--paginate', `repos/${repo}/issues/comments?per_page=100`, '--jq', '.[] | {n: (.issue_url | split("/") | last | tonumber), author: .user.login, body, createdAt: .created_at}']));
+function groupComments(rows) {
   const by = new Map();
   for (const r of rows) {
     if (!by.has(r.n)) by.set(r.n, []);
     by.get(r.n).push({ author: r.author, body: r.body, createdAt: r.createdAt });
   }
   return by;
+}
+
+/** Repo-wide issue and PR comments updated since `since` (all of them when null), fully paged. */
+function fetchRecentComments(repo, since) {
+  const q = since ? `&since=${encodeURIComponent(since)}` : '';
+  return groupComments(jsonLines(gh(['api', '--paginate', `repos/${repo}/issues/comments?per_page=100${q}`, '--jq', COMMENT_JQ])));
+}
+
+/** Every comment on one issue or PR, fully paged. */
+function fetchThreadComments(repo, number) {
+  return groupComments(jsonLines(gh(['api', '--paginate', `repos/${repo}/issues/${number}/comments?per_page=100`, '--jq', COMMENT_JQ]))).get(number) || [];
 }
 
 const STATUS = { added: 'ADDED', removed: 'DELETED', modified: 'MODIFIED', renamed: 'RENAMED', copied: 'COPIED', changed: 'CHANGED', unchanged: 'UNCHANGED' };
@@ -509,14 +596,13 @@ function fetchPrFiles(repo, number, expected) {
   }
 }
 
-function fetchOpenPrs(owner, name, maintainers, comments) {
+function fetchOpenPrs(owner, name, maintainers) {
   const q = `query($owner:String!,$name:String!,$after:String){repository(owner:$owner,name:$name){
     pullRequests(states:OPEN, first:25, after:$after){ pageInfo{hasNextPage endCursor} nodes{
       number title body createdAt changedFiles authorAssociation author{__typename login}
       labels(first:50){nodes{name}}
       closingIssuesReferences(first:20){nodes{number}}
-      timelineItems(itemTypes:[UNLABELED_EVENT, REOPENED_EVENT], first:100){nodes{
-        __typename ... on UnlabeledEvent{actor{login} label{name}} ... on ReopenedEvent{actor{login}} }}
+      timelineItems(itemTypes:[REOPENED_EVENT], first:100){nodes{ ... on ReopenedEvent{actor{login}} }}
     }}}}`;
   const repo = `${owner}/${name}`;
   const out = [];
@@ -524,23 +610,27 @@ function fetchOpenPrs(owner, name, maintainers, comments) {
   do {
     const page = graphql(q, { owner, name, after }).repository.pullRequests;
     for (const n of page.nodes) {
-      const byMaintainer = (e) => maintainers.has(String(e.actor?.login || '').toLowerCase());
-      const tl = n.timelineItems.nodes;
-      out.push({
+      const pr = {
         number: n.number,
         title: n.title,
         body: n.body,
         createdAt: n.createdAt,
+        changedFiles: n.changedFiles,
         author: n.author?.login || 'ghost',
         isBot: n.author?.__typename === 'Bot',
         authorAssociation: n.authorAssociation,
         labels: n.labels.nodes.map((l) => l.name),
         closingIssues: n.closingIssuesReferences.nodes.map((i) => i.number),
-        comments: comments.get(n.number) || [],
-        maintainerUnlabeled: tl.filter((e) => e.__typename === 'UnlabeledEvent' && byMaintainer(e)).map((e) => e.label?.name).filter(Boolean),
-        maintainerReopened: tl.some((e) => e.__typename === 'ReopenedEvent' && byMaintainer(e)),
-        ...fetchPrFiles(repo, n.number, n.changedFiles),
-      });
+        maintainerReopened: n.timelineItems.nodes.some((e) => maintainers.has(String(e.actor?.login || '').toLowerCase())),
+        comments: [],
+        files: [],
+      };
+      // Only PRs the guard judges need their files and full comment threads.
+      if (!isMaintainer(pr.authorAssociation) && !pr.isBot) {
+        Object.assign(pr, fetchPrFiles(repo, n.number, n.changedFiles));
+        pr.comments = fetchThreadComments(repo, n.number);
+      }
+      out.push(pr);
     }
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
   } while (after);
@@ -553,7 +643,7 @@ function fetchBountyIssues(owner, name, comments) {
       number state labels(first:50){nodes{name}}
       timelineItems(itemTypes:[CLOSED_EVENT], last:1){ nodes{ ... on ClosedEvent{
         createdAt actor{login}
-        closer{ __typename ... on PullRequest{ number authorAssociation labels(first:50){nodes{name}} } }
+        closer{ __typename ... on PullRequest{ number authorAssociation author{login} labels(first:50){nodes{name}} } }
       }}}}}}}`;
   const out = [];
   let after = null;
@@ -572,7 +662,7 @@ function fetchBountyIssues(owner, name, comments) {
               actor: ev.actor?.login || 'ghost',
               closer: ev.closer
                 ? ev.closer.__typename === 'PullRequest'
-                  ? { type: 'PullRequest', number: ev.closer.number, authorAssociation: ev.closer.authorAssociation, labels: ev.closer.labels.nodes.map((l) => l.name) }
+                  ? { type: 'PullRequest', number: ev.closer.number, author: ev.closer.author?.login || null, authorAssociation: ev.closer.authorAssociation, labels: ev.closer.labels.nodes.map((l) => l.name) }
                   : { type: ev.closer.__typename }
                 : null,
             }
@@ -657,54 +747,57 @@ async function main(argv) {
   const ri = argv.indexOf('--repo');
   const repo = ri >= 0 ? argv[ri + 1] : DEFAULT_REPO;
   const [owner, name] = repo.split('/');
-  const home = process.env.BOUNTY_GUARD_HOME || dirname(fileURLToPath(import.meta.url));
+  const home = process.env.BOUNTY_GUARD_HOME || join(dirname(fileURLToPath(import.meta.url)), 'state');
   const stateFile = join(home, 'state.json');
   const statusFile = join(home, 'status.txt');
   const stamp = () => new Date().toISOString();
   const status = (line) => {
-    if (doApply) writeFileSync(statusFile, `${stamp()} ${line}\n`);
+    if (doApply) writeAtomic(statusFile, `${stamp()} ${line}\n`);
   };
 
   if (doApply && rotateLog(process.env.BOUNTY_GUARD_LOG)) console.log(`${stamp()} rotated log`);
   console.log(`${stamp()} bounty-guard ${doApply ? 'APPLY' : 'dry run'} on ${repo}`);
 
   try {
+    const startedAt = new Date();
+    const state = loadState(stateFile);
     const viewer = gh(['api', 'user', '--jq', '.login']).trim();
     const maintainers = fetchMaintainers(repo);
     const flaggedAuthors = fetchFlaggedAuthors(repo);
-    const comments = fetchAllComments(repo);
+    const since = commentsSince(state, flaggedAuthors);
+    const comments = fetchRecentComments(repo, since);
     const issues = fetchBountyIssues(owner, name, comments);
-    const prs = fetchOpenPrs(owner, name, maintainers, comments);
-    const state = loadState(stateFile);
-    console.log(`${stamp()} ${prs.length} open PRs, ${issues.length} bounty issues, ${[...comments.values()].flat().length} comments, flagged authors: ${[...flaggedAuthors].join(', ') || 'none'}`);
+    const prs = fetchOpenPrs(owner, name, maintainers);
+
+    // Evidence may sit in an old comment on a bounty issue an open PR claims: fetch those threads in full.
+    const bountyNums = new Set(issues.map((i) => i.number));
+    const claimed = new Set(prs.filter((p) => !isMaintainer(p.authorAssociation) && !p.isBot).flatMap((p) => claimedIssues(p, repo)).filter((n) => bountyNums.has(n)));
+    for (const issue of issues) if (claimed.has(issue.number)) issue.comments = fetchThreadComments(repo, issue.number);
+
+    console.log(`${stamp()} ${prs.length} open PRs, ${issues.length} bounty issues, comments since ${since || 'the beginning'}: ${[...comments.values()].flat().length}, flagged authors: ${[...flaggedAuthors].join(', ') || 'none'}`);
 
     const now = new Date();
     const { actions, errors } = plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, state, repo });
-    for (const e of errors) console.error(`${stamp()} ERROR assessing ${e}`);
-    for (const a of actions) console.log(describeAction(a));
-    const w = writeCount(actions);
+    for (const e of errors) console.error(`${stamp()} ERROR ${e}`);
+    const { run, deferred } = selectWithinCap(actions);
+    for (const a of run) console.log(describeAction(a));
+    for (const a of deferred) console.log(`DEFERRED ${describeAction(a)}`);
+    const w = writeCount(run);
 
     if (!doApply) {
-      console.log(`${stamp()} ${actions.length} action(s), ${w.closes} close/reopen, ${w.comments} comment(s), ${errors.length} error(s) (dry run; pass --apply to act)`);
+      console.log(`${stamp()} ${run.length} action(s) (${w.closes} close/reopen, ${w.comments} comment(s)), ${deferred.length} deferred by caps, ${errors.length} error(s) (dry run; pass --apply to act)`);
       if (errors.length) process.exitCode = 1;
-      return;
-    }
-    if (w.exceeded) {
-      const msg = `ABORTED: plan has ${w.closes} closes/reopens and ${w.comments} comments (cap ${WRITE_CAP.closes}/${WRITE_CAP.comments}); nothing done`;
-      console.error(`${stamp()} ${msg}`);
-      status(msg);
-      process.exitCode = 2;
       return;
     }
 
     const have = fetchLabels(repo);
-    for (const l of new Set(actions.flatMap((a) => (a.kind === 'unlabel' ? [] : a.labels)))) {
+    for (const l of new Set(run.flatMap((a) => (a.kind === 'unlabel' ? [] : a.labels)))) {
       if (have.has(l)) continue;
       const [color, description] = LABEL_DEFS[l] || ['EDEDED', ''];
       gh(['api', `repos/${repo}/labels`, '-f', `name=${l}`, '-f', `color=${color}`, '-f', `description=${description}`]);
     }
     let failed = 0;
-    for (const a of actions) {
+    for (const a of run) {
       try {
         apply(repo, a, state, now, () => saveState(stateFile, state));
       } catch (err) {
@@ -712,14 +805,26 @@ async function main(argv) {
         console.error(`${stamp()} FAILED ${a.kind} ${a.ref}: ${String(err.stderr || err.message).trim()}`);
       }
     }
-    const summary = `${actions.length} action(s), ${failed} failed, ${errors.length} assessment error(s)`;
+    if (!failed) {
+      // The comment window only advances after a clean run.
+      state.lastRunAt = startedAt.toISOString();
+      state.flaggedAuthorsSeen = [...flaggedAuthors];
+    }
+    saveState(stateFile, state);
+    const summary = `${run.length} action(s), ${failed} failed, ${deferred.length} deferred, ${errors.length} error(s)`;
     console.log(`${stamp()} ${summary}`);
-    status(`${failed || errors.length ? 'FAILED' : 'ok'} ${summary}`);
+    const word = failed ? 'FAILED' : deferred.length ? 'ABORTED-PARTIAL' : errors.length ? 'WARN' : 'ok';
+    status(`${word} ${summary}`);
     if (failed || errors.length) process.exitCode = 1;
+    else if (deferred.length) process.exitCode = 2;
   } catch (err) {
     const msg = String(err.stderr || err.stack || err).trim();
     console.error(`${stamp()} bounty-guard crashed: ${msg}`);
-    status(`CRASHED ${msg.split('\n')[0].slice(0, 300)}`);
+    try {
+      status(`CRASHED ${msg.split('\n')[0].slice(0, 300)}`);
+    } catch {
+      // status dir unwritable: the non-zero exit and the log line above still show it
+    }
     process.exitCode = 1;
   }
 }

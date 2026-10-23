@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync, writeFileSync, mkdtempSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -17,6 +17,10 @@ import {
   closeComment,
   plan,
   writeCount,
+  selectWithinCap,
+  commentsSince,
+  FILES_UNREADABLE,
+  PER_AUTHOR_CAP,
   loadState,
   saveState,
   recordMarker,
@@ -140,6 +144,14 @@ describe('assessPr: tests rule', () => {
     }
   });
 
+  it('lines added elsewhere, or a new test file, cannot offset lines cut from an existing test', () => {
+    const d = assessPr(legitBountyPr({ files: [file('tests/a.test.js', 0, 30), file('tests/new.test.js', 100, 0, 'ADDED')] }), ctx());
+    expect(d.reasons.join('\n')).toMatch(/30 net lines/);
+    const d2 = assessPr(codePr([file('tests/a.test.js', 0, 25), file('tests/b.test.js', 30, 0)]), ctx());
+    expect(d2.action).toBe('flag');
+    expect(d2.needsMaintainer).toBe(true);
+  });
+
   it('a rename within tests/ is not a deletion', () => {
     expect(assessPr(codePr([file('tests/b.test.js', 0, 0, 'RENAMED', 'tests/a.test.js')]), ctx()).action).toBe('ok');
   });
@@ -220,13 +232,37 @@ describe('assessPr: bounty PRs', () => {
 });
 
 describe('assessPr: file list problems', () => {
-  it('a failed or truncated file fetch flags for a maintainer, never ok and never close', () => {
-    for (const filesError of ['fetch failed: HTTP 502', 'got 3000 of 3400 files']) {
-      const d = assessPr({ ...fixture(435), filesError }, ctx());
-      expect(d.action).toBe('flag');
-      expect(d.needsMaintainer).toBe(true);
-      expect(d.labels).toEqual(['needs-maintainer']);
-    }
+  it('a clean partial list flags for a maintainer with a fixed public message, never ok', () => {
+    const d = assessPr(codePr([file('src/a.js', 1, 1)], { filesError: 'fetch failed: HTTP 502 secret-ish stderr' }), ctx());
+    expect(d.action).toBe('flag');
+    expect(d.labels).toEqual(['needs-maintainer']);
+    expect(d.reasons).toEqual([FILES_UNREADABLE]);
+    expect(d.cleanupOk).toBe(false);
+    expect(JSON.stringify(d.reasons)).not.toMatch(/502|stderr/);
+  });
+
+  it('a partial list is still enforced: protected paths on it close, and author/evidence checks run', () => {
+    expect(assessPr({ ...fixture(435), filesError: 'got 3 of 9 files' }, ctx()).action).toBe('close');
+    const flagged = assessPr(codePr([], { author: 'TaherEzzi', filesError: 'fetch failed' }), ctx({ flaggedAuthors: new Set(['taherezzi']) }));
+    expect(flagged.action).toBe('close');
+    const asked = new Date(NOW.getTime() - EVIDENCE_GRACE_MS - 1000).toISOString();
+    const noEvidence = assessPr(legitBountyPr({ body: 'Refs #200', files: [], filesError: 'fetch failed' }), ctx({ evidenceRequestedAt: asked }));
+    expect(noEvidence.action).toBe('close');
+  });
+
+  it('more files than the API can list closes', () => {
+    const d = assessPr(codePr([file('src/a.js', 1, 1)], { changedFiles: 3500, filesError: 'got 3000 of 3500 files' }), ctx());
+    expect(d.action).toBe('close');
+    expect(d.reasons.join('\n')).toMatch(/3500 files/);
+  });
+
+  it('repro from review: a 502 never makes the guard remove needs-evidence (so the 72h close still happens)', () => {
+    const base = { flaggedAuthors: new Set(), maintainers: new Set(['lizthedeveloper']), viewer: 'lizTheDeveloper', now: NOW };
+    const pr = { ...legitBountyPr({ body: 'Refs #200', labels: ['needs-evidence'], files: [], filesError: 'fetch failed' }), comments: [] };
+    const { actions } = plan({ ...base, prs: [pr], issues: [{ number: 200, state: 'OPEN', labels: [], comments: [] }] });
+    expect(actions.some((a) => a.kind === 'unlabel')).toBe(false);
+    const skipped = { ...legitBountyPr({ body: `Refs #200 ${WAYBACK}`, labels: ['needs-evidence', 'guard-skip'] }), comments: [] };
+    expect(plan({ ...base, prs: [skipped], issues: [] }).actions).toEqual([]);
   });
 });
 
@@ -245,17 +281,15 @@ describe('assessPr: maintainer overrides', () => {
     }
   });
 
-  it('a PR a maintainer reopened, or took karma-farming off, is not re-closed', () => {
+  it('a PR a maintainer reopened is not re-closed (the guard never reopens PRs itself)', () => {
     expect(assessPr({ ...fixture(427), maintainerReopened: true }, ctx()).action).toBe('ok');
-    expect(assessPr({ ...fixture(427), maintainerUnlabeled: ['karma-farming'] }, ctx()).action).toBe('ok');
   });
 
-  it('a label a maintainer removed is not re-added', () => {
-    const d = assessPr(legitBountyPr({ body: 'Fixes #200', maintainerUnlabeled: ['needs-evidence'] }), ctx());
-    expect(d.needsEvidence).toBe(false);
-    expect(d.labels).toEqual(['refs-not-fixes']);
-    const d2 = assessPr(legitBountyPr({ body: `Fixes #200 ${WAYBACK}`, maintainerUnlabeled: ['refs-not-fixes'] }), ctx());
-    expect(d2.action).toBe('ok');
+  it('label removals are never read as overrides, since the guard removes labels as the same account', () => {
+    const d = assessPr(legitBountyPr({ body: 'Fixes #200', maintainerUnlabeled: ['needs-evidence', 'refs-not-fixes', 'karma-farming'] }), ctx());
+    expect(d.needsEvidence).toBe(true);
+    expect(d.labels).toEqual(['needs-evidence', 'refs-not-fixes']);
+    expect(assessPr({ ...fixture(427), maintainerUnlabeled: ['karma-farming'] }, ctx()).action).toBe('close');
   });
 });
 
@@ -380,7 +414,33 @@ describe('plan', () => {
   });
 });
 
-describe('write cap', () => {
+describe('write cap: priority order, deferral, per-author cap', () => {
+  const act = (kind, author, priority, comments = 1) => ({ kind, author, priority, comments: Array(comments).fill({}) });
+
+  it('a flood of low-priority work cannot block reopens or high-severity closes', () => {
+    const flood = Array.from({ length: 40 }, (_, i) => act('ineligible-reply', `spam${i}`, 4));
+    const urgent = [act('reopen-issue', 'x', 0), act('close-pr', 'y', 1)];
+    const { run, deferred } = selectWithinCap([...flood, ...urgent]);
+    expect(run.slice(0, 2).map((a) => a.kind)).toEqual(['reopen-issue', 'close-pr']);
+    expect(writeCount(run).exceeded).toBe(false);
+    expect(run.reduce((n, a) => n + a.comments.length, 0)).toBe(WRITE_CAP.comments);
+    expect(deferred.length).toBe(42 - run.length);
+  });
+
+  it(`one author gets at most ${PER_AUTHOR_CAP} actions per run`, () => {
+    const { run, deferred } = selectWithinCap([...Array.from({ length: 8 }, () => act('close-pr', 'farmer', 1)), act('close-pr', 'other', 2)]);
+    expect(run.filter((a) => a.author === 'farmer')).toHaveLength(PER_AUTHOR_CAP);
+    expect(run.some((a) => a.author === 'other')).toBe(true);
+    expect(deferred).toHaveLength(8 - PER_AUTHOR_CAP);
+  });
+
+  it('never more than the close cap', () => {
+    const { run } = selectWithinCap(Array.from({ length: 30 }, (_, i) => act('close-pr', `a${i}`, 1, 0)));
+    expect(run).toHaveLength(WRITE_CAP.closes);
+  });
+});
+
+describe('write count', () => {
   it(`refuses more than ${WRITE_CAP.closes} closes/reopens or ${WRITE_CAP.comments} comments`, () => {
     const close = { kind: 'close-pr', comments: [{}] };
     const reply = { kind: 'ineligible-reply', comments: [{}] };
@@ -401,7 +461,20 @@ describe('state and log files', () => {
     recordMarker(s, { kind: 'flag-pr', number: 9 }, 'needs-evidence', new Date(NOW.getTime() + 1000));
     recordMarker(s, { kind: 'reopen-issue', number: 61 }, 'reopen:x', NOW);
     saveState(f, s);
-    expect(loadState(f)).toEqual({ prs: { 9: { markers: ['needs-evidence'], evidenceRequestedAt: NOW.toISOString() } }, issues: { 61: { markers: ['reopen:x'] } } });
+    expect(loadState(f)).toMatchObject({ prs: { 9: { markers: ['needs-evidence'], evidenceRequestedAt: NOW.toISOString() } }, issues: { 61: { markers: ['reopen:x'] } } });
+  });
+
+  it('saves atomically (no temp file left behind)', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'bounty-guard-'));
+    saveState(join(dir, 'state.json'), { prs: {}, issues: {} });
+    expect(readdirSync(dir)).toEqual(['state.json']);
+  });
+
+  it('comment window: full fetch on first run or a newly flagged author, else since the last good run minus a margin', () => {
+    const flagged = new Set(['a']);
+    expect(commentsSince({ lastRunAt: null }, flagged)).toBeNull();
+    expect(commentsSince({ lastRunAt: '2026-10-23T12:00:00Z', flaggedAuthorsSeen: [] }, flagged)).toBeNull();
+    expect(commentsSince({ lastRunAt: '2026-10-23T12:00:00Z', flaggedAuthorsSeen: ['a'] }, flagged)).toBe('2026-10-23T06:00:00.000Z');
   });
 
   it('rotates the log once it passes the cap', () => {
@@ -426,6 +499,9 @@ describe('install files', () => {
     expect(sh).toMatch(/Library\/Application Support\/bounty-guard/);
     expect(sh).toMatch(/chmod 0444/);
     expect(sh).toMatch(/chmod 0555/);
+    expect(sh).toMatch(/guard\.mjs\.tmp"\n[\s\S]*mv -f "\$dir\/guard\.mjs\.tmp" "\$dir\/guard\.mjs"/);
+    expect(sh).toMatch(/mv -f "\$plist\.tmp" "\$plist"/);
+    expect(sh).toMatch(/chmod 0700 "\$dir\/state"/);
     expect(sh.indexOf('"$node_bin" "$dir/guard.mjs"')).toBeLessThan(sh.indexOf('launchctl bootstrap'));
   });
 
