@@ -9,7 +9,7 @@ import { initRouter, navigate, parseRoute, tracksPageview, RENDER_CAUSE } from '
 import { localDay, hasSavedState, loadState, saveState, updateMission, updateStreak, streakAfterFiling, toggleAccount, markMissionStarted } from './state.js';
 import { calcDistrictProgress, calcIntegrity, districtBreachedAddresses } from './utils/calc.js';
 import { MISSIONS, missionDistrict } from './data/missions.js';
-import { fileDebrief, applyRecheck, recordNotNeeded, missionEventData, visibleQuestions } from './utils/debrief.js';
+import { fileDebrief, applyRecheck, recheckWithChecklist, recordNotNeeded, missionEventData, visibleQuestions } from './utils/debrief.js';
 import { ensureBurst, startBurst } from './utils/bursts.js';
 import { applyCategoryAction } from './utils/pm-categories.js';
 import { isMissionDone } from './utils/mission-status.js';
@@ -27,6 +27,7 @@ import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { applyChecklistFiling } from './utils/broker-state.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
+import { checklistFor } from './data/broker-checklists.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
 import { renderStats } from './screens/stats.js';
 import { renderCityTogether, cityStats } from './screens/city-together.js';
@@ -245,7 +246,11 @@ function submitDebrief(missionId) {
 function submitRecheck(missionId) {
   const mission = MISSIONS.find((m) => m.id === missionId);
   if (!mission) return navigate('#/city');
-  const next = applyRecheck(state, mission, readAnswers(app, mission));
+  // A broker mission's ticked lines get today's date; the rest keep theirs.
+  const ticks = [...app.querySelectorAll('[data-broker-checklist] input[name="filed"]:checked')].map((el) => el.value);
+  const next = checklistFor(missionId)
+    ? recheckWithChecklist(state, mission, readAnswers(app, mission), ticks, localDay())
+    : applyRecheck(state, mission, readAnswers(app, mission));
   if (!next) {
     // Unanswered, or an answer that would un-file it: say so, change nothing.
     const msg = app.querySelector('[data-recheck-msg]');
@@ -806,7 +811,8 @@ function refreshDebriefForm(e) {
   // The first question changing ticks or clears the boxes once; the player can still change them.
   if (input.name === `q_${mission.debriefQs[0]?.id}`) {
     const ticks = checklistTicksFor(mission.debriefQs[0].id, input.value);
-    if (ticks) for (const box of form.querySelectorAll('[data-broker-checklist] input[name="filed"]')) box.checked = ticks === 'all';
+    // Not on a re-check: there only the lines the player ticks get a new date.
+    if (ticks) for (const box of form.querySelectorAll('[data-broker-checklist]:not([data-mode="recheck"]) input[name="filed"]')) box.checked = ticks === 'all';
   }
   const shown = new Set(visibleQuestions(mission, readAnswers(form, mission)).map((q) => q.id));
   for (const group of form.querySelectorAll('[data-question]')) group.hidden = !shown.has(group.dataset.question);

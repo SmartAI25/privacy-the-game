@@ -41,8 +41,8 @@ describe('broker debrief checklist', () => {
   it('the re-check form carries no file-mode checklist', () => {
     const s = { ...createInitialState(), missions: { [WEB]: { status: 'completed', optout_result: 'all-submitted', completedAt: '2026-10-01T12:00:00.000Z' } } };
     const html = renderDebrief(s, WEB, { recheck: true });
-    expect(html).not.toContain('name="filed"');
-    expect(html).not.toContain('data-broker-checklist');
+    expect(html).not.toContain('WHICH OF THESE DID YOU FILE?');
+    expect(html).not.toMatch(/data-broker-checklist="[^"]+"(?! data-mode="recheck")/);
   });
 
   it('checklistTicksFor', () => {

@@ -14,6 +14,7 @@ import { isPasswordMission, passwordResetNeed, isPmFlagged } from '../utils/pass
 import { twoFactorMethod } from '../utils/two-factor.js';
 import { renderPasswordProgress, renderCategoryAsk, renderCategoryQuiet } from '../components/password-progress.js';
 import { neededResets } from '../utils/bursts.js';
+import { checklistFor } from '../data/broker-checklists.js';
 
 function renderDistrictIntro(state, districtId) {
   const dialogue = DISTRICT_DIALOGUE[districtId];
@@ -444,6 +445,10 @@ function renderFacilitySection(state, facilityId, district) {
     let action;
     if (done) {
       action = `<div class="badge" style="letter-spacing: 1px; color: var(--lime); background: rgba(198,255,0,0.08); border-color: rgba(198,255,0,0.2);">DONE</div>`;
+      // A filed broker mission can be filed again: main's re-check mode.
+      if (record.status === 'completed' && checklistFor(m.id)) {
+        action = `<div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">${action}<a class="btn-primary" style="padding: 6px 14px; font-size: 8px; text-decoration: none; box-shadow: 0 0 10px rgba(0,229,255,0.15), 0 2px 0 #009bb3;" href="#/mission/${m.id}/recheck">RE-CHECK</a></div>`;
+      }
     } else if (skipped) {
       action = `<a class="btn-primary" style="padding: 6px 14px; font-size: 8px; text-decoration: none; box-shadow: 0 0 10px rgba(0,229,255,0.15), 0 2px 0 #009bb3;" href="#/mission/${m.id}/briefing">RETRY</a>`;
     } else {
