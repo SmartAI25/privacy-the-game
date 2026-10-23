@@ -85,6 +85,11 @@ export function recordChecklist(state, missionId, lineIds, day, { first = false 
   return withEntry(state, missionId, entry);
 }
 
+// The debrief's ticks count only on a completed filing.
+export function applyChecklistFiling(state, missionId, status, lineIds, day) {
+  return status === 'completed' ? recordChecklist(state, missionId, lineIds, day, { first: true }) : state;
+}
+
 export function setResidency(state, value) {
   const next = { ...state };
   if (RESIDENCY.includes(value)) next.caResident = value;

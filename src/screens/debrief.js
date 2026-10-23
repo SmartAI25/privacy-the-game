@@ -9,6 +9,7 @@ import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
 import { twoFactorMethod, CODE_METHODS } from '../utils/two-factor.js';
 import { scoutSprite } from '../components/scout.js';
+import { renderBrokerChecklist } from '../components/broker-checklist.js';
 import { feelingForDebrief, twoFactorHugDue } from '../utils/scout-feelings.js';
 
 const ROW = 'display: flex; align-items: center; gap: 12px; background: rgba(26,31,43,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 12px 16px;';
@@ -267,7 +268,8 @@ function debriefForm(state, mission, given = null, recheck = false) {
     if (v !== undefined) pre[q.id] = v;
   }
   const shown = new Set(visibleQuestions(mission, pre).map((q) => q.id));
-  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id], recheck)).join('')}</div>`;
+  const checklist = recheck ? '' : renderBrokerChecklist(mission, state, 'file');
+  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id], recheck)).join('')}${checklist}</div>`;
 }
 
 // A re-check of a mission that was never filed as done: no form, the way in.
