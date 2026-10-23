@@ -812,7 +812,12 @@ function refreshDebriefForm(e) {
   if (input.name === `q_${mission.debriefQs[0]?.id}`) {
     const ticks = checklistTicksFor(mission.debriefQs[0].id, input.value);
     // Not on a re-check: there only the lines the player ticks get a new date.
-    if (ticks) for (const box of form.querySelectorAll('[data-broker-checklist]:not([data-mode="recheck"]) input[name="filed"]')) box.checked = ticks === 'all';
+    const boxes = [...form.querySelectorAll('[data-broker-checklist]:not([data-mode="recheck"]) input[name="filed"]')];
+    // Moving off an "all" answer clears the boxes only if they still exactly match what "all" ticked.
+    const wasAll = form.dataset.prevAll === '1';
+    form.dataset.prevAll = ticks === 'all' ? '1' : '';
+    if (ticks) for (const box of boxes) box.checked = ticks === 'all';
+    else if (wasAll && boxes.length && boxes.every((b) => b.checked)) for (const box of boxes) box.checked = false;
   }
   const shown = new Set(visibleQuestions(mission, readAnswers(form, mission)).map((q) => q.id));
   for (const group of form.querySelectorAll('[data-question]')) group.hidden = !shown.has(group.dataset.question);

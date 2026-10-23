@@ -15,13 +15,13 @@ const WEB = 'people_search-fortify-web-forms';
 describe('broker filing privacy', () => {
   it('restoreEvents is identical with and without the broker fields', () => {
     const base = { ...createInitialState(), missions: { [WEB]: { status: 'completed', optout_result: 'all-submitted', completedAt: '2026-10-01T12:00:00.000Z' } } };
-    const withBroker = { ...base, brokerFiled: { [WEB]: { lines: { spokeo: '2026-10-23' }, since: '2026-10-23' } }, brokerResidency: 'yes', brokerBigCheck: { spokeo: '2026-10-23' } };
+    const withBroker = { ...base, brokerFiled: { [WEB]: { lines: { spokeo: '2026-10-23' }, since: '2026-10-23' } }, caResident: 'yes', bigCheck: { spokeo: '2026-10-23' } };
     expect(JSON.stringify(restoreEvents(withBroker))).toBe(JSON.stringify(restoreEvents(base)));
   });
 
   it('the new modules never import analytics', () => {
     for (const f of ['src/utils/broker-state.js', 'src/utils/broker-lighting.js', 'src/components/broker-checklist.js', 'src/data/broker-checklists.js'])
-      expect(readFileSync(f, 'utf8').replace(/^\s*\/\/.*$/gm, '')).not.toMatch(/import[^;]*analytics|\btrack\(/);
+      expect(readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '')).not.toMatch(/import[^;]*analytics|\btrack\(|umami|__rc/i);
   });
 
   it('checklist breadcrumbs never leave the device', () => {
@@ -31,7 +31,7 @@ describe('broker filing privacy', () => {
 
   it('re-check mode can never auto-tick the checklist boxes', () => {
     const src = readFileSync('src/app.js', 'utf8');
-    const line = src.split('\n').find((l) => l.includes('input[name="filed"]') && l.includes('box.checked'));
+    const line = src.split('\n').find((l) => l.includes('const boxes') && l.includes('input[name="filed"]'));
     expect(line).toContain(':not([data-mode="recheck"])');
   });
 
@@ -56,5 +56,22 @@ describe('district done row', () => {
     const row = src.slice(src.indexOf('const missionRows = missions.map((m) => {', src.indexOf('renderFacilitySection')));
     expect(row).not.toMatch(/border-bottom: 1px solid rgba\(0,229,255,0\.04\); \$\{done \? 'opacity: 0\.5;'/);
     expect(row).toContain('const dim');
+  });
+});
+
+describe('review fixes', () => {
+  it('moving off an "all" answer clears boxes that still match what it ticked', () => {
+    const src = readFileSync('src/app.js', 'utf8');
+    expect(src).toContain("form.dataset.prevAll = ticks === 'all' ? '1' : ''");
+    expect(src).toMatch(/wasAll && boxes\.length && boxes\.every\(\(b\) => b\.checked\)/);
+  });
+
+  it('re-check label asks WHICH DID YOU FILE? while any line is undated', () => {
+    const dated = { ...createInitialState(), missions: { [WEB]: { status: 'completed', optout_result: 'all-submitted', completedAt: '2026-10-01T12:00:00.000Z' } }, brokerFiled: { [WEB]: { lines: { spokeo: '2026-10-01' }, since: '2026-10-01' } } };
+    expect(renderDebrief(dated, WEB, { recheck: true })).toContain('WHICH DID YOU FILE?');
+    const all = { ...dated, brokerFiled: { [WEB]: { lines: { spokeo: '2026-10-01', whitepages: '2026-10-01', beenverified: '2026-10-01' }, since: '2026-10-01' } } };
+    expect(renderDebrief(all, WEB, { recheck: true })).toContain('FILED AGAIN?');
+    const pending = { ...dated, missions: { [WEB]: { status: 'completed', optout_result: 'some-submitted', completedAt: '2026-10-01T12:00:00.000Z' } }, brokerFiled: {} };
+    expect(renderDebrief(pending, WEB, { recheck: true })).toContain('TELL SCOUT WHICH ONES YOU FILED');
   });
 });

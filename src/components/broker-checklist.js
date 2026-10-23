@@ -49,14 +49,15 @@ function recheckRow(line, day) {
     </label>`;
 }
 
-const SUB = '<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It lights your field map and is never sent anywhere.</div>';
+const SUB = '<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It\'s never sent anywhere.</div>';
 
 export function renderBrokerChecklist(mission, state, mode = 'file') {
   const list = checklistFor(mission?.id);
   if (!list) return '';
   if (mode === 'recheck') {
     const dates = lineDates(state, mission.id);
-    const label = isChecklistPending(state, mission.id) ? 'TELL SCOUT WHICH ONES YOU FILED' : 'FILED AGAIN?';
+    const undated = list.some((l) => !dates[l.id]);
+    const label = isChecklistPending(state, mission.id) ? 'TELL SCOUT WHICH ONES YOU FILED' : undated ? 'WHICH DID YOU FILE?' : 'FILED AGAIN?';
     return `
   <div class="broker-checklist" data-broker-checklist="${esc(mission.id)}" data-mode="recheck" style="margin-bottom: 28px;">
     <div class="section-label" style="color: rgba(0,229,255,0.5); margin-bottom: 14px;">${label}</div>
