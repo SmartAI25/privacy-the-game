@@ -12,6 +12,8 @@ Bounties are paid in karma points. Before you start one:
 
 A maintainer turns your evidence into a dataset change. You don't need to open a pull request.
 
+Karma is paid only after a maintainer verifies the evidence and applies `karma-approved`. Submissions with fabricated or AI-generated evidence are labelled `karma-farming`, earn nothing, and the account's later claims are closed automatically.
+
 ## Pull requests
 
 If you do open one for a bounty:
