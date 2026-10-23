@@ -1,6 +1,7 @@
 import { captureError } from './utils/errors.js';
 import { ACCOUNTS } from './data/accounts.js';
 import { migrateBrokenAnswers } from './utils/migrate-answers.js';
+import { cleanBrokerState } from './utils/broker-state.js';
 
 export const STATE_VERSION = 1;
 const STORAGE_KEY = 'reclaim-city-state';
@@ -45,7 +46,7 @@ export function loadState(storage = localStorage) {
         parsed.accounts[id] = { enabled: true, name: a.name, district: a.district };
       }
     }
-    return migrateBrokenAnswers(parsed);
+    return cleanBrokerState(migrateBrokenAnswers(parsed));
   } catch (error) {
     captureError(error, { operation: 'loadState' });
     return createInitialState();
