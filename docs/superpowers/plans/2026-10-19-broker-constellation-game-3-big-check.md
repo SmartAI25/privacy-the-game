@@ -26,7 +26,13 @@
   - none of the phrases banned in `tests/recon-phase3-districts.test.js`
   - added to `docs/scout-dialogue-ch8-reclamation.md` as well
 - Opt-out links follow Plan 2's rule: only `verified` URLs are links.
-- Every PR bumps the version.
+- Every PR bumps the version (`package.json` + `package-lock.json`) **and** sets `src/index.html`'s stylesheet link to `style.css?v=<new version>` (`tests/css-cache-bust.test.js`).
+- Error reports carry nothing per-broker. The Big Check screen's root carries the class `big-check`, and Task 2 adds it to `PRIVATE_UI` in `src/utils/errorNoise.js`. No broker id or name goes in an `id`, `name` or `title` attribute (Sentry selectors include them). Ticks use `data-big-check`, which selectors leave out.
+- Curated dataset config lives in `research/data-brokers/build/*.json` and generated files are never hand-edited (`CONTRIBUTING.md`, #449). `sweeps.json` is curated config, so it goes in `build/`. The PR description follows `.github/pull_request_template.md`, including the Evidence section with the Wayback captures of both member lists.
+- **Decisions (controller, 2026-10-23):**
+  - Broker missions are filed again in main's re-check mode (`#/mission/<id>/recheck`), which holds the checklist (Plan 1, decision 1). A Big Check row in a mission the player completed but hasn't recorded links there. Rows in missions not yet done link to the briefing.
+  - The map's first visit animates the lit stars, within `prefers-reduced-motion` (Plan 2). The Big Check has no bloom.
+  - Only ticked lines and ticks refresh a star's date. A re-check with no ticks changes nothing (Plan 1, decision 3).
 - Decisions (Liz, 2026-10-19):
   - NAI/DAA member lists are their own source kind (`member-list`). They are used only for the halo and for new `ad-network` records of members the registries don't list. They never back a drawn or published link.
   - The Big Check also lists brokers from missions the player hasn't done. Those rows link to the mission instead of offering a tick box. Ticks are only for brokers no mission covers.
@@ -36,7 +42,7 @@
 ## Review Focus
 
 1. **A Big Check tick on a broker that a later dataset release puts in a mission.** Expected: the tick stays recorded and the star stays lit, and the row shows the mission instead of a tick box. Pinned by Task 2's `a ticked broker that gains a mission stays lit`.
-2. **About 750 rows on a phone (903 brokers, less buyers, `none` routes and anything lit), filtered to nothing.** Expected: `No brokers match`, and clearing the filter restores the groups. Pinned by Task 2's `filtering to nothing says so`.
+2. **About 880 rows on a phone (on main: 903 brokers less 18 buyers and 2 `none` routes is 883 before anything is lit; 681 of them have no `kind`, so "Not yet classified" is the biggest group), filtered to nothing.** Expected: `No brokers match`, and clearing the filter restores the groups. Pinned by Task 2's `filtering to nothing says so`.
 3. **Scout's one-time lines after a reload.** Expected: each line shows once per save, never twice. Pinned by Task 3's `each map line shows once`.
 4. **A member list naming a company under a different spelling** (`Criteo SA` vs. the record `criteo`). Expected: one record, matched by legal name; a match on brand alone is never made. Pinned by Task 1's `members match records by legal name only`.
 5. **Ticks reaching progress or the collective.** Expected: `calcDistrictProgress`, `calcIntegrity` and `restoreEvents` are identical with and without `bigCheck`. Pinned by Task 2's `Big Check ticks count for nothing but the map`.
@@ -47,7 +53,7 @@
 
 ```
 research/data-brokers/build/sweeps.json      NAI/DAA member lists (source of truth)
-research/data-brokers/build/schema.js        source kind member-list; validateSweeps
+research/data-brokers/build/schema.js        MEMBER_LIST_KIND; validateLink rejects member-list sources; validateSweeps
 research/data-brokers/build/validate.js      runs validateSweeps
 research/data-brokers/build/export.js        writes sweeps into broker-map.json
 research/data-brokers/staging/membership/    member companies with no record yet (merged by merge-staging.js)
@@ -58,6 +64,8 @@ src/utils/broker-scout.js                    mapScoutLine, MAP_SCOUT_KEYS
 src/utils/broker-state.js                    markScoutSeen
 src/data/dialogue.js                         BROKER_MAP_DIALOGUE (rest of the lines)
 docs/scout-dialogue-ch8-reclamation.md       the same lines, documented
+src/utils/errorNoise.js                      PRIVATE_UI gains big-check
+src/index.html                               style.css?v= follows package.json
 ```
 
 ---
@@ -66,20 +74,32 @@ docs/scout-dialogue-ch8-reclamation.md       the same lines, documented
 
 **Files:**
 - Create: `research/data-brokers/build/sweeps.json`, `research/data-brokers/staging/membership/…`
-- Modify: `research/data-brokers/build/schema.js`, `validate.js`, `export.js`, `sources.json`, `brokers/*.json` (via merge), `src/data/broker-map.json` and `src/data/broker-layout.json` (regenerated), `research/data-brokers/README.md` (a "Sweeps" section, the new source kind, new counts and a new `asOf`)
+- Modify: `research/data-brokers/build/schema.js`, `validate.js`, `export.js`, `sources.json`, `brokers/*.json` (via merge), `src/data/broker-map.json` and `src/data/broker-layout.json` (regenerated), `research/data-brokers/README.md`:
+  - a "Sweeps" section;
+  - the new source kind;
+  - `build/sweeps.json` in the "How to rebuild" list of curated config;
+  - `membership` added last to step 4's merge loop: `for f in sec enforcement procurement policies journalism membership; do`;
+  - new counts and a new `asOf`.
 - Test: `tests/broker-data/sweeps.test.js`
 
 **Interfaces:**
 - Produces:
   - `sweeps.json`: `{ "nai": { "name": "NAI opt-out tool", "source": "<source id>", "members": ["<broker id>", …] }, "daa": { "name": "DAA WebChoices", … } }`, with members sorted.
-  - The source kind `member-list` is added to the schema's source kinds. It is never a tier A kind, so it can never back a published link.
+  - On main, `schema.js` has no list of source kinds: `validateSource` accepts any non-empty `kind`, and only `TIER_A_SOURCE_KINDS` is named. So the plan adds `export const MEMBER_LIST_KIND = 'member-list'`, used where the schema actually needs it:
+    - `validateLink(l, { …, sourceKinds })`: when `sourceKinds` is given, a link citing any `member-list` source is an error, published or not: `link <from>-><to>: a member-list source can't back a link`. Membership never backs a drawn or published link (Liz, 2026-10-19).
+    - `validateSweeps`: each sweep's `source` must be a `member-list` source.
+    - `TIER_A_SOURCE_KINDS` stays as it is, without `member-list`.
+    - Broker records may cite a `member-list` source; that is how the new `ad-network` records are sourced.
   - `validateSweeps(sweeps, { brokerIds: Set, sources }) → string[]`. Errors: an unknown member id, a duplicate member, a missing source, a source whose kind isn't `member-list`, or a sweep id other than `nai` and `daa`.
   - The export adds `sweeps: { nai: { name, source: { url, archived }, members }, daa: { … } }`. `formatVersion` stays `1` (additive), and a reader treats a missing `sweeps` as `{}`.
 
 - [ ] **Step 1: Write the failing tests**:
   - `validateSweeps rejects unknown members`
   - `validateSweeps rejects a non-member-list source`
-  - `member-list is not a tier A kind`
+  - `member-list is not a tier A kind` (`expect(TIER_A_SOURCE_KINDS).not.toContain(MEMBER_LIST_KIND)`)
+  - `a link citing a member-list source is rejected, published or not`
+  - `a broker record may cite a member-list source`
+  - `the README merge loop includes membership` (it reads `research/data-brokers/README.md` and matches `journalism membership; do`)
   - `members match records by legal name only` (a fixture member `Criteo SA` merges into `criteo` through `normalizeName`; a fixture brand-only match stays unmatched and lands in staging)
   - `export writes sweeps with archived sources`
   - `export without sweeps.json writes no sweeps key`
@@ -93,7 +113,7 @@ docs/scout-dialogue-ch8-reclamation.md       the same lines, documented
 
 **Files:**
 - Create: `src/utils/big-check.js`, `src/screens/big-check.js`
-- Modify: `src/router.js`, `src/app.js`, `src/components/star-card.js`, `src/screens/broker-map.js` (a `THE BIG CHECK →` link, and What's-left rows with no mission link to it)
+- Modify: `src/router.js`, `src/app.js`, `src/components/star-card.js`, `src/screens/broker-map.js` (a `THE BIG CHECK →` link, and What's-left rows with no mission link to it), `src/utils/errorNoise.js` (`PRIVATE_UI` gains `big-check`)
 - Test: `tests/broker-game/big-check.test.js`
 
 **Interfaces:**
@@ -109,8 +129,12 @@ docs/scout-dialogue-ch8-reclamation.md       the same lines, documented
     - Loading and error states reuse Plan 2's.
     - Heading `THE BIG CHECK`, then the line `Optional. It never counts toward your districts, your city lights or the city's totals.`
     - A filter `<input type="search" data-big-check-filter>`, whose `input` handler hides rows in place and re-renders nothing.
-    - One `<details>` per group, its summary reading `<label> · <ticked>/<rows>`.
-    - Each row: the name; the opt-out block (verified link or note); then either `<input type="checkbox" data-big-check="<id>">` labelled `I filed with them` (no mission) or `In a mission:` plus the mission briefing link.
+    - The screen's root is `<div class="big-check">`.
+    - One `<details>` per group, its summary reading `<label> · <ticked>/<rows>`. Every group starts closed. "Not yet classified" holds most rows, and an open group of hundreds would bury the others on a phone.
+    - Each row shows the name, then the opt-out block (verified link or note), then one of:
+      - `<input type="checkbox" data-big-check="<id>">` labelled `I filed with them`, when no mission covers it;
+      - `In a mission:` plus a link to the mission's briefing (`#/mission/<id>/briefing`), when that mission isn't done;
+      - `In a mission:` plus a link to its re-check (`#/mission/<id>/recheck`, labelled `RE-CHECK`), when it's completed (decision 1).
     - `No brokers match` when the filter leaves nothing.
   - `starCard` adds the same tick box when the broker has no non-recon mission, isn't a buyer, and its method isn't `none`.
   - `app.js` handles `change` on `[data-big-check]` with `setState(setBigCheck(state, id, checked, localDay()))`. The Big Check screen does not re-render (so scroll and open groups stay). The map does a REFRESH render, so the star lights. No `track()`.
@@ -128,13 +152,17 @@ it('filtering to nothing says so', ...);
 it('Big Check ticks count for nothing but the map', () => {
   // calcDistrictProgress for every district, calcIntegrity, restoreEvents: identical with and without bigCheck
 });
-it('the Big Check screen links nowhere but missions, the map and verified opt-outs', ...);
+it('the Big Check screen links nowhere but missions, the map and verified opt-outs', ...); // mission hrefs match ^#/mission/[^/]+/(briefing|recheck)$
+it('a row in a completed mission links its re-check', ...);       // completed web-forms with no lines: whitepages row has href="#/mission/people_search-fortify-web-forms/recheck"
+it('every group starts closed', ...);                             // no <details open>
+it('Big Check breadcrumbs never leave the device', () =>
+  expect(isPrivateBreadcrumb({ category: 'ui.input', message: 'div.big-check > details > label > input[type="checkbox"]' })).toBe(true));
 it('a long-tail card has the tick box; a mission broker\'s card does not', ...);
 ```
 
 - [ ] **Step 2: Run `npx vitest run tests/broker-game/big-check.test.js` and confirm it fails.**
 - [ ] **Step 3: Implement.**
-- [ ] **Step 4: Run the test again plus `npx vitest run tests/broker-game`.** Expected: PASS.
+- [ ] **Step 4: Run the test again plus `npx vitest run tests/broker-game tests/errorNoise.test.js`.** Expected: PASS.
 - [ ] **Step 5: Commit**: `feat(broker-map): the Big Check`
 
 ### Task 3: Scout on the map
@@ -187,7 +215,7 @@ it('every line is documented in the chapter 8 dialogue doc', () => {
 ### Task 4: Phone check, version, PR
 
 **Files:**
-- Modify: `package.json`, `package-lock.json`
+- Modify: `package.json`, `package-lock.json`, `src/index.html` (stylesheet link)
 - Create: `docs/screenshots/broker-constellation/big-check-*.png`
 
 - [ ] **Step 1: Run the full suite** with `npx vitest run` (or `~/.claude/bin/vast-test`). Expected: every test passes.
@@ -198,5 +226,5 @@ it('every line is documented in the chapter 8 dialogue doc', () => {
   - Run the NAI line in a seeded save. Expected: halos show on its members and no member is lime.
   - Expected: each Scout line shows once, and the hash is never anything but the two fixed routes.
   - Screenshot each state.
-- [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version`.
+- [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version` (6.5.0 → 6.6.0), and set `src/index.html`'s link to `style.css?v=6.6.0`. Run `npx vitest run tests/css-cache-bust.test.js`. Expected: PASS.
 - [ ] **Step 4: Commit by explicit paths, push, and open a PR** with the screenshots. Merge once the full suite is green.

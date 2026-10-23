@@ -9,6 +9,9 @@ import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
 import { twoFactorMethod, CODE_METHODS } from '../utils/two-factor.js';
 import { scoutSprite } from '../components/scout.js';
+import { renderBrokerChecklist } from '../components/broker-checklist.js';
+import { checklistFor } from '../data/broker-checklists.js';
+import { isChecklistPending } from '../utils/broker-lighting.js';
 import { feelingForDebrief, twoFactorHugDue } from '../utils/scout-feelings.js';
 
 const ROW = 'display: flex; align-items: center; gap: 12px; background: rgba(26,31,43,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 12px 16px;';
@@ -267,7 +270,8 @@ function debriefForm(state, mission, given = null, recheck = false) {
     if (v !== undefined) pre[q.id] = v;
   }
   const shown = new Set(visibleQuestions(mission, pre).map((q) => q.id));
-  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id], recheck)).join('')}</div>`;
+  const checklist = renderBrokerChecklist(mission, state, recheck ? 'recheck' : 'file');
+  return `<div data-debrief="${mission.id}">${mission.debriefQs.map((q) => questionGroup(q, state, mission, shown.has(q.id), given?.[q.id], recheck)).join('')}${checklist}</div>`;
 }
 
 // A re-check of a mission that was never filed as done: no form, the way in.
@@ -312,6 +316,7 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
     ? `
     <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
       <span class="badge badge--safe">SECURED</span>
+      ${checklistFor(mission.id) ? `<a href="#/mission/${mission.id}/recheck" class="btn-secondary" style="text-decoration: none;">RE-CHECK</a>` : ''}
       <a href="#/district/${districtId}${targetTab}" class="btn-primary" style="text-decoration: none;">BACK TO DISTRICT</a>
     </div>`
     : recheck
@@ -344,6 +349,7 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
       </div>
       ${questions}
       ${progressLine}
+      ${completed && isChecklistPending(state, mission.id) ? '<div style="font-size: 13px; color: var(--amber); line-height: 1.6; margin-bottom: 16px;">Tell Scout which ones you filed.</div>' : ''}
       ${footer}
     </div>
   </div>`;
