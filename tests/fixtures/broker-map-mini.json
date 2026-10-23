@@ -1,0 +1,258 @@
+{
+  "formatVersion": 1,
+  "asOf": "2026-10-19",
+  "brokers": [
+    {
+      "id": "spokeo",
+      "name": "spokeo",
+      "parent": null,
+      "kind": [
+        "people-search"
+      ],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [
+        "people_search-fortify-web-forms",
+        "people_search-fortify-privacy-portals"
+      ],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "whitepages",
+      "name": "whitepages",
+      "parent": null,
+      "kind": [
+        "people-search"
+      ],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [
+        "people_search-fortify-web-forms"
+      ],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "beenverified",
+      "name": "beenverified",
+      "parent": null,
+      "kind": [
+        "people-search"
+      ],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [
+        "people_search-fortify-web-forms"
+      ],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "acxiom",
+      "name": "acxiom",
+      "parent": null,
+      "kind": [
+        "marketing"
+      ],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [
+        "ad_trackers-reclaim-individual"
+      ],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "lexisnexis-risk-solutions",
+      "name": "lexisnexis-risk-solutions",
+      "parent": null,
+      "kind": [
+        "risk-identity"
+      ],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [
+        "enterprise_data-fortify-lexisnexis"
+      ],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "equifax-information-services",
+      "name": "equifax-information-services",
+      "parent": null,
+      "kind": [
+        "financial"
+      ],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "hub-a",
+      "name": "hub-a",
+      "parent": null,
+      "kind": [
+        "risk-identity"
+      ],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [],
+      "reach": 6,
+      "hub": true
+    },
+    {
+      "id": "tail-1",
+      "name": "tail-1",
+      "parent": null,
+      "kind": [],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "tail-2",
+      "name": "tail-2",
+      "parent": null,
+      "kind": [],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "nope",
+      "name": "nope",
+      "parent": null,
+      "kind": [
+        "marketing"
+      ],
+      "registries": {
+        "CA": "2026"
+      },
+      "sells": [],
+      "optOut": {
+        "method": "none",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "us-ice",
+      "name": "us-ice",
+      "parent": null,
+      "kind": [
+        "buyer"
+      ],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": null,
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    },
+    {
+      "id": "criteo",
+      "name": "criteo",
+      "parent": null,
+      "kind": [
+        "ad-network"
+      ],
+      "registries": {
+        "CA": null
+      },
+      "sells": [],
+      "optOut": {
+        "method": "web-form",
+        "url": "https://example.test/x",
+        "status": "verified"
+      },
+      "missions": [],
+      "reach": 1,
+      "hub": false
+    }
+  ],
+  "links": [],
+  "sweeps": {
+    "nai": {
+      "members": [
+        "criteo"
+      ]
+    },
+    "daa": {
+      "members": [
+        "criteo"
+      ]
+    }
+  }
+}

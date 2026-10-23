@@ -8,6 +8,8 @@ import { updateMission } from '../state.js';
 import { isPasswordMission, passwordResetNeed, reopenStaleNotNeeded, PM_MISSION_ID } from './password-need.js';
 import { pmNumbers, applyBurst } from './pm-numbers.js';
 import { isMissionDone } from './mission-status.js';
+import { checklistFor } from '../data/broker-checklists.js';
+import { materializeLegacy, recordChecklist } from './broker-state.js';
 
 const DEFERRED = new Set(['skip', 'later']);
 
@@ -267,6 +269,20 @@ export function applyRecheck(state, mission, answers, now = new Date().toISOStri
     ...state,
     missions: { ...state.missions, [mission.id]: record },
   });
+}
+
+// A broker mission's re-check: a legacy "all" filing becomes dated lines
+// first (before applyRecheck can rewrite the answer), then only the ticked
+// lines get today's date. since is always set afterwards, so the stored
+// answer never lights or unlights a star again. null when applyRecheck
+// refuses; nothing is saved then, the materialized base included.
+// Local only: no track(), no event.
+export function recheckWithChecklist(state, mission, answers, ticks, day, now) {
+  if (!checklistFor(mission.id)) return applyRecheck(state, mission, answers, now);
+  const base = materializeLegacy(state, mission.id);
+  const next = applyRecheck(base, mission, answers, now);
+  if (!next) return null;
+  return recordChecklist(next, mission.id, ticks, day, { first: true });
 }
 
 // A re-check confirms a filing: "skip" / "later" / severity-skip answers

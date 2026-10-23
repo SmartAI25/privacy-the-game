@@ -14,6 +14,7 @@ import { isPasswordMission, passwordResetNeed, isPmFlagged } from '../utils/pass
 import { twoFactorMethod } from '../utils/two-factor.js';
 import { renderPasswordProgress, renderCategoryAsk, renderCategoryQuiet } from '../components/password-progress.js';
 import { neededResets } from '../utils/bursts.js';
+import { checklistFor } from '../data/broker-checklists.js';
 
 function renderDistrictIntro(state, districtId) {
   const dialogue = DISTRICT_DIALOGUE[districtId];
@@ -441,9 +442,15 @@ function renderFacilitySection(state, facilityId, district) {
     const skipped = record?.status === 'skipped';
     const summary = done ? missionSummary(m, record) : '';
 
+    // A done row is dimmed piece by piece, so RE-CHECK stays full strength like RETRY.
+    const dim = done ? 'opacity: 0.5;' : '';
     let action;
     if (done) {
-      action = `<div class="badge" style="letter-spacing: 1px; color: var(--lime); background: rgba(198,255,0,0.08); border-color: rgba(198,255,0,0.2);">DONE</div>`;
+      action = `<div class="badge" style="${dim} letter-spacing: 1px; color: var(--lime); background: rgba(198,255,0,0.08); border-color: rgba(198,255,0,0.2);">DONE</div>`;
+      // A filed broker mission can be filed again: main's re-check mode.
+      if (record.status === 'completed' && checklistFor(m.id)) {
+        action = `<div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">${action}<a class="btn-primary" style="padding: 6px 14px; font-size: 8px; text-decoration: none; box-shadow: 0 0 10px rgba(0,229,255,0.15), 0 2px 0 #009bb3;" href="#/mission/${m.id}/recheck">RE-CHECK</a></div>`;
+      }
     } else if (skipped) {
       action = `<a class="btn-primary" style="padding: 6px 14px; font-size: 8px; text-decoration: none; box-shadow: 0 0 10px rgba(0,229,255,0.15), 0 2px 0 #009bb3;" href="#/mission/${m.id}/briefing">RETRY</a>`;
     } else {
@@ -451,13 +458,13 @@ function renderFacilitySection(state, facilityId, district) {
     }
 
     return `
-    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid rgba(0,229,255,0.04); ${done ? 'opacity: 0.5;' : ''}">
-      <div style="font-family: var(--font-mono); font-size: 10px; color: ${done ? 'var(--lime)' : skipped ? 'rgba(237,239,243,0.3)' : 'var(--cyan)'}; width: 16px; text-align: center;">${done ? '✓' : skipped ? '↺' : '▸'}</div>
-      <div style="flex: 1; min-width: 0;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid rgba(0,229,255,0.04);">
+      <div style="${dim} font-family: var(--font-mono); font-size: 10px; color: ${done ? 'var(--lime)' : skipped ? 'rgba(237,239,243,0.3)' : 'var(--cyan)'}; width: 16px; text-align: center;">${done ? '✓' : skipped ? '↺' : '▸'}</div>
+      <div style="${dim} flex: 1; min-width: 0;">
         <div style="font-size: 13px; font-weight: ${done ? 400 : 500}; color: ${done ? 'rgba(237,239,243,0.5)' : 'var(--offwhite)'};">${esc(m.title)}</div>
         ${summary ? `<div style="font-size: 10px; color: rgba(237,239,243,0.3); margin-top: 2px;">${esc(summary)}</div>` : ''}
       </div>
-      <div style="font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.25);">~${m.estimatedMinutes}m</div>
+      <div style="${dim} font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.25);">~${m.estimatedMinutes}m</div>
       ${action}
     </div>`;
   }).join('');
