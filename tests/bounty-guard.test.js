@@ -1,14 +1,29 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, existsSync, statSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import {
   assessPr,
   assessIssueClose,
   assessIssueComments,
+  claimedIssues,
   closingKeywordRefs,
+  refsKeywordRefs,
+  qualifiedRefs,
   hasWaybackLink,
+  isTestPath,
+  sanitizePath,
   guardComments,
+  closeComment,
+  plan,
+  writeCount,
+  loadState,
+  saveState,
+  recordMarker,
+  rotateLog,
   MARKER,
   EVIDENCE_GRACE_MS,
+  WRITE_CAP,
 } from '../scripts/bounty-guard/guard.mjs';
 
 // Fixtures are the real karma-farming PRs (#435, #427, #254, #421) as
@@ -21,40 +36,43 @@ const bountyIssues = new Set([42, 61, 131, 150, 200]);
 const ctx = (over = {}) => ({ bountyIssues, flaggedAuthors: new Set(), now: NOW, ...over });
 
 const WAYBACK = 'https://web.archive.org/web/20261022000000/https://example-broker.com/opt-out';
+const file = (path, additions, deletions, changeType = 'MODIFIED', previousPath = null) => ({ path, previousPath, additions, deletions, changeType });
 
 const legitBountyPr = (over = {}) => ({
   number: 900,
-  title: 'data: Example Broker opt-out route (Refs #200)',
+  title: 'data: Example Broker opt-out route',
   author: 'careful-human',
   authorAssociation: 'NONE',
   createdAt: '2026-10-22T12:00:00Z',
+  labels: [],
   body: `Refs #200\n\n## Evidence\nFinal URL: https://example-broker.com/opt-out\nVerdict: works, asks for name + email.\nCaptures: ${WAYBACK}`,
-  files: [{ path: 'research/data-brokers/build/link-overrides.json', additions: 3, deletions: 1, changeType: 'MODIFIED' }],
+  files: [file('research/data-brokers/build/link-overrides.json', 3, 1)],
   closingIssues: [],
   ...over,
 });
+const codePr = (files, over = {}) => legitBountyPr({ title: 'fix: tidy', body: 'small tidy', files, ...over });
 
 describe('assessPr: the real karma-farming PRs', () => {
-  it('#435 (rewrote the nightly purge job and deleted its tests) is closed as karma-farming', () => {
+  it('#435 (rewrote the nightly purge job and gutted its tests) is closed as karma-farming', () => {
     const d = assessPr(fixture(435), ctx());
     expect(d.action).toBe('close');
     expect(d.karmaFarming).toBe(true);
-    expect(d.reasons.join('\n')).toMatch(/collective\//);
-    expect(d.reasons.join('\n')).toMatch(/test/i);
+    expect(d.paths).toContain('collective/job/run.py');
+    expect(d.reasons.join('\n')).toMatch(/net lines from existing tests/);
   });
 
   it('#427 (invented collective/data/brokers.tsv, "Fixes #42") is closed as karma-farming', () => {
     const d = assessPr(fixture(427), ctx());
     expect(d.action).toBe('close');
     expect(d.karmaFarming).toBe(true);
-    expect(d.reasons.join('\n')).toMatch(/collective\//);
+    expect(d.paths).toEqual(['collective/data/brokers.tsv']);
   });
 
   it('#254 (docs_update.md for a bounty, author association NONE) is closed as karma-farming', () => {
     const d = assessPr(fixture(254), ctx());
     expect(d.action).toBe('close');
     expect(d.karmaFarming).toBe(true);
-    expect(d.reasons.join('\n')).toMatch(/docs_update\.md/);
+    expect(d.paths).toEqual(['docs_update.md']);
   });
 
   it('#421 (CONTRIBUTOR association does not count as a maintainer) is closed', () => {
@@ -73,108 +91,94 @@ describe('assessPr: the real karma-farming PRs', () => {
   });
 });
 
-describe('assessPr: rules one at a time', () => {
+describe('assessPr: collective/ and generated files', () => {
   it('touching collective/ closes even when the PR is not about a bounty', () => {
-    const d = assessPr(
-      legitBountyPr({ title: 'tidy', body: 'small tidy', files: [{ path: 'collective/service/server.js', additions: 1, deletions: 1, changeType: 'MODIFIED' }] }),
-      ctx(),
-    );
+    const d = assessPr(codePr([file('collective/service/server.js', 1, 1)]), ctx());
     expect(d.action).toBe('close');
     expect(d.karmaFarming).toBe(true);
   });
 
-  it('editing or deleting a test closes; adding a new test does not', () => {
-    const edit = assessPr(
-      legitBountyPr({ title: 'x', body: 'x', files: [{ path: 'tests/state.test.js', additions: 0, deletions: 4, changeType: 'MODIFIED' }] }),
-      ctx(),
-    );
-    expect(edit.action).toBe('close');
-    expect(edit.karmaFarming).toBe(true);
-
-    const add = assessPr(
-      legitBountyPr({
-        title: 'fix: typo in router',
-        body: 'fixes a typo',
-        files: [
-          { path: 'src/router.js', additions: 1, deletions: 1, changeType: 'MODIFIED' },
-          { path: 'tests/router-typo.test.js', additions: 10, deletions: 0, changeType: 'ADDED' },
-        ],
-      }),
-      ctx(),
-    );
-    expect(add.action).toBe('ok');
-  });
-
-  it('appending cases to an existing test file is fine (merged PR #2 did this)', () => {
-    const d = assessPr(
-      legitBountyPr({
-        title: 'fix: preserve active phase tab',
-        body: 'Keeps the tab when you come back from a mission.',
-        authorAssociation: 'CONTRIBUTOR',
-        files: [
-          { path: 'src/router.js', additions: 1, deletions: 1, changeType: 'MODIFIED' },
-          { path: 'tests/router.test.js', additions: 15, deletions: 0, changeType: 'MODIFIED' },
-        ],
-      }),
-      ctx(),
-    );
-    expect(d.action).toBe('ok');
-  });
-
-  it('deleting a collective test file closes (as #435 did)', () => {
-    const d = assessPr(
-      legitBountyPr({ title: 'x', body: 'x', files: [{ path: 'collective/job/tests/test_purge.py', additions: 0, deletions: 115, changeType: 'DELETED' }] }),
-      ctx(),
-    );
-    expect(d.reasons.join('\n')).toMatch(/tests/);
-  });
-
-  it('bots (dependabot bumping collective/service deps) are left for a maintainer', () => {
-    const d = assessPr(
-      legitBountyPr({
-        title: 'chore(deps): bump express in /collective/service',
-        body: 'Bumps express.',
-        author: 'dependabot',
-        isBot: true,
-        files: [{ path: 'collective/service/package.json', additions: 1, deletions: 1, changeType: 'MODIFIED' }],
-      }),
-      ctx(),
-    );
-    expect(d.action).toBe('ok');
-  });
-
-  it('a bounty PR that adds a file outside research/data-brokers/build/*.json is closed as karma-farming', () => {
-    const d = assessPr(
-      legitBountyPr({ files: [{ path: 'data/brokers.json', additions: 12, deletions: 0, changeType: 'ADDED' }] }),
-      ctx(),
-    );
+  it('a rename out of collective/ is caught by its old path', () => {
+    const d = assessPr(codePr([file('src/run.py', 0, 0, 'RENAMED', 'collective/job/run.py')]), ctx());
     expect(d.action).toBe('close');
-    expect(d.karmaFarming).toBe(true);
-    expect(d.reasons.join('\n')).toMatch(/data\/brokers\.json/);
-  });
-
-  it('a nested file under build/ is not an allowed bounty path', () => {
-    const d = assessPr(
-      legitBountyPr({ files: [{ path: 'research/data-brokers/build/new/x.json', additions: 1, deletions: 0, changeType: 'ADDED' }] }),
-      ctx(),
-    );
-    expect(d.action).toBe('close');
+    expect(d.paths).toContain('collective/job/run.py');
   });
 
   it('hand-editing generated files closes (without the karma-farming label on its own)', () => {
-    for (const path of [
-      'research/data-brokers/brokers/acme.json',
-      'research/data-brokers/links.json',
-      'research/data-brokers/sources.json',
-      'src/data/broker-map.json',
-    ]) {
-      const d = assessPr(
-        legitBountyPr({ title: 'x', body: 'x', files: [{ path, additions: 1, deletions: 1, changeType: 'MODIFIED' }] }),
-        ctx(),
-      );
+    for (const path of ['research/data-brokers/brokers/acme.json', 'research/data-brokers/links.json', 'research/data-brokers/sources.json', 'src/data/broker-map.json']) {
+      const d = assessPr(codePr([file(path, 1, 1)]), ctx());
       expect(d.action, path).toBe('close');
       expect(d.karmaFarming, path).toBe(false);
     }
+  });
+});
+
+describe('assessPr: tests rule', () => {
+  it('fixtures under tests/fixtures are data, not tests', () => {
+    expect(isTestPath('tests/fixtures/verified-urls.json')).toBe(false);
+    expect(isTestPath('tests/router.test.js')).toBe(true);
+    expect(isTestPath('collective/job/tests/test_purge.py')).toBe(true);
+    expect(isTestPath('collective/service/test/client-info.test.js')).toBe(true);
+  });
+
+  it('small edits to tests are fine; appending cases is fine (merged PR #2 did this)', () => {
+    expect(assessPr(codePr([file('src/router.js', 1, 1), file('tests/router.test.js', 3, 10)]), ctx()).action).toBe('ok');
+    expect(assessPr(codePr([file('src/router.js', 1, 1), file('tests/router.test.js', 15, 0)], { authorAssociation: 'CONTRIBUTOR' }), ctx()).action).toBe('ok');
+  });
+
+  it('on a non-bounty PR, deleting a test or removing >20 net lines flags for a maintainer, never karma-farming', () => {
+    for (const files of [
+      [file('tests/state.test.js', 0, 40, 'DELETED')],
+      [file('tests/state.test.js', 2, 30)],
+      [file('src/state-old.js', 0, 0, 'RENAMED', 'tests/state.test.js')],
+    ]) {
+      const d = assessPr(codePr(files), ctx());
+      expect(d.action).toBe('flag');
+      expect(d.karmaFarming).toBe(false);
+      expect(d.needsMaintainer).toBe(true);
+      expect(d.labels).toContain('needs-maintainer');
+    }
+  });
+
+  it('a rename within tests/ is not a deletion', () => {
+    expect(assessPr(codePr([file('tests/b.test.js', 0, 0, 'RENAMED', 'tests/a.test.js')]), ctx()).action).toBe('ok');
+  });
+
+  it('on a bounty PR, gutting tests is karma-farming', () => {
+    const d = assessPr(legitBountyPr({ files: [file('tests/data.test.js', 0, 50)] }), ctx());
+    expect(d.action).toBe('close');
+    expect(d.karmaFarming).toBe(true);
+  });
+});
+
+describe('assessPr: bounty PRs', () => {
+  it('a bounty PR that adds a file outside research/data-brokers/build/*.json is closed as karma-farming', () => {
+    const d = assessPr(legitBountyPr({ files: [file('data/brokers.json', 12, 0, 'ADDED')] }), ctx());
+    expect(d.action).toBe('close');
+    expect(d.karmaFarming).toBe(true);
+    expect(d.paths).toEqual(['data/brokers.json']);
+  });
+
+  it('a nested file under build/ is not an allowed bounty path', () => {
+    expect(assessPr(legitBountyPr({ files: [file('research/data-brokers/build/new/x.json', 1, 0, 'ADDED')] }), ctx()).action).toBe('close');
+  });
+
+  it('a bare "#N" mention in the body does not make a PR a bounty PR', () => {
+    const d = assessPr(codePr([file('src/city-map.js', 2, 1)], { body: 'Same root cause as #200, but this is a map fix.' }), ctx());
+    expect(d.action).toBe('ok');
+    expect(d.bountyRefs).toEqual([]);
+  });
+
+  it('Refs, closing keywords, title refs, full URLs and owner/repo#N all count', () => {
+    const repo = 'lizTheDeveloper/privacy-the-game';
+    expect(claimedIssues({ title: 'x', body: 'Refs #200' })).toEqual([200]);
+    expect(claimedIssues({ title: 'x', body: 'resolves #200' })).toEqual([200]);
+    expect(claimedIssues({ title: 'opt-out check (#200)', body: '' })).toEqual([200]);
+    expect(claimedIssues({ title: 'x', body: `see https://github.com/${repo}/issues/200 for context` })).toEqual([200]);
+    expect(claimedIssues({ title: 'x', body: `as in ${repo}#200` })).toEqual([200]);
+    expect(claimedIssues({ title: 'x', body: '', closingIssues: [200] })).toEqual([200]);
+    expect(refsKeywordRefs('Refs #1, #2 and #3')).toEqual([1, 2, 3]);
+    expect(qualifiedRefs('other/repo#5 and https://github.com/other/repo/issues/6')).toEqual([]);
   });
 
   it('a bounty PR with no Wayback link is flagged needs-evidence, not closed, inside 72h', () => {
@@ -184,12 +188,19 @@ describe('assessPr: rules one at a time', () => {
     expect(d.labels).toContain('needs-evidence');
   });
 
+  it('evidence posted by the PR author as a comment on the bounty issue counts', () => {
+    const issues = new Map([[200, { labels: ['bounty'], comments: [{ author: 'careful-human', body: `Done by hand: ${WAYBACK}` }] }]]);
+    expect(assessPr(legitBountyPr({ body: 'Refs #200' }), ctx({ bountyIssues: issues })).action).toBe('ok');
+    const othersEvidence = new Map([[200, { labels: [], comments: [{ author: 'someone-else', body: WAYBACK }] }]]);
+    expect(assessPr(legitBountyPr({ body: 'Refs #200' }), ctx({ bountyIssues: othersEvidence })).action).toBe('flag');
+  });
+
   it('closes a needs-evidence PR 72h after the guard asked for evidence', () => {
     const asked = new Date(NOW.getTime() - EVIDENCE_GRACE_MS - 1000).toISOString();
     const d = assessPr(legitBountyPr({ body: 'Refs #200\nI checked it.' }), ctx({ evidenceRequestedAt: asked }));
     expect(d.action).toBe('close');
+    expect(d.karmaFarming).toBe(false);
     expect(d.reasons.join('\n')).toMatch(/72/);
-
     const recent = new Date(NOW.getTime() - 3600 * 1000).toISOString();
     expect(assessPr(legitBountyPr({ body: 'Refs #200' }), ctx({ evidenceRequestedAt: recent })).action).toBe('flag');
   });
@@ -208,25 +219,53 @@ describe('assessPr: rules one at a time', () => {
   });
 });
 
-describe('assessPr: legitimate shapes', () => {
-  it('evidence + allowed path + Refs #N is ok', () => {
-    const d = assessPr(legitBountyPr(), ctx());
-    expect(d).toMatchObject({ action: 'ok', reasons: [] });
+describe('assessPr: file list problems', () => {
+  it('a failed or truncated file fetch flags for a maintainer, never ok and never close', () => {
+    for (const filesError of ['fetch failed: HTTP 502', 'got 3000 of 3400 files']) {
+      const d = assessPr({ ...fixture(435), filesError }, ctx());
+      expect(d.action).toBe('flag');
+      expect(d.needsMaintainer).toBe(true);
+      expect(d.labels).toEqual(['needs-maintainer']);
+    }
+  });
+});
+
+describe('assessPr: maintainer overrides', () => {
+  it('collaborators and bots are never touched', () => {
+    for (const authorAssociation of ['OWNER', 'MEMBER', 'COLLABORATOR']) {
+      expect(assessPr({ ...fixture(435), authorAssociation }, ctx()).action, authorAssociation).toBe('ok');
+    }
+    const bot = codePr([file('collective/service/package.json', 1, 1)], { author: 'dependabot', isBot: true });
+    expect(assessPr(bot, ctx()).action).toBe('ok');
   });
 
-  it('collaborators are never touched, even on collective/', () => {
-    for (const authorAssociation of ['OWNER', 'MEMBER', 'COLLABORATOR']) {
-      const d = assessPr({ ...fixture(435), authorAssociation }, ctx());
-      expect(d.action, authorAssociation).toBe('ok');
+  it('karma-approved or guard-skip on the PR skips it', () => {
+    for (const label of ['karma-approved', 'guard-skip']) {
+      expect(assessPr({ ...fixture(435), labels: [label] }, ctx()).action, label).toBe('ok');
     }
   });
 
+  it('a PR a maintainer reopened, or took karma-farming off, is not re-closed', () => {
+    expect(assessPr({ ...fixture(427), maintainerReopened: true }, ctx()).action).toBe('ok');
+    expect(assessPr({ ...fixture(427), maintainerUnlabeled: ['karma-farming'] }, ctx()).action).toBe('ok');
+  });
+
+  it('a label a maintainer removed is not re-added', () => {
+    const d = assessPr(legitBountyPr({ body: 'Fixes #200', maintainerUnlabeled: ['needs-evidence'] }), ctx());
+    expect(d.needsEvidence).toBe(false);
+    expect(d.labels).toEqual(['refs-not-fixes']);
+    const d2 = assessPr(legitBountyPr({ body: `Fixes #200 ${WAYBACK}`, maintainerUnlabeled: ['refs-not-fixes'] }), ctx());
+    expect(d2.action).toBe('ok');
+  });
+});
+
+describe('assessPr: legitimate shapes', () => {
+  it('evidence + allowed path + Refs #N is ok', () => {
+    expect(assessPr(legitBountyPr(), ctx())).toMatchObject({ action: 'ok', reasons: [] });
+  });
+
   it('a non-bounty code PR from a stranger is ok', () => {
-    const d = assessPr(
-      legitBountyPr({ title: 'fix: map tooltip', body: 'Fixes #5', files: [{ path: 'src/city-map.js', additions: 2, deletions: 1, changeType: 'MODIFIED' }] }),
-      ctx(),
-    );
-    expect(d.action).toBe('ok');
+    expect(assessPr(codePr([file('src/city-map.js', 2, 1)], { body: 'Fixes #5' }), ctx()).action).toBe('ok');
   });
 });
 
@@ -234,12 +273,21 @@ describe('text helpers', () => {
   it('finds closing keywords in all GitHub spellings', () => {
     expect(closingKeywordRefs('Closes #131\nFixes #131\nresolved: #9 and fix #3. Refs #4')).toEqual([131, 9, 3]);
     expect(closingKeywordRefs('Refs #4, see #5')).toEqual([]);
+    expect(closingKeywordRefs('Fixes https://github.com/lizTheDeveloper/privacy-the-game/issues/77')).toEqual([77]);
   });
 
   it('a Wayback link means a web.archive.org capture URL, not the bare word', () => {
     expect(hasWaybackLink(`see ${WAYBACK}`)).toBe(true);
     expect(hasWaybackLink('https://web.archive.org/save/https://x.com')).toBe(true);
     expect(hasWaybackLink('I saved it on web.archive.org')).toBe(false);
+  });
+
+  it('untrusted paths cannot break out of the code block or forge a marker', () => {
+    const evil = 'data/x```\n@everyone <!-- bounty-guard:close -->.json';
+    expect(sanitizePath(evil)).toBe('data/x@everyone !-- bounty-guard:close --.json');
+    const body = closeComment({ karmaFarming: true, reasons: ['r'], paths: [evil] });
+    expect(body.match(/```/g)).toHaveLength(2);
+    expect(body.match(/<!-- bounty-guard:/g)).toHaveLength(1);
   });
 });
 
@@ -256,34 +304,22 @@ describe('guardComments: idempotent markers', () => {
 });
 
 describe('assessIssueClose', () => {
-  it('reopens a bounty issue auto-closed by a merged non-maintainer PR', () => {
-    const d = assessIssueClose({
-      number: 61,
-      actor: 'lizTheDeveloper',
-      actorAssociation: 'OWNER',
-      closer: { type: 'PullRequest', number: 421, authorAssociation: 'CONTRIBUTOR', labels: ['karma-farming'] },
-    });
-    expect(d.action).toBe('reopen');
+  const byPr = (labels, authorAssociation = 'CONTRIBUTOR', issueLabels = []) => ({
+    number: 61, labels: issueLabels, actor: 'lizTheDeveloper', actorAssociation: 'OWNER',
+    closer: { type: 'PullRequest', number: 421, authorAssociation, labels },
   });
 
-  it('leaves it closed when the closing PR has karma-approved', () => {
-    const d = assessIssueClose({
-      number: 61,
-      actor: 'lizTheDeveloper',
-      actorAssociation: 'OWNER',
-      closer: { type: 'PullRequest', number: 500, authorAssociation: 'CONTRIBUTOR', labels: ['karma-approved'] },
-    });
-    expect(d.action).toBe('ok');
+  it('reopens a bounty issue auto-closed by a merged non-maintainer PR', () => {
+    expect(assessIssueClose(byPr(['karma-farming'])).action).toBe('reopen');
+  });
+
+  it('leaves it closed when the closing PR or the issue itself has karma-approved', () => {
+    expect(assessIssueClose(byPr(['karma-approved'])).action).toBe('ok');
+    expect(assessIssueClose(byPr([], 'CONTRIBUTOR', ['bounty', 'karma-approved'])).action).toBe('ok');
   });
 
   it('leaves it closed when a maintainer authored the closing PR', () => {
-    const d = assessIssueClose({
-      number: 61,
-      actor: 'lizTheDeveloper',
-      actorAssociation: 'OWNER',
-      closer: { type: 'PullRequest', number: 501, authorAssociation: 'OWNER', labels: [] },
-    });
-    expect(d.action).toBe('ok');
+    expect(assessIssueClose(byPr([], 'OWNER')).action).toBe('ok');
   });
 
   it('reopens an issue a non-maintainer closed by hand; a maintainer close stands', () => {
@@ -301,11 +337,101 @@ describe('assessIssueComments', () => {
     ];
     const flagged = new Set(['taherezzi']);
     expect(assessIssueComments({ number: 131, comments }, flagged, 'lizTheDeveloper')).toEqual(['TaherEzzi']);
-
-    const replied = [
-      ...comments,
-      { author: 'lizTheDeveloper', body: `${MARKER}\n<!-- bounty-guard:ineligible:taherezzi -->`, createdAt: '2026-10-21T00:00:00Z' },
-    ];
+    const replied = [...comments, { author: 'lizTheDeveloper', body: `${MARKER}\n<!-- bounty-guard:ineligible:taherezzi -->`, createdAt: '2026-10-21T00:00:00Z' }];
     expect(assessIssueComments({ number: 131, comments: replied }, flagged, 'lizTheDeveloper')).toEqual([]);
+    expect(assessIssueComments({ number: 131, comments }, flagged, 'lizTheDeveloper', ['ineligible:taherezzi'])).toEqual([]);
+  });
+});
+
+describe('plan', () => {
+  const base = { flaggedAuthors: new Set(), maintainers: new Set(['lizthedeveloper']), viewer: 'lizTheDeveloper', now: NOW };
+  const issues = [{ number: 200, state: 'OPEN', labels: ['bounty'], comments: [] }];
+
+  it('one malformed PR becomes an error; the rest of the run continues', () => {
+    const bad = Object.defineProperty({ number: 1, author: 'x', authorAssociation: 'NONE', title: 't', body: '', comments: [], labels: [] }, 'files', { get() { throw new Error('boom'); } });
+    const { actions, errors } = plan({ ...base, prs: [bad, { comments: [], labels: [], ...fixture(427) }], issues: [{ number: 42, state: 'OPEN', labels: [], comments: [] }] });
+    expect(errors).toHaveLength(1);
+    expect(actions.map((a) => a.number)).toEqual([427]);
+  });
+
+  it('the 72h clock starts at the earliest request, from state or a guard comment, so flooding cannot reset it', () => {
+    const pr = { ...legitBountyPr({ body: 'Refs #200' }), comments: [] };
+    const old = new Date(NOW.getTime() - EVIDENCE_GRACE_MS - 1000).toISOString();
+    const state = { prs: { 900: { markers: ['needs-evidence'], evidenceRequestedAt: old } }, issues: {} };
+    const { actions } = plan({ ...base, prs: [pr], issues, state });
+    expect(actions[0].kind).toBe('close-pr');
+  });
+
+  it('a marker recorded in state suppresses the comment even if GitHub paging missed it', () => {
+    const pr = { ...legitBountyPr({ body: 'Refs #200' }), comments: [] };
+    const state = { prs: { 900: { markers: ['needs-evidence'], evidenceRequestedAt: NOW.toISOString() } }, issues: {} };
+    const { actions } = plan({ ...base, prs: [pr], issues, state });
+    expect(actions[0].comments).toEqual([]);
+    expect(actions[0].labels).toEqual(['needs-evidence']);
+  });
+
+  it('reopen comments carry the close time, so a reopen whose comment already posted only retries the reopen', () => {
+    const closed = { number: 61, state: 'CLOSED', labels: ['bounty'], comments: [], closedEvent: { createdAt: '2026-10-20T00:00:00Z', actor: 'lizTheDeveloper', closer: { type: 'PullRequest', number: 421, authorAssociation: 'CONTRIBUTOR', labels: [] } } };
+    const first = plan({ ...base, prs: [], issues: [closed] }).actions[0];
+    expect(first.kind).toBe('reopen-issue');
+    expect(first.comments[0].marker).toBe('reopen:2026-10-20T00:00:00Z');
+    const state = { prs: {}, issues: { 61: { markers: ['reopen:2026-10-20T00:00:00Z'] } } };
+    expect(plan({ ...base, prs: [], issues: [closed], state }).actions[0].comments).toEqual([]);
+  });
+});
+
+describe('write cap', () => {
+  it(`refuses more than ${WRITE_CAP.closes} closes/reopens or ${WRITE_CAP.comments} comments`, () => {
+    const close = { kind: 'close-pr', comments: [{}] };
+    const reply = { kind: 'ineligible-reply', comments: [{}] };
+    expect(writeCount(Array(10).fill(close)).exceeded).toBe(false);
+    expect(writeCount(Array(11).fill(close)).exceeded).toBe(true);
+    expect(writeCount(Array(20).fill(reply)).exceeded).toBe(false);
+    expect(writeCount(Array(21).fill(reply)).exceeded).toBe(true);
+  });
+});
+
+describe('state and log files', () => {
+  it('round-trips markers and the first evidence request time', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'bounty-guard-'));
+    const f = join(dir, 'state.json');
+    writeFileSync(f, '');
+    const s = loadState(f);
+    recordMarker(s, { kind: 'flag-pr', number: 9 }, 'needs-evidence', NOW);
+    recordMarker(s, { kind: 'flag-pr', number: 9 }, 'needs-evidence', new Date(NOW.getTime() + 1000));
+    recordMarker(s, { kind: 'reopen-issue', number: 61 }, 'reopen:x', NOW);
+    saveState(f, s);
+    expect(loadState(f)).toEqual({ prs: { 9: { markers: ['needs-evidence'], evidenceRequestedAt: NOW.toISOString() } }, issues: { 61: { markers: ['reopen:x'] } } });
+  });
+
+  it('rotates the log once it passes the cap', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'bounty-guard-'));
+    const log = join(dir, 'bounty-guard.log');
+    writeFileSync(log, 'x'.repeat(50));
+    expect(rotateLog(log, 100)).toBe(false);
+    writeFileSync(log, 'x'.repeat(150));
+    expect(rotateLog(log, 100)).toBe(true);
+    expect(existsSync(log)).toBe(false);
+    expect(statSync(`${log}.1`).size).toBe(150);
+  });
+});
+
+describe('install files', () => {
+  const read = (p) => readFileSync(new URL(`../scripts/bounty-guard/${p}`, import.meta.url), 'utf8');
+
+  it('install.sh installs from origin/main into Application Support, read-only, after a dry run', () => {
+    const sh = read('install.sh');
+    expect(sh).toMatch(/git -C "\$repo" fetch origin/);
+    expect(sh).toMatch(/git -C "\$repo" show "\$ref:scripts\/bounty-guard\/guard\.mjs"/);
+    expect(sh).toMatch(/Library\/Application Support\/bounty-guard/);
+    expect(sh).toMatch(/chmod 0444/);
+    expect(sh).toMatch(/chmod 0555/);
+    expect(sh.indexOf('"$node_bin" "$dir/guard.mjs"')).toBeLessThan(sh.indexOf('launchctl bootstrap'));
+  });
+
+  it('nothing hardcodes a user home', () => {
+    expect(read('install.sh')).not.toMatch(/\/Users\//);
+    expect(read('com.multiverse.bounty-guard.plist')).not.toMatch(/\/Users\//);
+    expect(read('com.multiverse.bounty-guard.plist')).toMatch(/__DIR__\/guard\.mjs/);
   });
 });

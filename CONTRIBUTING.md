@@ -16,12 +16,19 @@ Karma is paid only after a maintainer verifies the evidence and applies `karma-a
 
 ## Pull requests
 
-If you do open one for a bounty:
+If you do open one for a bounty (it says `Refs #N`, `Fixes #N` or similar, or links the issue):
 
 - **Edit only the real dataset config:** `research/data-brokers/build/*.json` (overrides, aliases, id-map). Generated files (`research/data-brokers/brokers/`, `links.json`, `sources.json`, `src/data/broker-map.json`) are never edited by hand; see "How to rebuild" in `research/data-brokers/README.md`.
 - **Don't add new data files.** Paths like `data/brokers.json`, `collective/data/…` or `docs_update.md` aren't read by anything, and those PRs will be closed.
-- **Don't touch `collective/`** in a bounty PR. It runs the nightly job that deletes opted-out players' data. Changes there need a maintainer and their own issue.
-- Put the Wayback captures in the PR description, and link the issue with `Refs #N`, not `Fixes #N`. A maintainer closes the issue once the evidence is checked.
+- **Don't delete or gut tests.** A bounty PR that deletes a test file, renames one away, or removes more than 20 net lines from tests is closed.
+- Put the Wayback captures in the PR description or in your evidence comment on the issue. A bounty PR without them is labelled `needs-evidence` and closed 72 hours after we ask.
+- Link the issue with `Refs #N`, not `Fixes #N`. A maintainer closes the issue once the evidence is checked; an issue closed any other way is reopened.
 - Run `npm run brokers:validate` and `npx vitest run` before opening the PR.
 
-PRs that don't follow these rules are closed without review.
+## Any pull request from outside the team
+
+- **Don't touch `collective/`.** It runs the nightly job that deletes opted-out players' data. A PR from anyone who isn't a collaborator that changes anything under `collective/` is closed and labelled `karma-farming`; changes there need a maintainer and their own issue.
+- Hand-edited generated files (listed above) are closed.
+- A PR that deletes tests or removes more than 20 net lines from them is held for a maintainer (`needs-maintainer`).
+
+These rules are applied automatically every hour by `scripts/bounty-guard/guard.mjs`. A maintainer can exempt a PR with `guard-skip` or `karma-approved`, and the guard never re-closes a PR or re-adds a label a maintainer has reversed.
