@@ -19,6 +19,7 @@ import {
   writeCount,
   selectWithinCap,
   commentsSince,
+  nextLastRunAt,
   FILES_UNREADABLE,
   PER_AUTHOR_CAP,
   loadState,
@@ -477,6 +478,25 @@ describe('state and log files', () => {
     expect(commentsSince({ lastRunAt: '2026-10-23T12:00:00Z', flaggedAuthorsSeen: ['a'] }, flagged)).toBe('2026-10-23T06:00:00.000Z');
   });
 
+  it('the comment window never moves past a reply still owed', () => {
+    const startedAt = '2026-10-23T12:00:00Z';
+    expect(nextLastRunAt({ startedAt })).toBe('2026-10-23T12:00:00.000Z');
+    expect(nextLastRunAt({ startedAt, previous: '2026-10-22T00:00:00Z', failed: 1 })).toBe('2026-10-22T00:00:00Z');
+    const deferred = [{ kind: 'ineligible-reply', commentAt: '2026-10-20T05:00:00Z' }, { kind: 'close-pr' }];
+    expect(nextLastRunAt({ startedAt, deferred })).toBe('2026-10-20T05:00:00.000Z');
+    const issues = [{ number: 7, comments: [{ createdAt: '2026-10-19T01:00:00Z' }, { createdAt: '2026-10-21T01:00:00Z' }] }, { number: 8, comments: [{ createdAt: '2026-10-01T00:00:00Z' }] }];
+    expect(nextLastRunAt({ startedAt, issueErrors: [7], issues })).toBe('2026-10-19T01:00:00.000Z');
+  });
+
+  it('plan gives deferred replies the flagged comment time and reports issue errors by number', () => {
+    const base = { flaggedAuthors: new Set(['taherezzi']), maintainers: new Set(), viewer: 'lizTheDeveloper', now: NOW, prs: [] };
+    const ok = { number: 131, state: 'OPEN', labels: [], comments: [{ author: 'TaherEzzi', body: '/claim', createdAt: '2026-10-20T00:00:00Z' }] };
+    const bad = Object.defineProperty({ number: 9, state: 'OPEN', comments: [] }, 'labels', { get() { throw new Error('boom'); } });
+    const { actions, issueErrors } = plan({ ...base, issues: [ok, bad] });
+    expect(actions[0]).toMatchObject({ kind: 'ineligible-reply', commentAt: '2026-10-20T00:00:00Z' });
+    expect(issueErrors).toEqual([9]);
+  });
+
   it('rotates the log once it passes the cap', () => {
     const dir = mkdtempSync(join(tmpdir(), 'bounty-guard-'));
     const log = join(dir, 'bounty-guard.log');
@@ -502,6 +522,8 @@ describe('install files', () => {
     expect(sh).toMatch(/guard\.mjs\.tmp"\n[\s\S]*mv -f "\$dir\/guard\.mjs\.tmp" "\$dir\/guard\.mjs"/);
     expect(sh).toMatch(/mv -f "\$plist\.tmp" "\$plist"/);
     expect(sh).toMatch(/chmod 0700 "\$dir\/state"/);
+    expect(sh.indexOf('rm -f "$dir/status.txt" "$dir/state.json"')).toBeLessThan(sh.indexOf('chmod 0555'));
+    expect(sh).toMatch(/plutil -lint "\$plist\.tmp" >\/dev\/null \|\| \{ rm -f "\$plist\.tmp"/);
     expect(sh.indexOf('"$node_bin" "$dir/guard.mjs"')).toBeLessThan(sh.indexOf('launchctl bootstrap'));
   });
 

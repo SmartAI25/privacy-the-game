@@ -26,6 +26,8 @@ git -C "$repo" fetch origin
 rev=$(git -C "$repo" rev-parse --short "$ref")
 mkdir -p "$dir" "$HOME/Library/LaunchAgents" "$HOME/Library/Logs"
 chmod 0755 "$dir"
+# The first layout kept these beside guard.mjs; they now live in state/.
+rm -f "$dir/status.txt" "$dir/state.json"
 # Write to a temp file and rename, so launchd never runs a half-written guard.
 git -C "$repo" show "$ref:scripts/bounty-guard/guard.mjs" > "$dir/guard.mjs.tmp"
 chmod 0444 "$dir/guard.mjs.tmp"
@@ -44,7 +46,7 @@ echo "--- end dry run ---"
 if [ "${BOUNTY_GUARD_NO_LOAD:-}" = 1 ]; then echo "BOUNTY_GUARD_NO_LOAD=1: not loading"; exit 0; fi
 
 printf '%s\n' "$template" | sed -e "s|__NODE__|$node_bin|g" -e "s|__DIR__|$dir|g" -e "s|__LOG__|$log|g" > "$plist.tmp"
-plutil -lint "$plist.tmp" >/dev/null
+plutil -lint "$plist.tmp" >/dev/null || { rm -f "$plist.tmp"; echo "generated plist failed plutil -lint" >&2; exit 1; }
 mv -f "$plist.tmp" "$plist"
 launchctl bootout "gui/$(id -u)/$label" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$plist"

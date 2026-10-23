@@ -226,6 +226,9 @@ export function assessPr(pr, ctx) {
     }
   }
 
+  // This is also the real backstop for a bounty PR that rewrites a test in
+  // place (same line count, so testDamage passes): tests/ is outside the
+  // allowed bounty paths, so any test edit on a bounty PR closes here.
   if (isBountyPr) {
     const outside = files.flatMap(filePaths).filter((p) => !isAllowedBountyPath(p) && !isProtectedPath(p));
     if (outside.length) {
@@ -383,6 +386,7 @@ export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, st
   const bountyIssues = new Map(issues.map((i) => [i.number, i]));
   const actions = [];
   const errors = [];
+  const issueErrors = [];
 
   for (const pr of prs) {
     const ref = `PR #${pr.number} (@${pr.author}, ${pr.authorAssociation})`;
@@ -441,14 +445,31 @@ export function plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, st
       if (!(issue.labels || []).includes(LABELS.guardSkip)) {
         for (const login of assessIssueComments(issue, flaggedAuthors, viewer, st.markers || [])) {
           const body = ineligibleComment(login);
-          actions.push({ kind: 'ineligible-reply', number: issue.number, ref, author: login.toLowerCase(), priority: 4, reasons: [`comment from flagged @${sanitizePath(login)}`], labels: [], comments: [{ marker: `ineligible:${sanitizePath(login).toLowerCase()}`, body }] });
+          const commentAt = (issue.comments || []).filter((c) => String(c.author).toLowerCase() === login.toLowerCase()).map((c) => c.createdAt).filter(Boolean).sort()[0] || null;
+          actions.push({ kind: 'ineligible-reply', number: issue.number, ref, author: login.toLowerCase(), priority: 4, commentAt, reasons: [`comment from flagged @${sanitizePath(login)}`], labels: [], comments: [{ marker: `ineligible:${sanitizePath(login).toLowerCase()}`, body }] });
         }
       }
     } catch (err) {
       errors.push(`${ref}: ${err.message}`);
+      issueErrors.push(issue.number);
     }
   }
-  return { actions, errors };
+  return { actions, errors, issueErrors };
+}
+
+/**
+ * Where the next run's comment window starts. Never past a comment the guard
+ * still owes a reply to: a deferred ineligible-reply or an issue whose
+ * assessment errored clamps it to the earliest such comment. Any failed write
+ * keeps the previous value.
+ */
+export function nextLastRunAt({ startedAt, previous = null, failed = 0, deferred = [], issueErrors = [], issues = [] }) {
+  if (failed) return previous;
+  const owed = deferred.filter((a) => a.kind === 'ineligible-reply').map((a) => a.commentAt);
+  const errored = new Set(issueErrors);
+  for (const i of issues) if (errored.has(i.number)) owed.push(...(i.comments || []).map((c) => c.createdAt));
+  const times = [new Date(startedAt).toISOString(), ...owed.filter(Boolean).map((t) => new Date(t).toISOString())].sort();
+  return times[0];
 }
 
 const isCloseLike = (a) => a.kind === 'close-pr' || a.kind === 'reopen-issue';
@@ -777,7 +798,7 @@ async function main(argv) {
     console.log(`${stamp()} ${prs.length} open PRs, ${issues.length} bounty issues, comments since ${since || 'the beginning'}: ${[...comments.values()].flat().length}, flagged authors: ${[...flaggedAuthors].join(', ') || 'none'}`);
 
     const now = new Date();
-    const { actions, errors } = plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, state, repo });
+    const { actions, errors, issueErrors } = plan({ prs, issues, flaggedAuthors, maintainers, viewer, now, state, repo });
     for (const e of errors) console.error(`${stamp()} ERROR ${e}`);
     const { run, deferred } = selectWithinCap(actions);
     for (const a of run) console.log(describeAction(a));
@@ -805,11 +826,8 @@ async function main(argv) {
         console.error(`${stamp()} FAILED ${a.kind} ${a.ref}: ${String(err.stderr || err.message).trim()}`);
       }
     }
-    if (!failed) {
-      // The comment window only advances after a clean run.
-      state.lastRunAt = startedAt.toISOString();
-      state.flaggedAuthorsSeen = [...flaggedAuthors];
-    }
+    state.lastRunAt = nextLastRunAt({ startedAt, previous: state.lastRunAt, failed, deferred, issueErrors, issues });
+    if (!failed) state.flaggedAuthorsSeen = [...flaggedAuthors];
     saveState(stateFile, state);
     const summary = `${run.length} action(s), ${failed} failed, ${deferred.length} deferred, ${errors.length} error(s)`;
     console.log(`${stamp()} ${summary}`);
