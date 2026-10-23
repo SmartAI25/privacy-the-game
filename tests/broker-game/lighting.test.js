@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { BROKER_CHECKLISTS } from '../../src/data/broker-checklists.js';
 import { dayOf, materializeLegacy, recordChecklist } from '../../src/utils/broker-state.js';
@@ -56,7 +56,7 @@ describe('broker lighting', () => {
   it('legacy all submitted lights every broker the mission covers', () => {
     const l = light(legacyAll);
     // People-search, filed in March: lit, and re-check-due (amber) by October.
-    for (const id of ['spokeo', 'whitepages', 'beenverified']) expect(l.stars[id], id).toEqual({ state: 'amber', litOn: '2026-03-01', via: ['legacy'] });
+    for (const id of ['spokeo', 'whitepages', 'beenverified']) expect(l.stars[id], id).toEqual({ state: 'amber', litOn: AT_DAY, via: ['legacy'] });
     expect(stateOf(light(legacyAll, '2026-03-02'), 'whitepages')).toBe('lit');
     expect(litIds(l)).toEqual(['beenverified', 'spokeo', 'whitepages']);
     expect(l.pending).toEqual([]);
@@ -211,6 +211,10 @@ describe('broker lighting', () => {
     expect(light({ missions: { 'credit_freeze-fortify-equifax': { status: 'completed', freeze_status: 'not-yet' } } }).frozen).toEqual([]);
   });
 
+  it('a freeze answer on an unfinished mission rings nothing', () => {
+    expect(light({ missions: { 'credit_freeze-fortify-equifax': { status: 'in_progress', freeze_status: 'now-frozen' } } }).frozen).toEqual([]);
+  });
+
   it('NAI gives a halo, never a light', () => {
     const l = light({ brokerFiled: filed('ad_trackers-fortify-bulk', { nai: '2026-10-01' }) });
     expect(l.halo).toEqual(['criteo']);
@@ -257,6 +261,20 @@ describe('broker lighting', () => {
     expect(fieldCoverage(mini, tick(reachable.filter((id) => id !== 'tail-2'))).percent).toBe(93);
     expect(fieldCoverage(mini, tick(reachable)).percent).toBe(100);
     expect(fieldCoverage(mini, tick(['spokeo']))).toEqual(fieldCoverage(mini, tick(['spokeo'])));
+  });
+
+  describe('the device clock', () => {
+    afterEach(() => vi.useRealTimers());
+    it('never changes the output', () => {
+      const s = { ...legacyAll, brokerFiled: { ...filed(STRAG, { drop: '2026-10-01' }), 'ad_trackers-fortify-bulk': { lines: { nai: T } } }, caResident: 'yes', bigCheck: { 'tail-2': '2026-06-01' } };
+      const run = () => { const l = light(s); return { l, c: fieldCoverage(mini, l) }; };
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2020-01-01T00:00:00Z'));
+      const a = run();
+      vi.setSystemTime(new Date('2031-07-15T18:30:00Z'));
+      const b = run();
+      expect(b).toEqual(a);
+    });
   });
 
   it('coverage is 0 when nothing is reachable', () => {

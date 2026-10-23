@@ -130,7 +130,7 @@ export function brokerLighting(map, state, today, checklists = BROKER_CHECKLISTS
   const frozen = new Set();
   for (const r of FREEZE_RINGS) {
     const rec = own(state?.missions, r.mission) ? state.missions[r.mission] : null;
-    if (isObj(rec) && r.values.includes(rec[r.question])) for (const id of r.brokers) if (known.has(id)) frozen.add(id);
+    if (isObj(rec) && rec.status === 'completed' && r.values.includes(rec[r.question])) for (const id of r.brokers) if (known.has(id)) frozen.add(id);
   }
 
   const halo = new Set();
