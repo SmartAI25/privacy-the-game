@@ -26,7 +26,17 @@ describe('broker-state', () => {
   it('cleanBrokerState keeps good values and cleans bigCheck', () => {
     const s = { missions: {}, caResident: 'yes', bigCheck: { a: '2026-01-02', b: '2026-02-30' }, brokerFiled: { m: { lines: { x: '2026-01-02' }, since: '2026-01-01' } } };
     expect(cleanBrokerState(s)).toEqual({ missions: {}, caResident: 'yes', bigCheck: { a: '2026-01-02' }, brokerFiled: { m: { lines: { x: '2026-01-02' }, since: '2026-01-01' } } });
-    expect(cleanBrokerState(structuredClone(s))).toBeTruthy();
+  });
+  it('cleanBrokerState drops __proto__ keys and never changes a prototype', () => {
+    const s = JSON.parse('{"missions":{},"brokerFiled":{"__proto__":{"lines":{}},"m":{"lines":{"__proto__":"2026-01-02","x":"2026-01-02"}}},"bigCheck":{"__proto__":"2026-01-02","a":"2026-01-02"}}');
+    const c = cleanBrokerState(s);
+    expect(Object.getPrototypeOf(c.brokerFiled)).toBe(Object.prototype);
+    expect(Object.hasOwn(c.brokerFiled, '__proto__')).toBe(false);
+    expect(Object.keys(c.brokerFiled)).toEqual(['m']);
+    expect(Object.getPrototypeOf(c.brokerFiled.m.lines)).toBe(Object.prototype);
+    expect(Object.keys(c.brokerFiled.m.lines)).toEqual(['x']);
+    expect(Object.getPrototypeOf(c.bigCheck)).toBe(Object.prototype);
+    expect(Object.keys(c.bigCheck)).toEqual(['a']);
   });
   it('an old save without the fields is returned as is', () => { const s = { missions: {} }; expect(cleanBrokerState(s)).toBe(s); });
   it('a clean save with the fields is returned as is', () => {

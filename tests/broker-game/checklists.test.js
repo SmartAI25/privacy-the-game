@@ -28,6 +28,10 @@ describe('broker checklists', () => {
   it('a line never names a broker in both brokers and notLit', () => {
     for (const lines of Object.values(BROKER_CHECKLISTS)) for (const l of lines) for (const b of l.notLit ?? []) expect(l.brokers ?? []).not.toContain(b);
   });
+  it('no lit broker anywhere has a none opt-out', () => {
+    const byId = new Map(map.brokers.map((b) => [b.id, b]));
+    for (const lines of Object.values(BROKER_CHECKLISTS)) for (const l of lines) for (const id of l.brokers ?? []) expect(byId.get(id).optOut?.method, id).not.toBe('none');
+  });
   it('Radaris has no line', () => {
     for (const lines of Object.values(BROKER_CHECKLISTS)) expect(lines.some((l) => l.brokers?.includes('radaris'))).toBe(false);
   });

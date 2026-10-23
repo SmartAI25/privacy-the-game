@@ -25,9 +25,13 @@ export function dayOf(iso) {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
+// A save is untrusted JSON: a "__proto__" key would set the output's
+// prototype instead of a field, so it is dropped.
+const SKIP = '__proto__';
+
 function cleanDays(obj) {
   const out = {};
-  for (const [k, v] of Object.entries(obj)) if (realDay(v)) out[k] = v;
+  for (const [k, v] of Object.entries(obj)) if (k !== SKIP && realDay(v)) out[k] = v;
   return out;
 }
 
@@ -35,7 +39,7 @@ function cleanFiled(filed) {
   if (!isObj(filed)) return undefined;
   const out = {};
   for (const [id, entry] of Object.entries(filed)) {
-    if (!isObj(entry) || !isObj(entry.lines)) continue;
+    if (id === SKIP || !isObj(entry) || !isObj(entry.lines)) continue;
     const e = { lines: cleanDays(entry.lines) };
     if (realDay(entry.since)) e.since = entry.since;
     out[id] = e;
