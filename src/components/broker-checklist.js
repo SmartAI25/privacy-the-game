@@ -17,7 +17,7 @@ export function checklistTicksFor(questionId, value) {
   return null;
 }
 
-const BOX = '<input type="checkbox" name="filed" value="%ID%" style="width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;">';
+const BOX = '<input type="checkbox" name="filed" value="%ID%" style="width: 24px; height: 24px; flex-shrink: 0; margin: 0; accent-color: var(--cyan);">';
 
 function lineText(line) {
   return `
