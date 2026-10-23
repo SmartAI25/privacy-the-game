@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Broker mission debriefs ask "Which of these did you file?", completed broker missions can be filed again, and a pure lighting function turns the saved game into the star states the map will draw.
+**Goal:** Broker mission debriefs ask "Which of these did you file?", completed broker missions can be re-checked with the same checklist (main's re-check mode), and a pure lighting function turns the saved game into the star states the map will draw.
 
 **Architecture:** The checklist lines live in a new data file keyed by mission id. What the player ticks is stored in new optional top-level fields of the saved game, never in `missions[id]` answers, `missionEventData` or `track()`. `brokerLighting(map, state, today)` is a pure function over `src/data/broker-map.json` and the saved game, like `lights.js`. Nothing on the map screen exists yet; Plan 2 consumes this.
 
@@ -29,20 +29,31 @@
 - Re-check: people-search brokers turn amber 90 days after they were lit. Stars lit by DROP never go amber.
 - Credit freezes light nothing. They show as a "frozen" ring on the bureau stars.
 - Residency answers: Yes / No / Rather not say. "No" and "Rather not say" mean DROP lights nothing.
-- Every PR bumps the version (`package.json` + `package-lock.json`).
+- Every PR bumps the version (`package.json` + `package-lock.json`) **and** sets the stylesheet link in `src/index.html` to `style.css?v=<new version>`. `tests/css-cache-bust.test.js` holds the two equal.
 - Copy follows the v5.0 recon rules: no claim we can't verify, and no numbers we can't source.
 - **A line lights only its own site's star (Liz, 2026-10-19).** Ticking one site never lights its parent or operating company's star. A company's star lights only from its own opt-out, a sweep, or a mission line that files with that company itself. A site with no record of its own is a *site-only* line: its date is kept and shown, and it lights nothing.
 - **Re-check-due stars still count toward FIELD COVERED (Liz, 2026-10-19).** Plan 2 draws them dimmer than freshly filed stars.
 - **A `none` opt-out star is always the magenta ✕.** Nothing lights it, not a line, not DROP, not a Big Check tick, and it is outside the coverage denominator. Since PR #145, Radaris is one: its step is a note with no link, and its record has no missions.
 - Dataset as of this plan: `asOf` 2026-10-19, 903 brokers (Vermont included), 106 published links, 12 hubs.
+- **Decisions (controller, 2026-10-23)**, made after the drift check against main v6.3.2:
+  1. Broker missions are filed again through main's existing **re-check mode**: `#/mission/<id>/recheck`, `renderDebrief(state, id, { recheck: true })`, `applyRecheck`, and `data-action="submit-recheck"`. They keep its RE-CHECK label. The "which did you file?" checklist lives in re-check mode. There is no "FILE AGAIN" link and no `refile-brokers` action.
+  2. The map's first visit animates the lit stars, within `prefers-reduced-motion` (Plan 2).
+  3. Only ticked checklist lines refresh a star's date. A re-check with no ticks changes no star's state or date, even when it rewrites the mission's stored answer.
+- Facts from main (v6.3.2) that this plan builds on:
+  - Re-check mode: `applyRecheck` (`src/utils/debrief.js`) keeps `status` and `completedAt`, may rewrite the stored answers, writes `rechecked`, and calls no `track()`. `canRecheck` is true for every broker mission. `submitRecheck` (`src/app.js`) goes to `#/district/<district>` for missions without an interior, which covers every Reclamation mission. `pageviewUrl` (`src/utils/pageview-url.js`) and Umami's `__rcBeforeSend` (`src/index.html`) both send the route as `#/mission/recheck`.
+  - The Reclamation is a facility district (`type: 'facility'`). Its missions render in `renderFacilitySection` (`src/screens/district.js`), done rows show a `DONE` badge, and `renderMissionRow` never draws them.
+  - `debriefForm(state, mission, given, recheck)` is shared by the open debrief and the re-check form.
+  - `src/utils/errorNoise.js` `PRIVATE_UI` drops UI breadcrumbs whose selector matches it, before an error report is built.
+  - `broker-state.js` must not import `src/state.js`, because `state.js` imports it for `loadState`. It carries its own `dayOf(iso)`.
 
 ## Review Focus
 
-1. **An old save answered "Submitted all of them", then filed again with only some lines ticked.** Expected: the lines not re-ticked stay lit at the mission's `completedAt` day. Re-filing never unlights anything. Pinned by Task 3's `legacy all, then a partial re-file, keeps the rest lit`.
+1. **An old save answered "Submitted all of them", then re-checked with only some lines ticked.** Expected: the lines not re-ticked stay lit at the mission's `completedAt` day. A re-check never unlights anything. Pinned by Task 3's `legacy all, then a partial re-check, keeps the rest lit`.
 2. **A save with malformed broker fields** (`brokerFiled: "x"`, a line dated `"soon"`, `caResident: "maybe"`, `bigCheck: [1]`). Expected: it loads, every mission and district % is kept, and only the bad values are dropped. Pinned by Task 2's `cleanBrokerState drops bad values and keeps missions`.
 3. **The player ticks lines, then answers "I'll come back to this".** Expected: nothing is recorded and nothing lights. Pinned by Task 4's `a skipped filing records no lines`.
 4. **The device clock is set back, so a line's date is after today.** Expected: the star is lit, not amber, and nothing throws. Pinned by Task 3's `a date after today is lit, not amber`.
 5. **A line id in the save that no longer exists in the checklist** (a later release renames a line). Expected: it is ignored and never lights a broker by accident. Pinned by Task 3's `unknown line ids are ignored`.
+6. **A re-check of a legacy "all" filing changes the answer to "some" and ticks nothing.** Expected: every star keeps its state and date (decision 3). Pinned by Task 5's `a re-check that changes the answer and ticks nothing leaves every star as it was`.
 
 ---
 
@@ -50,13 +61,15 @@
 
 ```
 src/data/broker-checklists.js     BROKER_CHECKLISTS (lines per mission), LEGACY_ALL_ANSWERS, FREEZE_RINGS
-src/utils/broker-state.js         saved-game fields: cleanBrokerState, recordChecklist, setResidency, setBigCheck
+src/utils/broker-state.js         saved-game fields: cleanBrokerState, recordChecklist, materializeLegacy, applyChecklistFiling, setResidency, setBigCheck
 src/utils/broker-lighting.js      brokerLighting, lineDates, fieldCoverage, fieldHeader, isBuyer, RECHECK_DAYS
 src/components/broker-checklist.js  renderBrokerChecklist(mission, state, mode)
 src/state.js                      loadState calls cleanBrokerState
-src/screens/debrief.js            renders the checklist (open form) and the "filed again" panel (completed)
-src/screens/district.js           FILE AGAIN link on completed broker missions
-src/app.js                        reads ticks on SUBMIT REPORT and on SAVE; ticks all on "Submitted all"
+src/screens/debrief.js            checklist: file mode in the open form, recheck mode in the re-check form; RE-CHECK link on the completed view
+src/screens/district.js           RE-CHECK link on done checklist missions (renderFacilitySection)
+src/app.js                        reads ticks on SUBMIT REPORT and on SAVE RE-CHECK; ticks all on "Submitted all"
+src/index.html                    style.css?v= follows package.json (Task 0, Task 6)
+src/utils/errorNoise.js           PRIVATE_UI drops checklist breadcrumbs
 tests/fixtures/broker-map-mini.json  small map for lighting tests
 tests/broker-game/*.test.js
 ```
@@ -72,6 +85,19 @@ bigCheck: { [brokerId]: 'YYYY-MM-DD' }   // Plan 3 writes it; lighting reads it 
 ```
 
 ---
+
+### Task 0: Fix main's red stylesheet test
+
+Main (v6.3.2) links `style.css?v=6.3.1`, so `tests/css-cache-bust.test.js` already fails before any work starts.
+
+**Files:**
+- Modify: `src/index.html` (the `<link rel="stylesheet">` line only)
+- Test: `tests/css-cache-bust.test.js` (exists, unchanged)
+
+- [ ] **Step 1: Run `npx vitest run tests/css-cache-bust.test.js` and confirm it fails**, expecting `style.css?v=6.3.2` and getting `style.css?v=6.3.1`.
+- [ ] **Step 2: Change the link to `href="style.css?v=6.3.2"`.** Leave the comment above it alone.
+- [ ] **Step 3: Run the test again.** Expected: PASS.
+- [ ] **Step 4: Commit**: `fix: stylesheet link matches v6.3.2`
 
 ### Task 1: Checklist lines per mission
 
@@ -89,7 +115,7 @@ bigCheck: { [brokerId]: 'YYYY-MM-DD' }   // Plan 3 writes it; lighting reads it 
     - `credit_freeze-fortify-equifax`, `freeze_status`, `['already-frozen', 'now-frozen']`, `['equifax-information-services']`
     - `credit_freeze-fortify-experian`, same answers, `['experian-information-solutions']`
     - `credit_freeze-fortify-transunion`, same answers, `['trans-union']`
-    - `credit_freeze-fortify-extras`, `freeze_extras`, `['both-frozen']`, `['innovis', 'chex-systems']`
+    - `credit_freeze-fortify-extras`, `freeze_extras`, `['both-frozen']`, `['innovis-data-solutions', 'chex-systems']`. Since the Vermont import (#236), Innovis's record id is `innovis-data-solutions`; there is no `innovis`.
 
 The lines, one per step that reaches a broker record or a sweep (step-to-broker matching is `research/data-brokers/build/map-missions.js`; `--dry-run` prints it). A line lights a record only when the step files with that record itself:
 - the step URL is the record's own `optOut.url` (or is on the site the record's own opt-out lives on);
@@ -170,13 +196,15 @@ it('every FREEZE_RINGS broker exists', ...);
 - Test: `tests/broker-game/broker-state.test.js`
 
 **Interfaces:**
-- Consumes: `checklistFor` (Task 1).
+- Consumes: `checklistFor`, `LEGACY_ALL_ANSWERS` (Task 1).
 - Produces:
   - `RESIDENCY = ['yes', 'no', 'unsaid']`
+  - `dayOf(iso: string) → 'YYYY-MM-DD' | null`: the local calendar day of an ISO time, by the same rule as `localDay` in `state.js`. A value that doesn't parse gives `null`.
   - `cleanBrokerState(state) → state`. It keeps only well-formed values: `brokerFiled` entries that are objects with a `lines` object, line values that are real `YYYY-MM-DD` days, `since` only when it's a real day, `caResident` only from `RESIDENCY`, and `bigCheck` only as an object of real days. It returns the same object when nothing changed. It never touches `missions`.
   - `recordChecklist(state, missionId, lineIds: string[], day: string, { first = false } = {}) → state`. It sets `lines[id] = day` for each id that is a line of that mission (other ids are dropped), and sets `since = day` when `first` and `since` is absent. It returns `state` unchanged when the mission has no checklist or `lineIds` is empty and `first` is false.
   - `setResidency(state, value) → state`. A value outside `RESIDENCY` deletes the field (back to "not asked").
   - `setBigCheck(state, brokerId, ticked: boolean, day) → state`. Ticked sets the day, unticked deletes the key.
+  - `materializeLegacy(state, missionId) → state`. It applies only to a legacy "all" filing: `missions[missionId].status === 'completed'`, the record's `optout_result` or `defense_done` answer is in `LEGACY_ALL_ANSWERS`, the mission has a checklist, `brokerFiled[missionId]?.since` is absent, and `dayOf(record.completedAt)` is a day. In that case it writes every line not already recorded at that day and sets `since` to that day. Otherwise it returns `state` unchanged (the same object). The stars it lights, and their dates, are exactly the ones Task 3's legacy rule already gives, so calling it never changes the map. Task 5 calls it before a re-check can rewrite the answer.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -199,6 +227,14 @@ it('a first filing with no ticks still records since', ...); // so legacy "all" 
 it('recordChecklist on a mission with no checklist is a no-op', ...);
 it('setResidency accepts yes/no/unsaid and clears anything else', ...);
 it('setBigCheck ticks and unticks', ...);
+it('materializeLegacy writes a legacy all filing into lines at its completedAt day', () => {
+  const s = { missions: { 'people_search-fortify-web-forms': { status: 'completed', optout_result: 'all-submitted', completedAt: '2026-03-01T12:00:00.000Z' } } };
+  expect(materializeLegacy(s, 'people_search-fortify-web-forms').brokerFiled['people_search-fortify-web-forms'])
+    .toEqual({ lines: { spokeo: '2026-03-01', whitepages: '2026-03-01', beenverified: '2026-03-01' }, since: '2026-03-01' });
+});
+it('materializeLegacy keeps lines already recorded', ...);  // lines {spokeo: '2026-10-19'} stays '2026-10-19'; the other two get '2026-03-01'
+it('materializeLegacy leaves some-submitted, skipped, no-checklist and checklist filings alone', ...); // each returns the same object
+it('broker-state.js never imports state.js', () => expect(readFileSync('src/utils/broker-state.js', 'utf8')).not.toMatch(/from ['"]\.\.\/state\.js['"]/));
 ```
 
 - [ ] **Step 2: Run `npx vitest run tests/broker-game/broker-state.test.js` and confirm it fails.**
@@ -213,11 +249,11 @@ it('setBigCheck ticks and unticks', ...);
 - Test: `tests/broker-game/lighting.test.js`
 
 **Interfaces:**
-- Consumes: `BROKER_CHECKLISTS`, `LEGACY_ALL_ANSWERS`, `FREEZE_RINGS` (Task 1); `localDay` from `src/state.js`.
+- Consumes: `BROKER_CHECKLISTS`, `LEGACY_ALL_ANSWERS`, `FREEZE_RINGS` (Task 1); `dayOf` (Task 2) for `completedAt` days. Tests also use `materializeLegacy` and `recordChecklist` (Task 2).
 - Produces:
   - `RECHECK_DAYS = 90`
   - `isBuyer(broker) → boolean`: `kind` includes `buyer`.
-  - `lineDates(state, missionId, checklists = BROKER_CHECKLISTS) → Record<lineId, day>`. The mission's recorded lines, plus, for a legacy "all" filing (completed, a `LEGACY_ALL_ANSWERS` answer, no `since`), every line not recorded dated `localDay(new Date(record.completedAt))`.
+  - `lineDates(state, missionId, checklists = BROKER_CHECKLISTS) → Record<lineId, day>`. The mission's recorded lines, plus, for a legacy "all" filing (completed, a `LEGACY_ALL_ANSWERS` answer, no `since`), every line not recorded dated `dayOf(record.completedAt)`.
   - `isChecklistPending(state, missionId, checklists = BROKER_CHECKLISTS) → boolean`: the mission is completed, has a checklist, and `lineDates` is empty.
   - `brokerLighting(map, state, today: string, checklists = BROKER_CHECKLISTS) → Lighting`:
     ```
@@ -277,7 +313,8 @@ it('legacy defense done counts as all', ...);                      // enterprise
 it('legacy some submitted lights nothing and is pending', ...);    // pending: ['people_search-fortify-web-forms']
 it('filling in the checklist clears pending', ...);
 it('a new filing ignores its all-submitted answer', ...);          // since set, lines {spokeo} → whitepages dim
-it('legacy all, then a partial re-file, keeps the rest lit', ...); // re-file spokeo '2026-10-19'; whitepages still lit at '2026-03-01'
+it('legacy all, then a partial re-check, keeps the rest lit', ...); // materializeLegacy, then recordChecklist spokeo '2026-10-19': spokeo litOn '2026-10-19'; whitepages still lit at '2026-03-01'
+it('a materialized legacy filing lights the same stars on the same days', ...); // brokerLighting before and after materializeLegacy: deep-equal stars
 it('DROP with residency yes lights CA-registered brokers only', () => {
   // drop ticked in stragglers, caResident 'yes' → spokeo, acxiom, equifax-information-services, hub-a, tail-1 lit via drop; nope stays no-opt-out; whitepages dim; us-ice dim
 });
@@ -314,18 +351,18 @@ it('an old save with no broker fields never throws', ...);         // {missions:
 
 **Files:**
 - Create: `src/components/broker-checklist.js`
-- Modify: `src/screens/debrief.js` (`debriefForm` appends the checklist), `src/utils/broker-state.js` (`applyChecklistFiling`), `src/app.js` (`submitDebrief`, `refreshDebriefForm`)
+- Modify: `src/screens/debrief.js` (`debriefForm(state, mission, given, recheck)` appends the checklist in file mode only when `recheck` is false; Task 5 adds recheck mode), `src/utils/broker-state.js` (`applyChecklistFiling`), `src/app.js` (`submitDebrief`, `refreshDebriefForm`)
 - Test: `tests/broker-game/debrief-checklist.test.js`
 
 **Interfaces:**
 - Consumes: `checklistFor`, `LEGACY_ALL_ANSWERS` (Task 1); `recordChecklist` (Task 2); `lineDates`, `isChecklistPending` (Task 3); `localDay`.
 - Produces:
-  - `renderBrokerChecklist(mission, state, mode: 'file' | 'refile') → string` (`''` when the mission has no checklist). File mode renders `<div data-broker-checklist="<missionId>">` with the label `WHICH OF THESE DID YOU FILE?`, the sub-line `Only this browser keeps this. It lights your field map and is never sent anywhere.`, and one `<input type="checkbox" name="filed" value="<lineId>">` per line, unticked, plus the line's `hint`. Refile mode is Task 5's.
+  - `renderBrokerChecklist(mission, state, mode: 'file' | 'recheck') → string` (`''` when the mission has no checklist). File mode renders `<div class="broker-checklist" data-broker-checklist="<missionId>">` with the label `WHICH OF THESE DID YOU FILE?`, the sub-line `Only this browser keeps this. It lights your field map and is never sent anywhere.`, and one `<input type="checkbox" name="filed" value="<lineId>">` per line, unticked, plus the line's `hint`. The `broker-checklist` class is what Task 6's `PRIVATE_UI` matches. Recheck mode is Task 5's.
   - `checklistTicksFor(questionId: string, value: string) → 'all' | 'none' | null`, exported from `broker-checklist.js`. It returns `'all'` for a `LEGACY_ALL_ANSWERS` value, `'none'` for `skip`, and `null` otherwise.
   - `applyChecklistFiling(state, missionId, status, lineIds, day) → state` in `broker-state.js`. It is `recordChecklist(..., { first: true })` when `status === 'completed'`, else `state`.
 - `app.js`:
-  - `submitDebrief` reads `[data-broker-checklist] input[name="filed"]:checked` and, after `fileDebrief`, applies `applyChecklistFiling(filed.state, missionId, filed.event?.status, ticks, localDay())` before `setState`.
-  - `refreshDebriefForm` applies `checklistTicksFor` when the mission's first question changes, ticking or unticking every `filed` box once (the player can still change them).
+  - `submitDebrief` reads `[data-broker-checklist] input[name="filed"]:checked` and, after `fileDebrief`, applies `applyChecklistFiling(filed.state, missionId, filed.event?.status, ticks, localDay())` to `filed.state` before the existing `noteFirstTwoFactor` → `streakAfterFiling` → `ensureBurst` → `setState` chain.
+  - `refreshDebriefForm` applies `checklistTicksFor` when the mission's first question *changes*, ticking or unticking every `filed` box once (the player can still change them). It never acts on a prefilled answer, so a re-check form that opens on "all submitted" starts with every box unticked (decision 3). `readAnswers` reads only `q_*` names, so the `filed` boxes never reach the answers.
   - Neither touches `track()`.
 
 - [ ] **Step 1: Write the failing tests**
@@ -337,6 +374,7 @@ it('an open broker debrief lists one tick box per line', () => {
 });
 it('DROP is its own line with its hint', ...);
 it('a mission with no checklist renders none', ...);   // credit_freeze-fortify-equifax, ad_trackers-fortify-platforms
+it('the re-check form carries no file-mode checklist', ...); // completed web-forms: renderDebrief(s, id, { recheck: true }) has no data-broker-checklist without data-mode="recheck" (that panel is Task 5's)
 it('checklistTicksFor', () => {
   expect(checklistTicksFor('optout_result', 'all-submitted')).toBe('all');
   expect(checklistTicksFor('optout_result', 'some-submitted')).toBe(null);
@@ -353,46 +391,81 @@ it('district progress is the same with and without brokerFiled', ...); // calcDi
 
 - [ ] **Step 2: Run `npx vitest run tests/broker-game/debrief-checklist.test.js` and confirm it fails.**
 - [ ] **Step 3: Implement the component, `checklistTicksFor` and `applyChecklistFiling`, and wire `debrief.js` and `app.js`.** The checkbox rows reuse the debrief's `debrief-opt` row style.
-- [ ] **Step 4: Run the test plus `npx vitest run tests/recon-phase2-review.test.js tests/passwords-2fa-ui.test.js`.** Expected: PASS.
+- [ ] **Step 4: Run the test plus `npx vitest run tests/recon-phase2-review.test.js tests/passwords-2fa-ui.test.js tests/recheck.test.js`.** Expected: PASS.
 - [ ] **Step 5: Commit**: `feat(broker-map): debrief asks which brokers you filed`
 
-### Task 5: File again (debrief panel and district link)
+### Task 5: Re-check a broker mission
+
+A completed broker mission is filed again through main's re-check mode (decision 1). The re-check form keeps its RE-CHECK heading and SAVE RE-CHECK button, and gains the checklist with each line's last date.
 
 **Files:**
-- Modify: `src/components/broker-checklist.js` (refile mode), `src/screens/debrief.js` (completed view), `src/screens/district.js` (`renderMissionRow`), `src/app.js` (action `refile-brokers`)
-- Test: `tests/broker-game/refile.test.js`
+- Modify: `src/components/broker-checklist.js` (recheck mode), `src/screens/debrief.js` (re-check form and completed view), `src/screens/district.js` (`renderFacilitySection`), `src/app.js` (`submitRecheck`)
+- Test: `tests/broker-game/recheck-brokers.test.js`. `tests/recheck.test.js` already exists and must stay green.
 
 **Interfaces:**
-- Consumes: Tasks 1–4.
+- Consumes: Tasks 1–4; `applyRecheck`, `canRecheck` (`src/utils/debrief.js`); `pageviewUrl` (`src/utils/pageview-url.js`).
 - Produces:
-  - Refile mode renders `<div data-broker-checklist="<missionId>" data-mode="refile">`. The label is `FILED AGAIN?`, or `TELL SCOUT WHICH ONES YOU FILED` when `isChecklistPending(state, id)` (it needs no map). Each line shows `Last filed YYYY-MM-DD` or `Not recorded yet`, then an unticked box, then `<button data-action="refile-brokers" data-mission="<id>">SAVE</button>`.
-  - `renderDebrief` for a completed checklist mission appends the refile panel after the locked answers.
-  - `renderMissionRow` for a completed mission with a checklist adds `<a href="#/mission/<id>/briefing">FILE AGAIN</a>` beside SECURED. The briefing already shows a completed mission's steps and leads to the debrief.
-  - `app.js` `refile-brokers`: `setState(recordChecklist(state, id, ticks, localDay()))`, then a REFRESH render. The mission record, `completedAt`, streak and events are untouched.
+  - Recheck mode renders `<div class="broker-checklist" data-broker-checklist="<missionId>" data-mode="recheck">`:
+    - The label is `FILED AGAIN?`, or `TELL SCOUT WHICH ONES YOU FILED` when `isChecklistPending(state, id)`. The sub-line is the same as file mode's.
+    - Each line shows `Last filed YYYY-MM-DD` (from `lineDates`) or `Not recorded yet`, then an unticked `<input type="checkbox" name="filed" value="<lineId>">`, then its `hint`.
+    - It has no button. The form's existing SAVE RE-CHECK (`data-action="submit-recheck"`) submits it.
+  - `debriefForm(state, mission, given, recheck)` appends recheck mode when `recheck` is true and the mission has a checklist.
+  - The completed debrief of a checklist mission (`renderDebrief` without `recheck`) adds `<a href="#/mission/<id>/recheck" class="btn-secondary" style="text-decoration: none;">RE-CHECK</a>` beside SECURED. When `isChecklistPending`, the line above the footer reads `Tell Scout which ones you filed.`.
+  - In `renderFacilitySection`, a done row of a checklist mission (`record.status === 'completed'`) adds `<a href="#/mission/<id>/recheck">RE-CHECK</a>` beside its `DONE` badge, styled like the row's RETRY link. Other rows are unchanged.
+  - `submitRecheck(missionId)` in `app.js`. A mission with no checklist keeps today's path exactly. A checklist mission does this:
+    ```js
+    const base = materializeLegacy(state, missionId);            // before applyRecheck can rewrite the answer
+    const next = applyRecheck(base, mission, readAnswers(app, mission));
+    if (!next) { /* the existing [data-recheck-msg] path; nothing is saved, base included */ return; }
+    const ticks = [...app.querySelectorAll('[data-broker-checklist] input[name="filed"]:checked')].map((el) => el.value);
+    setState(recordChecklist(next, missionId, ticks, localDay()));
+    ```
+    Then it takes its existing navigation (`#/district/reclamation`). No `track()`, no `afterMissionRecorded`, no event.
+  - `brokerLighting` is unchanged. Once `materializeLegacy` has set `since`, the stored answer no longer matters, so a re-check that changes `all-submitted` to `some-submitted` unlights nothing. Only ticked lines get a new date (decision 3).
+  - Nothing in `src/` says "FILE AGAIN", and there is no `refile-brokers` action.
 
 - [ ] **Step 1: Write the failing tests**
 
 ```js
-it('a completed broker debrief shows the refile panel with dates', () => {
-  // legacy all, completedAt '2026-03-01T12:00:00.000Z' → 'Last filed 2026-03-01' on all three lines, label 'FILED AGAIN?'
+it('a re-check of a legacy all filing shows each line\'s date', () => {
+  // web-forms {completed, all-submitted, completedAt '2026-03-01T12:00:00.000Z'}: renderDebrief(s, id, { recheck: true }) has
+  // data-mode="recheck", 'FILED AGAIN?', 'Last filed 2026-03-01' three times, data-action="submit-recheck", and no checked filed box
 });
-it('a legacy some-submitted debrief asks Scout\'s question', ...);   // label 'TELL SCOUT WHICH ONES YOU FILED', 'Not recorded yet'
-it('re-filing keeps the mission completed and its completedAt', ...);
-it('the district offers FILE AGAIN only on completed checklist missions', () => {
-  // completed web-forms row has href="#/mission/people_search-fortify-web-forms/briefing">FILE AGAIN; an open one and a completed freeze don't
+it('a re-check of a legacy some-submitted filing asks Scout\'s question', ...);   // 'TELL SCOUT WHICH ONES YOU FILED', 'Not recorded yet' three times
+it('the open debrief has no recheck panel', ...);                                 // renderDebrief(createInitialState(), id) has no data-mode="recheck"
+it('a re-check with ticks dates only the ticked lines', () => {
+  // materializeLegacy → applyRecheck(optout_result 'all-submitted') → recordChecklist(['spokeo'], '2026-10-19'):
+  // brokerLighting(mini, …, '2026-10-19'): spokeo litOn '2026-10-19'; whitepages and beenverified litOn '2026-03-01'
+});
+it('a re-check that changes the answer and ticks nothing leaves every star as it was', () => {
+  // legacy all; materializeLegacy → applyRecheck(optout_result 'some-submitted') → recordChecklist([], day):
+  // brokerLighting(...).stars deep-equals the stars before the re-check; pending stays []
+});
+it('a re-check keeps the mission completed with its completedAt and sends nothing', ...); // status 'completed', completedAt unchanged, rechecked set; missionEventData unchanged
+it('the completed debrief links RE-CHECK', () => {
+  // renderDebrief(completed web-forms) contains href="#/mission/people_search-fortify-web-forms/recheck" and '>RE-CHECK<'
+});
+it('nothing says FILE AGAIN and there is no refile-brokers action', ...); // every src/**/*.js file: no 'FILE AGAIN', no 'refile-brokers'
+it('the district offers RE-CHECK only on done checklist missions', () => {
+  // renderDistrict(state, 'reclamation'): a completed web-forms row has href="#/mission/people_search-fortify-web-forms/recheck";
+  // an open web-forms row and a completed credit_freeze-fortify-equifax row don't
+});
+it('the re-check route stays private', () => {
+  const href = 'https://x.test/reclaim-city/#/mission/people_search-fortify-web-forms/recheck';
+  expect(pageviewUrl(parseRoute('#/mission/people_search-fortify-web-forms/recheck'), href)).toBe('https://x.test/reclaim-city/#/mission/recheck');
 });
 ```
 
-- [ ] **Step 2: Run `npx vitest run tests/broker-game/refile.test.js` and confirm it fails.**
-- [ ] **Step 3: Implement refile mode, the debrief panel, the district link and the action.**
-- [ ] **Step 4: Run the test again plus `npx vitest run tests/district-phase-gating.test.js`.** Expected: PASS.
-- [ ] **Step 5: Commit**: `feat(broker-map): file a broker mission again`
+- [ ] **Step 2: Run `npx vitest run tests/broker-game/recheck-brokers.test.js` and confirm it fails.**
+- [ ] **Step 3: Implement recheck mode, the completed-view link, the district link and the `submitRecheck` branch.**
+- [ ] **Step 4: Run the test again plus `npx vitest run tests/recheck.test.js tests/district-phase-gating.test.js tests/pageview.test.js tests/analytics-hook.test.js`.** Expected: PASS.
+- [ ] **Step 5: Commit**: `feat(broker-map): re-check a broker mission with its checklist`
 
 ### Task 6: Privacy guard, version, PR
 
 **Files:**
 - Test: `tests/broker-game/privacy.test.js`
-- Modify: `package.json`, `package-lock.json`
+- Modify: `src/utils/errorNoise.js` (`PRIVATE_UI` gains `broker-checklist`), `package.json`, `package-lock.json`, `src/index.html` (stylesheet link)
 
 - [ ] **Step 1: Write the tests**
 
@@ -402,10 +475,14 @@ it('the new modules never import analytics', () => {
   for (const f of ['src/utils/broker-state.js', 'src/utils/broker-lighting.js', 'src/components/broker-checklist.js', 'src/data/broker-checklists.js'])
     expect(readFileSync(f, 'utf8')).not.toMatch(/analytics|track\(/);
 });
+it('checklist breadcrumbs never leave the device', () => {
+  expect(isPrivateBreadcrumb({ category: 'ui.click', message: 'div.broker-checklist > label.debrief-opt > input[type="checkbox"][name="filed"]' })).toBe(true);
+  expect(isPrivateBreadcrumb({ category: 'ui.click', message: 'button.btn-primary' })).toBe(false);
+});
 ```
 
-- [ ] **Step 2: Run `npx vitest run tests/broker-game`.** Expected: PASS.
-- [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version`.
+- [ ] **Step 2: Add `broker-checklist` to the `PRIVATE_UI` alternation in `src/utils/errorNoise.js`, then run `npx vitest run tests/broker-game tests/errorNoise.test.js`.** Expected: PASS.
+- [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version` (6.3.2 → 6.4.0), and set `src/index.html`'s link to `style.css?v=6.4.0`. Run `npx vitest run tests/css-cache-bust.test.js`. Expected: PASS.
 - [ ] **Step 4: Run the full suite** with `npx vitest run` (or `~/.claude/bin/vast-test`). Expected: every test passes.
-- [ ] **Step 5: Check it in a browser at 375px** (Playwright). File `people_search-fortify-web-forms` with two of three ticked, reopen the debrief, save a re-file, and confirm there's no horizontal scroll. Save the screenshots under `docs/screenshots/broker-constellation/`.
+- [ ] **Step 5: Check it in a browser at 375px** (Playwright). File `people_search-fortify-web-forms` with two of three ticked. Open RE-CHECK from the district, tick the third line, and SAVE RE-CHECK. Confirm the hash reads `#/mission/<id>/recheck` while there (its pageview goes out as `#/mission/recheck`), and that there's no horizontal scroll. Save the screenshots under `docs/screenshots/broker-constellation/`.
 - [ ] **Step 6: Commit, push, and open a PR.** Commit by explicit paths. Merge once the full suite is green.
