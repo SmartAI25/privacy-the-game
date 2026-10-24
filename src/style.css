@@ -351,12 +351,11 @@ img { image-rendering: pixelated; }
 /* Debrief / re-check: the briefing's Scout line again, first sentence then "Remind me".
    At 900px and up the whole line shows, as it always did. */
 .scout-remind { display: inline; }
+[data-scout-line]:has(.scout-remind[open]) .scout-cut-quote { display: none; }
 .scout-remind > summary { display: inline-block; min-height: 44px; line-height: 44px; padding: 0 4px; cursor: pointer; font-family: var(--font-display); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); }
+/* Open from 900px by script (data-open-desktop, app.js); there the tap isn't needed. */
 @media (min-width: 900px) {
-  @supports selector(::details-content) {
-    .scout-remind > summary { display: none; }
-    .scout-remind::details-content { content-visibility: visible; display: contents; }
-  }
+  .scout-remind > summary { display: none; }
 }
 
 /* map key: start */
@@ -365,12 +364,10 @@ img { image-rendering: pixelated; }
 .map-key > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
 .map-key > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 .map-key[open] .map-legend { margin-top: 10px; }
+/* Open from 900px by script (data-open-desktop, app.js). */
 @media (min-width: 900px) {
-  @supports selector(::details-content) {
-    .map-key > summary { display: none; }
-    .map-key::details-content { content-visibility: visible; display: contents; }
-    .map-key .map-legend { margin-top: 0; }
-  }
+  .map-key > summary { display: none; }
+  .map-key .map-legend { margin-top: 0; }
 }
 /* map key: end */
 
@@ -378,6 +375,7 @@ img { image-rendering: pixelated; }
 /* Your City: the three dials and four findings. From 900px, as they always were. */
 .stats-dials { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
 .stat-dial { flex: 1 1 240px; padding: 24px; text-align: center; }
+.stat-dial-label { letter-spacing: 2px; }
 .stat-ring-value { font-size: 26px; }
 .stat-streak { height: 120px; margin: 0 auto 14px; }
 .stat-streak-value { font-size: 40px; }
@@ -387,6 +385,8 @@ img { image-rendering: pixelated; }
   /* Three dials in one row, four findings in a 2x2 grid: the same words, drawn tighter. */
   .stats-dials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .stats-dials .stat-dial { padding: 12px 4px; min-width: 0; }
+  .stat-dial { overflow-wrap: anywhere; }
+  .stat-dial-label { letter-spacing: 1px; }
   .stats-dials .stat-ring { margin-bottom: 8px; }
   .stat-ring-value { font-size: 20px; }
   .stat-streak { height: auto; aspect-ratio: 1 / 1; max-width: 120px; margin-bottom: 8px; }
@@ -534,12 +534,9 @@ img { image-rendering: pixelated; }
   /* A step's further notes sit under it, as they did inside its row. */
   .brief-deck .brief-steps.brief-note:not(.is-first) { padding-top: 8px; }
   .brief-deck .brief-note > div { margin-left: 42px; }
-  /* The rest of the intel shows in full, as it always did. */
+  /* The rest of the intel shows in full, as it always did (open by script: data-open-desktop). */
   .brief-more { margin-top: 0; }
-  @supports selector(::details-content) {
-    .brief-more > summary { display: none; }
-    .brief-more::details-content { content-visibility: visible; display: contents; }
-  }
+  .brief-more > summary { display: none; }
 }
 /* briefing deck: end */
 
@@ -585,10 +582,7 @@ img { image-rendering: pixelated; }
 @media (min-width: 900px) {
   .desk-table { display: none; }
   .entry-lock--line { display: none; }
-  /* The stories and entries show in full, as they always did. */
-  @supports selector(::details-content) {
-    .saint-story > summary, .entry-fold > summary { display: none; }
-    .saint-story::details-content, .entry-fold::details-content { content-visibility: visible; display: contents; }
-  }
+  /* The stories and entries show in full, as they always did (open by script: data-open-desktop). */
+  .saint-story > summary, .entry-fold > summary { display: none; }
 }
 /* interiors slides: end */

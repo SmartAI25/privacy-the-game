@@ -38,7 +38,7 @@ function card(state, s) {
         <h2 class="saint-name">${esc(s.name)}</h2>
         <div class="dim alcove-title">${esc(s.title)} · ${esc(s.years)}</div>
         <div class="alcove-tribute"><span>Scout: “${esc(s.tribute)}”</span></div>
-        <details class="saint-story" data-fold="saint-story-${esc(s.id)}"><summary>Their story</summary><div class="alcove-story">${esc(s.story)}</div>
+        <details class="saint-story" data-fold="saint-story-${esc(s.id)}" data-open-desktop><summary>Their story</summary><div class="alcove-story">${esc(s.story)}</div>
         ${sources(s.sources)}</details>
         ${renderCandle(state, s)}
       </div>`;

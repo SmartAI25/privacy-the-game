@@ -9,7 +9,6 @@ const map = JSON.parse(readFileSync('src/data/broker-map.json', 'utf8'));
 const layout = JSON.parse(readFileSync('src/data/broker-layout.json', 'utf8'));
 const mini = JSON.parse(readFileSync('tests/fixtures/broker-map-mini.json', 'utf8'));
 const T = '2026-10-23';
-const css = readFileSync('src/style.css', 'utf8');
 const NO_MISSION = 'No mission covers this one yet: file with them, then tick it in the Big Check';
 const NOTE = "Optional. It never counts toward your districts, your city lights or the city's totals.";
 
@@ -24,13 +23,9 @@ describe('the broker map says it once', () => {
   const html = renderBrokerMap(createInitialState(), { status: 'ready', data: { map, layout }, today: T });
 
   it('the legend sits behind a KEY tap on phones and shows open from 900px', () => {
-    expect(html).toMatch(/<details class="map-key"><summary>KEY<\/summary><ul class="map-legend">/);
-    // Closed in the markup; CSS opens it from 900px (summary hidden, content shown).
+    expect(html).toMatch(/<details class="map-key" data-open-desktop><summary>KEY<\/summary><ul class="map-legend">/);
+    // Closed in the markup; app.js opens it from 900px (applyOpenDesktop).
     expect(html).not.toMatch(/<details class="map-key"[^>]*\sopen/);
-    const wide = css.slice(css.indexOf('/* map key: start */'), css.indexOf('/* map key: end */'));
-    expect(wide).toMatch(/@media \(min-width: 900px\)/);
-    expect(wide).toMatch(/\.map-key > summary \{ display: none; \}/);
-    expect(wide).toMatch(/\.map-key::details-content \{[^}]*content-visibility: visible/);
     for (const t of ['You filed', 'Re-check due', 'No opt-out exists', 'Not yet', 'Buyers']) expect(html).toContain(t);
   });
 
@@ -44,6 +39,11 @@ describe('the broker map says it once', () => {
     const marked = count(rows, 'class="none-mark"');
     const bigCheckRows = count(rows, 'href="#/reclamation/big-check"');
     expect(marked).toBe(bigCheckRows);
+    // Every visual * is hidden from screen readers; the rows say "(no mission yet)" in words.
+    const stars = [...left.matchAll(/<span class="none-mark"([^>]*)>\*<\/span>/g)];
+    expect(stars.length).toBe(marked + 1);
+    for (const m of stars) expect(m[1]).toContain('aria-hidden="true"');
+    expect(count(rows, '<span class="sr-only"> (no mission yet)</span>')).toBe(marked);
   });
 });
 
@@ -54,7 +54,7 @@ describe('the Big Check says it once', () => {
     expect(BROKER_MAP_DIALOGUE.bigCheck).toContain('never counts toward your districts');
     const html = render({ scoutLine: BROKER_MAP_DIALOGUE.bigCheck });
     expect(html).not.toContain(NOTE);
-    expect(html).toContain('never counts toward your districts, your city lights or the city&#39;s totals'.replace('&#39;', "'"));
+    expect(html).toContain("never counts toward your districts, your city lights or the city's totals");
   });
 
   it('without Scout, the note stays', () => {

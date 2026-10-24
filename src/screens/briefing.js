@@ -188,7 +188,7 @@ function briefingSlides({ header, briefing, stepRows, stepRow, missionStepList, 
     // Later intel slides repeat the label on a phone from style.css, so the text reads on unbroken.
     const label = i === 0 ? '<div class="section-label" style="color: rgba(0,229,255,0.5); margin-bottom: 10px;">THREAT INTEL</div>' : '';
     const moreHtml = i === intel.length - 1 && more
-      ? `<details class="brief-more"><summary>More intel</summary><div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.7;">${more}</div></details>`
+      ? `<details class="brief-more" data-open-desktop><summary>More intel</summary><div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.7;">${more}</div></details>`
       : '';
     const panel = `<div class="panel brief-intel${pos}">${label}<div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.7;" data-chunk>${chunk}</div>${moreHtml}</div>`;
     slides.push({ html: i === 0 ? `${header}${panel}` : panel });

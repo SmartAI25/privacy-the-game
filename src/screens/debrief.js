@@ -236,7 +236,21 @@ export function scoutLineOnce(line, briefingLine) {
   if (!line || line !== briefingLine) return line;
   const [first, ...rest] = splitWords(line, 1);
   if (!rest.length) return line;
-  return `${first.trim()} <details class="scout-remind"><summary>Remind me</summary>${rest.join('').trim()}</details>`;
+  const head = first.trim();
+  return `${head}${cutQuote(head)} <details class="scout-remind" data-open-desktop><summary>Remind me</summary>${rest.join('').trim()}</details>`;
+}
+
+// A quote the first sentence opens and doesn't close: close it at the cut, for as long as the
+// rest is folded away (style.css hides it once the details opens).
+const QUOTE_PAIRS = [['"', '"'], ['\u201c', '\u201d'], ['&ldquo;', '&rdquo;']];
+function cutQuote(head) {
+  const pair = QUOTE_PAIRS.find(([open]) => head.startsWith(open));
+  if (!pair) return '';
+  const [open, close] = pair;
+  const opens = head.split(open).length - 1;
+  const closes = open === close ? 0 : head.split(close).length - 1;
+  const unclosed = open === close ? opens % 2 === 1 : opens > closes;
+  return unclosed ? `<span class="scout-cut-quote" aria-hidden="true">${close}</span>` : '';
 }
 
 // Scout's reaction to a filed report: the line, the feeling, and any progress

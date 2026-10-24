@@ -24,7 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
-import { initDecks, deckPositions, openFolds, restoreFolds } from './components/deck.js';
+import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -61,6 +61,10 @@ let state = ensureBurst(loadState());
 let started = hasSavedState();
 
 const app = document.getElementById('app');
+// Folds the player set by hand this screen visit (see applyOpenDesktop), and the desktop width test.
+let handFolds = new Map();
+const desktopQuery = typeof matchMedia === 'function' ? matchMedia('(min-width: 900px)') : null;
+function isDesktopWide() { return !!desktopQuery?.matches; }
 
 let collectiveView = { status: 'idle' };
 let whoamiView = { status: 'idle' };
@@ -232,6 +236,9 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
     restoreFolds(app, foldsBefore);
+    // Arriving forgets the folds the player set by hand on the last screen.
+    if (tracksPageview(cause)) handFolds = new Map();
+    applyOpenDesktop(app, isDesktopWide(), handFolds);
     initDecks(app, decksBefore);
     // The Big Check's line is drawn once the data is in; then it's seen.
     if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {
@@ -1246,6 +1253,15 @@ app.addEventListener('click', async (e) => {
     renderCurrentRoute();
   }
 });
+
+// <details data-open-desktop>: closed on a phone, open from 900px (set after every render and
+// on a breakpoint change). A fold the player opens or closes by hand keeps that this screen visit.
+desktopQuery?.addEventListener?.('change', () => applyOpenDesktop(app, isDesktopWide(), handFolds));
+app.addEventListener('toggle', (e) => {
+  const d = e.target;
+  if (!(d instanceof HTMLDetailsElement) || !d.hasAttribute('data-open-desktop')) return;
+  recordHandToggle(d, [...app.querySelectorAll('details[data-open-desktop]')].indexOf(d), handFolds);
+}, true);
 
 // A building floor folded or unfolded. <details> toggle does not bubble, so
 // listen in the capture phase. Local state only: no track().

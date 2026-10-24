@@ -247,7 +247,7 @@ function entry(state, accountId, e, sealing) {
   const icon = ICON[s.state] ?? '?';
   return `
       <div class="entry entry--${s.state}${sealing.has(e.id) ? ' entry--sealing' : ''}" data-entry="${esc(e.id)}" data-state="${s.state}">
-        <details class="entry-fold" data-fold="entry-${esc(accountId)}-${esc(e.id)}"><summary class="entry-line"><span class="entry-lock entry-lock--line" role="img" aria-label="${label}">${icon}</span><span class="entry-line-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</span><span class="entry-line-who">${esc(who)}</span></summary>
+        <details class="entry-fold" data-fold="entry-${esc(accountId)}-${esc(e.id)}" data-open-desktop><summary class="entry-line"><span class="entry-lock entry-lock--line" role="img" aria-label="${label}">${icon}</span><span class="entry-line-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</span><span class="entry-line-who">${esc(who)}</span></summary>
         <div class="entry-card">
         <div class="entry-lock" role="img" aria-label="${label}">${icon}</div>
         <div class="entry-text">

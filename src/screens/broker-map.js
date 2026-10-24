@@ -218,7 +218,7 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
     + `<p class="constellation-pick" aria-live="polite">${selected ? esc(shortName(selected.name)) : ''}</p>`
     + starList(map, layout, lighting, selectedId, listOpen)
     + `</div>${card}</div>`
-    + `<details class="map-key"><summary>KEY</summary><ul class="map-legend">${LEGEND.filter(([, , needs]) => needs !== 'sweeps' || hasSweepMembers(map)).map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul></details>`
+    + `<details class="map-key" data-open-desktop><summary>KEY</summary><ul class="map-legend">${LEGEND.filter(([, , needs]) => needs !== 'sweeps' || hasSweepMembers(map)).map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul></details>`
     + nudgeBlock(lighting.pending)
     + residencyBlock(state, editingResidency)
     + dropBlock(lighting.drop, state.caResident)

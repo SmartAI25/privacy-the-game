@@ -41,7 +41,7 @@ describe('saints: one saint per slide on phones', () => {
       expect(slide).toContain(`data-saint-card="${id}"`);
       expect(norm(slide)).toContain(norm(s.name));
       expect(norm(slide)).toContain(norm(s.tribute));
-      const story = slide.match(/<details class="saint-story" data-fold="saint-story-[a-z]+"><summary>Their story<\/summary>([\s\S]*)<\/details>/)?.[1] ?? '';
+      const story = slide.match(/<details class="saint-story" data-fold="saint-story-[a-z]+" data-open-desktop><summary>Their story<\/summary>([\s\S]*)<\/details>/)?.[1] ?? '';
       expect(norm(story), id).toContain(norm(s.story.replace(/&/g, '&amp;')));
       expect(story).toContain(s.sources[0].url);
       // The candle stays on the slide, outside the story.
@@ -60,8 +60,9 @@ describe('saints: one saint per slide on phones', () => {
 
   it('desktop: the story shows in full, the summary hidden (as the briefing does)', () => {
     const block = CSS.slice(CSS.indexOf('/* interiors slides: start */'), CSS.indexOf('/* interiors slides: end */'));
-    expect(block).toMatch(/@media \(min-width: 900px\)[\s\S]*@supports selector\(::details-content\)[\s\S]*\.saint-story > summary[^{]*\{[^}]*display: none/);
-    expect(block).toMatch(/\.saint-story::details-content[^{]*\{[^}]*content-visibility: visible/);
+    // Open from 900px by script (data-open-desktop, tests/open-desktop.test.js); the summary is hidden there.
+    expect(block).toMatch(/@media \(min-width: 900px\)[\s\S]*\.saint-story > summary[^{]*\{[^}]*display: none/);
+    expect(block).not.toContain('::details-content');
   });
 });
 
@@ -135,7 +136,7 @@ describe('the ground floor: one line per entry, opening on tap', () => {
       const html = building(i.accountId);
       for (const e of i.entries) {
         const block = html.match(new RegExp(`<div class="entry[^"]*" data-entry="${e.id}"[\\s\\S]*?<!-- /entry -->`))?.[0] ?? '';
-        const m = block.match(/<details class="entry-fold" data-fold="entry-[a-z_]+-[a-z-]+"><summary class="entry-line">([\s\S]*?)<\/summary>([\s\S]*)<\/details>/);
+        const m = block.match(/<details class="entry-fold" data-fold="entry-[a-z_]+-[a-z-]+" data-open-desktop><summary class="entry-line">([\s\S]*?)<\/summary>([\s\S]*)<\/details>/);
         expect(m, `${i.accountId}/${e.id}`).toBeTruthy();
         const [, line, inside] = m;
         expect(countWords(line), `${i.accountId}/${e.id}: ${norm(line)}`).toBeLessThanOrEqual(8);
@@ -149,8 +150,8 @@ describe('the ground floor: one line per entry, opening on tap', () => {
 
   it('desktop: the entry shows as before, its one-line summary hidden', () => {
     const block = CSS.slice(CSS.indexOf('/* interiors slides: start */'), CSS.indexOf('/* interiors slides: end */'));
-    expect(block).toMatch(/@supports selector\(::details-content\)[\s\S]*\.entry-fold > summary[^{]*\{[^}]*display: none/);
-    expect(block).toMatch(/\.entry-fold::details-content[^{]*\{[^}]*content-visibility: visible/);
+    expect(block).toMatch(/@media \(min-width: 900px\)[\s\S]*\.entry-fold > summary[^{]*\{[^}]*display: none/);
+    expect(block).not.toContain('::details-content');
     expect(block).not.toMatch(/white-space:\s*nowrap/);
     for (const w of block.match(/(?<![-\w])width:\s*(\d+)px/g) || []) expect(parseInt(w.split(':')[1], 10)).toBeLessThanOrEqual(360);
   });

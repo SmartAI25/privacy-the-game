@@ -366,3 +366,30 @@ export function restoreFolds(root, keys) {
     if (keys.has(d.getAttribute('data-fold'))) d.open = true;
   }
 }
+
+// ---------------------------------------------------------------------------
+// Open on desktop: a <details data-open-desktop> is closed on a phone and open
+// from 900px, set by script after every render and on a breakpoint change (no
+// ::details-content, which older browsers lack). One the player opened or
+// closed by hand this screen visit keeps that choice (`hand`: key -> open).
+
+export function desktopFoldKey(d, index) {
+  return d.getAttribute('data-fold') || `${(d.getAttribute('class') || '').split(/\s+/)[0]}#${index}`;
+}
+
+export function applyOpenDesktop(root, wide, hand = new Map()) {
+  const list = [...(root?.querySelectorAll?.('details[data-open-desktop]') ?? [])];
+  list.forEach((d, i) => {
+    const key = desktopFoldKey(d, i);
+    const want = hand.has(key) ? hand.get(key) : !!wide;
+    d.dataset.autoOpen = want ? '1' : '0';
+    if (d.open !== want) d.open = want;
+  });
+}
+
+// From a toggle event: a state the script didn't set is the player's.
+export function recordHandToggle(d, index, hand) {
+  if (d.dataset.autoOpen === (d.open ? '1' : '0')) return;
+  hand.set(desktopFoldKey(d, index), d.open);
+  d.dataset.autoOpen = d.open ? '1' : '0';
+}

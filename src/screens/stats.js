@@ -37,7 +37,7 @@ function statCard({ label, labelColor, border, content }) {
   return `
   <div class="panel stat-dial" style="border-color: ${border};">
     ${content}
-    <div style="font-family: var(--font-display); font-size: 8px; font-weight: 600; color: ${labelColor}; letter-spacing: 2px;">${label}</div>
+    <div class="stat-dial-label" style="font-family: var(--font-display); font-size: 8px; font-weight: 600; color: ${labelColor};">${label}</div>
   </div>`;
 }
 

@@ -1,8 +1,7 @@
-// "Do you have an Outlook account?", "Do you have an Investment Account?": the right article, "account" once.
-export const haveAccount = (name) => {
-  const noun = /\baccount$/i.test(name) ? name : `${name} account`;
-  return `Do you have ${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun}?`;
-};
+import { withArticle } from '../utils/article.js';
+
+// "Do you have an Outlook account?", "Do you have an Investment Account?": a/an by sound, "account" once.
+export const haveAccount = (name) => `Do you have ${withArticle(/\baccount$/i.test(name) ? name : `${name} account`)}?`;
 
 export const DISTRICTS = [
   {
@@ -87,7 +86,7 @@ export const DISTRICTS = [
     chapter: 9,
     description: 'Connected vehicles — your car is a surveillance device on wheels',
     flavor: 'Your car knows where you go, how you drive, and who you call. Time to take the wheel back.',
-    surveyQuestion: (name) => `Do you own a ${name} vehicle?`,
+    surveyQuestion: (name) => `Do you own ${withArticle(name)} vehicle?`,
     hasGarage: true,
   },
   {

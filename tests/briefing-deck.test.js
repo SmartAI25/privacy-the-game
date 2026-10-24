@@ -145,7 +145,7 @@ describe('briefings are slides on phones', () => {
   it('long intel: two more slides, then More intel behind a details', () => {
     const m = MISSIONS.find((x) => splitWords(x.briefing, 35).length > 4);
     const html = renderBriefing(state, m.id);
-    expect(deckOf(html)).toMatch(/<details class="brief-more"><summary>More intel<\/summary>/);
+    expect(deckOf(html)).toMatch(/<details class="brief-more" data-open-desktop><summary>More intel<\/summary>/);
   });
 
   it('a short mission renders no deck', () => {
