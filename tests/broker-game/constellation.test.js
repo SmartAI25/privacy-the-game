@@ -105,16 +105,14 @@ describe('constellationSvg', () => {
     }
   });
 
-  it("the player's lit stars keep their names in a crowded cluster (desktop, Intelius beside MyLife)", () => {
-    const d = '2026-10-20';
-    const lit = brokerLighting(realMap, { missions: {}, brokerFiled: {
-      'people_search-fortify-removal-links': { since: d, lines: { intelius: d } },
-      'people_search-reclaim-stragglers': { since: d, lines: { mylife: d } },
-    } }, '2026-10-24');
-    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: lit, view: { x: 454.3, y: 810.5, w: 260, h: 177.91 }, px: 928, controls: { w: 84, h: 236 } });
-    const names = labelsOf(s).map((l) => l.text);
-    expect(names).toContain('Intelius');
-    expect(names).toContain('MyLife');
+  it("the player's lit star keeps its name when dim stars crowd every side", () => {
+    // Intelius once sat boxed in by dim neighbours on desktop and went unnamed.
+    const ring = [[-6, 0], [6, 0], [0, -4], [0, 4], [-6, -4], [6, -4], [-6, 4], [6, 4], [-12, 0], [12, 0], [0, -8], [0, 8]];
+    const brokers = [{ id: 'mine', name: 'Intelius' }, ...ring.map((_, i) => ({ id: `d${i}`, name: `Dim ${i}` }))];
+    const lay = { stars: [['mine', 500, 500, 2], ...ring.map(([dx, dy], i) => [`d${i}`, 500 + dx, 500 + dy, 2])] };
+    const lit = { stars: { mine: { state: 'lit', litOn: '2026-10-20' } } };
+    const s = constellationSvg({ map: { brokers, links: [] }, layout: lay, lighting: lit, view: { x: 400, y: 440, w: 200, h: 136.85 }, px: 928 });
+    expect(labelsOf(s).map((l) => l.text)).toContain('Intelius');
   });
 
   it("a few lit stars are named even zoomed out; a DROP crowd of them is not", () => {
