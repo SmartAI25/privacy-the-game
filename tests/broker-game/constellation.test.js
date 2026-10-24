@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
-  constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE, labelBox, LABEL_LINE_EM, LABEL_CLEAR_EM, LABEL_TIGHT_EM, BUYER_LINK_OPACITY, SELECTED_LINK_OPACITY,
+  constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE, labelBox, LABEL_LINE_EM, LABEL_CLEAR_EM, DIM_TINTS, TWINKLE_EVERY, LABEL_TIGHT_EM, BUYER_LINK_OPACITY, SELECTED_LINK_OPACITY,
 } from '../../src/components/constellation.js';
 import { shortName, nearestStar, zoomViewBox } from '../../src/utils/broker-view.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
@@ -107,6 +107,21 @@ describe('constellationSvg', () => {
     expect(s).toMatch(/class="hub-label"[^>]*>Hubco</);
   });
 
+  it('not-yet stars vary in tint and some twinkle, by id only (no meaning), only with motion allowed', () => {
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: brokerLighting(realMap, {}, '2026-10-24'), px: 343 });
+    const fills = new Set([...s.matchAll(/class="star star--dim[^"]*"[^>]*fill="(#[0-9a-f]+)"/gi)].map((m) => m[1].toLowerCase()));
+    expect(fills.size).toBeGreaterThan(2);
+    for (const f of fills) expect(DIM_TINTS.map((c) => c.toLowerCase())).toContain(f);
+    const tw = (s.match(/star--tw/g) ?? []).length;
+    expect(tw).toBeGreaterThan(30);
+    expect(tw).toBeLessThan(realMap.brokers.length / (TWINKLE_EVERY - 3));
+    // The twinkle rule sits inside the reduced-motion guard.
+    const guard = s.indexOf('@media (prefers-reduced-motion: no-preference)');
+    expect(guard).toBeGreaterThan(-1);
+    expect(s.indexOf('.star--tw{')).toBeGreaterThan(guard);
+    expect(constellationSvg({ map: realMap, layout: realLayout, lighting: brokerLighting(realMap, {}, '2026-10-24'), px: 343 })).toBe(s);
+  });
+
   it('a figure glows only when both of its stars are lit', () => {
     const brokers = [{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }, { id: 'c', name: 'C' }];
     const lay = { stars: [['a', 100, 100, 2], ['b', 120, 100, 2], ['c', 140, 100, 2]], figures: [[0, 1], [1, 2]] };
@@ -201,10 +216,10 @@ describe('constellationSvg', () => {
   it('lit, amber and dim stars get their class', () => {
     expect(starTag(svg, 'acxiom')).toMatch(/class="star star--lit"/);
     expect(starTag(svg, 'spokeo')).toMatch(/class="star star--amber"/);
-    expect(starTag(svg, 'beenverified')).toMatch(/class="star star--dim"/);
+    expect(starTag(svg, 'beenverified')).toMatch(/class="star star--dim( star--tw)?"/);
     expect(starTag(svg, 'acxiom')).toMatch(/C6FF00/i);
     expect(starTag(svg, 'spokeo')).toMatch(/FF9F00/i);
-    expect(starTag(svg, 'beenverified')).toMatch(/3a4256/i);
+    expect(DIM_TINTS.some((c) => starTag(svg, 'beenverified').toLowerCase().includes(c.toLowerCase()))).toBe(true);
   });
 
   it('a re-check-due star draws dimmer than a freshly filed one', () => {
@@ -605,5 +620,16 @@ describe('constellationSvg: the skyline hides no star', () => {
     const sky = s.indexOf('<g class="skyline"');
     expect(sky).toBeGreaterThan(s.indexOf('<g class="sky"'));
     for (const g of ['links', 'stars', 'rings', 'effects', 'labels', 'hits']) expect(s.indexOf(`<g class="${g}"`), g).toBeGreaterThan(sky);
+  });
+});
+
+describe('zoomViewBox, zoomed right out', () => {
+  it('centres the sky top to bottom when the whole width is in view, on any screen shape', () => {
+    // Desktop (wide) and phone (tall) stages; any anchor.
+    for (const h of [690, 1750]) for (const cy of [0, 300, 900]) {
+      const v = zoomViewBox({ x: 0, y: cy, w: 500, h: h / 2 }, 0.5, 500, cy, { padY: 0.5 });
+      expect(v.w).toBe(1000);
+      expect(v.y + v.h / 2).toBeCloseTo(500, 6);
+    }
   });
 });
