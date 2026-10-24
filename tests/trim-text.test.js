@@ -230,3 +230,16 @@ describe('saints: the candle note behind a tap on a phone', async () => {
     expect(renderSaints(createInitialState())).toMatch(/<details class="phone-fold" data-fold="saints-candles" data-open-desktop><summary>About candles<\/summary><div class="dim interior-note">Candles stay on this phone\. Nothing here is sent anywhere\.<\/div><\/details>/);
   });
 });
+
+describe('the city map on a phone: each district\'s percentage is drawn, not written twice', async () => {
+  const { renderCityMap } = await import('../src/screens/city-map.js');
+  const html = renderCityMap(createInitialState());
+
+  it('the bar carries the percentage as its name; the written one hides under 900px', () => {
+    const bars = [...html.matchAll(/<div class="city-label__bar" role="img" aria-label="(\d+)%">/g)];
+    expect(bars).toHaveLength(8);
+    const pcts = [...html.matchAll(/<span class="city-label__pct">(\d+)%<\/span>/g)];
+    expect(pcts.map((m) => m[1])).toEqual(bars.map((m) => m[1]));
+    expect(html).toMatch(/@media \(max-width: 899px\) \{ \.city-label__pct \{ display: none; \} \}/);
+  });
+});
