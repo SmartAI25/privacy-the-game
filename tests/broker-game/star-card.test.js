@@ -246,7 +246,7 @@ describe('starCard', () => {
     const lit = { ...l, frozen: ['equifax'], halo: ['equifax'] };
     const html = starCard(map, lit, 'equifax');
     expect(html).toContain("Your credit is frozen here. A freeze stops new credit in your name; it doesn't stop this company selling what it holds.");
-    expect(html).toContain('You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.');
+    expect(html).toContain('You opted out in this browser through the DAA WebChoices tool. That sets a cookie on this device; it deletes nothing.');
     expect(starCard(map, l, 'equifax')).not.toContain('frozen here');
   });
   it('an unknown id draws nothing', () => {

@@ -60,8 +60,9 @@ describe('broker checklists', () => {
   it('hints and legacy answers are exact', () => {
     const find = (id) => Object.values(BROKER_CHECKLISTS).flat().find((l) => l.id === id);
     expect(find('drop').hint).toBe('California residents only. It lights the map only if you tell the map you live in California.');
-    expect(find('nai').hint).toBe('Sets an opt-out cookie in this browser on this device. It deletes nothing.');
-    expect(find('daa').hint).toBe(find('nai').hint);
+    expect(find('daa').hint).toBe('Sets an opt-out cookie in this browser on this device. It deletes nothing.');
+    // The NAI runs no one-shot opt-out any more (2026-10-24), so its line says so and lights nothing.
+    expect(find('nai').hint).toBe('The NAI no longer opts you out in one go: it sends you to each member, or adds a Global Privacy Control signal in Chrome. It lights nothing on the map.');
     expect(LEGACY_ALL_ANSWERS).toEqual({ optout_result: ['all-submitted'], defense_done: ['done', 'already-done'] });
   });
   it('the table is frozen', () => {

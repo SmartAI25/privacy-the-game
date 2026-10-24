@@ -100,6 +100,11 @@
     "matchedBy": "id"
   },
   {
+    "stagedId": "hivestack-technologies",
+    "existingId": "hivestack-technologies",
+    "matchedBy": "id"
+  },
+  {
     "stagedId": "illumin",
     "existingId": "illumin",
     "matchedBy": "id"
@@ -107,6 +112,11 @@
   {
     "stagedId": "index-exchange",
     "existingId": "index-exchange",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "inmarket-media",
+    "existingId": "inmarket-media",
     "matchedBy": "id"
   },
   {
@@ -157,6 +167,16 @@
   {
     "stagedId": "place-exchange",
     "existingId": "place-exchange",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "predactiv",
+    "existingId": "predactiv",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "predictive-pop",
+    "existingId": "predictive-pop",
     "matchedBy": "id"
   },
   {
@@ -230,6 +250,11 @@
     "matchedBy": "id"
   },
   {
+    "stagedId": "viant-us",
+    "existingId": "viant-us",
+    "matchedBy": "id"
+  },
+  {
     "stagedId": "videoamp",
     "existingId": "videoamp",
     "matchedBy": "id"
@@ -237,6 +262,11 @@
   {
     "stagedId": "wunderkind",
     "existingId": "wunderkind",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "xad",
+    "existingId": "xad",
     "matchedBy": "id"
   },
   {

@@ -1,6 +1,6 @@
 // Folds research/data-brokers/staging/<family>/ into the dataset.
 // Curation lives in build/ config, never in hand edits:
-//   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
+//   id-map.json         { family: { stagedId: canonicalId | { id, reason } } }, final (no name matching)
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
 //   alias-blocklist.json { brokerId: [{ alias, reason }] }
 //   link-overrides.json { drop: [{from,to,type,family?,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
@@ -102,7 +102,13 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const cfg = (f, fb) => readJson(join(datasetDir, 'build', f), fb);
   const idMapAll = await cfg('id-map.json', {});
   if (Object.values(idMapAll).some((v) => typeof v === 'string')) throw new Error('id-map.json must be family-scoped: { "<family>": { stagedId: canonicalId } }');
-  const idMap = idMapAll[family] ?? {};
+  // An entry is a canonical id, or { id, reason } when the pin records why (the membership family's pins do).
+  const idMap = {};
+  for (const [k, v] of Object.entries(idMapAll[family] ?? {})) {
+    if (typeof v === 'string') idMap[k] = v;
+    else if (isObj(v) && isStr(v.id) && isStr(v.reason)) idMap[k] = v.id;
+    else throw new Error(`id-map.json ${family}.${k}: must be a record id or { id, reason }`);
+  }
   const aliasBlock = await cfg('alias-blocklist.json', {});
   const linkOv = await cfg('link-overrides.json', {});
   const recordOv = await cfg('record-overrides.json', {});

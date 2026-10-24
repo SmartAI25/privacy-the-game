@@ -32,5 +32,71 @@
     "foursquare": "foursquare-labs",
     "openx": "openx-technologies",
     "complementics": "econtextai"
+  },
+  "membership": {
+    "adelphic": {
+      "id": "viant-us",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists Viant US LLC with DBA \"Adelphic LLC; Viant Technology LLC\"; the list names the company \"Adelphic\"."
+    },
+    "audigent": {
+      "id": "predictive-pop",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists Predictive Pop, Inc. with DBA \"Audigent\"; the list names the company \"AuDigent / Audigent\"."
+    },
+    "groundtruth": {
+      "id": "xad",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists xAd, Inc. with DBA \"GroundTruth\"; the list names the company \"GroundTruth\"."
+    },
+    "inmarket": {
+      "id": "inmarket-media",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists InMarket Media, LLC with DBA \"InMarket\"; the list names the company \"InMarket\"."
+    },
+    "perion": {
+      "id": "hivestack-technologies",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists Hivestack Technologies Inc. with DBA \"Perion\"; the list names the company \"Perion\"."
+    },
+    "sharethis": {
+      "id": "predactiv",
+      "reason": "CA data broker registry snapshot 2026-10-18 (registry-ca-2026-10-18) lists Predactiv with DBA \"ShareThis\"; the list names the company \"ShareThis\"."
+    },
+    "kargo": {
+      "id": "kargo-global",
+      "reason": "\"Kargo (NAI)\" and \"Kargo Global (DAA)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://www.kargo.com and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.kargo.com/. Kargo Global LLC matched the DAA listing by legal name."
+    },
+    "wunderkind-formerly-bouncex": {
+      "id": "wunderkind",
+      "reason": "\"Wunderkind (formerly BounceX) (DAA)\" and \"Wunderkind (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives https://www.wunderkind.co/ and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.wunderkind.co/. Wunderkind Corporation matched the NAI listing by legal name."
+    },
+    "adobe-marketing-cloud": {
+      "id": "adobe",
+      "reason": "\"Adobe Marketing Cloud (DAA)\" and \"Adobe (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives https://www.adobe.com/advertising-cloud.html and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.adobe.com/advertising-cloud.html."
+    },
+    "amazon-ad-system": {
+      "id": "amazon-ads",
+      "reason": "\"Amazon Ad System (DAA)\" and \"Amazon Ads (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives https://advertising.amazon.com and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.amazon.com/. Same registrable domain (amazon.com), different host."
+    },
+    "mountain": {
+      "id": "mntn",
+      "reason": "\"Mountain (NAI)\" and \"MNTN (DAA)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://mountain.com and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://mountain.com/."
+    },
+    "catalina-buyervision": {
+      "id": "catalina",
+      "reason": "\"Catalina BuyerVision (DAA)\" and \"Catalina (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://www.catalina.com/ and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.catalina.com/buyervision/. Same registrable domain (catalina.com)."
+    },
+    "the-nielsen-marketing-cloud": {
+      "id": "nielsen",
+      "reason": "\"The Nielsen Marketing Cloud (DAA)\" and \"Nielsen (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives https://www.nielsen.com and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.nielsen.com."
+    },
+    "outbrain-direct-response-odr-by-teads": {
+      "id": "outbrain",
+      "reason": "\"Outbrain Direct Response (ODR) by Teads (NAI)\" and \"Outbrain (DAA)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://www.outbrain.com/ and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.outbrain.com/."
+    },
+    "beeswax-freewheel": {
+      "id": "freewheel",
+      "reason": "\"Beeswax/FreeWheel (NAI)\" and \"FreeWheel (DAA)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives https://www.freewheel.com and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.freewheel.com/."
+    },
+    "viant-specific-media-vindico": {
+      "id": "viant",
+      "reason": "\"Viant (Specific Media/Vindico) (DAA)\" and \"Viant (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://www.viantinc.com/ and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.viantinc.com/."
+    }
   }
 }

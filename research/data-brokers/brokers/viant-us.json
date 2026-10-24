@@ -3,7 +3,8 @@
   "name": "Viant US LLC",
   "aliases": [
     "Adelphic LLC",
-    "Viant Technology LLC"
+    "Viant Technology LLC",
+    "Adelphic"
   ],
   "parent": null,
   "kind": [
@@ -27,7 +28,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "mem-daa-webchoices-2026"
   ],
   "website": "https://www.viantinc.com"
 }

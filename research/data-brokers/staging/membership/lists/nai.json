@@ -1,6 +1,6 @@
 {
-  "sweep": "nai",
-  "name": "NAI opt-out tool",
+  "list": "nai",
+  "note": "No sweep: since at least 2026-10-24 the NAI runs no one-shot opt-out (thenai.org/how-to-opt-out/ offers a GPC Chrome extension, links to each member's own opt-out, and the DAA tools). The list sources records only.",
   "source": "mem-nai-members-2026",
   "sourceRecord": {
     "url": "https://thenai.org/about-the-nai-2/members/",

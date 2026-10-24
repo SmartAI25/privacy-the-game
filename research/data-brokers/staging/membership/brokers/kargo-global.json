@@ -1,8 +1,11 @@
 {
   "id": "kargo-global",
   "name": "Kargo Global",
-  "aliases": [],
+  "aliases": [
+    "Kargo"
+  ],
   "sources": [
-    "mem-daa-webchoices-2026"
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ]
 }

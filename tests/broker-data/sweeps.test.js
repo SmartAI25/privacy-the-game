@@ -129,6 +129,53 @@ describe('membership staging', () => {
   });
 });
 
+describe('membership pins and sweep-less lists', () => {
+  it('a list without a sweep sources records but emits no sweep', () => {
+    const staged = stageMembers([{ list: 'nai', source: 'nai', members: [{ name: 'Acme Ads' }] }], []);
+    expect(staged.sweeps).toEqual({});
+    expect(staged.brokers.map((b) => [b.id, b.sources])).toEqual([['acme-ads', ['nai']]]);
+  });
+
+  it('a membership pin puts a list member on the record it names, without changing its kind', () => {
+    const existing = [broker('xad', 'xAd, Inc.', { aliases: ['GroundTruth'], kind: ['location'] })];
+    const pins = { groundtruth: { id: 'xad', reason: 'CA registry DBA' } };
+    const staged = stageMembers([{ list: 'daa', sweep: 'daa', name: 'DAA WebChoices', source: 'daa', members: [{ name: 'GroundTruth' }] }], existing, { pins });
+    expect(staged.sweeps.daa.members).toEqual(['xad']);
+    expect(staged.brokers).toEqual([{ id: 'xad', name: 'GroundTruth', aliases: [], sources: ['daa'] }]);
+    expect(staged.matches[0]).toMatchObject({ id: 'xad', matched: true, pinned: true });
+  });
+
+  it('a pin between two new list names collapses them into the pin target, named by its own listing', () => {
+    const lists = [
+      { list: 'daa', sweep: 'daa', name: 'DAA WebChoices', source: 'daa', members: [{ name: 'Adobe Marketing Cloud' }] },
+      { list: 'nai', source: 'nai', members: [{ name: 'Adobe' }] },
+    ];
+    const staged = stageMembers(lists, [], { pins: { 'adobe-marketing-cloud': { id: 'adobe', reason: 'same website' } } });
+    expect(staged.brokers).toHaveLength(1);
+    expect(staged.brokers[0]).toMatchObject({ id: 'adobe', name: 'Adobe', aliases: ['Adobe Marketing Cloud'], kind: ['ad-network'], sources: ['daa', 'nai'] });
+    expect(staged.sweeps.daa.members).toEqual(['adobe']);
+  });
+
+  it('a pin to a record that neither exists nor is listed is an error', () => {
+    expect(() => stageMembers([{ list: 'nai', source: 'nai', members: [{ name: 'Acme Ads' }] }], [], { pins: { 'acme-ads': { id: 'ghost', reason: 'r' } } })).toThrow(/ghost/);
+  });
+
+  it('the committed sweeps carry only daa: the NAI runs no one-shot opt-out', () => {
+    const sweeps = JSON.parse(readFileSync(join(root, 'research/data-brokers/build/sweeps.json'), 'utf8'));
+    expect(Object.keys(sweeps)).toEqual(['daa']);
+    const map = JSON.parse(readFileSync(join(root, 'src/data/broker-map.json'), 'utf8'));
+    expect(Object.keys(map.sweeps)).toEqual(['daa']);
+    expect(validateSweeps({ nai: { name: 'NAI', source: 'nai', members: [] } }, { brokerIds, sources })).toEqual([]);
+  });
+
+  it('every membership pin in id-map.json has a reason', () => {
+    const idMap = JSON.parse(readFileSync(join(root, 'research/data-brokers/build/id-map.json'), 'utf8'));
+    const pins = Object.entries(idMap.membership ?? {});
+    expect(pins.length).toBeGreaterThan(0);
+    for (const [k, v] of pins) expect(typeof v?.reason === 'string' && v.reason.length > 20, k).toBe(true);
+  });
+});
+
 describe('export sweeps', () => {
   async function fixture({ sweeps } = {}) {
     dir = await mkdtemp(join(tmpdir(), 'sweeps-export-'));

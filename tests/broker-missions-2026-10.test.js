@@ -149,3 +149,21 @@ describe('dialogue.js words DROP the way the law does', () => {
     expect(src).toMatch(/the law requires registered data brokers to process it/);
   });
 });
+
+// 2026-10-24: the NAI runs no one-shot opt-out any more (thenai.org/how-to-opt-out/, archived
+// https://web.archive.org/web/20261024073031/https://thenai.org/how-to-opt-out/): a GPC Chrome extension,
+// links to each member's own opt-out, and the DAA's tools. Only DAA WebChoices is a bulk opt-out.
+describe('the NAI is a signpost, not a bulk opt-out', async () => {
+  const { BROKER_CHECKLISTS } = await import('../src/data/broker-checklists.js');
+  const { DISTRICT_DIALOGUE } = await import('../src/data/dialogue.js');
+  it('no mission or dialogue says the NAI opts you out in one session', () => {
+    const all = everything('ad_trackers-fortify-bulk') + everything('ad_trackers-recon-understand') + JSON.stringify(DISTRICT_DIALOGUE.reclamation);
+    for (const p of ['NAI and DAA tools cover', 'NAI opt-out alone', 'Two tools, one hundred-plus', 'select and opt out of member', 'NAI Consumer Opt-Out', 'hundred-plus', '100+ Ad Networks']) expect(all).not.toContain(p);
+    expect(everything('ad_trackers-fortify-bulk')).toContain('The NAI no longer has a one-click tool');
+  });
+  it('the checklist keeps the nai id but says it lights nothing', () => {
+    const line = BROKER_CHECKLISTS['ad_trackers-fortify-bulk'].find((l) => l.id === 'nai');
+    expect(line.label).toBe('NAI: GPC extension or member links');
+    expect(line.hint).toMatch(/no longer opts you out in one go.*It lights nothing on the map\./);
+  });
+});

@@ -1,7 +1,9 @@
 {
   "id": "viant",
   "name": "Viant",
-  "aliases": [],
+  "aliases": [
+    "Viant (Specific Media/Vindico)"
+  ],
   "parent": null,
   "kind": [
     "ad-network"
@@ -14,6 +16,7 @@
     "signals": []
   },
   "sources": [
+    "mem-daa-webchoices-2026",
     "mem-nai-members-2026"
   ]
 }

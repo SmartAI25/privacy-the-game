@@ -39,7 +39,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "enf-ftc-inmarket-complaint-2024",
-    "enf-ftc-inmarket-order-2024"
+    "enf-ftc-inmarket-order-2024",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.inmarket.com"
 }

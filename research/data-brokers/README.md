@@ -18,7 +18,7 @@ When you cite a specific link, also cite the source document it rests on (its `u
 
 | | Count |
 |---|---|
-| Broker records | 989 |
+| Broker records | 973 |
 | Links (all tiers) | 158 |
 | Published links (tier A) | 106 |
 | Sources | 174 |
@@ -42,7 +42,7 @@ Published links by source family:
 
 The other 52 links are kept but not published: 10 tier B, 27 tier C, and 15 tier A links that review held back because the source's wording did not support publishing the claim (for example, a procurement award that reads as a software licence, a filing that says reports "combine information from" bureaus rather than that one buys from another, or a complaint that describes what a contract permitted rather than what the companies did). See "Evidence tiers" below.
 
-Of the 989 broker records, 806 come from the state registries, 97 were added by research (parent companies, subsidiaries named in filings, and government buyers), and 86 come only from the two industry member lists (see "Sweeps"). 93 records appear in at least one published link; most registered brokers have no documented link yet.
+Of the 973 broker records, 806 come from the state registries, 97 were added by research (parent companies, subsidiaries named in filings, and government buyers), and 70 come only from the two industry member lists (see "Sweeps"). 93 records appear in at least one published link; most registered brokers have no documented link yet.
 
 The count includes a few near-duplicates caused by typos in the registries themselves, such as `west-publising` beside `west-publishing` and `melissa-data-corporatoin` beside `melissa-data`. They are kept as separate records until research confirms they are the same company.
 
@@ -102,7 +102,7 @@ sources.json          every source document, keyed by id
 sources/registries/   state registry snapshots as downloaded, SOURCES.md, MERGE-CANDIDATES.md
 sources/MISSION-MAPPING.md   how records are tied to the game's missions
 staging/<family>/     research output per source family, with researchers' NOTES.md and REJECTED.json
-staging/membership/lists/   the NAI and DAA member lists as transcribed, one JSON file per sweep
+staging/membership/lists/   the NAI and DAA member lists as transcribed, one JSON file per list
 build/                scripts and the curation config
 ```
 
@@ -122,7 +122,7 @@ The game reads a derived file, `src/data/broker-map.json`, which holds only publ
 | `registries` | `{ "CA": "2026", "VT": …, "TX": …, "OR": … }`: the snapshot year a registry listed it in. |
 | `website` | Primary website, where a registry gives one. |
 | `sells` | What a source says it sells, in short phrases. |
-| `optOut` | How to opt out, or `null` if no route is known (245 records, 86 of them added from a member list). See below. |
+| `optOut` | How to opt out, or `null` if no route is known (229 records, 70 of them added from a member list). See below. |
 | `size` | `{ known, signals: [{ kind, value, source }] }`. `known: false` has no signals. |
 | `missions` | Reclaim City missions that file with this broker (game use only). |
 | `sources` | Ids in `sources.json` behind anything on the record. |
@@ -177,22 +177,21 @@ Current results for the 743 records with an opt-out entry: 632 verified, 15 susp
 
 ## Sweeps
 
-A sweep is one opt-out tool run by an industry body that covers many companies at once. Reclaim City's broker missions name two (the ids match the checklist lines in `src/data/broker-checklists.js`):
+A sweep is one opt-out tool, run by an industry body, that covers many companies at once. Reclaim City's broker missions name sweeps by id on their checklist lines (`src/data/broker-checklists.js`). The dataset has one:
 
 | Sweep | Tool | Members | Source |
 |---|---|---|---|
-| `nai` | NAI opt-out tool | 75 | The Network Advertising Initiative's own member directory, [thenai.org/about-the-nai-2/members](https://thenai.org/about-the-nai-2/members/) ([archived](https://web.archive.org/web/20261024071604/https://thenai.org/about-the-nai-2/members/)) |
-| `daa` | DAA WebChoices | 99 | The list of participating companies that the Digital Advertising Alliance's WebChoices tool ([optout.aboutads.info](https://optout.aboutads.info/)) loads, `files.aboutads.info/prod-companies.json` ([archived](https://web.archive.org/web/20261024071700/https://files.aboutads.info/prod-companies.json)) |
+| `daa` | DAA WebChoices | 99 | The list of participating companies that the Digital Advertising Alliance's WebChoices tool ([optout.aboutads.info](https://optout.aboutads.info/)) loads, `files.aboutads.info/prod-companies.json` ([archived](https://web.archive.org/web/20261024071700/https://files.aboutads.info/prod-companies.json)), read 2026-10-24 |
 
-37 companies are on both lists, so the two sweeps reach 137 records. Both lists were read on 2026-10-24.
+**There is no `nai` sweep.** As of 2026-10-24 the Network Advertising Initiative runs no one-shot opt-out: optout.networkadvertising.org redirects to [thenai.org/how-to-opt-out](https://thenai.org/how-to-opt-out/) ([archived](https://web.archive.org/web/20261024073031/https://thenai.org/how-to-opt-out/)), which offers a Global Privacy Control extension for Chrome, a page of links to each member's own opt-out, and the DAA's tools. A halo for it would claim an opt-out that does not happen. The NAI's member directory ([thenai.org/about-the-nai-2/members](https://thenai.org/about-the-nai-2/members/), [archived](https://web.archive.org/web/20261024071604/https://thenai.org/about-the-nai-2/members/), 75 members) is still a `member-list` source: it sources broker records, never a sweep. The validator still accepts `nai` as a sweep id, so a working NAI tool could be added back.
 
-- **What a sweep claims.** Only that the company is on that list on that date. It says nothing about what the company holds, whether the tool's opt-out reaches all of it, or how long an opt-out lasts. NAI and DAA opt-outs are browser cookies: they cover one browser and are lost when its cookies are cleared, which is why the game marks these stars "browser only".
-- **The DAA list is the tool's, not the DAA's directory.** The DAA's "participating companies" page (youradchoices.com/participating) is a partial list that also names brand advertisers (car makers, banks, drug companies) whose ads the tool does not opt you out of. The WebChoices tool's own list is the set of companies the tool sends opt-outs to. The tool's page is a JavaScript application behind a bot check and archives as a blank page, so, as with procurement, the `archived` copy is the JSON file the page loads, and the `url` is the tool.
-- **The NAI no longer runs a cookie opt-out tool of its own.** optout.networkadvertising.org now redirects to thenai.org/how-to-opt-out, which links to each member's own opt-out page and to the DAA's tools. The NAI sweep is its member list; the game's "NAI opt-out tool" line covers those members' choice pages.
-- **Matching.** A listed company joins an existing record only when their legal names match under the rule in "Merging companies" (the lists mostly give brand names, so "Criteo" matches "Criteo Corp." but "Facebook" does not match "Meta Platforms", whose DBA it is). Everything else becomes a new record with `kind: ["ad-network"]`, no registries, `optOut: null`, unknown size and the list as its only source. Some of those new records are brands of companies already in the dataset (for example `facebook` beside `meta`, `experian-2` beside `experian`); they stay separate until a source ties them by legal name or a curator pins them in `build/id-map.json`. `staging/membership/NOTES.md` lists them.
+- **What a sweep claims.** Only that the company is on that tool's list on that date. It says nothing about what the company holds, whether the opt-out reaches all of it, or how long it lasts. WebChoices opt-outs are browser cookies: they cover one browser and are lost when its cookies are cleared, which is why the game marks these stars "browser only".
+- **The DAA list is the tool's, not the DAA's directory.** The DAA's "participating companies" page (youradchoices.com/participating) is a partial list that also names brand advertisers (car makers, banks, drug companies) the tool does not opt you out of. The tool's page is a JavaScript application behind a bot check and archives as a blank page, so, as with procurement, the `archived` copy is the JSON file the page loads, and the `url` is the tool.
+- **Matching.** A listed company joins an existing record when their legal names match under the rule in "Merging companies". The lists mostly give brand names, so "Criteo" matches "Criteo Corp." but "Facebook" does not match "Meta Platforms". A listing is also pinned onto an existing record in `build/id-map.json` (family `membership`, each pin with a `reason`) only when there is a documented tie: a state registry row lists that record with the list's brand as its DBA (for example xAd, Inc. d/b/a GroundTruth), or the list names the company the same way on the same website as a listing that matched (Kargo and Kargo Global, at kargo.com). Two listings of one company on the same website (Adobe and Adobe Marketing Cloud) become one record the same way. Liz's rule (2026-10-19): a new record only for a listed company the registries don't already list.
+- **New records.** Every other listing becomes a new record with `kind: ["ad-network"]`, no registries, `optOut: null`, unknown size and the list as its only source (70 records). Some share only a brand, an alias from research, or a website with a record already here (for example `facebook` beside `meta`, `experian-2` beside `experian`); they stay separate until a source ties the legal names. `staging/membership/NOTES.md` lists them for curators.
 - **Membership never backs a link,** and `member-list` is not a tier A source kind.
 
-`build/sweeps.json` holds each sweep's `name`, `source` and sorted `members` (broker ids). The validator checks it: each sweep id is `nai` or `daa`, the source is a `member-list` source, and every member is a record, listed once.
+The two lists reach 127 records, 47 of them on both. `build/sweeps.json` holds each sweep's `name`, `source` and sorted `members` (broker ids). The validator checks it: each sweep id is `nai` or `daa`, its source is a `member-list` source, and every member is a record, listed once.
 
 ## Reach and hubs
 
@@ -238,8 +237,7 @@ Reading these numbers:
                  "sources": [ { "url": "…", "archived": "https://web.archive.org/…", "kind": "filing" } ] } ],
   "links": [ { "from": "…", "to": "…", "type": "owns", "tier": "A", "claim": "…",
                "sources": [ { "url": "…", "archived": "https://web.archive.org/…" } ] } ],
-  "sweeps": { "nai": { "name": "NAI opt-out tool", "source": { "url": "…", "archived": "https://web.archive.org/…" }, "members": [ "…" ] },
-              "daa": { "name": "DAA WebChoices", "source": { "url": "…", "archived": "https://web.archive.org/…" }, "members": [ "…" ] } } }
+  "sweeps": { "daa": { "name": "DAA WebChoices", "source": { "url": "…", "archived": "https://web.archive.org/…" }, "members": [ "…" ] } } }
 ```
 
 | Field | Meaning |
@@ -257,7 +255,7 @@ Reading these numbers:
 | `brokers[].reach`, `hub` | Reach and hub status (see "Reach and hubs"). |
 | `brokers[].sources` | The record's sources whose `kind` is not `registry`, as `url`, `archived` and `kind`, sorted by `url`; `[]` when none. Added without changing `formatVersion`, since readers that ignore it are unaffected. |
 | `links` | Published links only, sorted by `from`, `to`, `type`. Each source is given as its `url` and `archived` copy. |
-| `sweeps` | `{ nai: { name, source: { url, archived }, members: [id] }, daa: { … } }` from `build/sweeps.json` (see "Sweeps"); members sorted. Added without changing `formatVersion`: a reader treats a missing `sweeps` as `{}`. |
+| `sweeps` | `{ daa: { name, source: { url, archived }, members: [id] } }` from `build/sweeps.json` (see "Sweeps"; there is no `nai` sweep); members sorted. Added without changing `formatVersion`: a reader treats a missing `sweeps` as `{}`. |
 
 Not in the export: `aliases`, `website`, `size`, registry-kind `sources` on broker records, and every unpublished link. Use the dataset files for those.
 
@@ -265,11 +263,11 @@ Not in the export: `aliases`, `website`, `size`, registry-kind `sources` on brok
 
 Everything is regenerated by scripts. Curation decisions live in config under `build/`, never in hand edits to the records:
 
-- `build/id-map.json`: per family, a staged id to the canonical record it means.
+- `build/id-map.json`: per family, a staged id to the canonical record it means: a record id, or `{ id, reason }` (the `membership` family's pins all carry a reason).
 - `build/alias-blocklist.json`: aliases removed from a record, each with a reason.
 - `build/link-overrides.json`: links dropped, unpublished, moved to another entity or given a narrower claim, each with a reason. A drop acts on a link as research staged it, and names the staging `family` it targets.
 - `build/record-overrides.json`: field corrections on a record (`name`, `parent`, `sells`, `kind`, `optOut.email`), each with a source and reason.
-- `build/sweeps.json`: the NAI and DAA sweeps and their members (see "Sweeps"). `build/stage-membership.js` writes it, together with `staging/membership/`, from the transcribed lists in `staging/membership/lists/`; its output is committed. When a list changes, re-run it after the other families are merged and before `merge-staging.js membership`, so it matches against the same records the merge will.
+- `build/sweeps.json`: the NAI and DAA sweeps and their members (see "Sweeps"). `build/stage-membership.js` writes it, together with `staging/membership/`, from the transcribed lists in `staging/membership/lists/` and the `membership` pins in `build/id-map.json`; its output is committed. When a list changes, re-run it after the other families are merged and before `merge-staging.js membership`, so it matches against the same records the merge will.
 
 From the repository root (Node.js; built with v22):
 

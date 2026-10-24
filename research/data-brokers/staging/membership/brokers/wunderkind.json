@@ -1,8 +1,11 @@
 {
   "id": "wunderkind",
-  "name": "Wunderkind",
-  "aliases": [],
+  "name": "Wunderkind (formerly BounceX)",
+  "aliases": [
+    "Wunderkind"
+  ],
   "sources": [
+    "mem-daa-webchoices-2026",
     "mem-nai-members-2026"
   ]
 }

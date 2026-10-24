@@ -241,6 +241,19 @@ describe('mergeStaging', () => {
     expect(r.rejected.some((x) => /self-link/.test(x.reason))).toBe(true);
   });
 
+  it('id-map.json accepts { id, reason } entries', async () => {
+    await setup({ brokers: [broker('xad', 'xAd, Inc.')], staged: { brokers: [{ id: 'groundtruth', name: 'GroundTruth', sources: ['reg'] }] }, idMap: { groundtruth: { id: 'xad', reason: 'CA registry DBA' } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.matches).toEqual([{ stagedId: 'groundtruth', existingId: 'xad', matchedBy: 'id-map' }]);
+    expect((await readB('xad')).aliases).toContain('GroundTruth');
+  });
+
+  it('id-map.json rejects an entry without a reason', async () => {
+    await setup({ brokers: [broker('xad', 'xAd, Inc.')], idMap: { groundtruth: { id: 'xad' } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/id, reason/);
+  });
+
   it('id-map.json redirects staged ids and link endpoints', async () => {
     await setup({
       idMap: { 'acme-inc': 'acme' },

@@ -1,4 +1,5 @@
 {
+  "list": "daa",
   "sweep": "daa",
   "name": "DAA WebChoices",
   "source": "mem-daa-webchoices-2026",
@@ -9,303 +10,403 @@
     "title": "Digital Advertising Alliance (DAA): WebChoices browser opt-out tool, its list of participating companies (prod-companies.json, the file the tool loads)",
     "accessed": "2026-10-24"
   },
+  "websitesFrom": "https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json (WebsiteURL of each trigger's daaParticipant)",
   "members": [
     {
-      "name": "33Across"
+      "name": "33Across",
+      "website": "https://33across.com/"
     },
     {
-      "name": "AcuityAds"
+      "name": "AcuityAds",
+      "website": "https://www.illumin.com"
     },
     {
-      "name": "Adbrain"
+      "name": "Adbrain",
+      "website": "http://www.adbrain.com/"
     },
     {
-      "name": "Adelphic"
+      "name": "Adelphic",
+      "website": "https://www.viantinc.com/"
     },
     {
-      "name": "Adform"
+      "name": "Adform",
+      "website": "https://site.adform.com"
     },
     {
-      "name": "Samsung Ads"
+      "name": "Samsung Ads",
+      "website": "https://www.samsung.com/us/business/samsungads/"
     },
     {
-      "name": "Adobe Marketing Cloud"
+      "name": "Adobe Marketing Cloud",
+      "website": "https://www.adobe.com/advertising-cloud.html"
     },
     {
-      "name": "Adstra"
+      "name": "Adstra",
+      "website": "https://adstradata.com/"
     },
     {
-      "name": "Alphonso"
+      "name": "Alphonso",
+      "website": "https://alphonso.tv/"
     },
     {
-      "name": "Amazon Ad System"
+      "name": "Amazon Ad System",
+      "website": "https://www.amazon.com/"
     },
     {
-      "name": "Audiencerate"
+      "name": "Audiencerate",
+      "website": "https://www.audiencerate.com/"
     },
     {
-      "name": "AuDigent"
+      "name": "AuDigent",
+      "website": "https://audigent.com/"
     },
     {
-      "name": "Beeswax"
+      "name": "Beeswax",
+      "website": "https://www.beeswax.com/"
     },
     {
-      "name": "Bombora"
+      "name": "Bombora",
+      "website": "https://bombora.com/"
     },
     {
-      "name": "Branch"
+      "name": "Branch",
+      "website": "https://branch.io/"
     },
     {
-      "name": "Cadent"
+      "name": "Cadent",
+      "website": "https://cadent.tv/"
     },
     {
-      "name": "Catalina BuyerVision"
+      "name": "Catalina BuyerVision",
+      "website": "https://www.catalina.com/buyervision/"
     },
     {
-      "name": "Chicory"
+      "name": "Chicory",
+      "website": "https://chicory.co"
     },
     {
-      "name": "Choreograph"
+      "name": "Choreograph",
+      "website": "https://www.choreograph.com/"
     },
     {
-      "name": "Claritas"
+      "name": "Claritas",
+      "website": "https://claritas.com/"
     },
     {
-      "name": "Clickagy"
+      "name": "Clickagy",
+      "website": "https://www.clickagy.com/"
     },
     {
-      "name": "Cognitiv"
+      "name": "Cognitiv",
+      "website": "https://www.cognitiv.ai/"
     },
     {
-      "name": "Connexity"
+      "name": "Connexity",
+      "website": "https://www.connexity.com/about/"
     },
     {
-      "name": "Criteo"
+      "name": "Criteo",
+      "website": "https://www.criteo.com/"
     },
     {
-      "name": "Datonics"
+      "name": "Datonics",
+      "website": "https://www.datonics.com/"
     },
     {
-      "name": "Demandbase"
+      "name": "Demandbase",
+      "website": "https://www.demandbase.com/"
     },
     {
-      "name": "Dianomi"
+      "name": "Dianomi",
+      "website": "https://www.dianomi.com/"
     },
     {
-      "name": "Dstillery"
+      "name": "Dstillery",
+      "website": "https://dstillery.com/"
     },
     {
-      "name": "eBay"
+      "name": "eBay",
+      "website": "https://www.ebay.com/"
     },
     {
-      "name": "Epsilon"
+      "name": "Epsilon",
+      "website": "https://www.epsilon.com"
     },
     {
-      "name": "Equativ"
+      "name": "Equativ",
+      "website": "https://www.equativ.com/"
     },
     {
-      "name": "Experian"
+      "name": "Experian",
+      "website": "https://www.tapad.com/"
     },
     {
-      "name": "Eyeota"
+      "name": "Eyeota",
+      "website": "https://www.eyeota.com/"
     },
     {
-      "name": "Facebook"
+      "name": "Facebook",
+      "website": "https://www.facebook.com/"
     },
     {
-      "name": "Flashtalking"
+      "name": "Flashtalking",
+      "website": "https://www.flashtalking.com/"
     },
     {
-      "name": "FreeWheel"
+      "name": "FreeWheel",
+      "website": "https://www.freewheel.com/"
     },
     {
-      "name": "Google Inc."
+      "name": "Google Inc.",
+      "website": "https://www.google.com/"
     },
     {
-      "name": "GroundTruth"
+      "name": "GroundTruth",
+      "website": "https://www.groundtruth.com/"
     },
     {
-      "name": "GroupM"
+      "name": "GroupM",
+      "website": "https://www.wppmedia.com/"
     },
     {
-      "name": "GumGum"
+      "name": "GumGum",
+      "website": "https://gumgum.com/"
     },
     {
-      "name": "Havas Edge"
+      "name": "Havas Edge",
+      "website": "https://www.havasedge.com"
     },
     {
-      "name": "Index Exchange"
+      "name": "Index Exchange",
+      "website": "https://www.indexexchange.com/"
     },
     {
-      "name": "Innovid"
+      "name": "Innovid",
+      "website": "https://www.innovid.com/"
     },
     {
-      "name": "Inuvo"
+      "name": "Inuvo",
+      "website": "https://inuvo.com/"
     },
     {
-      "name": "iPromote"
+      "name": "iPromote",
+      "website": "https://ipromote.com/"
     },
     {
-      "name": "IQM.com"
+      "name": "IQM.com",
+      "website": "https://iqm.com"
     },
     {
-      "name": "Kargo Global"
+      "name": "Kargo Global",
+      "website": "https://www.kargo.com/"
     },
     {
-      "name": "Knorex"
+      "name": "Knorex",
+      "website": "https://knorex.com"
     },
     {
-      "name": "LinkedIn"
+      "name": "LinkedIn",
+      "website": "https://www.linkedin.com"
     },
     {
-      "name": "LiveIntent"
+      "name": "LiveIntent",
+      "website": "https://www.liveintent.com/"
     },
     {
-      "name": "LiveRamp"
+      "name": "LiveRamp",
+      "website": "https://liveramp.com/"
     },
     {
-      "name": "Lotame"
+      "name": "Lotame",
+      "website": "https://www.lotame.com"
     },
     {
-      "name": "Magnite"
+      "name": "Magnite",
+      "website": "https://www.magnite.com/"
     },
     {
-      "name": "Media.net"
+      "name": "Media.net",
+      "website": "https://www.media.net/"
     },
     {
-      "name": "Merkle"
+      "name": "Merkle",
+      "website": "https://www.dentsu.com/"
     },
     {
-      "name": "Microsoft"
+      "name": "Microsoft",
+      "website": "https://www.microsoft.com/"
     },
     {
-      "name": "MiQ"
+      "name": "MiQ",
+      "website": "https://www.wearemiq.com/"
     },
     {
-      "name": "MNTN"
+      "name": "MNTN",
+      "website": "https://mountain.com/"
     },
     {
-      "name": "Nativo"
+      "name": "Nativo",
+      "website": "https://www.nativo.com"
     },
     {
-      "name": "NextRoll"
+      "name": "NextRoll",
+      "website": "https://www.nextroll.com/"
     },
     {
-      "name": "Nexxen"
+      "name": "Nexxen",
+      "website": "www.nexxen.com"
     },
     {
-      "name": "OpenX"
+      "name": "OpenX",
+      "website": "https://www.openx.com/"
     },
     {
-      "name": "Optimal"
+      "name": "Optimal",
+      "website": "https://www.winwithoptimal.com"
     },
     {
-      "name": "Outbrain"
+      "name": "Outbrain",
+      "website": "https://www.outbrain.com/"
     },
     {
-      "name": "PebblePost"
+      "name": "PebblePost",
+      "website": "https://www.pebblepost.com/"
     },
     {
-      "name": "Pinterest"
+      "name": "Pinterest",
+      "website": "https://pinterest.com/"
     },
     {
-      "name": "PubMatic"
+      "name": "PubMatic",
+      "website": "https://pubmatic.com/"
     },
     {
-      "name": "PulsePoint"
+      "name": "PulsePoint",
+      "website": "https://www.pulsepoint.com/"
     },
     {
-      "name": "Quantcast"
+      "name": "Quantcast",
+      "website": "https://www.quantcast.com/"
     },
     {
-      "name": "Resonate"
+      "name": "Resonate",
+      "website": "https://www.resonate.com/"
     },
     {
-      "name": "Responsys"
+      "name": "Responsys",
+      "website": "https://www.oracle.com/"
     },
     {
-      "name": "Samba.TV"
+      "name": "Samba.TV",
+      "website": "https://samba.tv/"
     },
     {
-      "name": "Semasio"
+      "name": "Semasio",
+      "website": "https://www.semasio.com/"
     },
     {
-      "name": "ShareThis"
+      "name": "ShareThis",
+      "website": "https://sharethis.com/"
     },
     {
-      "name": "Sharethrough"
+      "name": "Sharethrough",
+      "website": "https://www.sharethrough.com/"
     },
     {
-      "name": "Simpli.fi"
+      "name": "Simpli.fi",
+      "website": "https://www.simpli.fi"
     },
     {
-      "name": "Skimlinks"
+      "name": "Skimlinks",
+      "website": "https://www.skimlinks.com"
     },
     {
-      "name": "Sojern"
+      "name": "Sojern",
+      "website": "https://www.sojern.com/"
     },
     {
-      "name": "Sonobi"
+      "name": "Sonobi",
+      "website": "https://sonobi.com/"
     },
     {
-      "name": "Sovrn"
+      "name": "Sovrn",
+      "website": "https://www.sovrn.com/"
     },
     {
-      "name": "StackAdapt"
+      "name": "StackAdapt",
+      "website": "https://www.stackadapt.com/"
     },
     {
-      "name": "Swoop"
+      "name": "Swoop",
+      "website": "https://www.swoop.com"
     },
     {
-      "name": "Taboola"
+      "name": "Taboola",
+      "website": "https://www.taboola.com/"
     },
     {
-      "name": "Tapad"
+      "name": "Tapad",
+      "website": "https://www.tapad.com"
     },
     {
-      "name": "The Nielsen Marketing Cloud"
+      "name": "The Nielsen Marketing Cloud",
+      "website": "https://www.nielsen.com"
     },
     {
-      "name": "The Trade Desk"
+      "name": "The Trade Desk",
+      "website": "https://www.thetradedesk.com"
     },
     {
-      "name": "Throtle"
+      "name": "Throtle",
+      "website": "https://www.throtle.io/"
     },
     {
-      "name": "Triplelift"
+      "name": "Triplelift",
+      "website": "https://triplelift.com/"
     },
     {
-      "name": "Twitter"
+      "name": "Twitter",
+      "website": "https://x.com/"
     },
     {
-      "name": "Undertone"
+      "name": "Undertone",
+      "website": "https://perion.com/"
     },
     {
-      "name": "Valassis"
+      "name": "Valassis",
+      "website": "https://www.valassis.com/"
     },
     {
-      "name": "VDX.tv"
+      "name": "VDX.tv",
+      "website": "https://www.vdx.tv/"
     },
     {
-      "name": "Veeva Crossix"
+      "name": "Veeva Crossix",
+      "website": "https://veeva.com/crossix"
     },
     {
-      "name": "Viant (Specific Media/Vindico)"
+      "name": "Viant (Specific Media/Vindico)",
+      "website": "https://www.viantinc.com/"
     },
     {
-      "name": "Wunderkind (formerly BounceX)"
+      "name": "Wunderkind (formerly BounceX)",
+      "website": "https://www.wunderkind.co/"
     },
     {
-      "name": "Yahoo"
+      "name": "Yahoo",
+      "website": "https://yahooinc.com"
     },
     {
-      "name": "Yieldmo"
+      "name": "Yieldmo",
+      "website": "https://yieldmo.com/"
     },
     {
-      "name": "Zeta Global"
+      "name": "Zeta Global",
+      "website": "https://zetaglobal.com/"
     },
     {
-      "name": "Ziff Davis"
+      "name": "Ziff Davis",
+      "website": "https://www.ziffdavis.com/"
     }
   ]
 }

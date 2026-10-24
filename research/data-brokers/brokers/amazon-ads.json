@@ -1,7 +1,9 @@
 {
   "id": "amazon-ads",
   "name": "Amazon Ads",
-  "aliases": [],
+  "aliases": [
+    "Amazon Ad System"
+  ],
   "parent": null,
   "kind": [
     "ad-network"
@@ -14,6 +16,7 @@
     "signals": []
   },
   "sources": [
+    "mem-daa-webchoices-2026",
     "mem-nai-members-2026"
   ]
 }
