@@ -112,6 +112,14 @@ export const LABEL_CHAR_EM = 0.62;
 export const LABEL_TRACK = 0.5;
 export const LABEL_PAD_EM = 0.6;
 export const LABEL_LINE_EM = 1.1;
+// Space kept clear around each placed label, in em. Drawn glyphs and their outline stroke run past
+// labelBox by about 0.2em, so this is what leaves a visible gap between two names.
+export const LABEL_CLEAR_EM = 0.6;
+// The least a hub's name may keep, when the full clearance leaves it nowhere to go.
+export const LABEL_TIGHT_EM = 0.1;
+// Up to this many of the player's own stars in view are named at any zoom; more (a DROP sweep)
+// wait for the zoom, as every other star does.
+export const OWN_NAMES_MAX = 12;
 
 // The box a label covers: anchor x `lx` ('start' | 'end' | 'middle'), vertical centre `cy`.
 export function labelBox(lines, fontSize, lx, anchor, cy) {
@@ -206,6 +214,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
     links.push(`<line class="link${touching ? ' link--selected' : ''}" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}" opacity="${n(op)}"${dash}/>`);
   }
 
+  // The player's own stars in view, named before the zoom names everything when there are few.
+  const ownUnnamed = [];
   const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vh;
   const wanted = [];
   let lit = 0;
@@ -242,15 +252,20 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
     }
 
     if (hub || s.id === selId || (nameStars && inView(s))) wanted.push(s);
+    else if ((state === 'lit' || state === 'amber') && inView(s)) ownUnnamed.push(s);
 
     hits.push(`<circle class="star-hit" cx="${cx}" cy="${cy}" r="${n(Math.max(hitR, r))}" data-star="${s.index}" fill="transparent" pointer-events="all"/>`);
   }
 
-  // Labels, placed without overlaps: the selected star first (it always shows), then by reach
-  // (ties by id). Each tries right, left, above, below; one that fits nowhere in view without
+  if (ownUnnamed.length <= OWN_NAMES_MAX) wanted.push(...ownUnnamed);
+
+  // Labels, placed without overlaps: the selected star first (it always shows), then the player's
+  // own (lit or re-check) stars, then by reach
+  // (ties by id). Each tries right, left, above, below, then the four corners; one that fits nowhere in view without
   // touching a placed label waits for a zoom or a tap.
   const reach = (s) => (Number.isFinite(s.broker.reach) ? s.broker.reach : 0);
-  wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const mine = (s) => s.state === 'lit' || s.state === 'amber';
+  wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || mine(b) - mine(a) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const placed = [];
   const ctl = scale && Number.isFinite(controls?.w) && Number.isFinite(controls?.h)
     ? (controls.corner === 'bottom-right'
@@ -276,17 +291,33 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       { lx: s.x - s.r - gap, anchor: 'end', cy: s.y },
       { lx: s.x, anchor: 'middle', cy: s.y - s.r - gap - h / 2 },
       { lx: s.x, anchor: 'middle', cy: s.y + s.r + gap + h / 2 },
+      // Corners, tried only when no side has room.
+      { lx: s.x + s.r, anchor: 'start', cy: s.y - s.r - gap - h / 2 },
+      { lx: s.x - s.r, anchor: 'end', cy: s.y - s.r - gap - h / 2 },
+      { lx: s.x + s.r, anchor: 'start', cy: s.y + s.r + gap + h / 2 },
+      { lx: s.x - s.r, anchor: 'end', cy: s.y + s.r + gap + h / 2 },
     ];
-    const pad = fontSize * 0.1;
-    const clear = (o, avoidMarks) => {
+    const clear = (o, avoidMarks, padEm = LABEL_CLEAR_EM) => {
       const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
+      const pad = fontSize * padEm;
       const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
       return fits(b) && !placed.some((q) => overlaps(padded, q.box))
         && !(avoidMarks && marksInView.some((m) => m.id !== s.id && overlaps(b, m)));
     };
     let pick = options.find((o) => clear(o, true));
-    // A hub always keeps a name: when every side touches a star, take one that only clears labels.
-    if (!pick && hub) pick = options.find((o) => clear(o, false));
+    // A hub always keeps a name: when every side touches a star or crowds a name, take one that
+    // only clears the other labels, then one lifted clear, then tightly.
+    // A hub's name may also sit one clearance further above or below its star.
+    const lift = fontSize * LABEL_CLEAR_EM;
+    const lifted = [
+      { lx: s.x, anchor: 'middle', cy: s.y - s.r - gap - lift - h / 2 },
+      { lx: s.x, anchor: 'middle', cy: s.y + s.r + gap + lift + h / 2 },
+    ];
+    // The player's own stars are what they came to see: they get the hub's fallback too.
+    if (!pick && (hub || mine(s))) {
+      pick = options.find((o) => clear(o, false)) ?? lifted.find((o) => clear(o, false))
+        ?? options.find((o) => clear(o, false, LABEL_TIGHT_EM));
+    }
     if (!pick && s.id === selId) pick = options.find((o) => fits(labelBox(lines, fontSize, o.lx, o.anchor, o.cy))) ?? options[0];
     if (!pick) continue;
     const cls = hub ? 'hub-label' : 'star-label';

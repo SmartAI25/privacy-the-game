@@ -23,7 +23,10 @@ const archived = new Set([
   ...map.brokers.flatMap((b) => (b.sources ?? []).map((s) => s.archived)),
   ...map.links.flatMap((k) => (k.sources ?? []).map((s) => s.archived)),
 ]);
-const allowedExternal = (u, b) => (b.optOut?.status === 'verified' && b.optOut.method !== 'none' && b.optOut.url === u)
+// A verified opt-out of this broker, or of a company a published link shows it owning.
+const verifiedRoute = (u, b) => [b, ...map.links.filter((k) => k.type === 'owns' && k.from === b.id).map((k) => byId.get(k.to))]
+  .some((c) => c?.optOut?.status === 'verified' && c.optOut.method !== 'none' && c.optOut.url === u);
+const allowedExternal = (u, b) => verifiedRoute(u, b)
   || (archived.has(u) && u.startsWith('https://web.archive.org/'))
   || Object.hasOwn(verified.urls, u);
 
@@ -269,8 +272,19 @@ describe('starCard', () => {
       expect(html.replace(' id="star-card-title"', '')).not.toMatch(/\s(id|name|title)="/);
     }
   });
+  it('a holding company with no route of its own lists the routes of the companies it owns', () => {
+    const h = starCard(map, l, 'experian');
+    expect(h).toContain('Companies it owns have their own:');
+    expect(h).toContain(`Experian Information Solutions · <a href="${byId.get('experian-information-solutions').optOut.url}"`);
+    // Confirmed opt-out pages before bare homepages.
+    expect(h.indexOf('Experian Information Solutions ·')).toBeLessThan(h.indexOf('AtData ·'));
+    // A broker with its own confirmed route doesn't list its companies'.
+    for (const b of map.brokers.filter((x) => x.optOut?.status === 'verified' && /^https?:/.test(x.optOut.url ?? ''))) {
+      expect(starCard(map, l, b.id)).not.toContain('Companies it owns have their own:');
+    }
+  });
   it('every opt-out URL any card shows is verified', () => {
-    for (const b of map.brokers) for (const u of optOutHrefs(starCard(map, l, b.id))) expect(b.optOut?.url === u && b.optOut.status === 'verified').toBe(true);
+    for (const b of map.brokers) for (const u of optOutHrefs(starCard(map, l, b.id))) expect(verifiedRoute(u, b), `${b.id} ${u}`).toBe(true);
   });
   it('every external link on a card is a verified opt-out, an archived source or a complaint form in verified-urls.json', () => {
     for (const b of map.brokers) {

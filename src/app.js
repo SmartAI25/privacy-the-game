@@ -326,6 +326,8 @@ const isPhone = () => !window.matchMedia?.('(min-width: 900px)').matches;
 
 function openCard(id, returnTo) {
   selectedId = id;
+  // Tapping a star is what Scout's first-visit note asks for; the note then gives the sky back.
+  mapScoutDismissed = true;
   cardReturn = returnTo;
   renderCurrentRoute();
   keepSelectedInView();

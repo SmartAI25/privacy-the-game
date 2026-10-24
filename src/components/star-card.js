@@ -100,6 +100,27 @@ function optOutBlock(b) {
     : `<p>We couldn't confirm their opt-out page.</p>`;
 }
 
+// A holding company often takes no opt-outs itself; the companies a published link shows it owning
+// may. Their checker-confirmed pages, each named, when this record has no confirmed link of its own.
+function ownedRoutesBlock(map, b, byId) {
+  const o = b.optOut;
+  if (isObj(o) && (o.method === 'none' || (o.status === 'verified' && parseUrl(o.url)))) return '';
+  const seen = new Set();
+  const rows = (Array.isArray(map?.links) ? map.links : [])
+    .filter((k) => isObj(k) && k.type === 'owns' && k.from === b.id && k.to !== b.id)
+    .map((k) => byId.get(k.to))
+    .filter((c) => c && !seen.has(c.id) && seen.add(c.id) && isObj(c.optOut) && c.optOut.status === 'verified' && c.optOut.method !== 'none' && parseUrl(c.optOut.url))
+    .map((c) => {
+      const u = parseUrl(c.optOut.url);
+      const bare = (u.pathname === '' || u.pathname === '/') && !u.search && !u.hash;
+      return { name: shortName(c.name ?? c.id), url: c.optOut.url, bare };
+    })
+    .sort((x, y) => x.bare - y.bare || (x.name < y.name ? -1 : x.name > y.name ? 1 : 0));
+  if (!rows.length) return '';
+  const items = rows.map((r) => `<li>${esc(r.name)} · ${ext(r.url, r.bare ? THEIR_SITE_TEXT : OPT_OUT_TEXT)}</li>`).join('');
+  return `<p class="star-card-owned">Companies it owns have their own:</p><ul class="star-card-list">${items}</ul>`;
+}
+
 function linksBlock(map, id, byId) {
   const name = (other) => esc(shortName(byId.get(other)?.name ?? other));
   const rows = (Array.isArray(map?.links) ? map.links : []).filter((k) => isObj(k) && SIDE[k.type] && (k.from === id || k.to === id) && k.from !== k.to);
@@ -160,7 +181,7 @@ export function starCard(map, lighting, id, state = null) {
     + (full && full !== short ? `<p class="star-card-full">${esc(full)}</p>` : '')
     + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')
     + stateLine + buyer + frozen + halo
-    + `<div class="label">OPT-OUT ROUTE</div>${optOutBlock(b)}`
+    + `<div class="label">OPT-OUT ROUTE</div>${optOutBlock(b)}${ownedRoutesBlock(map, b, byId)}`
     + (sells.length ? `<div class="label">WHAT ITS RECORDS SAY IT SELLS</div><ul class="star-card-list">${sells.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
     + linksBlock(map, id, byId)
     + sourcesBlock(b)

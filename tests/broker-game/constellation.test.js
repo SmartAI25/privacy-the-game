@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
-  constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE, labelBox, LABEL_LINE_EM, BUYER_LINK_OPACITY, SELECTED_LINK_OPACITY,
+  constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE, labelBox, LABEL_LINE_EM, LABEL_CLEAR_EM, LABEL_TIGHT_EM, BUYER_LINK_OPACITY, SELECTED_LINK_OPACITY,
 } from '../../src/components/constellation.js';
 import { shortName, nearestStar, zoomViewBox } from '../../src/utils/broker-view.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
+import { setResidency } from '../../src/utils/broker-state.js';
 
 const mini = JSON.parse(readFileSync('tests/fixtures/broker-map-mini.json', 'utf8'));
 const realMap = JSON.parse(readFileSync('src/data/broker-map.json', 'utf8'));
@@ -85,6 +86,60 @@ describe('shortName', () => {
 });
 
 describe('constellationSvg', () => {
+  it('labels keep their clearance across zoomed views of the real sky; only a hub falls back to tight', () => {
+    const grow = (b, d) => ({ left: b.left - d, right: b.right + d, top: b.top - d, bottom: b.bottom + d });
+    for (const w of [1000, 400, 200]) {
+      for (let x = 0; x + w <= 1000; x += w / 2) {
+        for (let y = 0; y + w <= 1000; y += w / 2) {
+          const s = constellationSvg({ map: realMap, layout: realLayout, lighting: realLight, view: { x, y, w, h: w * 1.75 }, px: 343 });
+          const ls = labelsOf(s);
+          for (let i = 0; i < ls.length; i += 1) for (let j = i + 1; j < ls.length; j += 1) {
+            const [p, q] = [ls[i], ls[j]];
+            const f = Math.min(p.box.bottom - p.box.top, q.box.bottom - q.box.top) / LABEL_LINE_EM;
+            const em = p.cls === 'star-label' && q.cls === 'star-label' ? LABEL_CLEAR_EM : LABEL_TIGHT_EM;
+            const half = (f * em) / 2 - 1e-6;
+            expect(intersects(grow(p.box, half), grow(q.box, half)), `${p.text} / ${q.text} at ${x},${y},${w}`).toBe(false);
+          }
+        }
+      }
+    }
+  });
+
+  it("the player's lit stars keep their names in a crowded cluster (desktop, Intelius beside MyLife)", () => {
+    const d = '2026-10-20';
+    const lit = brokerLighting(realMap, { missions: {}, brokerFiled: {
+      'people_search-fortify-removal-links': { since: d, lines: { intelius: d } },
+      'people_search-reclaim-stragglers': { since: d, lines: { mylife: d } },
+    } }, '2026-10-24');
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: lit, view: { x: 454.3, y: 810.5, w: 260, h: 177.91 }, px: 928, controls: { w: 84, h: 236 } });
+    const names = labelsOf(s).map((l) => l.text);
+    expect(names).toContain('Intelius');
+    expect(names).toContain('MyLife');
+  });
+
+  it("a few lit stars are named even zoomed out; a DROP crowd of them is not", () => {
+    const d = '2026-10-20';
+    const few = brokerLighting(realMap, { missions: {}, brokerFiled: { 'people_search-fortify-web-forms': { since: d, lines: { spokeo: d, whitepages: d, beenverified: d } } } }, '2026-10-24');
+    const names = labelsOf(constellationSvg({ map: realMap, layout: realLayout, lighting: few, px: 288 })).map((l) => l.text);
+    expect(names).toEqual(expect.arrayContaining(['Spokeo', 'Whitepages', 'BeenVerified']));
+    const crowd = brokerLighting(realMap, setResidency({ brokerFiled: { 'people_search-reclaim-stragglers': { since: d, lines: { drop: d } } } }, 'yes'), '2026-10-24');
+    expect(labelsOf(constellationSvg({ map: realMap, layout: realLayout, lighting: crowd, px: 288 })).every((l) => l.cls === 'hub-label')).toBe(true);
+  });
+
+  it('Babel Street and Experian Information Solutions keep a full gap on a phone with DROP lit', () => {
+    // Their labels once stacked 2px apart and read as one name (phone opening view, 328px wide).
+    const lit = brokerLighting(realMap, setResidency({ brokerFiled: { 'people_search-reclaim-stragglers': { since: '2026-10-20', lines: { drop: '2026-10-20' } } } }, 'yes'), '2026-10-24');
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: lit, view: { x: 0, y: 185.16, w: 416.88, h: 762.58 }, px: 328 });
+    const ls = labelsOf(s);
+    const babel = ls.find((l) => l.text === 'Babel Street');
+    const exp = ls.find((l) => l.text.startsWith('Experian Information'));
+    expect(babel && exp).toBeTruthy();
+    const f = (babel.box.bottom - babel.box.top) / LABEL_LINE_EM;
+    const gapY = Math.max(exp.box.top - babel.box.bottom, babel.box.top - exp.box.bottom);
+    const gapX = Math.max(exp.box.left - babel.box.right, babel.box.left - exp.box.right);
+    expect(Math.max(gapX, gapY)).toBeGreaterThanOrEqual(f * LABEL_CLEAR_EM - 1e-6);
+  });
+
   it('is one svg with a viewBox from the view and an accessible label', () => {
     expect(svg).toMatch(/^<svg class="constellation" viewBox="0 0 1000 1000" role="img" aria-label="Map of data brokers: [^"]+"/);
     expect(render({ view: { x: 100, y: 50, w: 400 } })).toMatch(/viewBox="100 50 400 400"/);
@@ -386,14 +441,16 @@ describe('constellationSvg: tappable and zoomable', () => {
     }
   });
 
-  it('non-hub stars are named only once zoomed in, and only those in view', () => {
-    expect(render({ px: 343 })).not.toMatch(/class="star-label"/);
+  it('other non-hub stars are named only once zoomed in, and only those in view', () => {
+    // With nothing of the player's lit (a few lit ones are always named: see the test above).
+    const unlit = { stars: {} };
+    expect(render({ px: 343, lighting: unlit })).not.toMatch(/class="star-label"/);
     // Grid stars sit 200 apart from (100, 100); this view covers the four in the top-left corner.
     const w = 686 / STAR_LABEL_SCALE;
     const s = render({ view: { x: 80, y: 80, w }, px: 686 });
     const names = [...s.matchAll(/<text class="star-label"[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]);
     expect(names).toEqual(['spokeo', 'whitepages', 'lexisnexis-risk-solutions', 'equifax-information-services']);
-    expect(render({ view: { x: 80, y: 80, w: w * 1.2 }, px: 686 })).not.toMatch(/class="star-label"/);
+    expect(render({ view: { x: 80, y: 80, w: w * 1.2 }, px: 686, lighting: unlit })).not.toMatch(/class="star-label"/);
   });
 
   it('nothing blocks the browser or the map from zooming', () => {

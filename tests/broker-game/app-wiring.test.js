@@ -61,4 +61,9 @@ describe('first-visit Scout overlay wiring', () => {
     expect(src).toContain("'dismiss-scout'");
     expect(src).toContain(".constellation-controls, .constellation-scout'");
   });
+
+  it('opening a star card dismisses the note, so the selected star is never left under it', () => {
+    const body = src.slice(src.indexOf('function openCard('), src.indexOf('function closeCard('));
+    expect(body).toMatch(/mapScoutDismissed = true;/);
+  });
 });
