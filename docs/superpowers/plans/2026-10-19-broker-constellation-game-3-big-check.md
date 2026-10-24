@@ -223,7 +223,7 @@ it('every line is documented in the chapter 8 dialogue doc', () => {
   - Open the Big Check and expand every group. Expected: `scrollWidth <= 375`.
   - Filter to nothing. Expected: `No brokers match`.
   - Tick a row, reload. Expected: it's still ticked, and its star is lit on the map.
-  - Run the NAI line in a seeded save. Expected: halos show on its members and no member is lime.
+  - Run the DAA line in a seeded save. Expected: halos show on its members and no member is lime. Run the NAI line: it lights and haloes nothing (ruling T1-b, 2026-10-24: the NAI no longer has a one-shot opt-out).
   - Expected: each Scout line shows once, and the hash is never anything but the two fixed routes.
   - Screenshot each state.
 - [ ] **Step 3: Bump the version** with `npm version minor --no-git-tag-version` (6.5.0 → 6.6.0), and set `src/index.html`'s link to `style.css?v=6.6.0`. Run `npx vitest run tests/css-cache-bust.test.js`. Expected: PASS.
