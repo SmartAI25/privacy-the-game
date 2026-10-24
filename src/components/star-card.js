@@ -154,9 +154,9 @@ export function starCard(map, lighting, id, state = null) {
     ? `<p class="star-card-note">Your credit is frozen here. A freeze stops new credit in your name; it doesn't stop this company selling what it holds.</p>` : '';
   const halo = Array.isArray(lighting?.halo) && lighting.halo.includes(id)
     ? '<p class="star-card-note">You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.</p>' : '';
-  return `<section class="star-card" tabindex="-1">`
+  return `<section class="star-card" tabindex="-1" role="dialog" aria-modal="false" aria-labelledby="star-card-title">`
     + '<div class="star-card-grab" aria-hidden="true"><span></span></div>'
-    + `<h2 class="star-card-name">${esc(short)}</h2>`
+    + `<h2 class="star-card-name" id="star-card-title">${esc(short)}</h2>`
     + (full && full !== short ? `<p class="star-card-full">${esc(full)}</p>` : '')
     + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')
     + stateLine + buyer + frozen + halo

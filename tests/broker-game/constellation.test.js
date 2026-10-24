@@ -249,8 +249,6 @@ describe('constellationSvg', () => {
     expect(labels).toHaveLength(1);
     expect(labels[0]).toMatch(/>Hub Alpha Holdings<\/text>/);
     const [, x, y, r] = at('hub-a');
-    const lx = Number(labels[0].match(/ x="([\d.]+)"/)[1]);
-    expect(lx).toBeGreaterThan(x + r);
     expect(labels[0]).toMatch(/font-size="22"/);
   });
 
@@ -450,10 +448,15 @@ describe('constellationSvg: labels never collide (controller fix round 1)', () =
     expect(labelsOf(s).map((l) => l.text.replace(/&amp;/g, '&'))).toContain(name);
   });
 
-  it('labels come right of the star when there is room', () => {
-    const [, x, , r] = at('hub-a');
-    const l = labelsOf(svg).find((q) => q.cls === 'hub-label');
-    expect(l.box.left).toBeGreaterThan(x + r);
+  it('labels sit on no drawn star mark, including a no-opt-out cross', () => {
+    const sp = render({ view: { x: 0, y: 0, w: 800 }, px: 400 });
+    const marks = layout.stars.map(([id, x, y, r]) => {
+      const m = lighting.stars[id].state === 'no-opt-out' ? r + 2 : r;
+      return { id, left: x - m, right: x + m, top: y - m, bottom: y + m };
+    });
+    const ls = labelsOf(sp);
+    expect(ls.length).toBeGreaterThan(0);
+    for (const l of ls) for (const m of marks) expect(intersects(l.box, m), `${l.text} sits on ${m.id}`).toBe(false);
   });
 });
 

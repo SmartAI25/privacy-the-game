@@ -23,8 +23,11 @@ const STYLE = `<style>
 .broker-map .back-link{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none}
 .broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
-.map-scout{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;padding:8px 10px;background:rgba(26,31,43,0.9);border:1px solid rgba(0,229,255,0.25)}
-.map-scout p{margin:0;font-size:12px;line-height:1.5;color:var(--offwhite)}
+.constellation-scout{position:absolute;top:8px;left:8px;right:68px;display:flex;gap:8px;align-items:flex-start;padding:6px 4px 6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px;cursor:default}
+.constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite)}
+.constellation-scout>svg,.constellation-scout>img,.constellation-scout>div{flex-shrink:0}
+.constellation-scout-x{flex-shrink:0;width:44px;height:44px;margin:-6px 0 -6px 0;font-size:22px;color:var(--cyan);background:transparent;border:0;cursor:pointer}
+.constellation-scout-x:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
 .map-stage{position:relative;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;height:calc(100svh - 150px);min-height:320px;border-radius:8px;overflow:hidden;background:#090B10}
 .map-stage>svg.constellation{width:100%;height:100%;border-radius:8px}
 .map-stage:focus{outline:none}.map-stage:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
@@ -50,6 +53,7 @@ const STYLE = `<style>
 @media (min-width:900px){.constellation-wrap.has-card{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}.star-card{max-height:calc(100svh - 40px);overflow-y:auto;position:sticky;top:12px}.star-card-grab{display:none}}
 .map-stage.is-dragging{cursor:grabbing}
 .constellation-controls{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;gap:6px}
+@media (max-width:359.98px){.constellation-controls{top:auto;bottom:8px;flex-direction:row}.constellation-scout{right:8px}.broker-map .map-head{font-size:12px;margin-top:6px}.broker-map .map-sub{margin-bottom:6px}}
 .constellation-zoom{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--offwhite);background:rgba(9,11,16,0.82);border:1px solid rgba(0,229,255,0.35);border-radius:8px;cursor:pointer;padding:0}
 .constellation-zoom--reset{font-size:10px;letter-spacing:1px}
 .constellation-zoom:focus-visible,.constellation-star:focus-visible,.constellation-list:focus-visible,.residency-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
@@ -77,12 +81,20 @@ const LEGEND = [
   [swatch('<path d="M5 5L13 13M13 5L5 13" stroke="#FF2D9B" stroke-width="2" stroke-linecap="round"/>'), 'No opt-out exists'],
   [swatch('<circle cx="9" cy="9" r="4" fill="#3a4256"/>'), 'Not yet'],
   [swatch('<circle cx="9" cy="9" r="3" fill="#3a4256"/><circle cx="9" cy="9" r="6.5" fill="none" stroke="#00E5FF" stroke-width="1.2" stroke-dasharray="2 2"/>'), 'Credit frozen (still sells data)'],
-  [swatch('<circle cx="9" cy="9" r="8" fill="#EDEFF3" opacity="0.25"/><circle cx="9" cy="9" r="3" fill="#3a4256"/>'), 'Opted out in this browser only'],
+  [swatch('<circle cx="9" cy="9" r="8" fill="#EDEFF3" opacity="0.25"/><circle cx="9" cy="9" r="3" fill="#3a4256"/>'), 'Opted out in this browser only', 'sweeps'],
   [swatch('<rect x="5" y="5" width="8" height="8" fill="none" stroke="#8a93a6" stroke-width="1.4" transform="rotate(45 9 9)"/>'), 'Buyers'],
 ];
 
 // The zoom buttons' corner, in CSS px (44px buttons, 8px inset, gaps): labels keep clear of it.
 const CONTROLS = { w: 60, h: 160 };
+// Under 360px of screen the buttons lie in a row along the bottom-right instead (see the CSS).
+const NARROW_VIEWPORT = 360;
+const GUTTER = 32;
+const CONTROLS_NARROW = { w: 3 * 44 + 2 * 6 + 20, h: 60, corner: 'bottom-right' };
+export const controlsFor = (stage) => (stage?.w > 0 && stage.w + GUTTER < NARROW_VIEWPORT ? CONTROLS_NARROW : CONTROLS);
+
+// The legend's "browser only" row describes stars the sweeps light; with no sweep members, none do.
+export const hasSweepMembers = (map) => Object.values(map?.sweeps ?? {}).some((s) => Array.isArray(s?.members) && s.members.length > 0);
 
 const RESIDENCY_LABEL = { yes: 'Yes', no: 'No', unsaid: 'Rather not say' };
 
@@ -94,10 +106,10 @@ function residencyBlock(state, editing) {
   return `<div class="residency"><div class="map-panel">${inner}</div></div>`;
 }
 
-function dropBlock(drop) {
+function dropBlock(drop, resident) {
   const text = {
     lit: 'DROP: filed. It lights the brokers registered in California.',
-    'not-resident': esc(BROKER_MAP_DIALOGUE.dropNotResident),
+    'not-resident': esc(resident === 'unsaid' ? BROKER_MAP_DIALOGUE.dropUnsaid : BROKER_MAP_DIALOGUE.dropNotResident),
     ask: 'DROP: filed. Tell the map whether you live in California to light it.',
   }[drop] ?? `DROP: not filed yet. <a href="#/mission/${DROP_MISSION}/briefing">File it</a>`;
   return `<div class="map-panel map-drop">${text}</div>`;
@@ -161,20 +173,20 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
   const lighting = brokerLighting(map, state, today);
   const ratio = stage?.w > 0 && stage?.h > 0 ? stage.h / stage.w : 1;
   const v = view ?? initialView(map, layout, lighting, ratio);
-  const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: CONTROLS });
+  const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: controlsFor(stage) });
   const selected = selectedId ? map.brokers.find((b) => b.id === selectedId) : null;
   // The tapped star's card: below the map on a phone, beside it from 900px.
   const card = selected ? starCard(map, lighting, selectedId, state) : '';
   const height = stage?.h > 0 ? ` style="height:${Math.round(stage.h)}px"` : '';
-  // Above the map, compact, so it reads on a 375×812 phone without scrolling.
+  // Scout's first-visit line floats over the top of the sky (dismissable), so the map keeps the
+  // phone's height; it leaves the zoom buttons' corner clear.
   const scout = firstVisit
-    ? `<div class="map-scout">${smallScout('thinkingA', 36)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p></div>`
+    ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
     : '';
-  return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting))}</h1>`
+  return `<h1 class="map-head">${esc(fieldHeader(fieldCoverage(map, lighting)))}</h1>`
     + '<p class="map-sub">estimated share of the field your opt-outs reach</p>'
-    + scout
     + `<div class="constellation-wrap${card ? ' has-card' : ''}"><div class="map-col">`
-    + `<div class="map-stage" tabindex="-1"${height}>${svg}<div class="constellation-controls">`
+    + `<div class="map-stage" tabindex="-1"${height}>${svg}${scout}<div class="constellation-controls">`
     + '<button type="button" class="constellation-zoom" data-action="map-zoom" data-dir="in" aria-label="Zoom in">+</button>'
     + '<button type="button" class="constellation-zoom" data-action="map-zoom" data-dir="out" aria-label="Zoom out">−</button>'
     + '<button type="button" class="constellation-zoom constellation-zoom--reset" data-action="map-zoom" data-dir="reset" aria-label="Reset the view">RESET</button>'
@@ -182,9 +194,9 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
     + `<p class="constellation-pick" aria-live="polite">${selected ? esc(shortName(selected.name)) : ''}</p>`
     + starList(map, layout, lighting, selectedId, listOpen)
     + `</div>${card}</div>`
-    + `<ul class="map-legend">${LEGEND.map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul>`
+    + `<ul class="map-legend">${LEGEND.filter(([, , needs]) => needs !== 'sweeps' || hasSweepMembers(map)).map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul>`
     + nudgeBlock(lighting.pending)
     + residencyBlock(state, editingResidency)
-    + dropBlock(lighting.drop)
+    + dropBlock(lighting.drop, state.caResident)
     + leftBlock(whatsLeft(map, lighting));
 }

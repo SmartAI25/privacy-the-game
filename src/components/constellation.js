@@ -253,8 +253,17 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const placed = [];
   const ctl = scale && Number.isFinite(controls?.w) && Number.isFinite(controls?.h)
-    ? { left: vx + vw - controls.w / scale, right: vx + vw, top: vy, bottom: vy + controls.h / scale }
+    ? (controls.corner === 'bottom-right'
+      ? { left: vx + vw - controls.w / scale, right: vx + vw, top: vy + vh - controls.h / scale, bottom: vy + vh }
+      : { left: vx + vw - controls.w / scale, right: vx + vw, top: vy, bottom: vy + controls.h / scale })
     : null;
+  // Every drawn star mark is an obstacle a label must not sit on (a ✕ reaches r+1 either side, a
+  // buyer's diamond r√2). Only marks in view matter.
+  const markBox = (s) => {
+    const m = s.state === 'no-opt-out' ? s.r + 2 : s.state === 'buyer' ? s.r * 1.42 : s.r;
+    return { id: s.id, left: s.x - m, right: s.x + m, top: s.y - m, bottom: s.y + m };
+  };
+  const marksInView = stars.filter((s) => s.x >= vx - 40 && s.x <= vx + vw + 40 && s.y >= vy - 40 && s.y <= vy + vh + 40).map(markBox);
   const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh && !(ctl && overlaps(b, ctl));
   for (const s of wanted) {
     const hub = s.broker.hub === true;
@@ -269,11 +278,15 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       { lx: s.x, anchor: 'middle', cy: s.y + s.r + gap + h / 2 },
     ];
     const pad = fontSize * 0.1;
-    let pick = options.find((o) => {
+    const clear = (o, avoidMarks) => {
       const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
       const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
-      return fits(b) && !placed.some((q) => overlaps(padded, q.box));
-    });
+      return fits(b) && !placed.some((q) => overlaps(padded, q.box))
+        && !(avoidMarks && marksInView.some((m) => m.id !== s.id && overlaps(b, m)));
+    };
+    let pick = options.find((o) => clear(o, true));
+    // A hub always keeps a name: when every side touches a star, take one that only clears labels.
+    if (!pick && hub) pick = options.find((o) => clear(o, false));
     if (!pick && s.id === selId) pick = options.find((o) => fits(labelBox(lines, fontSize, o.lx, o.anchor, o.cy))) ?? options[0];
     if (!pick) continue;
     const cls = hub ? 'hub-label' : 'star-label';

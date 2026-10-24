@@ -431,6 +431,7 @@ export const INTERIOR_LINES = {
 export const BROKER_MAP_DIALOGUE = {
   nudge: 'Tell Scout which ones you filed.',
   dropNotResident: "DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.",
+  dropUnsaid: 'We only light DROP if you tell us you live in California.',
   // Liz's line (2026-10-24), on the first visit only.
   firstVisit: "There's a whole constellation of data brokers up there, trading in what drifted up out of the city. The lit stars are the ones your opt-outs reach. Tap one to see its name.",
 };

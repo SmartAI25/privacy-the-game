@@ -159,11 +159,14 @@ export function fieldCoverage(map, lighting) {
   const hubs = brokers.filter((b) => b.hub === true);
   return {
     percent: total > 0 ? Math.floor((100 * lit) / total) : 0,
+    // Something is lit, so a floored 0% is "under 1%", not nothing (ruling M8).
+    anyLit: lit > 0,
     hubsLit: hubs.filter(on).length,
     hubsTotal: hubs.length,
   };
 }
 
-export function fieldHeader({ percent, hubsLit, hubsTotal }) {
-  return `FIELD COVERED: ${percent}% · HUBS LIT ${hubsLit}/${hubsTotal}`;
+export function fieldHeader({ percent, hubsLit, hubsTotal, anyLit = false }) {
+  const shown = percent === 0 && anyLit ? '<1' : percent;
+  return `FIELD COVERED: ${shown}% · HUBS LIT ${hubsLit}/${hubsTotal}`;
 }

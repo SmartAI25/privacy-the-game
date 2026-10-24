@@ -67,7 +67,7 @@ describe('broker re-check', () => {
     const html = renderDebrief(legacy('some-submitted'), WEB, { recheck: true });
     expect(html).toContain('TELL SCOUT WHICH ONES YOU FILED');
     expect(count(html, 'Not recorded yet')).toBe(3);
-    expect(html).toContain('Only this browser keeps this. It lights your stars in the sky above the city and is never sent anywhere.');
+    expect(html).toContain('Only this browser keeps this. It\'s what lights stars in the sky above the city, and it\'s never sent anywhere.');
   });
 
   it('the open debrief has no recheck panel', () => {

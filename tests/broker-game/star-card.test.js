@@ -255,10 +255,18 @@ describe('starCard', () => {
     const html = starCard(m, { stars: {}, frozen: [], halo: [] }, 'x');
     expect(html).not.toMatch(/<b>|<i>/);
   });
+  it('the card is a non-modal dialog labelled by its title', () => {
+    const html = starCard(map, l, map.brokers[0].id);
+    expect(html).toContain('role="dialog"');
+    expect(html).toContain('aria-modal="false"');
+    expect(html).toContain('aria-labelledby="star-card-title"');
+    expect(html).toMatch(/<h2 class="star-card-name" id="star-card-title">/);
+  });
   it('no broker id or name goes in an id, name or title attribute', () => {
     for (const b of map.brokers) {
       const html = starCard(map, l, b.id);
-      expect(html).not.toMatch(/\s(id|name|title)="/);
+      // The one id is a fixed title hook for aria-labelledby, never a broker id or name.
+      expect(html.replace(' id="star-card-title"', '')).not.toMatch(/\s(id|name|title)="/);
     }
   });
   it('every opt-out URL any card shows is verified', () => {

@@ -3,8 +3,11 @@
 // One trailing legal suffix (with the comma before it), or a bare trailing comma, comes off once.
 const SUFFIX = /,?\s+(?:Inc\.|Inc|LLC|L\.L\.C\.|Ltd|plc|PLC|Corp|Corporation|Company|Co\.)$/;
 
+const AFFILIATES = /,?\s+and\s+its\s+subsidiaries\s+and\s+affiliates\b.*$/i;
+const DBA = /,?\s+(?:d\/b\/a|dba)\s+.*$/i;
+
 export function shortName(name) {
-  const s = String(name ?? '').trim();
+  const s = String(name ?? '').replace(AFFILIATES, '').replace(DBA, '').trim();
   if (SUFFIX.test(s)) return s.replace(SUFFIX, '').trim();
   return s.endsWith(',') ? s.slice(0, -1).trim() : s;
 }

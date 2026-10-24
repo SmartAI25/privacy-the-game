@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { renderBrokerMap } from '../../src/screens/broker-map.js';
+import { renderBrokerMap, hasSweepMembers, controlsFor } from '../../src/screens/broker-map.js';
 import { renderDistrict } from '../../src/screens/district.js';
 import { RECHECK_OPACITY, constellationSvg, labelBox, LABEL_LINE_EM } from '../../src/components/constellation.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
@@ -41,9 +41,18 @@ describe('the map screen', () => {
   });
 
   it('the legend shows every mark, re-check due as dimmed amber', () => {
-    for (const t of ['You filed', 'Re-check due', 'No opt-out exists', 'Not yet', 'Credit frozen (still sells data)', 'Opted out in this browser only', 'Buyers']) expect(html).toContain(t);
+    for (const t of ['You filed', 'Re-check due', 'No opt-out exists', 'Not yet', 'Credit frozen (still sells data)', 'Buyers']) expect(html).toContain(t);
     const legend = html.slice(html.indexOf('class="map-legend"'));
     expect(legend).toMatch(new RegExp(`fill="#FF9F00" fill-opacity="${RECHECK_OPACITY}"`));
+  });
+
+  it('the browser-only legend row shows only when a sweep has members', () => {
+    expect(html).not.toContain('Opted out in this browser only');
+    expect(hasSweepMembers(map)).toBe(false);
+    expect(hasSweepMembers({ sweeps: { nai: { members: [] } } })).toBe(false);
+    const withSweep = { ...map, sweeps: { nai: { members: [map.brokers[0].id] } } };
+    expect(hasSweepMembers(withSweep)).toBe(true);
+    expect(draw(fresh(), { data: { map: withSweep, layout } })).toContain('Opted out in this browser only');
   });
 
   it('zoom buttons are real buttons, with a reset', () => {
@@ -83,7 +92,7 @@ describe('the map screen', () => {
     expect(editing).toContain('data-action="set-residency" data-value="yes"');
   });
 
-  it.each([['no'], ['unsaid']])('DROP explains why it lights nothing for %s', (v) => {
+  it.each([['no']])('DROP explains why it lights nothing for %s', (v) => {
     const h = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), v));
     expect(h).toContain("DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.");
     expect(BROKER_MAP_DIALOGUE.dropNotResident).toBe("DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.");
@@ -357,8 +366,37 @@ describe('fix round 1: framing', () => {
     expect((sp[1] - z.x) / z.w).toBeCloseTo((sp[1] - v.x) / v.w);
   });
 
-  it("Scout's first-visit line sits above the map", () => {
+  it("Scout's first-visit line floats inside the stage, dismissable, off the zoom buttons", () => {
     const h = draw(fresh(), { firstVisit: true });
-    expect(h.indexOf("There's a whole constellation")).toBeLessThan(h.indexOf('<svg class="constellation"'));
+    const stage = h.slice(h.indexOf('<div class="map-stage"'), h.indexOf('<p class="constellation-pick"'));
+    expect(stage).toContain("There's a whole constellation");
+    expect(stage.indexOf('class="constellation-scout"')).toBeLessThan(stage.indexOf('class="constellation-controls"'));
+    expect(stage).toContain('data-action="dismiss-scout"');
+    expect(h).toMatch(/\.constellation-scout\{[^}]*position:absolute[^}]*right:68px/);
+    expect(h).toMatch(/\.constellation-scout-x\{[^}]*width:44px;height:44px/);
+    expect(draw(fresh(), { firstVisit: false })).not.toContain('class="constellation-scout"');
+  });
+
+  it('on screens under 360px the zoom buttons lie in a row at the bottom-right, still 44px', () => {
+    expect(controlsFor({ w: 287, h: 400 })).toMatchObject({ corner: 'bottom-right' });
+    expect(controlsFor({ w: 343, h: 600 }).corner).toBeUndefined();
+    expect(controlsFor(null).corner).toBeUndefined();
+    const h = draw(fresh());
+    expect(h).toMatch(/@media \(max-width:359\.98px\)\{\.constellation-controls\{top:auto;bottom:8px;flex-direction:row\}/);
+  });
+
+  it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 63%', () => {
+    const h = draw(withLines(fresh(), WF, { spokeo: '2026-10-01' }));
+    expect(h).toContain('FIELD COVERED: &lt;1% · HUBS LIT 0/12');
+    expect(h).not.toContain('FIELD COVERED: 0%');
+    const drop = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), 'yes'));
+    expect(drop).toContain('FIELD COVERED: 63% · HUBS LIT 6/12');
+  });
+
+  it('DROP with "rather not say" has its own line', () => {
+    const h = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), 'unsaid'));
+    expect(h).toContain('We only light DROP if you tell us you live in California.');
+    expect(h).not.toContain('DROP is only for California residents');
+    expect(BROKER_MAP_DIALOGUE.dropUnsaid).toBe('We only light DROP if you tell us you live in California.');
   });
 });

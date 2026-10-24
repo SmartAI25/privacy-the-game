@@ -8,6 +8,9 @@ export const MIN_W = 100;
 export const MAX_W = 1000;
 const WHEEL_RATE = 0.002; // per wheel delta pixel: one ordinary notch (100) is about 1.22×
 
+// A plain wheel scrolls the page; ctrl/cmd+wheel and a trackpad pinch (a ctrl wheel event) zoom.
+export const wheelZooms = (e) => !!(e && (e.ctrlKey || e.metaKey));
+
 const fin = (v, d) => (Number.isFinite(v) ? v : d);
 
 function box(view) {

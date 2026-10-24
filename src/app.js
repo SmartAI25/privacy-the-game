@@ -30,7 +30,7 @@ import { renderBriefing } from './screens/briefing.js';
 import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
 import { brokerLighting } from './utils/broker-lighting.js';
 import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
-import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, TAP_MAX_PX } from './utils/map-gestures.js';
+import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { checklistFor } from './data/broker-checklists.js';
@@ -78,6 +78,7 @@ let mapStage = null;
 // This visit's bloom is still to be drawn (the data can arrive after the pageview render).
 let mapVisitPending = false;
 let mapFirstVisit = false;
+let mapScoutDismissed = false;
 let editingResidency = false;
 let mapListOpen = false;
 // When the player last saw the city map before this visit (Scout waves after a while away).
@@ -147,7 +148,7 @@ const screens = {
     }
     return renderBrokerMap(state, {
       status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
-      firstVisit: mapFirstVisit, editingResidency, listOpen: mapListOpen,
+      firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
     });
   },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
@@ -246,6 +247,7 @@ function startScreenVisit(route) {
     editingResidency = false;
     mapListOpen = false;
     mapFirstVisit = false;
+    mapScoutDismissed = false;
     mapVisitPending = true;
   }
   if (landingReaction) {
@@ -439,7 +441,7 @@ function drawViewBox(v) {
 
 function mapPointerDown(e) {
   const stage = e.target.closest?.('.map-stage');
-  if (!stage || !app.contains(stage) || e.target.closest('.constellation-controls')) return;
+  if (!stage || !app.contains(stage) || e.target.closest('.constellation-controls, .constellation-scout')) return;
   if (e.pointerType === 'mouse' && e.button !== 0) return;
   const data = brokerData();
   if (!data || !stageSvg()) return;
@@ -498,14 +500,14 @@ function mapPointerUp(e) {
   else if (g.dragging) renderCurrentRoute();
 }
 
-// A mouse wheel or trackpad over the stage zooms about the pointer (a trackpad pinch arrives as a
-// ctrl+wheel with small deltas). The page does not scroll while the pointer is on the stage.
+// Ctrl/cmd + wheel over the stage zooms about the pointer (a trackpad pinch arrives as a ctrl+wheel
+// with small deltas). A plain wheel scrolls the page as usual; the +/- buttons are always there.
 function mapWheel(e) {
   const stage = e.target.closest?.('.map-stage');
   if (!stage || !app.contains(stage)) return;
   const svg = stageSvg();
   const data = brokerData();
-  if (!svg || !data) return;
+  if (!svg || !data || !wheelZooms(e)) return;
   e.preventDefault();
   const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
   const dy = e.deltaY * unit * (e.ctrlKey ? 4 : 1);
@@ -549,6 +551,10 @@ function mapAction(action, el) {
     openCard(s[0], `[data-action="select-star"][data-star="${index}"]`);
   } else if (action === 'close-star') {
     closeCard();
+  } else if (action === 'dismiss-scout') {
+    mapScoutDismissed = true;
+    renderCurrentRoute();
+    app.querySelector('.map-stage')?.focus({ preventScroll: true });
   } else if (action === 'map-list') {
     mapListOpen = !mapListOpen;
     renderCurrentRoute();
@@ -565,7 +571,7 @@ function mapAction(action, el) {
   }
 }
 
-const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'set-residency', 'change-residency']);
+const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'set-residency', 'change-residency']);
 
 function renderCurrentRoute(cause = RENDER_CAUSE.REFRESH) {
   render(parseRoute(location.hash), cause);
@@ -1251,6 +1257,11 @@ window.addEventListener('resize', () => {
     if (!isPhone()) app.querySelector('.star-card')?.style.removeProperty('max-height');
     if (big && parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
   }, 150);
+});
+
+// Web fonts landing can move the header; the phone's map is sized from where it starts, so measure again.
+document.fonts?.addEventListener?.('loadingdone', () => {
+  if (parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
 });
 
 initRouter(render);

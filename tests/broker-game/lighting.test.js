@@ -41,7 +41,7 @@ describe('broker lighting', () => {
   it('nothing filed: every star dim, nope is no-opt-out, 0%', () => {
     const l = brokerLighting(mini, {}, '2026-10-19', cl);
     expect(l.stars.spokeo.state).toBe('dim'); expect(l.stars.nope.state).toBe('no-opt-out');
-    expect(fieldCoverage(mini, l)).toEqual({ percent: 0, hubsLit: 0, hubsTotal: 1 });
+    expect(fieldCoverage(mini, l)).toEqual({ percent: 0, anyLit: false, hubsLit: 0, hubsTotal: 1 });
     expect(l).toMatchObject({ frozen: [], halo: [], pending: [], drop: 'off' });
     expect(l.stars.spokeo).toEqual({ state: 'dim', litOn: null, via: [] });
   });
@@ -257,7 +257,7 @@ describe('broker lighting', () => {
     const tick = (ids) => light({ bigCheck: Object.fromEntries(ids.map((id) => [id, '2026-10-01'])) });
     const reachable = ['spokeo', 'whitepages', 'beenverified', 'acxiom', 'lexisnexis-risk-solutions', 'equifax-information-services', 'hub-a', 'tail-1', 'tail-2', 'criteo'];
     expect(fieldCoverage(mini, tick(['spokeo'])).percent).toBe(6);
-    expect(fieldCoverage(mini, tick(['hub-a']))).toEqual({ percent: 40, hubsLit: 1, hubsTotal: 1 });
+    expect(fieldCoverage(mini, tick(['hub-a']))).toEqual({ percent: 40, anyLit: true, hubsLit: 1, hubsTotal: 1 });
     expect(fieldCoverage(mini, tick(reachable.filter((id) => id !== 'tail-2'))).percent).toBe(93);
     expect(fieldCoverage(mini, tick(reachable)).percent).toBe(100);
     expect(fieldCoverage(mini, tick(['spokeo']))).toEqual(fieldCoverage(mini, tick(['spokeo'])));
@@ -279,7 +279,7 @@ describe('broker lighting', () => {
 
   it('coverage is 0 when nothing is reachable', () => {
     const none = { ...mini, brokers: mini.brokers.filter((b) => b.id === 'nope' || b.id === 'us-ice') };
-    expect(fieldCoverage(none, brokerLighting(none, {}, T, cl))).toEqual({ percent: 0, hubsLit: 0, hubsTotal: 0 });
+    expect(fieldCoverage(none, brokerLighting(none, {}, T, cl))).toEqual({ percent: 0, anyLit: false, hubsLit: 0, hubsTotal: 0 });
   });
 
   it('an amber star still counts toward coverage', () => {
@@ -289,7 +289,7 @@ describe('broker lighting', () => {
     const hub = { ...mini, brokers: mini.brokers.map((b) => (b.id === 'hub-a' ? { ...b, kind: ['people-search'] } : b)) };
     const h = brokerLighting(hub, { bigCheck: { 'hub-a': '2026-01-01' } }, T, cl);
     expect(h.stars['hub-a'].state).toBe('amber');
-    expect(fieldCoverage(hub, h)).toEqual({ percent: 40, hubsLit: 1, hubsTotal: 1 });
+    expect(fieldCoverage(hub, h)).toEqual({ percent: 40, anyLit: true, hubsLit: 1, hubsTotal: 1 });
   });
 
   it('a no-opt-out star is never lit, even by DROP or a tick', () => {
@@ -312,6 +312,17 @@ describe('broker lighting', () => {
     expect(l.stars['oracle-advertising'].state).toBe('no-opt-out');
   });
 
+  it('a floored 0% with something lit reads <1% (ruling M8)', () => {
+    expect(fieldHeader({ percent: 0, anyLit: false, hubsLit: 0, hubsTotal: 12 })).toBe('FIELD COVERED: 0% · HUBS LIT 0/12');
+    expect(fieldHeader({ percent: 0, anyLit: true, hubsLit: 0, hubsTotal: 12 })).toBe('FIELD COVERED: <1% · HUBS LIT 0/12');
+    const none = fieldCoverage(realMap, brokerLighting(realMap, {}, '2026-10-19'));
+    expect(none).toMatchObject({ percent: 0, anyLit: false });
+    const one = realMap.brokers.find((b) => b.reach === 1 && !isBuyer(b));
+    const lit = { stars: Object.fromEntries(realMap.brokers.map((b) => [b.id, { state: b.id === one.id ? 'lit' : 'dim' }])) };
+    const c = fieldCoverage(realMap, lit);
+    expect(c).toMatchObject({ percent: 0, anyLit: true });
+    expect(fieldHeader(c)).toContain('<1%');
+  });
   it('fieldHeader', () => expect(fieldHeader({ percent: 31, hubsLit: 3, hubsTotal: 12 })).toBe('FIELD COVERED: 31% · HUBS LIT 3/12'));
   it('the real map has 12 hubs', () => expect(fieldCoverage(realMap, brokerLighting(realMap, {}, '2026-10-19')).hubsTotal).toBe(12));
 
