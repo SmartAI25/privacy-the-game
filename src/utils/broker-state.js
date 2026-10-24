@@ -65,7 +65,31 @@ export function cleanBrokerState(state) {
       if (Object.keys(c).length !== Object.keys(state.bigCheck).length) { next.bigCheck = c; changed = true; }
     }
   }
+  if ('brokerMap' in state) {
+    if (!isObj(state.brokerMap)) drop('brokerMap');
+    else if ('seenLit' in state.brokerMap) {
+      const { seenLit, ...rest } = state.brokerMap;
+      if (!Array.isArray(seenLit)) { next.brokerMap = rest; changed = true; }
+      else if (seenLit.some((id) => typeof id !== 'string')) {
+        next.brokerMap = { ...rest, seenLit: seenLit.filter((id) => typeof id === 'string') };
+        changed = true;
+      }
+    }
+  }
   return changed ? next : state;
+}
+
+// The map's lit stars the player has already seen bloom. A save whose brokerMap isn't a plain
+// object starts it fresh.
+export function markMapSeen(state, litIds) {
+  const prev = isObj(state.brokerMap) ? state.brokerMap : {};
+  return { ...state, brokerMap: { ...prev, seenLit: [...new Set(litIds)].sort() } };
+}
+
+// Lit ids not yet seen on the map. A first visit (no seenLit) treats every lit star as new.
+export function newlyLitIds(state, litIds) {
+  const seen = isObj(state?.brokerMap) && Array.isArray(state.brokerMap.seenLit) ? new Set(state.brokerMap.seenLit) : new Set();
+  return new Set(litIds.filter((id) => !seen.has(id)));
 }
 
 function withEntry(state, missionId, entry) {

@@ -140,6 +140,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   const vx = Number.isFinite(view?.x) ? view.x : 0;
   const vy = Number.isFinite(view?.y) ? view.y : 0;
   const vw = Number.isFinite(view?.w) && view.w > 0 ? view.w : 1000;
+  // A view may be taller than wide (a phone's map fills its height); square when h is not given.
+  const vh = Number.isFinite(view?.h) && view.h > 0 ? view.h : vw;
   // CSS px per map unit, when the caller knows how wide the SVG is drawn.
   const scale = Number.isFinite(px) && px > 0 ? px / vw : null;
   const hitR = HIT_PX / (scale ?? ASSUMED_PX / vw);
@@ -197,7 +199,7 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
     links.push(`<line class="link${touching ? ' link--selected' : ''}" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}" opacity="${n(op)}"${dash}/>`);
   }
 
-  const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vw;
+  const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vh;
   const wanted = [];
   let lit = 0;
   let amber = 0;
@@ -243,7 +245,7 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   const reach = (s) => (Number.isFinite(s.broker.reach) ? s.broker.reach : 0);
   wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const placed = [];
-  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vw;
+  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh;
   for (const s of wanted) {
     const hub = s.broker.hub === true;
     const fontSize = hub ? labelSize : (scale ? STAR_LABEL_PX / scale : labelSize * (STAR_LABEL_PX / LABEL_PX));
@@ -287,9 +289,9 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
 
   // Hit circles sit on top and overlap in the dense crowd; the app resolves a tap with
   // nearestStar (broker-view.js) on the tap point, not with whichever circle is uppermost.
-  return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vw)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
+  return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vh)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
     + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/>${sky.join('')}</g>`
-    + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vw)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
+    + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vh)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
     + `<g class="links">${links.join('')}</g>`
     + `<g class="stars">${glows.join('')}${marks.join('')}</g>`
     + `<g class="rings">${rings.join('')}${halos.join('')}</g>`

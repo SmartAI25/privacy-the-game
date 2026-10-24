@@ -21,7 +21,7 @@ describe('broker debrief checklist', () => {
     expect(lineIds(html)).toEqual(['spokeo', 'whitepages', 'beenverified']);
     expect(html).toContain(`data-broker-checklist="${WEB}"`);
     expect(html).toContain('WHICH OF THESE DID YOU FILE?');
-    expect(html).toContain('Only this browser keeps this. It\'s never sent anywhere.');
+    expect(html).toContain('Only this browser keeps this. It lights your stars in the sky above the city and is never sent anywhere.');
     expect(html).not.toMatch(/name="filed"[^>]*checked/);
   });
 

@@ -27,7 +27,10 @@ import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-dat
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
+import { brokerLighting } from './utils/broker-lighting.js';
+import { litIds, initialView, withRatio, zoomViewBox, nearestStar } from './utils/broker-view.js';
+import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { checklistFor } from './data/broker-checklists.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
@@ -69,6 +72,13 @@ let saintsFrom = null;
 let selectedId = null;
 let view = null;
 let newlyLit = [];
+// The map's drawn size in CSS px ({ w, h }), measured after a render; it fills the phone's height.
+let mapStage = null;
+// This visit's bloom is still to be drawn (the data can arrive after the pageview render).
+let mapVisitPending = false;
+let mapFirstVisit = false;
+let editingResidency = false;
+let mapListOpen = false;
 // When the player last saw the city map before this visit (Scout waves after a while away).
 let cityArrival;
 // The first-2FA hug was on screen this visit; it counts as seen once they leave.
@@ -123,7 +133,21 @@ const screens = {
   saints: () => renderSaints(state, { from: saintsFrom }),
   'broker-map': () => {
     if (brokerDataStatus() === 'idle') loadBrokerMapData();
-    return renderBrokerMap(state, { status: brokerDataStatus(), data: brokerData(), selectedId, view, newlyLit });
+    const data = brokerDataStatus() === 'ready' ? brokerData() : null;
+    if (data) {
+      const lighting = brokerLighting(data.map, state, localDay());
+      // The first draw of this visit blooms what the player hasn't seen lit yet (on a first
+      // visit, every lit star). markMapSeen runs after it, and later re-draws pass none.
+      if (mapVisitPending) {
+        newlyLit = newlyLitIds(state, litIds(lighting));
+        mapFirstVisit = !Array.isArray(state.brokerMap?.seenLit);
+      }
+      if (!view && mapStage) view = initialView(data.map, data.layout, lighting, mapStage.h / mapStage.w);
+    }
+    return renderBrokerMap(state, {
+      status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
+      firstVisit: mapFirstVisit, editingResidency, listOpen: mapListOpen,
+    });
   },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
@@ -177,6 +201,7 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     // so a later re-render (a device add) does not replay them.
     const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
     app.innerHTML = renderFn(route.params);
+    if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
     if (watched) {
       const seen = markSealedSeen(state, route.params.id, watched ?? []);
       if (seen !== state) setState(seen);
@@ -209,6 +234,16 @@ function startScreenVisit(route) {
     setState(markTwoFactorHugSeen(state));
   }
   if (route.screen === 'city') cityArrival = { before: state.lastCityVisit || null };
+  // Each visit to the map opens fresh: zoomed in on the player's stars, nothing selected.
+  if (route.screen === 'broker-map') {
+    selectedId = null;
+    view = null;
+    newlyLit = [];
+    editingResidency = false;
+    mapListOpen = false;
+    mapFirstVisit = false;
+    mapVisitPending = true;
+  }
   if (landingReaction) {
     const arriving = !landingReaction.landed && route.screen === 'district' && route.params.id === landingReaction.districtId;
     landingReaction = arriving ? { ...landingReaction, landed: true } : null;
@@ -227,6 +262,84 @@ function cheerThenGo(hash) {
     if (leavingBriefing) navigate(hash);
   }, feelingDuration('goDoIt') + 150);
 }
+
+// The map fills the viewport height below its header on a phone (Liz: "too tiny"), and stays
+// about square on a wide screen. Measured after the draw; a changed size draws once more, in the
+// same task, so nothing paints in between. Then this visit's bloom is marked seen.
+function afterBrokerMapRender(renderFn, params) {
+  const stage = app.querySelector('.map-stage');
+  if (!stage) return;
+  const w = stage.clientWidth;
+  const top = stage.getBoundingClientRect().top + window.scrollY;
+  const fill = window.innerHeight - top - 8;
+  const h = Math.round(Math.max(320, window.innerWidth >= 900 ? Math.min(fill, w) : fill));
+  if (w > 0 && (!mapStage || Math.abs(mapStage.w - w) > 1 || Math.abs(mapStage.h - h) > 1)) {
+    mapStage = { w, h };
+    if (view) view = withRatio(view, h / w);
+    app.innerHTML = renderFn(params);
+  }
+  if (mapVisitPending && brokerDataStatus() === 'ready') {
+    const data = brokerData();
+    const seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    setState(seen);
+    mapVisitPending = false;
+    newlyLit = [];
+  }
+}
+
+// A tap on the sky selects the nearest star within a 44px target, or clears the selection.
+function tapSky(svg, e) {
+  const data = brokerData();
+  const ctm = svg.getScreenCTM?.();
+  if (!data || !ctm || !ctm.a) return;
+  const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
+  const i = nearestStar(data.layout, p.x, p.y, (HIT_PX + 2) / ctm.a);
+  selectedId = i >= 0 ? data.layout.stars[i][0] : null;
+  renderCurrentRoute();
+}
+
+function mapViewNow(data) {
+  if (view) return view;
+  const ratio = mapStage ? mapStage.h / mapStage.w : 1;
+  return initialView(data.map, data.layout, brokerLighting(data.map, state, localDay()), ratio);
+}
+
+// Map controls: in-memory only. No track(), no navigate(), nothing in the URL.
+function mapAction(action, el) {
+  const data = brokerData();
+  if (action === 'map-zoom') {
+    if (!data) return;
+    const dir = el.dataset.dir;
+    if (dir === 'reset') view = initialView(data.map, data.layout, brokerLighting(data.map, state, localDay()), mapStage ? mapStage.h / mapStage.w : 1);
+    else view = zoomViewBox(mapViewNow(data), dir === 'in' ? 2 : 0.5);
+    renderCurrentRoute();
+    app.querySelector(`[data-action="map-zoom"][data-dir="${dir === 'out' ? 'out' : dir === 'in' ? 'in' : 'reset'}"]`)?.focus();
+  } else if (action === 'select-star') {
+    const s = data?.layout?.stars?.[Number(el.dataset.star)];
+    if (!s) return;
+    selectedId = s[0];
+    const v = mapViewNow(data);
+    const h = v.h ?? v.w;
+    view = zoomViewBox({ ...v, x: s[1] - v.w / 2, y: s[2] - h / 2 }, 1, s[1], s[2]);
+    renderCurrentRoute();
+    app.querySelector(`[data-action="select-star"][data-star="${Number(el.dataset.star)}"]`)?.focus();
+  } else if (action === 'map-list') {
+    mapListOpen = !mapListOpen;
+    renderCurrentRoute();
+    app.querySelector('[data-action="map-list"]')?.focus();
+  } else if (action === 'set-residency') {
+    setState(setResidency(state, el.dataset.value));
+    editingResidency = false;
+    renderCurrentRoute();
+    app.querySelector('[data-action="change-residency"]')?.focus();
+  } else if (action === 'change-residency') {
+    editingResidency = true;
+    renderCurrentRoute();
+    app.querySelector('[data-action="set-residency"]')?.focus();
+  }
+}
+
+const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'map-list', 'set-residency', 'change-residency']);
 
 function renderCurrentRoute(cause = RENDER_CAUSE.REFRESH) {
   render(parseRoute(location.hash), cause);
@@ -467,9 +580,18 @@ async function handleShareCard(districtId) {
 }
 
 app.addEventListener('click', async (e) => {
+  const sky = e.target.closest?.('svg.constellation');
+  if (sky && app.contains(sky)) {
+    tapSky(sky, e);
+    return;
+  }
   const el = e.target.closest('[data-action]');
   if (!el || !app.contains(el)) return;
   const action = el.dataset.action;
+  if (MAP_ACTIONS.has(action)) {
+    mapAction(action, el);
+    return;
+  }
 
   if (leavingBriefing && (action === 'go-do-it' || action === 'i-did-it')) {
     e.preventDefault();
@@ -853,6 +975,19 @@ window.reclaimCity = {
   toggleAccount,
   setState,
 };
+
+// A rotated phone or a resized window re-measures the map (not the URL bar sliding on scroll).
+let lastSize = { w: window.innerWidth, h: window.innerHeight };
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const size = { w: window.innerWidth, h: window.innerHeight };
+    const big = size.w !== lastSize.w || Math.abs(size.h - lastSize.h) > 120;
+    lastSize = size;
+    if (big && parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
+  }, 150);
+});
 
 initRouter(render);
 checkStreakReminder(state);

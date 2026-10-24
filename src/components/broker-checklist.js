@@ -49,7 +49,7 @@ function recheckRow(line, day) {
     </label>`;
 }
 
-const SUB = '<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It\'s never sent anywhere.</div>';
+const SUB = '<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It lights your stars in the sky above the city and is never sent anywhere.</div>';
 
 export function renderBrokerChecklist(mission, state, mode = 'file') {
   const list = checklistFor(mission?.id);
