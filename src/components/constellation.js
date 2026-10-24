@@ -42,8 +42,11 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 const STYLE = `<style>
 .constellation{display:block;width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#121826 0%,${MIDNIGHT} 70%);border-radius:8px}
-.constellation .skyline,.constellation .sky,.constellation .links,.constellation .stars,.constellation .rings,.constellation .effects,.constellation .labels{pointer-events:none}
+.constellation .skyline,.constellation .sky,.constellation .figures,.constellation .names,.constellation .links,.constellation .stars,.constellation .rings,.constellation .effects,.constellation .labels{pointer-events:none}
 .constellation .link{stroke:${CYAN};stroke-width:1.4}
+.constellation .figure{stroke:${PALE};stroke-width:.8;opacity:.2;vector-effect:non-scaling-stroke}
+.constellation .figure--lit{stroke:${LIME};opacity:.5}
+.constellation .const-name{font-family:'JetBrains Mono',ui-monospace,monospace;fill:${PALE};opacity:.34;letter-spacing:.25em;font-style:italic}
 .constellation .link,.constellation .star-x,.constellation .buyer,.constellation .ring-frozen,.constellation .selected,.constellation .burst{vector-effect:non-scaling-stroke}
 .constellation .hub-label,.constellation .star-label{font-family:'JetBrains Mono',ui-monospace,monospace;paint-order:stroke;stroke:${MIDNIGHT};stroke-linejoin:round;letter-spacing:.5px}
 .constellation .hub-label{font-weight:700}
@@ -114,6 +117,8 @@ export const LABEL_PAD_EM = 0.6;
 export const LABEL_LINE_EM = 1.1;
 // Space kept clear around each placed label, in em. Drawn glyphs and their outline stroke run past
 // labelBox by about 0.2em, so this is what leaves a visible gap between two names.
+// Constellation names, in CSS px at any zoom.
+export const CONST_NAME_PX = 10;
 export const LABEL_CLEAR_EM = 0.6;
 // The least a hub's name may keep, when the full clearance leaves it nowhere to go.
 export const LABEL_TIGHT_EM = 0.1;
@@ -216,6 +221,36 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
 
   // The player's own stars in view, named before the zoom names everything when there are few.
   const ownUnnamed = [];
+  // Constellation figures (layout.figures, star index pairs): same kind of company, never a link.
+  // A figure whose two stars are both lit glows: the player is filling the constellation in.
+  const byIndex = new Map(stars.map((st) => [st.index, st]));
+  const figures = [];
+  for (const f of Array.isArray(layout?.figures) ? layout.figures : []) {
+    const a = Array.isArray(f) ? byIndex.get(f[0]) : null;
+    const b = Array.isArray(f) ? byIndex.get(f[1]) : null;
+    if (!a || !b) continue;
+    const litBoth = a.state === 'lit' && b.state === 'lit';
+    figures.push(`<line class="figure${litBoth ? ' figure--lit' : ''}" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}"/>`);
+  }
+  const nameSize = scale ? CONST_NAME_PX / scale : LABEL_SIZE * 0.8;
+  const constNames = (Array.isArray(layout?.names) ? layout.names : [])
+    .filter((m) => Array.isArray(m) && typeof m[0] === 'string' && Number.isFinite(m[1]) && Number.isFinite(m[2]))
+    .map(([label, x, y]) => ({ text: label.toUpperCase(), x, y }));
+  // A name shows only whole and in view, clear of the names before it (the layout lists the biggest
+  // kinds first); star labels keep clear of the names that show. Letter-spacing (.25em) widens them.
+  const nameBox = (m) => {
+    const b = labelBox([m.text], nameSize, m.x, 'middle', m.y - nameSize * 0.35);
+    const extra = (m.text.length * nameSize * 0.25) / 2;
+    return { left: b.left - extra, right: b.right + extra, top: b.top, bottom: b.bottom };
+  };
+  const shownNames = [];
+  for (const m of constNames) {
+    const box = nameBox(m);
+    const inside = box.left >= vx && box.right <= vx + vw && box.top >= vy && box.bottom <= vy + vh;
+    if (inside && !shownNames.some((q) => overlaps(box, q.box))) shownNames.push({ ...m, box });
+  }
+  const nameBoxes = shownNames.map((m) => m.box);
+
   const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vh;
   const wanted = [];
   let lit = 0;
@@ -304,7 +339,7 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
       const pad = fontSize * padEm;
       const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
-      return fits(b) && !placed.some((q) => overlaps(padded, q.box))
+      return fits(b) && !placed.some((q) => overlaps(padded, q.box)) && (hub || !nameBoxes.some((q) => overlaps(b, q)))
         && !marksInView.some((m) => m.id !== s.id && avoidMarks !== 'none' && (avoidMarks === 'all' || m.bright) && overlaps(b, m));
     };
     let pick = options.find((o) => clear(o, 'all'));
@@ -352,6 +387,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vh)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
     + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/>${sky.join('')}</g>`
     + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vh)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
+    + `<g class="names">${shownNames.filter((m) => !placed.some((q) => overlaps(m.box, q.box))).map((m) => `<text class="const-name" x="${n(m.x)}" y="${n(m.y)}" font-size="${n(nameSize)}" text-anchor="middle">${esc(m.text)}</text>`).join('')}</g>`
+    + `<g class="figures">${figures.join('')}</g>`
     + `<g class="links">${links.join('')}</g>`
     + `<g class="stars">${glows.join('')}${marks.join('')}</g>`
     + `<g class="rings">${rings.join('')}${halos.join('')}</g>`
