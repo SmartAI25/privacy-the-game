@@ -52,7 +52,8 @@ function recheckRow(line, day) {
     </label>`;
 }
 
-const SUB = '<div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It\'s what lights stars in the sky above the city, and it\'s never sent anywhere.</div>';
+// On a phone the note waits behind "Where it's kept"; from 900px it shows as it always did.
+const SUB = '<details class="phone-fold checklist-kept" data-fold="checklist-kept" data-open-desktop><summary>Where it\'s kept</summary><div style="font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.5; margin: -6px 0 12px;">Only this browser keeps this. It\'s what lights stars in the sky above the city, and it\'s never sent anywhere.</div></details>';
 
 export function renderBrokerChecklist(mission, state, mode = 'file') {
   const list = checklistFor(mission?.id);

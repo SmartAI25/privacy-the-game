@@ -664,6 +664,6 @@ img { image-rendering: pixelated; }
 /* Scout's district welcome: only its first sentence before MORE on a phone. */
 @media (max-width: 899px) { .intro-lead-more { display: none; } }
 @media (min-width: 900px) { .intro-lead-phone { display: none; } }
-/* A facility's title already names its building: the building's own label hides on a phone. */
-@media (max-width: 899px) { .facility-icon > div > div:last-child { display: none; } }
+/* A facility's title (or a timeline card's name) already names its building: the building's own label hides on a phone. */
+@media (max-width: 899px) { .facility-icon > div > div:last-child, .tl-icon--same > div > div:last-child { display: none; } }
 /* trim pass: end */

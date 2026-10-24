@@ -143,7 +143,7 @@ describe('surveys: one question and a grid of chips on a phone', async () => {
   it("a facility's title is not said twice on a phone: its building's own label hides there", () => {
     const html = renderDistrict(createInitialState(), 'reclamation');
     expect(html).toContain('<span class="facility-icon">');
-    expect(TRIM_CSS).toMatch(/@media \(max-width: 899px\) \{ \.facility-icon > div > div:last-child \{ display: none; \} \}/);
+    expect(TRIM_CSS).toMatch(/@media \(max-width: 899px\) \{ \.facility-icon > div > div:last-child[,\s]/);
   });
 });
 
@@ -195,5 +195,31 @@ describe('a building on a phone: the floors below the roof start folded until th
 
   it("a fold the script makes for the screen width is not saved as the player's", () => {
     expect(APP).toMatch(/if \(details\.hasAttribute\('data-open-desktop'\)\) \{[\s\S]*?if \(!handFolds\.has\(desktopFoldKey\(details, all\.indexOf\(details\)\)\)\) return;/);
+  });
+});
+
+describe('the Social Timeline and the broker checklist: the rest behind a tap on a phone', async () => {
+  const { renderTimeline } = await import('../src/screens/timeline.js');
+  const { renderDebrief } = await import('../src/screens/debrief.js');
+  const { updateMission } = await import('../src/state.js');
+
+  it("the timeline's intro: its first sentence, then MORE (the rest flows on in the paragraph on desktop)", () => {
+    const html = renderTimeline(createInitialState());
+    expect(html).toMatch(/Tell us when you joined each platform and how active you were\. <details class="more-fold" data-fold="timeline-how" data-open-desktop><summary>MORE<\/summary><\/details><span class="more-fold-text">We'll break your review into right-sized chunks — heavy years get their own missions, quiet years get grouped together\. <strong[^>]*>No rushing\.<\/strong><\/span>/);
+  });
+
+  it("a platform card whose building says the same name hides the building's label on a phone", () => {
+    const html = renderTimeline(createInitialState());
+    expect(html).toContain('<span class="tl-icon tl-icon--same">');
+    expect(TRIM_CSS).toMatch(/\.facility-icon > div > div:last-child, \.tl-icon--same > div > div:last-child \{ display: none; \}/);
+  });
+
+  it('the broker checklist note sits behind a fold, open on desktop, in both the debrief and the re-check', () => {
+    const WF = 'people_search-fortify-web-forms';
+    const fresh = createInitialState();
+    const filed = updateMission(fresh, WF, { status: 'completed', completedAt: '2026-10-20T10:00:00Z' });
+    for (const html of [renderDebrief(fresh, WF), renderDebrief(filed, WF, { recheck: true })]) {
+      expect(html).toMatch(/<details class="phone-fold checklist-kept" data-fold="checklist-kept" data-open-desktop><summary>Where it's kept<\/summary><div[^>]*>Only this browser keeps this\. It's what lights stars in the sky above the city, and it's never sent anywhere\.<\/div><\/details>/);
+    }
   });
 });
