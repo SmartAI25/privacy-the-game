@@ -276,9 +276,16 @@ node research/data-brokers/build/map-missions.js
 npm run brokers:check-urls
 npm run brokers:validate
 npm run brokers:export
+
+# 7. Lay out the constellation map
+npm run brokers:layout
 ```
 
 `merge-staging.js <family> --dry-run` shows what a merge would change without writing. `brokers:validate` exits non-zero on any error and prints the counts. `brokers:export` writes `src/data/broker-map.json` and prints the hubs.
+
+### Layout
+
+`brokers:layout` reads `src/data/broker-map.json` (and each record's `size.known`) and writes `src/data/broker-layout.json`: one star `[id, x, y, r]` per broker in a 1000×1000 square, so the game draws the Broker Constellation without running a simulation on the phone. Buyers sit on the rim (radius 470). Brokers in any published link are placed by a seeded force layout inside radius 330, with the 12 hubs kept at least 140 apart. Brokers with no documented links fill the outer ring between 350 and 440. A star's radius is `2 + 2.2 × log2(reach)`, plus 1 when the company's size is known. The script is deterministic: the same map gives a byte-identical file, so re-run it after every export and commit the result.
 
 Steps 1, 2, 4 and 5 are deterministic. The URL checks are not: they depend on the day and on how each site treats automated requests, so `status` and `verifiedAt` will differ from ours. Because the merge replaces a registry opt-out URL marked `blocked` when research found one on the broker's own domain, a different step 3 result can also change which opt-out URL a record ends up with.
 

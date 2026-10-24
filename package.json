@@ -8,6 +8,7 @@
     "brokers:import": "node research/data-brokers/build/import-registry.js",
     "brokers:check-urls": "node research/data-brokers/build/check-urls.js",
     "brokers:export": "node research/data-brokers/build/export.js",
+    "brokers:layout": "node research/data-brokers/build/layout.js",
     "dev": "npx serve src -l 3000",
     "test": "vitest run",
     "test:watch": "vitest"
