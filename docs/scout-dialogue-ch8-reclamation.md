@@ -318,7 +318,7 @@
 
 ## 7. Field Map
 
-The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation/big-check`). These live in `BROKER_MAP_DIALOGUE` in `src/data/dialogue.js`. They carry no digits, and they claim only what the map's records show. The one-time lines (`opened`, `firstHub`, `sweep`, `noOptOut`, `bigCheck`) each show once per save; the save remembers them in `brokerMap.scout` (1 seen, 0 waiting for a later visit). One line shows per map visit.
+The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation/big-check`). These live in `BROKER_MAP_DIALOGUE` in `src/data/dialogue.js`. They carry no digits, and they claim only what the map's records show. The one-time lines (`opened`, `sweep`, `firstHub`, `noOptOut`, `bigCheck`, in that order of precedence) each show once per save; the save remembers them in `brokerMap.scout` (1 seen, 0 waiting for a later visit). One line shows per map visit.
 
 **`firstVisit`** *(first map visit only; Liz's line)*
 
@@ -326,15 +326,15 @@ The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation
 
 **`opened`** *(once, from the second map visit on)*
 
-> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry opt-out list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
+> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry member list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
+
+**`sweep`** *(once, on a map visit where DROP has newly lit ten or more stars, or a later visit if another line showed then; it comes before `firstHub`, so the DROP visit explains DROP)*
+
+> One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.
 
 **`firstHub`** *(once, on a map visit where a hub has newly lit, or a later visit if another line showed then)*
 
 > That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.
-
-**`sweep`** *(once, on a map visit where DROP has newly lit ten or more stars, or a later visit if another line showed then)*
-
-> One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.
 
 **`noOptOut`** *(once, on the first card opened for a star with no opt-out)*
 

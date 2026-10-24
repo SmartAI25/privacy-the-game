@@ -49,14 +49,14 @@ describe("Scout's map lines: the copy", () => {
     expect(BROKER_MAP_DIALOGUE.firstVisit).toBe("There's a whole constellation of data brokers up there, trading in what drifted up out of the city. The lit stars are the ones your opt-outs reach. Tap one to see its name.");
   });
   it('the five new lines are the plan\'s copy, verbatim', () => {
-    expect(BROKER_MAP_DIALOGUE.opened).toBe('This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry opt-out list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.');
+    expect(BROKER_MAP_DIALOGUE.opened).toBe('This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry member list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.');
     expect(BROKER_MAP_DIALOGUE.firstHub).toBe("That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.");
     expect(BROKER_MAP_DIALOGUE.sweep).toBe("One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.");
     expect(BROKER_MAP_DIALOGUE.noOptOut).toBe("Some of them don't let you leave. When there's no opt-out, a complaint to a regulator still puts it on the record.");
     expect(BROKER_MAP_DIALOGUE.bigCheck).toBe("This is the long tail: every broker on the map your opt-outs haven't reached yet. Where a mission covers one, it points you there. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.");
   });
-  it('the keys', () => expect(MAP_SCOUT_KEYS).toEqual(['opened', 'firstHub', 'sweep', 'noOptOut', 'bigCheck']));
-  // The opened line says every star is on a registry or an ad industry opt-out list, or tied to
+  it('the keys', () => expect(MAP_SCOUT_KEYS).toEqual(['opened', 'sweep', 'firstHub', 'noOptOut', 'bigCheck']));
+  // The opened line says every star is on a registry or an ad industry member list, or tied to
   // them by public documents. Each drawn star must have one of those, so the line can't silently
   // become false on a data release.
   it("every drawn star backs the opened line's claim", () => {
@@ -127,7 +127,7 @@ describe('mapScoutLine', () => {
       saveState(s);
       s = loadState();
     }
-    expect(shown).toEqual(['opened', 'firstHub', 'sweep']);
+    expect(shown).toEqual(['opened', 'sweep', 'firstHub']);
     expect(mapScoutLine(s, sky, skyLighting, all)).toBeNull();
     expect(s.brokerMap.scout).toEqual({ opened: 1, firstHub: 1, sweep: 1 });
   });
@@ -147,22 +147,23 @@ describe('pending lines (ruling T3-b)', () => {
 
   it('triggers: firstHub for a newly lit hub, sweep for ten DROP stars; never opened', () => {
     const s = createInitialState();
-    expect(mapScoutTriggers(s, sky, skyLighting, new Set(['hub', ...drops(10)]))).toEqual(['firstHub', 'sweep']);
+    expect(mapScoutTriggers(s, sky, skyLighting, new Set(['hub', ...drops(10)]))).toEqual(['sweep', 'firstHub']);
     expect(mapScoutTriggers(s, sky, skyLighting, new Set(drops(9)))).toEqual([]);
     expect(mapScoutTriggers(seen(s, 'firstHub'), sky, skyLighting, new Set(['hub', ...drops(10)]))).toEqual(['sweep']);
   });
 
-  it('a DROP-yes filing after opened is seen shows firstHub now and sweep on the next visit', () => {
+  // Final review M3: the DROP visit explains itself (sweep); firstHub waits for the next visit.
+  it('a DROP-yes filing after opened is seen shows sweep now and firstHub on the next visit', () => {
     let s = { ...seen(createInitialState(), 'opened'), caResident: 'yes', brokerFiled: { 'people_search-reclaim-stragglers': { lines: { drop: '2026-10-01' }, since: '2026-10-01' } } };
     s = markMapSeen(s, []);
     const l = brokerLighting(map, s, T);
     const fresh = new Set(Object.keys(l.stars).filter((id) => ['lit', 'amber'].includes(l.stars[id].state)));
     let v = visit(s, map, l, fresh);
-    expect(v.got.key).toBe('firstHub');
-    expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 1, sweep: 0 });
-    // The next visit: nothing newly lit, but sweep was pending.
+    expect(v.got.key).toBe('sweep');
+    expect(v.state.brokerMap.scout).toEqual({ opened: 1, sweep: 1, firstHub: 0 });
+    // The next visit: nothing newly lit, but firstHub was pending.
     v = visit(v.state, map, l, new Set());
-    expect(v.got).toEqual({ key: 'sweep', line: BROKER_MAP_DIALOGUE.sweep });
+    expect(v.got).toEqual({ key: 'firstHub', line: BROKER_MAP_DIALOGUE.firstHub });
     v = visit(v.state, map, l, new Set());
     expect(v.got).toBeNull();
     expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 1, sweep: 1 });
@@ -175,9 +176,9 @@ describe('pending lines (ruling T3-b)', () => {
     expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 0, sweep: 0 });
     expect(JSON.parse(JSON.stringify(v.state)).brokerMap.scout.firstHub).toBe(0);
     v = visit(v.state, sky, skyLighting, new Set());
-    expect(v.got.key).toBe('firstHub');
-    v = visit(v.state, sky, skyLighting, new Set());
     expect(v.got.key).toBe('sweep');
+    v = visit(v.state, sky, skyLighting, new Set());
+    expect(v.got.key).toBe('firstHub');
     expect(visit(v.state, sky, skyLighting, new Set(['hub', ...drops(12)])).got).toBeNull();
   });
 

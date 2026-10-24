@@ -14,18 +14,20 @@ const said = (key) => ({ key, line: BROKER_MAP_DIALOGUE[key] });
 
 const scoutValue = (state, key) => (isObj(state?.brokerMap) && isObj(state.brokerMap.scout) ? state.brokerMap.scout[key] : undefined);
 
-// The map lines whose trigger fires on this visit and that aren't seen yet: firstHub (a newly lit
-// star is a hub) and sweep (ten or more newly lit through DROP). opened needs no trigger.
+// The map lines whose trigger fires on this visit and that aren't seen yet, in MAP_SCOUT_KEYS
+// order: sweep (ten or more newly lit through DROP) and firstHub (a newly lit star is a hub).
+// opened needs no trigger. Sweep comes first: six hubs are CA-registered, so the DROP visit lights
+// a hub too, and that visit should explain DROP, not point at one hub among hundreds of stars.
 export function mapScoutTriggers(state, map, lighting, newlyLit) {
   const fresh = newlyLit instanceof Set ? newlyLit : new Set(newlyLit ?? []);
   const brokers = Array.isArray(map?.brokers) ? map.brokers : [];
   const out = [];
-  if (!seen(state, 'firstHub') && brokers.some((b) => b?.hub === true && fresh.has(b.id))) out.push('firstHub');
   if (!seen(state, 'sweep')) {
     let n = 0;
     for (const id of fresh) if (Array.isArray(lighting?.stars?.[id]?.via) && lighting.stars[id].via.includes('drop')) n++;
     if (n >= SWEEP_MIN) out.push('sweep');
   }
+  if (!seen(state, 'firstHub') && brokers.some((b) => b?.hub === true && fresh.has(b.id))) out.push('firstHub');
   return out;
 }
 
@@ -36,7 +38,7 @@ export function mapScoutTriggers(state, map, lighting, newlyLit) {
 export function mapScoutLine(state, map, lighting, newlyLit) {
   if (!seen(state, 'opened')) return said('opened');
   const now = mapScoutTriggers(state, map, lighting, newlyLit);
-  const key = ['firstHub', 'sweep'].find((k) => !seen(state, k) && (now.includes(k) || scoutValue(state, k) === 0));
+  const key = ['sweep', 'firstHub'].find((k) => !seen(state, k) && (now.includes(k) || scoutValue(state, k) === 0));
   return key ? said(key) : null;
 }
 

@@ -594,10 +594,10 @@ export const RECLAMATION_MISSIONS = [
       briefing: "\"Three layers of data brokers, three kinds of data. People-search sells your identity. Enterprise aggregators sell your records. Ad brokers sell your behavior -- what you buy, where you go, what you read, what you search for. Together, they let a stranger build a complete picture of who you are. We cleared the first two layers. This is the third.\"",
       debrief: {
         "few-signals": "\"Not much to go on. Either you're already using privacy tools or you don't use many apps.\"",
-        "some-signals": "\"Some behavioral tracking. Google and Meta are the biggest -- we'll tackle them plus the bulk opt-out tools.\"",
-        "lots-signals": "\"A detailed profile. That's the default for anyone who uses the internet normally. The bulk opt-out tools are next.\"",
+        "some-signals": "\"Some behavioral tracking. Google and Meta are the biggest -- we'll tackle them plus the DAA bulk opt-out.\"",
+        "lots-signals": "\"A detailed profile. That's the default for anyone who uses the internet normally. The DAA bulk opt-out is next.\"",
         "not-found": "\"Minimal tracking footprint. Either you're already using privacy tools or you don't use many apps.\"",
-        "found-some": "\"Some behavioral tracking. Google and Meta are the biggest -- we'll tackle them plus the bulk opt-out tools.\"",
+        "found-some": "\"Some behavioral tracking. Google and Meta are the biggest -- we'll tackle them plus the DAA bulk opt-out.\"",
         "found-all": "\"Deep behavioral tracking. That's the default for anyone who uses the internet normally. The good news: the DAA's bulk opt-out tries about a hundred ad companies at once.\"",
         "skip": "\"Understanding what's being tracked is step one. Come back when you have a few minutes.\"",
       },

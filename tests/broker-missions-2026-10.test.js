@@ -161,6 +161,12 @@ describe('the NAI is a signpost, not a bulk opt-out', async () => {
     for (const p of ['NAI and DAA tools cover', 'NAI opt-out alone', 'Two tools, one hundred-plus', 'select and opt out of member', 'NAI Consumer Opt-Out', 'hundred-plus', '100+ Ad Networks']) expect(all).not.toContain(p);
     expect(everything('ad_trackers-fortify-bulk')).toContain('The NAI no longer has a one-click tool');
   });
+  // Final review M8: one bulk tool now, so the recon debrief says so.
+  it('the recon debrief names one bulk opt-out, the DAA\'s', () => {
+    const debrief = JSON.stringify(mission('ad_trackers-recon-understand').scoutDialog.debrief);
+    expect(debrief).not.toMatch(/bulk opt-out tools/);
+    expect(debrief).toContain('the DAA bulk opt-out');
+  });
   it('the checklist keeps the nai id but says it lights nothing', () => {
     const line = BROKER_CHECKLISTS['ad_trackers-fortify-bulk'].find((l) => l.id === 'nai');
     expect(line.label).toBe('NAI: GPC extension or member links');

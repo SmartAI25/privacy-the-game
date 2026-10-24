@@ -9,7 +9,7 @@ export const RESIDENCY = ['yes', 'no', 'unsaid'];
 
 // Scout's one-time lines on the field map (broker-scout.js): brokerMap.scout[key] is 1 once shown,
 // 0 while pending (its trigger fired on a visit that showed another line; ruling T3-b).
-export const MAP_SCOUT_KEYS = Object.freeze(['opened', 'firstHub', 'sweep', 'noOptOut', 'bigCheck']);
+export const MAP_SCOUT_KEYS = Object.freeze(['opened', 'sweep', 'firstHub', 'noOptOut', 'bigCheck']);
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
