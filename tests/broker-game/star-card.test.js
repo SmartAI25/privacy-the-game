@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { starCard, optOutHrefs, COMPLAINT_FORMS } from '../../src/components/star-card.js';
 import { nearestStar, nearestStarId, zoomView, VIEW_BOUNDS } from '../../src/utils/broker-view.js';
-import { screenToMap, isTap, panView, pinchView, wheelView, TAP_MAX_PX, TAP_MAX_MS } from '../../src/utils/map-gestures.js';
+import { screenToMap, isTap, isWidest, keepStarInView, panView, pinchView, wheelView, TAP_MAX_PX, MAX_W } from '../../src/utils/map-gestures.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
 import { renderBrokerMap } from '../../src/screens/broker-map.js';
 import { isPrivateBreadcrumb } from '../../src/utils/errorNoise.js';
@@ -68,12 +68,28 @@ describe('gesture math', () => {
     const p = screenToMap({ x: 0, y: 0, w: 100, h: 100 }, { left: 0, top: 0, width: 200, height: 400 }, 100, 200);
     expect(p).toEqual({ x: 50, y: 50 });
   });
-  it('a short, still press is a tap; a drag or a long press is not', () => {
+  it('a still press is a tap, however slow; a drag is not', () => {
     expect(isTap({ x: 0, y: 0, t: 0 }, { x: 5, y: 5, t: 120 })).toBe(true);
     expect(isTap({ x: 0, y: 0, t: 0 }, { x: TAP_MAX_PX, y: 0, t: 10 })).toBe(false);
-    expect(isTap({ x: 0, y: 0, t: 0 }, { x: 1, y: 0, t: TAP_MAX_MS })).toBe(false);
+    expect(isTap({ x: 0, y: 0, t: 0 }, { x: 1, y: 0, t: 2500 })).toBe(true); // a slow tap selects
     expect(isTap({ x: 0, y: 0, t: 0 }, { x: 1, y: 0, t: 10 }, 12)).toBe(false); // moved 12px on the way
     expect(isTap(null, { x: 0, y: 0, t: 0 })).toBe(false);
+  });
+  it('the widest view is the widest a pinch or zoom-out allows', () => {
+    expect(isWidest({ x: 0, y: -228.86, w: MAX_W, h: 1457.73 })).toBe(true);
+    expect(isWidest(pinchView(view, rect, [{ x: 16, y: 400 }, { x: 316, y: 400 }], [{ x: 160, y: 400 }, { x: 170, y: 400 }], VIEW_BOUNDS))).toBe(true);
+    expect(isWidest(view)).toBe(false);
+  });
+  it('the sheet keeps the selected star in the open sky above it', () => {
+    // Stage 100..700 on screen; the sheet covers from 400 down. A star at y 600 is hidden.
+    const v = keepStarInView(view, rect, { x: 166, y: 600 }, 100, 400, VIEW_BOUNDS);
+    const target = 100 + 300 * 0.4;
+    const star = screenToMap(view, rect, 166, 600);
+    expect(screenToMap(v, rect, 166, target).y).toBeCloseTo(star.y);
+    expect(v.x).toBe(view.x);
+    expect(keepStarInView(view, rect, { x: 166, y: 200 }, 100, 400, VIEW_BOUNDS)).toBeNull();
+    const side = keepStarInView(view, rect, { x: 20, y: 200 }, 100, 400, VIEW_BOUNDS);
+    expect(screenToMap(side, rect, 166, 200).x).toBeCloseTo(screenToMap(view, rect, 20, 200).x);
   });
   it('a one-finger pan moves the map with the finger', () => {
     const v = panView(view, rect, 30, -60, VIEW_BOUNDS);
@@ -146,6 +162,34 @@ describe('starCard', () => {
       expect(html).not.toContain('OPT OUT ↗');
       expect(html).toContain("We couldn't confirm their opt-out page");
     }
+  });
+  it('no verified record ever reads "couldn\'t confirm" (M7)', () => {
+    for (const b of map.brokers.filter((x) => x.optOut?.status === 'verified')) {
+      expect(starCard(map, l, b.id), b.id).not.toContain("couldn't confirm");
+    }
+  });
+  it('a verified http:// page is a link that says it is not secure (M7)', () => {
+    const html = starCard(map, l, 'netunim');
+    expect(html).toContain('<a href="http://www.countshark.net/grid_privacy/" target="_blank" rel="noopener noreferrer">OPT OUT ↗</a>');
+    expect(html).toContain("Their page isn't on a secure (https) link.");
+    expect(starCard(map, l, 'spokeo')).not.toContain('secure (https)');
+  });
+  it('a verified bare homepage is THEIR SITE, never OPT OUT (M7)', () => {
+    const bare = map.brokers.filter((b) => {
+      if (b.optOut?.status !== 'verified' || b.optOut.method === 'none') return false;
+      const u = new URL(b.optOut.url);
+      return (u.pathname === '' || u.pathname === '/') && !u.search && !u.hash;
+    });
+    expect(bare.length).toBeGreaterThan(100);
+    for (const b of bare) {
+      const html = starCard(map, l, b.id);
+      expect(html, b.id).not.toContain('OPT OUT ↗');
+      expect(html).toContain('THEIR SITE ↗');
+      expect(html).toContain('We haven\'t found a direct opt-out page. Look for "Do Not Sell" or "Privacy" on their site.');
+    }
+    const anchor = starCard(map, l, 'anchor-computer');
+    expect(anchor).toContain('THEIR SITE ↗');
+    expect(anchor).toContain("Their page isn't on a secure (https) link.");
   });
   it('shows a verified opt-out email as text', () => {
     const b = map.brokers.find((x) => x.optOut?.status === 'verified' && x.optOut.email && x.optOut.method !== 'none');
@@ -241,6 +285,13 @@ describe('the card on the map screen', () => {
       const ok = /^#\/(district\/reclamation|reclamation\/map|mission\/[^/]+\/(briefing|recheck))$/.test(h) || allowedExternal(h, spokeo);
       expect(ok, h).toBe(true);
     }
+  });
+  it('on a phone the card is a bottom sheet over the map, at most 60% of the screen, scrolling inside (M6)', () => {
+    const html = renderBrokerMap(fresh(), { status: 'ready', data, today: TODAY, selectedId: 'spokeo', stage: { w: 343, h: 600 } });
+    const phone = html.match(/@media \(max-width:899\.98px\)\{\.star-card\{([^}]*)\}/)?.[1] ?? '';
+    for (const rule of ['position:fixed', 'bottom:0', 'max-height:60svh', 'overflow-y:auto', 'overscroll-behavior:contain']) expect(phone).toContain(rule);
+    expect(html).toContain('<div class="star-card-grab" aria-hidden="true">');
+    expect(html).toContain('class="map-stage" tabindex="-1"');
   });
   it('no card without a selection', () => {
     const html = renderBrokerMap(fresh(), { status: 'ready', data, today: TODAY, stage: { w: 343, h: 600 } });

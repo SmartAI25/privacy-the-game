@@ -18,10 +18,22 @@ export const COMPLAINT_FORMS = Object.freeze([
 ]);
 
 const OPT_OUT_TEXT = 'OPT OUT ↗';
+const THEIR_SITE_TEXT = 'THEIR SITE ↗';
 
-// The opt-out hrefs a card shows (for the tests' "only verified" check).
+// An http(s) URL, or null.
+function parseUrl(url) {
+  if (typeof url !== 'string') return null;
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' || u.protocol === 'http:' ? u : null;
+  } catch {
+    return null;
+  }
+}
+
+// The opt-out (and their-site) hrefs a card shows (for the tests' "only verified" check).
 export function optOutHrefs(html) {
-  return [...String(html).matchAll(/<a href="([^"]*)"[^>]*>OPT OUT ↗<\/a>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
+  return [...String(html).matchAll(/<a href="([^"]*)"[^>]*>(?:OPT OUT|THEIR SITE) ↗<\/a>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
 }
 
 // Each link touching `id`, worded from this star's side.
@@ -66,11 +78,22 @@ function optOutBlock(b) {
     const forms = COMPLAINT_FORMS.map((f) => `<li>${ext(f.url, `${esc(f.label)} ↗`)}</li>`).join('');
     return `<p class="star-card-none">No opt-out exists.</p><p>What you can do instead: file a complaint, so it's on the record.</p><ul class="star-card-list">${forms}</ul>`;
   }
-  if (o.status === 'verified' && typeof o.url === 'string' && /^https:\/\//.test(o.url)) {
+  if (o.status === 'verified') {
+    // The checker vouched for this address (controller ruling M7): always a link, never "couldn't
+    // confirm". A bare homepage is their site, not an opt-out page; an http:// link says so.
+    const u = parseUrl(o.url);
     const email = typeof o.email === 'string' && o.email ? `<p>Or email ${esc(o.email)}</p>` : '';
-    return `<p class="star-card-go">${ext(o.url, OPT_OUT_TEXT)}</p>${email}`;
+    if (u) {
+      const bare = (u.pathname === '' || u.pathname === '/') && !u.search && !u.hash;
+      const insecure = u.protocol === 'http:' ? `<p class="star-card-note">Their page isn't on a secure (https) link.</p>` : '';
+      if (bare) {
+        return `<p class="star-card-go">${ext(o.url, THEIR_SITE_TEXT)}</p><p class="star-card-note">We haven't found a direct opt-out page. Look for "Do Not Sell" or "Privacy" on their site.</p>${insecure}${email}`;
+      }
+      return `<p class="star-card-go">${ext(o.url, OPT_OUT_TEXT)}</p>${insecure}${email}`;
+    }
+    if (email) return `<p>Opt out by email: ${esc(o.email)}</p>`;
+    return `<p>We don't know an opt-out route for this one yet.</p>`;
   }
-  if (o.status === 'verified' && typeof o.email === 'string' && o.email) return `<p>Opt out by email: ${esc(o.email)}</p>`;
   const day = typeof o.verifiedAt === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(o.verifiedAt) ? o.verifiedAt : null;
   return day
     ? `<p>We couldn't confirm their opt-out page when we last checked (${day}).</p>`
@@ -132,6 +155,7 @@ export function starCard(map, lighting, id, state = null) {
   const halo = Array.isArray(lighting?.halo) && lighting.halo.includes(id)
     ? '<p class="star-card-note">You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.</p>' : '';
   return `<section class="star-card" tabindex="-1">`
+    + '<div class="star-card-grab" aria-hidden="true"><span></span></div>'
     + `<h2 class="star-card-name">${esc(short)}</h2>`
     + (full && full !== short ? `<p class="star-card-full">${esc(full)}</p>` : '')
     + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')

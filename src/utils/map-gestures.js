@@ -4,7 +4,6 @@
 import { zoomViewBox } from './broker-view.js';
 
 export const TAP_MAX_PX = 8; // a press that moves this far is a drag, never a tap
-export const TAP_MAX_MS = 300;
 export const MIN_W = 100;
 export const MAX_W = 1000;
 const WHEEL_RATE = 0.002; // per wheel delta pixel: one ordinary notch (100) is about 1.22×
@@ -30,12 +29,31 @@ export function screenToMap(view, rect, sx, sy) {
   return { x: v.x + (sx - ox) / s, y: v.y + (sy - oy) / s };
 }
 
-// A press is a tap when it ends quickly, close to where it started, and never wandered further
-// (`maxMoved`, the furthest it got from the start, in px). A drag never selects.
+// A press is a tap when it ends close to where it started and never wandered further (`maxMoved`,
+// the furthest it got from the start, in px), however long it was held: a slow tap still selects.
+// A drag never selects.
 export function isTap(start, end, maxMoved = 0) {
   if (!start || !end) return false;
   const moved = Math.max(Math.hypot(end.x - start.x, end.y - start.y), fin(maxMoved, 0));
-  return moved < TAP_MAX_PX && end.t - start.t < TAP_MAX_MS;
+  return moved < TAP_MAX_PX;
+}
+
+// Whether the view is as wide as this screen allows (a miss there zooms in).
+export const isWidest = (view) => fin(view?.w, 0) >= MAX_W - 1e-6;
+
+const KEEP_MARGIN = 24;
+
+// While the phone's card sheet covers the bottom of the stage, the selected star stays in the
+// sky above it: if the star's screen point is outside [visTop, visBottom] (plus a margin) or off
+// the stage's sides, pan so it sits 40% of the way down the open sky. null when it already shows.
+export function keepStarInView(view, rect, star, visTop, visBottom, bounds = {}) {
+  if (!star || !(visBottom - visTop > 2 * KEEP_MARGIN)) return null;
+  const okY = star.y >= visTop + KEEP_MARGIN && star.y <= visBottom - KEEP_MARGIN;
+  const okX = star.x >= rect.left + KEEP_MARGIN && star.x <= rect.left + rect.width - KEEP_MARGIN;
+  if (okX && okY) return null;
+  const dx = okX ? 0 : rect.left + rect.width / 2 - star.x;
+  const dy = okY ? 0 : visTop + (visBottom - visTop) * 0.4 - star.y;
+  return panView(view, rect, dx, dy, bounds);
 }
 
 // The box at (nx, ny) of nw × nh, clamped to the bounds (factor 1: no zoom, just the clamp).
