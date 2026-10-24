@@ -623,8 +623,10 @@ function bigCheckChange(e) {
   setState(setBigCheck(state, id, box.checked, localDay()));
   const screen = parseRoute(location.hash).screen;
   if (screen === 'big-check') {
-    const count = box.closest('details')?.querySelector('[data-big-check-count]');
-    if (count) count.textContent = String(Math.max(0, Number(count.textContent) + (box.checked ? 1 : -1)));
+    // Recounted from the boxes: only rows without a mission count (a stale mission-row tick doesn't).
+    const details = box.closest('details');
+    const count = details?.querySelector('[data-big-check-count]');
+    if (count) count.textContent = String(details.querySelectorAll('.big-check-row:not(.big-check-row-mission) [data-big-check]:checked').length);
   } else if (screen === 'broker-map') {
     // The re-draw builds a new card: keep the sheet where it was, so the tapped box stays in view.
     const scrollTop = app.querySelector('.star-card')?.scrollTop ?? 0;
@@ -636,10 +638,21 @@ function bigCheckChange(e) {
 }
 
 // The Big Check's filter hides rows in place (nothing is re-drawn, nothing leaves the page). While
-// it holds a query, groups with a match open; clearing it puts each group back as it was.
+// it holds a query, groups with a match open; clearing it puts each group back as it was. The work
+// runs in an animation frame, one pending at a time, so fast typing over ~950 rows lays out once
+// per frame; the frame reads the input's value then, so the last keystroke always wins.
+let filterFrame = 0;
 function bigCheckFilter(e) {
   const input = e.target;
   if (!(input instanceof HTMLInputElement) || !input.matches('[data-big-check-filter]')) return;
+  if (filterFrame) return;
+  filterFrame = requestAnimationFrame(() => {
+    filterFrame = 0;
+    if (input.isConnected) applyBigCheckFilter(input);
+  });
+}
+
+function applyBigCheckFilter(input) {
   const screen = input.closest('.big-check');
   if (!screen) return;
   const query = input.value;

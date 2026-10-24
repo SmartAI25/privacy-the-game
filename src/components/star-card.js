@@ -7,7 +7,7 @@
 // title attribute (Sentry selectors carry those); the card's class `star-card` is in PRIVATE_UI.
 import { shortName } from '../utils/broker-view.js';
 import { MISSIONS } from '../data/missions.js';
-import { tickable } from '../utils/big-check.js';
+import { tickable, litElsewhere } from '../utils/big-check.js';
 import { smallScout } from './scout.js';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -155,19 +155,29 @@ function coverageBlock(b, state) {
   return `<div class="label">COVERED BY</div><ul class="star-card-list">${items}</ul>`;
 }
 
-// The tick's look, shared by the map's STYLE and the Big Check's: a 44px row, a 24px box.
-export const TICK_CSS = '.big-check-tick{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;color:var(--offwhite);cursor:pointer}.big-check-tick input{width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--lime);cursor:pointer}.big-check-tick input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}';
+// The tick's look, shared by the map's STYLE and the Big Check's: a 44px row, a 24px box. `.vh`
+// is visually hidden text a screen reader still reads (the tick's broker name).
+export const TICK_CSS = '.big-check-tick{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;color:var(--offwhite);cursor:pointer}.big-check-tick input{width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--lime);cursor:pointer}.big-check-tick input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.big-check-freeze{font-size:12px;color:rgba(237,239,243,0.75);margin:0 0 4px}.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0}';
 
-// The Big Check's tick: "I filed with them", for a broker no mission covers. The id rides in
-// data-big-check (error-report selectors leave data attributes out), never in an id or name.
-export function bigCheckTick(id, ticked) {
-  return `<label class="big-check-tick"><input type="checkbox" data-big-check="${esc(id)}"${ticked ? ' checked' : ''}> I filed with them</label>`;
+const FREEZE_NOTE = "A freeze isn't an opt-out: tick this only if you used their opt-out.";
+
+// The Big Check's tick: "I filed with them", for a broker no mission covers (or one ticked before
+// a mission covered it, so it can be unticked). The id rides in data-big-check (error-report
+// selectors leave data attributes out), never in an id or name; the broker's name is visually
+// hidden text in the label (text never reaches a selector), so each box has its own name.
+export function bigCheckTick(id, ticked, name = id, { frozen = false } = {}) {
+  const note = frozen ? `<p class="big-check-freeze">${esc(FREEZE_NOTE)}</p>` : '';
+  return `${note}<label class="big-check-tick"><input type="checkbox" data-big-check="${esc(id)}"${ticked ? ' checked' : ''}> I filed with them<span class="vh"> (${esc(name)})</span></label>`;
 }
 
-function tickBlock(b, star) {
-  if (!tickable(b)) return '';
+// A box is offered where the Big Check would list the broker: tickable and not lit by anything
+// else (litElsewhere, the Big Check's own rule). A box already ticked always shows, so it can be
+// unticked, even when a mission or another filing now covers the broker.
+function tickBlock(b, star, lighting) {
   const ticked = Array.isArray(star?.via) && star.via.includes('big-check');
-  return `<div class="label">THE BIG CHECK</div>${bigCheckTick(b.id, ticked)}`;
+  if (!ticked && (!tickable(b) || litElsewhere(star))) return '';
+  const frozen = Array.isArray(lighting?.frozen) && lighting.frozen.includes(b.id);
+  return `<div class="label">THE BIG CHECK</div>${bigCheckTick(b.id, ticked, shortName(b.name ?? b.id) || b.id, { frozen })}`;
 }
 
 const STATE_LINE = {
@@ -205,7 +215,7 @@ export function starCard(map, lighting, id, state = null, { scoutLine = null } =
     + linksBlock(map, id, byId)
     + sourcesBlock(b)
     + coverageBlock(b, state)
-    + tickBlock(b, star)
+    + tickBlock(b, star, lighting)
     + '<button type="button" class="star-card-close" data-action="close-star">CLOSE</button>'
     + '</section>';
 }

@@ -57,17 +57,23 @@ function missionLine(id, state) {
 }
 
 function rowHtml(r, b, map, byId, state) {
-  // A tick from before a dataset release put this broker in a mission stays recorded (and lit).
+  // A tick from before a dataset release put this broker in a mission stays recorded (and lit),
+  // and its box stays beside the mission link so it can be unticked. A mission row counts for
+  // nothing in its group's count (class big-check-row-mission; app.js's live count skips it).
   const action = r.mission
-    ? `${missionLine(r.mission, state)}${r.ticked ? '<p class="big-check-ticked">You ticked this one.</p>' : ''}`
-    : bigCheckTick(r.id, r.ticked);
-  return `<li class="big-check-row"><p class="big-check-name">${esc(r.name)}</p>${optOutBlock(b)}${ownedRoutesBlock(map, b, byId)}${action}</li>`;
+    ? `${missionLine(r.mission, state)}${r.ticked ? bigCheckTick(r.id, true, r.name, { frozen: r.frozen }) : ''}`
+    : bigCheckTick(r.id, r.ticked, r.name, { frozen: r.frozen });
+  return `<li class="big-check-row${r.mission ? ' big-check-row-mission' : ''}"><p class="big-check-name">${esc(r.name)}</p>${optOutBlock(b)}${ownedRoutesBlock(map, b, byId)}${action}</li>`;
 }
 
+// "<label> · <ticked>/<tickable>": only rows with a box of their own (no mission) count, so a
+// completionist can reach N/N. A group with nothing to tick shows just its label.
 function groupHtml(g, map, byId, state) {
-  const ticked = g.rows.filter((r) => r.ticked).length;
+  const own = g.rows.filter((r) => !r.mission);
+  const ticked = own.filter((r) => r.ticked).length;
+  const count = own.length ? ` · <span data-big-check-count>${ticked}</span>/${own.length}` : '';
   const rows = g.rows.map((r) => rowHtml(r, byId.get(r.id), map, byId, state)).join('');
-  return `<details><summary>${esc(g.label)} · <span data-big-check-count>${ticked}</span>/${g.rows.length}</summary><ul class="big-check-rows">${rows}</ul></details>`;
+  return `<details><summary>${esc(g.label)}${count}</summary><ul class="big-check-rows">${rows}</ul></details>`;
 }
 
 // Scout's first-visit line, in a bubble that looks like the map's (its own class: in the page's flow).

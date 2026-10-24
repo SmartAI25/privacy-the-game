@@ -34,8 +34,9 @@ export function tickable(b) {
   return isObj(b) && !isBuyer(b) && b.optOut?.method !== 'none' && coveringMission(b) === null;
 }
 
-// Lit by something other than a Big Check tick (a checklist line, a legacy filing, DROP).
-function litElsewhere(star) {
+// Lit by something other than a Big Check tick (a checklist line, a legacy filing, DROP). The
+// Big Check leaves these rows out, and the star card offers no unticked box on them.
+export function litElsewhere(star) {
   if (star?.state !== 'lit' && star?.state !== 'amber') return false;
   return (Array.isArray(star.via) ? star.via : []).some((v) => v !== 'big-check');
 }
@@ -45,6 +46,7 @@ const byName = (a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base
 export function bigCheckGroups(map, lighting) {
   const brokers = (Array.isArray(map?.brokers) ? map.brokers : []).filter((b) => isObj(b) && typeof b.id === 'string');
   const buckets = new Map(BIG_CHECK_GROUPS.map(([kind]) => [kind, []]));
+  const frozen = new Set(Array.isArray(lighting?.frozen) ? lighting.frozen : []);
   for (const b of brokers) {
     if (isBuyer(b) || b.optOut?.method === 'none') continue;
     const star = lighting?.stars?.[b.id];
@@ -56,6 +58,7 @@ export function bigCheckGroups(map, lighting) {
       name: shortName(b.name ?? b.id) || b.id,
       mission: coveringMission(b),
       ticked: Array.isArray(star?.via) && star.via.includes('big-check'),
+      frozen: frozen.has(b.id),
     });
   }
   return BIG_CHECK_GROUPS
