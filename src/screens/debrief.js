@@ -9,6 +9,7 @@ import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
 import { twoFactorMethod, CODE_METHODS } from '../utils/two-factor.js';
 import { scoutSprite } from '../components/scout.js';
+import { splitWords } from '../components/deck.js';
 import { renderBrokerChecklist } from '../components/broker-checklist.js';
 import { checklistFor } from '../data/broker-checklists.js';
 import { isChecklistPending } from '../utils/broker-lighting.js';
@@ -229,6 +230,15 @@ function mostSevere(mission, stored, values) {
   return values.reduce((best, v) => (best === undefined || rank(v) > rank(best) ? v : best), undefined);
 }
 
+// The briefing already said this line. Said again here, only its first
+// sentence shows; the rest waits behind "Remind me". Any other line is as it is.
+export function scoutLineOnce(line, briefingLine) {
+  if (!line || line !== briefingLine) return line;
+  const [first, ...rest] = splitWords(line, 1);
+  if (!rest.length) return line;
+  return `${first.trim()} <details class="scout-remind"><summary>Remind me</summary>${rest.join('').trim()}</details>`;
+}
+
 // Scout's reaction to a filed report: the line, the feeling, and any progress
 // check-in. Shown on the debrief when reopened, and on the screen the player
 // lands on right after SUBMIT REPORT. null unless the mission is completed.
@@ -344,7 +354,7 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
         </div>
         <div style="background: rgba(26,31,43,0.7); border: 1px solid rgba(0,229,255,0.15); padding: 12px 16px; flex: 1;">
           <div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.6;">${completed ? 'Report filed. Good work, agent.' : recheck ? 'Still true? Confirm each answer, or change it.' : 'Welcome back, agent. What did you find?'}</div>
-          <div style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLine}</div>
+          <div data-scout-line style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLineOnce(scoutLine, mission.scoutDialog?.briefing)}</div>
         </div>
       </div>
       ${questions}

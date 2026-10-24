@@ -347,6 +347,17 @@ img { image-rendering: pixelated; }
 .intro-more-toggle::before { content: 'MORE ▾'; }
 .intro-more[open] .intro-more-toggle::before { content: 'LESS ▴'; }
 
+/* Debrief / re-check: the briefing's Scout line again, first sentence then "Remind me".
+   At 900px and up the whole line shows, as it always did. */
+.scout-remind { display: inline; }
+.scout-remind > summary { display: inline-block; min-height: 44px; line-height: 44px; padding: 0 4px; cursor: pointer; font-family: var(--font-display); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); }
+@media (min-width: 900px) {
+  @supports selector(::details-content) {
+    .scout-remind > summary { display: none; }
+    .scout-remind::details-content { content-visibility: visible; display: contents; }
+  }
+}
+
 /* deck: start */
 /* A slide deck for phones (src/components/deck.js): a scroll-snap row under 900px,
    ordinary stacked blocks at 900px and up. */
