@@ -609,3 +609,47 @@ img { image-rendering: pixelated; }
   .saint-story > summary, .entry-fold > summary { display: none; }
 }
 /* interiors slides: end */
+
+/* trim pass: start */
+/* Fewer words on a phone's first screen (Task 7a). Under 900px some text waits behind a tap or
+   on a later slide; at 900px and up every screen looks as it always did.
+   .phone-only / .desktop-only: two drawings of the same thing, one shown at each width (a screen
+   reader meets one, as the records desk does). */
+@media (max-width: 899px) { .desktop-only { display: none !important; } }
+@media (min-width: 900px) { .phone-only { display: none !important; } }
+/* .phone-fold: a <details data-open-desktop> closed on a phone, open from 900px by script with
+   its summary hidden, so desktop shows the text where it always was. */
+.phone-fold > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.phone-fold > summary::-webkit-details-marker { display: none; }
+.phone-fold > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.phone-fold > summary::after { content: ' ▾'; white-space: pre; }
+.phone-fold[open] > summary::after { content: ' ▴'; }
+.phone-fold[open] > summary { margin-bottom: 8px; }
+/* .more-fold + .more-fold-text: the text sits right after the <details>, not in it, so on desktop
+   it flows on in the same paragraph (as the city explainer's list does). */
+.more-fold { display: inline; }
+.more-fold > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; margin-left: 4px; cursor: pointer; list-style: none; font-family: var(--font-display); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); vertical-align: middle; }
+.more-fold > summary::-webkit-details-marker { display: none; }
+.more-fold > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.more-fold:not([open]) + .more-fold-text { display: none; }
+.more-fold[open] + .more-fold-text { display: block; margin-top: 8px; }
+/* A Scout line split into slides: from 900px the slides flow as one paragraph again. */
+@media (min-width: 900px) {
+  .phone-fold > summary, .more-fold { display: none; }
+  .phone-fold[open] > summary { margin-bottom: 0; }
+  .more-fold:not([open]) + .more-fold-text, .more-fold[open] + .more-fold-text { display: inline; margin-top: 0; }
+  .deck.deck--flow, .deck--flow > .slide { display: inline; }
+}
+/* Quick Quest on a phone: four tiles a slide, two columns. */
+.qq-grid { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; }
+.qq-tile { position: relative; display: flex; flex-direction: column; min-width: 0; background: rgba(26,31,43,0.6); border: 1px solid rgba(0,229,255,0.15); }
+.qq-go { display: block; min-height: 44px; padding: 12px 44px 12px 12px; font-family: var(--font-display); font-size: 12px; font-weight: 700; line-height: 1.35; letter-spacing: 0.5px; color: var(--offwhite); text-decoration: none; overflow-wrap: anywhere; }
+.qq-go:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+.qq-signs { padding: 0 12px; }
+.qq-signs > summary { position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; cursor: pointer; list-style: none; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--cyan); }
+.qq-signs > summary::-webkit-details-marker { display: none; }
+.qq-signs > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: -4px; }
+.qq-signs[open] { padding-bottom: 12px; }
+.qq-badge { display: inline-block; font-size: 8px; letter-spacing: 1px; color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.15); }
+.qq-desc { margin-top: 6px; font-size: 12px; line-height: 1.5; color: rgba(237,239,243,0.6); }
+/* trim pass: end */
