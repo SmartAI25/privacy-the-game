@@ -223,3 +223,10 @@ describe('the Social Timeline and the broker checklist: the rest behind a tap on
     }
   });
 });
+
+describe('saints: the candle note behind a tap on a phone', async () => {
+  const { renderSaints } = await import('../src/screens/saints.js');
+  it('a fold, open on desktop, holding the note word for word', () => {
+    expect(renderSaints(createInitialState())).toMatch(/<details class="phone-fold" data-fold="saints-candles" data-open-desktop><summary>About candles<\/summary><div class="dim interior-note">Candles stay on this phone\. Nothing here is sent anywhere\.<\/div><\/details>/);
+  });
+});

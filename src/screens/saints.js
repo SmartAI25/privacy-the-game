@@ -62,7 +62,7 @@ export function renderSaints(state, { from = null } = {}) {
       ${backLink(state, from)}
       <div class="interior-title">SAINTS</div>
       <div class="interior-sub">People whose work made this map knowable</div>
-      <div class="dim interior-note">Candles stay on this phone. Nothing here is sent anywhere.</div>
+      <details class="phone-fold" data-fold="saints-candles" data-open-desktop><summary>About candles</summary><div class="dim interior-note">Candles stay on this phone. Nothing here is sent anywhere.</div></details>
       ${deck(saints.map((s) => ({ html: card(state, s) })), { label: 'Saints', className: 'saints-deck', names: saints.map((s) => s.name) })}
     </div>
   </div>`;
