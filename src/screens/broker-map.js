@@ -91,6 +91,8 @@ const LEGEND = [
   [swatch('<circle cx="9" cy="9" r="3" fill="#3a4256"/><circle cx="9" cy="9" r="6.5" fill="none" stroke="#00E5FF" stroke-width="1.2" stroke-dasharray="2 2"/>'), 'Credit frozen (still sells data)'],
   [swatch('<circle cx="9" cy="9" r="8" fill="#EDEFF3" opacity="0.25"/><circle cx="9" cy="9" r="3" fill="#3a4256"/>'), 'Opted out in this browser only', 'sweeps'],
   [swatch('<rect x="5" y="5" width="8" height="8" fill="none" stroke="#8a93a6" stroke-width="1.4" transform="rotate(45 9 9)"/>'), 'Buyers'],
+  [swatch('<line x1="2" y1="14" x2="16" y2="4" stroke="#00E5FF" stroke-width="1.4" opacity=".6"/>'), 'A documented business link'],
+  [swatch('<line x1="2" y1="12" x2="9" y2="6" stroke="#EDEFF3" stroke-width=".8" opacity=".45"/><line x1="9" y1="6" x2="16" y2="9" stroke="#EDEFF3" stroke-width=".8" opacity=".45"/><circle cx="9" cy="6" r="1.4" fill="#3a4256"/>'), 'Constellation: same kind of company, not a deal'],
 ];
 
 // The zoom buttons' corner, in CSS px (44px buttons, 8px inset, gaps): labels keep clear of it.

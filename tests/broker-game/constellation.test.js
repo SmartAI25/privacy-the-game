@@ -86,6 +86,36 @@ describe('shortName', () => {
 });
 
 describe('constellationSvg', () => {
+  it('draws the layout\'s constellation figures and names, distinct from documented links', () => {
+    const lit = brokerLighting(realMap, {}, '2026-10-24');
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: lit, px: 343 });
+    expect((s.match(/<line class="figure"/g) ?? []).length).toBe(realLayout.figures.length);
+    const shown = [...s.matchAll(/<text class="const-name"[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]);
+    expect(shown.length).toBeGreaterThan(0);
+    for (const t of shown) expect(realLayout.names.map((m) => m[0].toUpperCase())).toContain(t);
+    // Figures are drawn under the links and never share their class.
+    expect(s.indexOf('<g class="figures">')).toBeLessThan(s.indexOf('<g class="links">'));
+    expect(s).not.toMatch(/class="figure link|class="link figure/);
+  });
+
+  it('a constellation name shows only whole, in view, and clear of the names before it and of labels', () => {
+    const brokers = [{ id: 'h', name: 'Hubco', hub: true, reach: 9 }];
+    const lay = { stars: [['h', 500, 500, 8]], names: [['Location', 300, 300], ['Health', 305, 302], ['Edge', 2, 300], ['Under', 515, 497]] };
+    const s = constellationSvg({ map: { brokers, links: [] }, layout: lay, lighting: { stars: {} }, view: { x: 0, y: 0, w: 1000 }, px: 1000 });
+    const shown = [...s.matchAll(/<text class="const-name"[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]);
+    expect(shown).toEqual(['LOCATION']); // HEALTH overlaps it, EDGE is cut off, UNDER sits on the hub's name
+    expect(s).toMatch(/class="hub-label"[^>]*>Hubco</);
+  });
+
+  it('a figure glows only when both of its stars are lit', () => {
+    const brokers = [{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }, { id: 'c', name: 'C' }];
+    const lay = { stars: [['a', 100, 100, 2], ['b', 120, 100, 2], ['c', 140, 100, 2]], figures: [[0, 1], [1, 2]] };
+    const lit = { stars: { a: { state: 'lit' }, b: { state: 'lit' } } };
+    const s = constellationSvg({ map: { brokers, links: [] }, layout: lay, lighting: lit, px: 343 });
+    expect((s.match(/class="figure figure--lit"/g) ?? []).length).toBe(1);
+    expect((s.match(/class="figure"/g) ?? []).length).toBe(1);
+  });
+
   it('labels keep their clearance across zoomed views of the real sky; only a hub falls back to tight', () => {
     const grow = (b, d) => ({ left: b.left - d, right: b.right + d, top: b.top - d, bottom: b.bottom + d });
     for (const w of [1000, 400, 200]) {

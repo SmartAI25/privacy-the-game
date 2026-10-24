@@ -10,9 +10,13 @@ const SIZE = 1000;
 const C = SIZE / 2;
 const RIM = 470; // buyers
 const INNER = 330; // linked non-buyers
-const OUTER_MIN = 350; // unlinked non-buyers fill 350..440
-const OUTER_SPAN = 90;
-const GOLDEN = 2.39996;
+// Liz (2026-10-24): "the stars are a ring instead of like... constellations". The unlinked crowd is cut
+// into small constellations of one kind each, scattered over the whole sky between the hubs.
+const SKY_R = 440; // constellation centres and stars stay inside this radius (buyers sit at RIM)
+const ASTERISM_MAX = 13; // stars per constellation, at most
+const STAR_GAP = 9; // no two crowd stars closer than this
+const CLEAR_OF_LINKED = 24; // crowd stars keep this far from any linked star
+const CLEAR_OF_HUB = 62; // and this far from a hub (its nebula)
 const SEED = 20261018;
 const ITERATIONS = 400;
 const T_START = 60;
@@ -30,8 +34,12 @@ const NEBULA_DIST = 60; // rest length of that spring
 const HUB_LIMIT = 230; // hubs stay inside this radius so their nebula fits inside INNER
 const GRAVITY = 0.25; // pull of each non-hub toward the centre, per unit distance
 const CROWD_SEED = SEED + 1;
-const CROWD_ANGLE_JITTER = 0.5; // radians, full width
-const CROWD_RADIUS_JITTER = 0.3; // in sqrt-area units, full width
+// The constellation each kind is named for on the map (the Big Check's group names).
+export const KIND_NAMES = Object.freeze({
+  'people-search': 'People search', marketing: 'Marketing', 'risk-identity': 'Risk and identity', location: 'Location',
+  financial: 'Financial', health: 'Health', automotive: 'Automotive', 'identity-resolution': 'Identity resolution',
+  'data-marketplace': 'Data marketplaces', 'ad-network': 'Ad networks',
+});
 
 const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 const round1 = (n) => Math.round(n * 10) / 10 + 0; // + 0 turns -0 into 0
@@ -68,16 +76,7 @@ export function computeLayout(map, sizeKnown) {
     pos.set(b.id, { x: C + RIM * Math.cos(a), y: C + RIM * Math.sin(a) });
   });
 
-  // Unlinked non-buyers in the outer annulus: a golden-angle spiral in id order, jittered in angle and
-  // radius by a seeded PRNG so the crowd reads as a nebula, not a grid.
   const unlinked = brokers.filter((b) => !isBuyer(b) && !linkedIds.has(b.id));
-  const crowdRand = mulberry32(CROWD_SEED);
-  unlinked.forEach((b, i) => {
-    const a = i * GOLDEN + (crowdRand() - 0.5) * CROWD_ANGLE_JITTER;
-    const u = Math.min(1, Math.max(0, (i + 0.5) / unlinked.length + (crowdRand() - 0.5) * CROWD_RADIUS_JITTER));
-    const r = OUTER_MIN + OUTER_SPAN * Math.sqrt(u);
-    pos.set(b.id, { x: C + r * Math.cos(a), y: C + r * Math.sin(a) });
-  });
 
   // Linked non-buyers by Fruchterman-Reingold inside INNER, buyers as fixed anchors.
   const movers = brokers.filter((b) => !isBuyer(b) && linkedIds.has(b.id));
@@ -213,11 +212,129 @@ export function computeLayout(map, sizeKnown) {
     }
   }
 
+  const { figures, names } = placeConstellations(unlinked, pos, movers, mulberry32(CROWD_SEED));
+
   const stars = brokers.map((b) => {
     const p = pos.get(b.id);
     return [b.id, round1(p.x), round1(p.y), round1(starRadius(b.reach, sizeKnown.has(b.id)))];
   });
-  return { formatVersion: FORMAT_VERSION, asOf: map.asOf, size: SIZE, stars };
+  const index = new Map(brokers.map((b, i) => [b.id, i]));
+  return {
+    formatVersion: FORMAT_VERSION, asOf: map.asOf, size: SIZE, stars,
+    // Constellation lines: [i, j] star indices, same kind of company, not a documented link.
+    figures: figures.map(([a, b]) => [index.get(a), index.get(b)]).sort((x, y) => x[0] - y[0] || x[1] - y[1]),
+    // Constellation names: [label, x, y].
+    names: names.map(([l, x, y]) => [l, round1(x), round1(y)]),
+  };
+}
+
+
+// Cut the unlinked crowd into constellations of one kind (at most ASTERISM_MAX stars), scatter their
+// centres over the open sky, and join each constellation's stars by a minimum spanning tree (its
+// figure). Same-kind constellations sit near each other, and each named kind gets one name.
+function placeConstellations(unlinked, pos, movers, rand) {
+  const byKind = new Map();
+  for (const b of unlinked) {
+    const k = b.kind[0] ?? '';
+    if (!byKind.has(k)) byKind.set(k, []);
+    byKind.get(k).push(b);
+  }
+  const kinds = [...byKind.keys()].sort((a, b) => (a === '') - (b === '') || cmp(a, b));
+  const chunksOf = (k) => {
+    const list = byKind.get(k);
+    const n = Math.ceil(list.length / ASTERISM_MAX);
+    return Array.from({ length: n }, (_, i) => ({ kind: k, members: list.filter((_, j) => j % n === i) }));
+  };
+  // Named kinds spread round the sky: each followed by an even share of the unnamed constellations,
+  // so the walk below doesn't bunch every name in one corner.
+  const namedKinds = kinds.filter((k) => k !== '');
+  const unnamed = byKind.has('') ? chunksOf('') : [];
+  const chunks = [];
+  namedKinds.forEach((k, i) => {
+    chunks.push(...chunksOf(k));
+    const from = Math.round((unnamed.length * i) / Math.max(1, namedKinds.length));
+    const to = Math.round((unnamed.length * (i + 1)) / Math.max(1, namedKinds.length));
+    chunks.push(...unnamed.slice(from, to));
+  });
+  if (!namedKinds.length) chunks.push(...unnamed);
+  if (!chunks.length) return { figures: [], names: [] };
+
+  const fixed = movers.map((b) => ({ ...pos.get(b.id), hub: b.hub === true }));
+  const open = (x, y, clear = 1) => Math.hypot(x - C, y - C) <= SKY_R
+    && fixed.every((f) => Math.hypot(f.x - x, f.y - y) >= (f.hub ? CLEAR_OF_HUB : CLEAR_OF_LINKED) * clear);
+
+  // Centres: dart throwing over the open sky, the spacing shrinking until every constellation has one.
+  let gap = 2 * Math.sqrt((Math.PI * SKY_R * SKY_R) / chunks.length / Math.PI);
+  let centres = [];
+  while (centres.length < chunks.length && gap > 10) {
+    centres = [];
+    for (let tries = 0; tries < 20000 && centres.length < chunks.length; tries++) {
+      const x = C + (rand() * 2 - 1) * SKY_R, y = C + (rand() * 2 - 1) * SKY_R;
+      if (!open(x, y, 1.6)) continue;
+      if (centres.every((c) => Math.hypot(c.x - x, c.y - y) >= gap)) centres.push({ x, y });
+    }
+    gap *= 0.94;
+  }
+  // Same-kind constellations side by side: walk the centres nearest-first from the topmost.
+  const order = [];
+  const left = [...centres];
+  let at = left.reduce((best, c) => (c.y < best.y ? c : best), left[0]);
+  while (left.length) {
+    left.sort((a, b) => Math.hypot(a.x - at.x, a.y - at.y) - Math.hypot(b.x - at.x, b.y - at.y));
+    at = left.shift();
+    order.push(at);
+  }
+
+  const placed = [];
+  const figures = [];
+  const named = new Map();
+  chunks.forEach((chunk, ci) => {
+    const centre = order[ci] ?? { x: C, y: C };
+    const spread = 8 + 5.5 * Math.sqrt(chunk.members.length);
+    const pts = [];
+    for (const b of chunk.members) {
+      let p = null;
+      for (let t = 0; t < 400 && !p; t++) {
+        const a = 2 * Math.PI * rand(), r = spread * Math.sqrt(rand()) * (1 + t / 200);
+        const x = centre.x + r * Math.cos(a), y = centre.y + r * Math.sin(a);
+        if (open(x, y) && placed.every((q) => Math.hypot(q.x - x, q.y - y) >= STAR_GAP)) p = { x, y };
+      }
+      if (!p) p = { x: centre.x + (rand() - 0.5) * spread, y: centre.y + (rand() - 0.5) * spread };
+      pos.set(b.id, p);
+      placed.push(p);
+      pts.push({ id: b.id, ...p });
+    }
+    // Prim's minimum spanning tree: the constellation's figure.
+    const inTree = [pts[0]];
+    const rest = pts.slice(1);
+    while (rest.length) {
+      let best = null;
+      for (const a of inTree) for (const b of rest) {
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (!best || d < best.d) best = { a, b, d };
+      }
+      figures.push(cmp(best.a.id, best.b.id) < 0 ? [best.a.id, best.b.id] : [best.b.id, best.a.id]);
+      inTree.push(best.b);
+      rest.splice(rest.indexOf(best.b), 1);
+    }
+    if (chunk.kind && KIND_NAMES[chunk.kind]) {
+      if (!named.has(chunk.kind)) named.set(chunk.kind, []);
+      named.get(chunk.kind).push(...pts);
+    }
+  });
+  // One name per kind, just above its first constellation.
+  const names = [];
+  // Biggest kinds first: when names crowd, the map keeps theirs.
+  for (const k of [...kinds].sort((a, b) => byKind.get(b).length - byKind.get(a).length || cmp(a, b))) {
+    const pts = named.get(k);
+    if (!pts) continue;
+    const first = pts.slice(0, Math.min(pts.length, ASTERISM_MAX));
+    // Kept in from the sky's edge so a long name isn't cut off.
+    const x = Math.min(C + SKY_R - 70, Math.max(C - SKY_R + 70, first.reduce((s, p) => s + p.x, 0) / first.length));
+    const y = Math.min(...first.map((p) => p.y)) - 14;
+    names.push([KIND_NAMES[k], x, y]);
+  }
+  return { figures, names };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

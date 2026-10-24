@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { computeLayout } from '../../research/data-brokers/build/layout.js';
+import { computeLayout, KIND_NAMES } from '../../research/data-brokers/build/layout.js';
 
 const root = join(import.meta.dirname, '../..');
 const map = JSON.parse(readFileSync(join(root, 'src/data/broker-map.json'), 'utf8'));
@@ -56,13 +56,62 @@ describe('computeLayout', () => {
     expect(y).toBeCloseTo(30, 0);
   });
 
-  it('unlinked brokers sit in the outer annulus', () => {
-    const unlinked = pick((b) => !isBuyer(b) && !linked.has(b.id));
-    expect(unlinked.length).toBeGreaterThan(0);
-    for (const s of unlinked) {
-      expect(dist(s)).toBeGreaterThanOrEqual(349.5);
-      expect(dist(s)).toBeLessThanOrEqual(440.5);
-    }
+  describe('the crowd as constellations (Liz 2026-10-24: "a ring instead of like... constellations")', () => {
+    const crowd = map.brokers.filter((b) => !isBuyer(b) && !linked.has(b.id));
+    const idx = new Map(out.stars.map((s, i) => [s[0], i]));
+    const kindOf = new Map(map.brokers.map((b) => [b.id, b.kind[0] ?? '']));
+
+    it('is not a ring: crowd stars spread across the sky, a fifth or more inside r < 330', () => {
+      const ds = crowd.map((b) => dist(byId.get(b.id)));
+      for (const d of ds) expect(d).toBeLessThanOrEqual(440.5);
+      // The old ring had none in here; the centre is mostly hubs and their linked stars.
+      expect(ds.filter((d) => d < 330).length / ds.length).toBeGreaterThan(0.2);
+    });
+
+    it('no two crowd stars sit closer than the star gap, and none on a hub', () => {
+      const hubs = map.brokers.filter((b) => b.hub).map((b) => byId.get(b.id));
+      const pts = crowd.map((b) => byId.get(b.id));
+      let close = 0;
+      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+        if (Math.hypot(pts[i][1] - pts[j][1], pts[i][2] - pts[j][2]) < 8.9) close += 1;
+      }
+      expect(close).toBe(0);
+      for (const p of pts) for (const h of hubs) expect(Math.hypot(p[1] - h[1], p[2] - h[2])).toBeGreaterThanOrEqual(40);
+    });
+
+    it('figures join only crowd stars of the same kind, never a pair a documented link joins', () => {
+      const linkPairs = new Set(map.links.map((l) => [l.from, l.to].sort().join('|')));
+      expect(out.figures.length).toBeGreaterThan(0);
+      for (const [i, j] of out.figures) {
+        const a = out.stars[i][0], b = out.stars[j][0];
+        expect(linked.has(a) || linked.has(b)).toBe(false);
+        expect(kindOf.get(a)).toBe(kindOf.get(b));
+        expect(linkPairs.has([a, b].sort().join('|'))).toBe(false);
+      }
+    });
+
+    it('each constellation is a tree: every crowd star is on a figure, with no cycles', () => {
+      const parent = new Map();
+      const find = (x) => { while (parent.get(x) !== x) x = parent.get(x); return x; };
+      for (const b of crowd) parent.set(idx.get(b.id), idx.get(b.id));
+      for (const [i, j] of out.figures) {
+        const ri = find(i), rj = find(j);
+        expect(ri).not.toBe(rj);
+        parent.set(ri, rj);
+      }
+      const roots = new Set(crowd.map((b) => find(idx.get(b.id))));
+      // components = constellations; each has at most 13 stars
+      const size = new Map();
+      for (const b of crowd) { const r = find(idx.get(b.id)); size.set(r, (size.get(r) ?? 0) + 1); }
+      for (const n of size.values()) expect(n).toBeLessThanOrEqual(13);
+      expect(roots.size).toBe(out.figures.length === 0 ? crowd.length : crowd.length - out.figures.length);
+    });
+
+    it('one name per named kind, inside the sky', () => {
+      const kinds = new Set(crowd.map((b) => b.kind[0]).filter(Boolean));
+      expect(out.names.map((m) => m[0]).sort()).toEqual([...kinds].map((k) => KIND_NAMES[k]).sort());
+      for (const [, x, y] of out.names) expect(Math.hypot(x - 500, y - 500)).toBeLessThanOrEqual(460);
+    });
   });
 
   it('linked brokers sit inside 330', () => {
@@ -100,18 +149,6 @@ describe('computeLayout', () => {
       expect(edge.length / linkedNonHubs.length).toBeLessThanOrEqual(0.1);
     });
 
-    it('the unlinked crowd is jittered, not a constant-angle spiral', () => {
-      const crowd = pick((b) => !isBuyer(b) && !linked.has(b.id));
-      const steps = [];
-      for (let i = 1; i < crowd.length; i++) {
-        const a0 = Math.atan2(crowd[i - 1][2] - 500, crowd[i - 1][1] - 500);
-        const a1 = Math.atan2(crowd[i][2] - 500, crowd[i][1] - 500);
-        steps.push((((a1 - a0) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
-      }
-      const mean = steps.reduce((s, x) => s + x, 0) / steps.length;
-      const sd = Math.sqrt(steps.reduce((s, x) => s + (x - mean) ** 2, 0) / steps.length);
-      expect(sd / mean).toBeGreaterThan(0.05);
-    });
   });
 
   it('no two hubs are closer than 140', () => {
