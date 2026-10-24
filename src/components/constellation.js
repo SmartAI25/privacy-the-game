@@ -14,6 +14,12 @@ const LIME = '#C6FF00';
 const AMBER = '#FF9F00';
 const MAGENTA = '#FF2D9B';
 const DIM = '#3a4256';
+// Not-yet stars in faint natural tints (cool, blue-white, warm), all as dark as DIM: a real sky, and
+// still plainly "not yet". Picked by a hash of the id, so it carries no meaning.
+export const DIM_TINTS = Object.freeze([DIM, '#37435f', '#424a5c', '#463f4a', '#3d4a5a']);
+const hashId = (id) => { let h = 2166136261; for (let i = 0; i < id.length; i++) h = Math.imul(h ^ id.charCodeAt(i), 16777619); return h >>> 0; };
+// One not-yet star in TWINKLE_EVERY twinkles, slowly, out of step with the others.
+export const TWINKLE_EVERY = 7;
 const CYAN = '#00E5FF';
 const BUYER = '#8a93a6';
 const PALE = '#EDEFF3';
@@ -63,6 +69,7 @@ const STYLE = `<style>
 .constellation .glow--new{animation:rc-glow-in 1200ms ease-out both}
 .constellation .burst{animation:rc-burst 1100ms ease-out both}
 .constellation .glow--hub{animation:rc-twinkle 4.2s ease-in-out infinite}
+.constellation .star--tw{animation:rc-twinkle 5s ease-in-out infinite}
 .constellation .selected{animation:rc-select 1.6s ease-in-out infinite}
 }
 </style>`;
@@ -71,6 +78,7 @@ const DEFS = `<defs>
 <linearGradient id="rc-sky" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000"><stop offset="0" stop-color="${MIDNIGHT}"/><stop offset=".55" stop-color="#0d1220"/><stop offset="1" stop-color="${CHARCOAL}"/></linearGradient>
 <linearGradient id="rc-city" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a26"/><stop offset="1" stop-color="${MIDNIGHT}"/></linearGradient>
 <radialGradient id="rc-glow"><stop offset="0" stop-color="${LIME}" stop-opacity=".6"/><stop offset=".35" stop-color="${LIME}" stop-opacity=".18"/><stop offset="1" stop-color="${LIME}" stop-opacity="0"/></radialGradient>
+<radialGradient id="rc-milky"><stop offset="0" stop-color="#c9d6ff" stop-opacity=".075"/><stop offset=".45" stop-color="#9fb4e8" stop-opacity=".035"/><stop offset="1" stop-color="#9fb4e8" stop-opacity="0"/></radialGradient>
 <radialGradient id="rc-neb"><stop offset="0" stop-color="${CYAN}" stop-opacity=".13"/><stop offset=".5" stop-color="${CYAN}" stop-opacity=".04"/><stop offset="1" stop-color="${CYAN}" stop-opacity="0"/></radialGradient>
 <radialGradient id="rc-neb-lit"><stop offset="0" stop-color="${LIME}" stop-opacity=".16"/><stop offset=".5" stop-color="${CYAN}" stop-opacity=".05"/><stop offset="1" stop-color="${CYAN}" stop-opacity="0"/></radialGradient>
 </defs>`;
@@ -283,7 +291,10 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       amber += 1;
       marks.push(`<circle class="star star--amber" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${AMBER}" fill-opacity="${RECHECK_OPACITY}"/>`);
     } else {
-      marks.push(`<circle class="star star--dim" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${DIM}"/>`);
+      const h = hashId(s.id);
+      const tw = h % TWINKLE_EVERY === 0;
+      const twStyle = tw ? ` style="animation-delay:-${(h >>> 8) % 5000}ms;animation-duration:${4000 + ((h >>> 4) % 3000)}ms"` : '';
+      marks.push(`<circle class="star star--dim${tw ? ' star--tw' : ''}" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${DIM_TINTS[(h >>> 3) % DIM_TINTS.length]}"${twStyle}/>`);
     }
 
     if (hub || s.id === selId || (nameStars && inView(s))) wanted.push(s);
@@ -311,8 +322,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   // buyer's diamond r√2). Only marks in view matter.
   const markBox = (s) => {
     const m = s.state === 'no-opt-out' ? s.r + 2 : s.state === 'buyer' ? s.r * 1.42 : s.r;
-    // `bright`: a mark no label may cover even in a fallback (the player's own stars, and hubs).
-    const bright = s.state === 'lit' || s.state === 'amber' || s.broker.hub === true;
+    // `bright`: a mark no label may cover even in a fallback (the player's own stars, no-opt-out ✕s, hubs).
+    const bright = s.state === 'lit' || s.state === 'amber' || s.state === 'no-opt-out' || s.broker.hub === true;
     return { id: s.id, bright, left: s.x - m, right: s.x + m, top: s.y - m, bottom: s.y + m };
   };
   const marksInView = stars.filter((s) => s.x >= vx - 40 && s.x <= vx + vw + 40 && s.y >= vy - 40 && s.y <= vy + vh + 40).map(markBox);
@@ -385,7 +396,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   // Hit circles sit on top and overlap in the dense crowd; the app resolves a tap with
   // nearestStar (broker-view.js) on the tap point, not with whichever circle is uppermost.
   return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vh)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
-    + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/>${sky.join('')}</g>`
+    // A faint Milky Way band across the sky: a soft gradient, never points that could pass for stars.
+    + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/><ellipse class="milky" cx="520" cy="470" rx="760" ry="150" transform="rotate(-24 520 470)" fill="url(#rc-milky)"/><ellipse class="milky" cx="430" cy="530" rx="420" ry="70" transform="rotate(-21 430 530)" fill="url(#rc-milky)"/>${sky.join('')}</g>`
     + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vh)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
     + `<g class="names">${shownNames.filter((m) => !placed.some((q) => overlaps(m.box, q.box))).map((m) => `<text class="const-name" x="${n(m.x)}" y="${n(m.y)}" font-size="${n(nameSize)}" text-anchor="middle">${esc(m.text)}</text>`).join('')}</g>`
     + `<g class="figures">${figures.join('')}</g>`

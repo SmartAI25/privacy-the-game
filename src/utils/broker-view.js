@@ -58,7 +58,10 @@ export function zoomViewBox(viewBox, factor, cx, cy, bounds = {}) {
   const padY = Number.isFinite(bounds.padY) ? bounds.padY : 0;
   // (+ 0 turns a -0 into 0.)
   const clamp = (v, side, pad = 0) => (side >= size ? (size - side) / 2 : Math.min(size - side + side * pad, Math.max(-side * pad, v))) + 0;
-  const out = { x: clamp(px - (px - x) * k, nw), y: clamp(py - (py - y) * k, nh, padY), w: nw };
+  // The whole sky's width in view: centre it top to bottom (padY is for a zoomed-in view, so a star
+  // near the rim can sit mid-screen; zoomed right out it only left an empty band).
+  const y2 = nw >= size ? (size - nh) / 2 + 0 : clamp(py - (py - y) * k, nh, padY);
+  const out = { x: clamp(px - (px - x) * k, nw), y: y2, w: nw };
   if (h !== null) out.h = nh;
   return out;
 }

@@ -14,6 +14,15 @@ const INNER = 330; // linked non-buyers
 // into small constellations of one kind each, scattered over the whole sky between the hubs.
 const SKY_R = 440; // constellation centres and stars stay inside this radius (buyers sit at RIM)
 const ASTERISM_MAX = 13; // stars per constellation, at most
+const ASTERISM_MIN = 4; // and at least (a kind with fewer stars is one smaller constellation)
+const CLUSTERS = 11; // regions the constellations gather in, with dark sky between
+const CLUSTER_SIGMA = 62; // spread of a region's constellation centres
+const CENTRE_GAP = 46; // no two constellation centres closer than this
+const FIGURE_MIN = 4; // stars joined into a constellation's figure…
+const FIGURE_MAX = 7; // …the rest are loose field stars around it
+const FIG_STEP_MIN = 20; // a figure is an angular zigzag, each step this long…
+const FIG_STEP_SPAN = 16; // …plus up to this much
+const FIELD_SIGMA = 16; // spread of the field stars round the figure
 const STAR_GAP = 9; // no two crowd stars closer than this
 const CLEAR_OF_LINKED = 24; // crowd stars keep this far from any linked star
 const CLEAR_OF_HUB = 62; // and this far from a hub (its nebula)
@@ -240,10 +249,18 @@ function placeConstellations(unlinked, pos, movers, rand) {
     byKind.get(k).push(b);
   }
   const kinds = [...byKind.keys()].sort((a, b) => (a === '') - (b === '') || cmp(a, b));
+  // Real constellations vary: cut each kind into runs of ASTERISM_MIN..ASTERISM_MAX stars.
   const chunksOf = (k) => {
     const list = byKind.get(k);
-    const n = Math.ceil(list.length / ASTERISM_MAX);
-    return Array.from({ length: n }, (_, i) => ({ kind: k, members: list.filter((_, j) => j % n === i) }));
+    const out = [];
+    for (let i = 0; i < list.length;) {
+      let size = ASTERISM_MIN + Math.floor(rand() * (ASTERISM_MAX - ASTERISM_MIN + 1));
+      if (list.length - (i + size) < ASTERISM_MIN) size = list.length - i; // no stub at the end
+      if (size > ASTERISM_MAX) size = Math.ceil((list.length - i) / 2);
+      out.push({ kind: k, members: list.slice(i, i + size) });
+      i += size;
+    }
+    return out;
   };
   // Named kinds spread round the sky: each followed by an even share of the unnamed constellations,
   // so the walk below doesn't bunch every name in one corner.
@@ -263,13 +280,23 @@ function placeConstellations(unlinked, pos, movers, rand) {
   const open = (x, y, clear = 1) => Math.hypot(x - C, y - C) <= SKY_R
     && fixed.every((f) => Math.hypot(f.x - x, f.y - y) >= (f.hub ? CLEAR_OF_HUB : CLEAR_OF_LINKED) * clear);
 
-  // Centres: dart throwing over the open sky, the spacing shrinking until every constellation has one.
-  let gap = 2 * Math.sqrt((Math.PI * SKY_R * SKY_R) / chunks.length / Math.PI);
+  // Centres gather in a few regions with dark sky between, as stars do: region seeds spread over the
+  // open sky, then each centre a Gaussian step from a seed. The gap shrinks only if the sky runs out.
+  const gauss = () => Math.sqrt(-2 * Math.log(1 - rand())) * Math.cos(2 * Math.PI * rand());
+  const seeds = [];
+  for (let tries = 0; tries < 20000 && seeds.length < CLUSTERS; tries++) {
+    const x = C + (rand() * 2 - 1) * SKY_R, y = C + (rand() * 2 - 1) * SKY_R;
+    if (open(x, y, 1.6) && seeds.every((q) => Math.hypot(q.x - x, q.y - y) >= SKY_R * 0.42)) seeds.push({ x, y });
+  }
+  if (!seeds.length) seeds.push({ x: C, y: C });
+  let gap = CENTRE_GAP;
   let centres = [];
   while (centres.length < chunks.length && gap > 10) {
     centres = [];
-    for (let tries = 0; tries < 20000 && centres.length < chunks.length; tries++) {
-      const x = C + (rand() * 2 - 1) * SKY_R, y = C + (rand() * 2 - 1) * SKY_R;
+    for (let tries = 0; tries < 40000 && centres.length < chunks.length; tries++) {
+      const seed = seeds[tries % seeds.length];
+      const sigma = CLUSTER_SIGMA * (1 + Math.floor(tries / 8000) * 0.35); // widen if a region fills
+      const x = seed.x + gauss() * sigma, y = seed.y + gauss() * sigma;
       if (!open(x, y, 1.6)) continue;
       if (centres.every((c) => Math.hypot(c.x - x, c.y - y) >= gap)) centres.push({ x, y });
     }
@@ -290,33 +317,44 @@ function placeConstellations(unlinked, pos, movers, rand) {
   const named = new Map();
   chunks.forEach((chunk, ci) => {
     const centre = order[ci] ?? { x: C, y: C };
-    const spread = 8 + 5.5 * Math.sqrt(chunk.members.length);
+    const m = chunk.members.length;
     const pts = [];
-    for (const b of chunk.members) {
+    const ok = (x, y) => open(x, y) && placed.every((q) => Math.hypot(q.x - x, q.y - y) >= STAR_GAP);
+    const put = (b, p) => { pos.set(b.id, p); placed.push(p); pts.push({ id: b.id, ...p }); };
+    const scatter = (sigma, c = centre) => {
+      for (let t = 0; t < 400; t++) {
+        const g = 1 + t / 120;
+        const x = c.x + gauss() * sigma * g, y = c.y + gauss() * sigma * g;
+        if (ok(x, y)) return { x, y };
+      }
+      return { x: c.x + (rand() - 0.5) * sigma, y: c.y + (rand() - 0.5) * sigma };
+    };
+    // As in the real sky, a few stars make the figure and the rest are loose field stars around it.
+    const nFig = Math.min(m, FIGURE_MIN + Math.floor(rand() * (FIGURE_MAX - FIGURE_MIN + 1)));
+    const fig = [];
+    let heading = 2 * Math.PI * rand();
+    let turn = rand() < 0.5 ? 1 : -1;
+    chunk.members.slice(0, nFig).forEach((b, i) => {
       let p = null;
-      for (let t = 0; t < 400 && !p; t++) {
-        const a = 2 * Math.PI * rand(), r = spread * Math.sqrt(rand()) * (1 + t / 200);
-        const x = centre.x + r * Math.cos(a), y = centre.y + r * Math.sin(a);
-        if (open(x, y) && placed.every((q) => Math.hypot(q.x - x, q.y - y) >= STAR_GAP)) p = { x, y };
+      let from = null;
+      if (i === 0) p = scatter(6);
+      // An angular zigzag: each step long, turning one way then the other; now and then a branch.
+      for (let t = 0; t < 80 && !p; t++) {
+        from = rand() < 0.22 && fig.length > 2 ? fig[Math.floor(rand() * (fig.length - 1))] : fig[fig.length - 1];
+        const a = heading + turn * (0.35 + rand() * 1.0) + (t > 20 ? (rand() - 0.5) * t * 0.05 : 0);
+        const r = FIG_STEP_MIN + rand() * FIG_STEP_SPAN;
+        const x = from.x + r * Math.cos(a), y = from.y + r * Math.sin(a);
+        if (ok(x, y)) { p = { x, y }; heading = a; turn = -turn; }
       }
-      if (!p) p = { x: centre.x + (rand() - 0.5) * spread, y: centre.y + (rand() - 0.5) * spread };
-      pos.set(b.id, p);
-      placed.push(p);
-      pts.push({ id: b.id, ...p });
-    }
-    // Prim's minimum spanning tree: the constellation's figure.
-    const inTree = [pts[0]];
-    const rest = pts.slice(1);
-    while (rest.length) {
-      let best = null;
-      for (const a of inTree) for (const b of rest) {
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (!best || d < best.d) best = { a, b, d };
-      }
-      figures.push(cmp(best.a.id, best.b.id) < 0 ? [best.a.id, best.b.id] : [best.b.id, best.a.id]);
-      inTree.push(best.b);
-      rest.splice(rest.indexOf(best.b), 1);
-    }
+      if (!p) { p = scatter(14); from = fig[fig.length - 1] ?? null; }
+      put(b, p);
+      const me = { id: b.id, ...p };
+      if (from) figures.push(cmp(from.id, b.id) < 0 ? [from.id, b.id] : [b.id, from.id]);
+      fig.push(me);
+    });
+    // Field stars gather round the figure's middle.
+    const mid = { x: fig.reduce((t, p) => t + p.x, 0) / fig.length, y: fig.reduce((t, p) => t + p.y, 0) / fig.length };
+    for (const b of chunk.members.slice(nFig)) put(b, scatter(FIELD_SIGMA + 3 * Math.sqrt(m), mid));
     if (chunk.kind && KIND_NAMES[chunk.kind]) {
       if (!named.has(chunk.kind)) named.set(chunk.kind, []);
       named.get(chunk.kind).push(...pts);
