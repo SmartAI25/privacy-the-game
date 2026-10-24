@@ -1,7 +1,9 @@
 {
   "id": "sovrn",
   "name": "Sovrn, Inc.",
-  "aliases": [],
+  "aliases": [
+    "Sovrn"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -22,7 +24,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "mem-daa-webchoices-2026"
   ],
   "website": "https://www.sovrn.com"
 }

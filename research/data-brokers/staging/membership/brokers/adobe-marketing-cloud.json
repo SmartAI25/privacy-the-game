@@ -1,0 +1,19 @@
+{
+  "id": "adobe-marketing-cloud",
+  "name": "Adobe Marketing Cloud",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-daa-webchoices-2026"
+  ]
+}

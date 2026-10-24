@@ -1,0 +1,311 @@
+{
+  "sweep": "daa",
+  "name": "DAA WebChoices",
+  "source": "mem-daa-webchoices-2026",
+  "sourceRecord": {
+    "url": "https://optout.aboutads.info/",
+    "archived": "https://web.archive.org/web/20261024071700/https://files.aboutads.info/prod-companies.json",
+    "kind": "member-list",
+    "title": "Digital Advertising Alliance (DAA): WebChoices browser opt-out tool, its list of participating companies (prod-companies.json, the file the tool loads)",
+    "accessed": "2026-10-24"
+  },
+  "members": [
+    {
+      "name": "33Across"
+    },
+    {
+      "name": "AcuityAds"
+    },
+    {
+      "name": "Adbrain"
+    },
+    {
+      "name": "Adelphic"
+    },
+    {
+      "name": "Adform"
+    },
+    {
+      "name": "Samsung Ads"
+    },
+    {
+      "name": "Adobe Marketing Cloud"
+    },
+    {
+      "name": "Adstra"
+    },
+    {
+      "name": "Alphonso"
+    },
+    {
+      "name": "Amazon Ad System"
+    },
+    {
+      "name": "Audiencerate"
+    },
+    {
+      "name": "AuDigent"
+    },
+    {
+      "name": "Beeswax"
+    },
+    {
+      "name": "Bombora"
+    },
+    {
+      "name": "Branch"
+    },
+    {
+      "name": "Cadent"
+    },
+    {
+      "name": "Catalina BuyerVision"
+    },
+    {
+      "name": "Chicory"
+    },
+    {
+      "name": "Choreograph"
+    },
+    {
+      "name": "Claritas"
+    },
+    {
+      "name": "Clickagy"
+    },
+    {
+      "name": "Cognitiv"
+    },
+    {
+      "name": "Connexity"
+    },
+    {
+      "name": "Criteo"
+    },
+    {
+      "name": "Datonics"
+    },
+    {
+      "name": "Demandbase"
+    },
+    {
+      "name": "Dianomi"
+    },
+    {
+      "name": "Dstillery"
+    },
+    {
+      "name": "eBay"
+    },
+    {
+      "name": "Epsilon"
+    },
+    {
+      "name": "Equativ"
+    },
+    {
+      "name": "Experian"
+    },
+    {
+      "name": "Eyeota"
+    },
+    {
+      "name": "Facebook"
+    },
+    {
+      "name": "Flashtalking"
+    },
+    {
+      "name": "FreeWheel"
+    },
+    {
+      "name": "Google Inc."
+    },
+    {
+      "name": "GroundTruth"
+    },
+    {
+      "name": "GroupM"
+    },
+    {
+      "name": "GumGum"
+    },
+    {
+      "name": "Havas Edge"
+    },
+    {
+      "name": "Index Exchange"
+    },
+    {
+      "name": "Innovid"
+    },
+    {
+      "name": "Inuvo"
+    },
+    {
+      "name": "iPromote"
+    },
+    {
+      "name": "IQM.com"
+    },
+    {
+      "name": "Kargo Global"
+    },
+    {
+      "name": "Knorex"
+    },
+    {
+      "name": "LinkedIn"
+    },
+    {
+      "name": "LiveIntent"
+    },
+    {
+      "name": "LiveRamp"
+    },
+    {
+      "name": "Lotame"
+    },
+    {
+      "name": "Magnite"
+    },
+    {
+      "name": "Media.net"
+    },
+    {
+      "name": "Merkle"
+    },
+    {
+      "name": "Microsoft"
+    },
+    {
+      "name": "MiQ"
+    },
+    {
+      "name": "MNTN"
+    },
+    {
+      "name": "Nativo"
+    },
+    {
+      "name": "NextRoll"
+    },
+    {
+      "name": "Nexxen"
+    },
+    {
+      "name": "OpenX"
+    },
+    {
+      "name": "Optimal"
+    },
+    {
+      "name": "Outbrain"
+    },
+    {
+      "name": "PebblePost"
+    },
+    {
+      "name": "Pinterest"
+    },
+    {
+      "name": "PubMatic"
+    },
+    {
+      "name": "PulsePoint"
+    },
+    {
+      "name": "Quantcast"
+    },
+    {
+      "name": "Resonate"
+    },
+    {
+      "name": "Responsys"
+    },
+    {
+      "name": "Samba.TV"
+    },
+    {
+      "name": "Semasio"
+    },
+    {
+      "name": "ShareThis"
+    },
+    {
+      "name": "Sharethrough"
+    },
+    {
+      "name": "Simpli.fi"
+    },
+    {
+      "name": "Skimlinks"
+    },
+    {
+      "name": "Sojern"
+    },
+    {
+      "name": "Sonobi"
+    },
+    {
+      "name": "Sovrn"
+    },
+    {
+      "name": "StackAdapt"
+    },
+    {
+      "name": "Swoop"
+    },
+    {
+      "name": "Taboola"
+    },
+    {
+      "name": "Tapad"
+    },
+    {
+      "name": "The Nielsen Marketing Cloud"
+    },
+    {
+      "name": "The Trade Desk"
+    },
+    {
+      "name": "Throtle"
+    },
+    {
+      "name": "Triplelift"
+    },
+    {
+      "name": "Twitter"
+    },
+    {
+      "name": "Undertone"
+    },
+    {
+      "name": "Valassis"
+    },
+    {
+      "name": "VDX.tv"
+    },
+    {
+      "name": "Veeva Crossix"
+    },
+    {
+      "name": "Viant (Specific Media/Vindico)"
+    },
+    {
+      "name": "Wunderkind (formerly BounceX)"
+    },
+    {
+      "name": "Yahoo"
+    },
+    {
+      "name": "Yieldmo"
+    },
+    {
+      "name": "Zeta Global"
+    },
+    {
+      "name": "Ziff Davis"
+    }
+  ]
+}

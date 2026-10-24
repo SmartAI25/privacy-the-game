@@ -348,7 +348,7 @@ describe('constellationSvg', () => {
     const ms = performance.now() - t0;
     expect(ms).toBeLessThan(200);
     const marks = s.match(/<circle class="star[ "]|<path class="star-x"|<rect class="buyer"/g).length;
-    expect(marks).toBe(903);
+    expect(marks).toBe(realMap.brokers.length);
     expect(s.match(/<text class="hub-label"/g).length).toBeGreaterThanOrEqual(10);
     expect(s.match(/<line class="link"/g).length).toBeGreaterThan(0);
     expect(s).not.toMatch(/\bfilter="/);

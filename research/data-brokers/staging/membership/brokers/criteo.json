@@ -1,0 +1,9 @@
+{
+  "id": "criteo",
+  "name": "Criteo",
+  "aliases": [],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

@@ -1,7 +1,9 @@
 {
   "id": "ziff-davis",
   "name": "Ziff Davis LLC",
-  "aliases": [],
+  "aliases": [
+    "Ziff Davis"
+  ],
   "parent": null,
   "kind": [
     "location",
@@ -26,7 +28,8 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "mem-daa-webchoices-2026"
   ],
   "website": "https://www.ziffdavis.com"
 }

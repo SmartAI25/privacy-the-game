@@ -50,10 +50,14 @@ describe('the map screen', () => {
   });
 
   it('the browser-only legend row shows only when a sweep has members', () => {
-    expect(html).not.toContain('Opted out in this browser only');
-    expect(hasSweepMembers(map)).toBe(false);
+    // The real map carries the NAI and DAA member lists, so the row shows; a map without sweeps hides it.
+    expect(hasSweepMembers(map)).toBe(true);
+    expect(html).toContain('Opted out in this browser only');
+    const { sweeps: _sweeps, ...bare } = map;
+    expect(hasSweepMembers(bare)).toBe(false);
+    expect(draw(fresh(), { data: { map: bare, layout } })).not.toContain('Opted out in this browser only');
     expect(hasSweepMembers({ sweeps: { nai: { members: [] } } })).toBe(false);
-    const withSweep = { ...map, sweeps: { nai: { members: [map.brokers[0].id] } } };
+    const withSweep = { ...bare, sweeps: { nai: { members: [map.brokers[0].id] } } };
     expect(hasSweepMembers(withSweep)).toBe(true);
     expect(draw(fresh(), { data: { map: withSweep, layout } })).toContain('Opted out in this browser only');
   });
@@ -241,8 +245,8 @@ describe('the opening view', () => {
     const v = initialView(map, layout, brokerLighting(map, s, T), 2);
     expect(v.w).toBeLessThanOrEqual(600);
     const pos = Object.fromEntries(layout.stars.map((x) => [x[0], x]));
-    const shown = ['whitepages', 'mylife'].filter((id) => pos[id][1] >= v.x && pos[id][1] <= v.x + v.w && pos[id][2] >= v.y && pos[id][2] <= v.y + v.h);
-    expect(shown).toEqual(['whitepages', 'mylife']);
+    const shown = ['beenverified', 'mylife'].filter((id) => pos[id][1] >= v.x && pos[id][1] <= v.x + v.w && pos[id][2] >= v.y && pos[id][2] <= v.y + v.h);
+    expect(shown).toEqual(['beenverified', 'mylife']);
   });
 
   it('with nothing lit, opens on the densest hub cluster', () => {
@@ -346,7 +350,7 @@ describe('fix round 1: labels clear of the zoom buttons and the edges (ruling M5
 
 describe('fix round 1: framing', () => {
   it('a lit bunch near the bottom rim opens centred on it (the view may run past the map)', () => {
-    const s = withLines(withLines(fresh(), WF, { whitepages: '2026-10-01' }), STRAG, { mylife: '2026-10-02' });
+    const s = withLines(fresh(), WF, { whitepages: '2026-10-01' });
     const l = brokerLighting(map, s, T);
     const b = litBunch(layout, l, 2);
     const v = initialView(map, layout, l, 2);
@@ -357,7 +361,7 @@ describe('fix round 1: framing', () => {
 
   it('+/- zoom about the selected star, else the lit bunch, else the centre', () => {
     const l = brokerLighting(map, filedState(), T);
-    const v = { x: 400, y: 400, w: 500, h: 1000 };
+    const v = { x: 200, y: 400, w: 500, h: 1000 };
     const sp = layout.stars.find((x) => x[0] === 'spokeo');
     expect(zoomAnchor(v, layout, l, 'spokeo')).toEqual({ x: sp[1], y: sp[2] });
     const b = litBunch(layout, l, 2);
@@ -388,11 +392,11 @@ describe('fix round 1: framing', () => {
     expect(h).toMatch(/@media \(max-width:359\.98px\)\{\.constellation-controls\{top:auto;bottom:8px;flex-direction:row\}/);
   });
 
-  it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 63%', () => {
+  it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 58%', () => {
     const h = draw(withLines(fresh(), WF, { spokeo: '2026-10-01' }));
     expect(head(h)).toBe('FIELD COVERED: &lt;1% · HUBS LIT 0/12');
     const drop = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), 'yes'));
-    expect(head(drop)).toBe('FIELD COVERED: 63% · HUBS LIT 6/12');
+    expect(head(drop)).toBe('FIELD COVERED: 58% · HUBS LIT 6/12');
   });
 
   it('DROP with "rather not say" has its own line', () => {

@@ -2,7 +2,8 @@
   "id": "taboola",
   "name": "Taboola, Inc.",
   "aliases": [
-    "TABOOLA INC"
+    "TABOOLA INC",
+    "Taboola"
   ],
   "parent": null,
   "kind": [],
@@ -26,7 +27,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-or-2026-10-18",
-    "registry-vt-2026-10-19"
+    "registry-vt-2026-10-19",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.taboola.com"
 }

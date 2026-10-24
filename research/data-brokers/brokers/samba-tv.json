@@ -1,7 +1,9 @@
 {
   "id": "samba-tv",
   "name": "Samba TV, Inc.",
-  "aliases": [],
+  "aliases": [
+    "Samba.TV"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -24,7 +26,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-vt-2026-10-19"
+    "registry-vt-2026-10-19",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.samba.tv"
 }

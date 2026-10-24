@@ -1,0 +1,9 @@
+{
+  "id": "tapad",
+  "name": "Tapad",
+  "aliases": [],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

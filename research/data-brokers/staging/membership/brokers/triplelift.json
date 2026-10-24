@@ -1,0 +1,11 @@
+{
+  "id": "triplelift",
+  "name": "Triplelift",
+  "aliases": [
+    "TripleLift"
+  ],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

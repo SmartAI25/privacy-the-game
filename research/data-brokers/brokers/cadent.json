@@ -2,7 +2,8 @@
   "id": "cadent",
   "name": "Cadent LLC",
   "aliases": [
-    "Cadent, LLC"
+    "Cadent, LLC",
+    "Cadent"
   ],
   "parent": null,
   "kind": [
@@ -28,7 +29,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-vt-2026-10-19"
+    "registry-vt-2026-10-19",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.cadent.tv"
 }

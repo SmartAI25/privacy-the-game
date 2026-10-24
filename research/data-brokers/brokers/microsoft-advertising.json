@@ -1,0 +1,19 @@
+{
+  "id": "microsoft-advertising",
+  "name": "Microsoft Advertising",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-nai-members-2026"
+  ]
+}

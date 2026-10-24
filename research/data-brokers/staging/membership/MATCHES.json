@@ -1,0 +1,257 @@
+[
+  {
+    "stagedId": "33across",
+    "existingId": "33across",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "adstra",
+    "existingId": "adstra",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "alikeaudience",
+    "existingId": "alikeaudience",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "alphonso",
+    "existingId": "alphonso",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "arity",
+    "existingId": "arity",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "azira",
+    "existingId": "azira",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "beeswax",
+    "existingId": "beeswax",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "bombora",
+    "existingId": "bombora",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "cadent",
+    "existingId": "cadent",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "choreograph",
+    "existingId": "choreograph",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "claritas",
+    "existingId": "claritas",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "clickagy",
+    "existingId": "clickagy",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "criteo",
+    "existingId": "criteo",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "cuebiq",
+    "existingId": "cuebiq",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "datonics",
+    "existingId": "datonics",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "definitive-healthcare",
+    "existingId": "definitive-healthcare",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "demandbase",
+    "existingId": "demandbase",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "dstillery",
+    "existingId": "dstillery",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "google",
+    "existingId": "google",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "healthlink-dimensions",
+    "existingId": "healthlink-dimensions",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "illumin",
+    "existingId": "illumin",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "index-exchange",
+    "existingId": "index-exchange",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "kargo-global",
+    "existingId": "kargo-global",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "liveintent",
+    "existingId": "liveintent",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "liveramp",
+    "existingId": "liveramp",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "loopme",
+    "existingId": "loopme",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "magnite",
+    "existingId": "magnite",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "merkle",
+    "existingId": "merkle",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "nextroll",
+    "existingId": "nextroll",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "nexxen",
+    "existingId": "nexxen",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "pebblepost",
+    "existingId": "pebblepost",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "place-exchange",
+    "existingId": "place-exchange",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "pubmatic",
+    "existingId": "pubmatic",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "pulsepoint",
+    "existingId": "pulsepoint",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "resonate",
+    "existingId": "resonate",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "samba-tv",
+    "existingId": "samba-tv",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "semasio",
+    "existingId": "semasio",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "sharethrough",
+    "existingId": "sharethrough",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "sojern",
+    "existingId": "sojern",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "sovrn",
+    "existingId": "sovrn",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "stackadapt",
+    "existingId": "stackadapt",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "taboola",
+    "existingId": "taboola",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "tapad",
+    "existingId": "tapad",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "throtle",
+    "existingId": "throtle",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "triplelift",
+    "existingId": "triplelift",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "unacast",
+    "existingId": "unacast",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "videoamp",
+    "existingId": "videoamp",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "wunderkind",
+    "existingId": "wunderkind",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "yieldmo",
+    "existingId": "yieldmo",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "zeta-global",
+    "existingId": "zeta-global",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "ziff-davis",
+    "existingId": "ziff-davis",
+    "matchedBy": "id"
+  }
+]

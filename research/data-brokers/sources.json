@@ -1202,5 +1202,19 @@
     "kind": "journalism",
     "title": "My Phone Was Spying on Me, so I Tracked Down the Surveillants (NRK Beta, Dec. 3, 2020)",
     "accessed": "2026-10-18"
+  },
+  "mem-daa-webchoices-2026": {
+    "url": "https://optout.aboutads.info/",
+    "archived": "https://web.archive.org/web/20261024071700/https://files.aboutads.info/prod-companies.json",
+    "kind": "member-list",
+    "title": "Digital Advertising Alliance (DAA): WebChoices browser opt-out tool, its list of participating companies (prod-companies.json, the file the tool loads)",
+    "accessed": "2026-10-24"
+  },
+  "mem-nai-members-2026": {
+    "url": "https://thenai.org/about-the-nai-2/members/",
+    "archived": "https://web.archive.org/web/20261024071604/https://thenai.org/about-the-nai-2/members/",
+    "kind": "member-list",
+    "title": "Network Advertising Initiative (NAI): NAI Members, the NAI's directory of its member companies",
+    "accessed": "2026-10-24"
   }
 }

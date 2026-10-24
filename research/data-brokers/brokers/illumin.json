@@ -1,7 +1,9 @@
 {
   "id": "illumin",
   "name": "illumin Inc.",
-  "aliases": [],
+  "aliases": [
+    "illumin"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -22,7 +24,8 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "mem-nai-members-2026"
   ],
   "website": "http://www.illumin.com"
 }

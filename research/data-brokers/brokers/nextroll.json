@@ -2,7 +2,8 @@
   "id": "nextroll",
   "name": "NextRoll, Inc.",
   "aliases": [
-    "NextRoll Inc"
+    "NextRoll Inc",
+    "NextRoll"
   ],
   "parent": null,
   "kind": [],
@@ -25,7 +26,9 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.nextroll.com"
 }

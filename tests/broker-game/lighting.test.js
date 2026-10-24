@@ -221,7 +221,7 @@ describe('broker lighting', () => {
     expect(stateOf(l, 'criteo')).toBe('dim');
     expect(litIds(l)).toEqual([]);
     expect(light({ brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T, daa: T }) }).halo).toEqual(['criteo']);
-    expect(brokerLighting(realMap, { brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T }) }, T).halo).toEqual([]);
+    expect(brokerLighting(realMap, { brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T }) }, T).halo).toEqual([...realMap.sweeps.nai.members].sort());
   });
 
   it('a Big Check tick lights that broker', () => {

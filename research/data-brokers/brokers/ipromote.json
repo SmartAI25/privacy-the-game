@@ -1,0 +1,19 @@
+{
+  "id": "ipromote",
+  "name": "iPromote",
+  "aliases": [],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-daa-webchoices-2026"
+  ]
+}
