@@ -150,6 +150,18 @@ describe('mergeStaging', () => {
     expect(l.published).toBe(false);
   });
 
+  it('a re-staged source with the same url refreshes its archived copy and accessed date', async () => {
+    // Two Publicis captures cited since Phase 1 were never saved by the Wayback Machine; re-staging
+    // fresh ones must reach sources.json without a full rebuild (which would discard URL checks).
+    const fresh = 'https://web.archive.org/web/20261024073937/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: fresh, accessed: '2026-10-24' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.sourcesUpdated).toBe(1);
+    const out = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8'));
+    expect(out.reg).toMatchObject({ url: 'https://example.gov/doc', archived: fresh, accessed: '2026-10-24', kind: 'ftc-complaint' });
+  });
+
   it('new broker without source is rejected', async () => {
     await setup({ staged: { brokers: [{ id: 'nu', name: 'Nu', kind: ['marketing'], sources: [] }] } });
     const r = await mergeStaging(dir, 'fam');
