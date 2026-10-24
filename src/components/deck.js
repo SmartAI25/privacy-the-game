@@ -137,6 +137,30 @@ export function controlState(index, count) {
   return { prevDisabled: index <= 0, nextDisabled: index >= count - 1, count: `${index + 1} of ${count}` };
 }
 
+// The slide a BACK / NEXT / arrow press moves to. Steps from the slide already being
+// scrolled to, so two quick taps move two slides.
+export function stepTarget(target, current, step, count) {
+  const from = target ?? current;
+  return Math.min(count - 1, Math.max(0, from + step));
+}
+
+// The slide to show while scrolling. During a programmatic scroll the target wins (the
+// half-way scroll position would pull the count back); it settles once the scroll is there.
+export function resolveIndex(target, scrollLeft, width, count) {
+  const atScroll = slideIndex(scrollLeft, width, count);
+  if (target == null) return { index: atScroll, settled: true };
+  return { index: target, settled: !(width > 0) || Math.abs(scrollLeft - target * width) < 2 };
+}
+
+// Scroll a deck without the CSS smooth behaviour (a redraw restoring its slide).
+function jumpTo(d, left) {
+  const before = d.style?.scrollBehavior ?? '';
+  if (d.style) d.style.scrollBehavior = 'auto';
+  if (d.scrollTo) d.scrollTo({ left, behavior: 'instant' });
+  else d.scrollLeft = left;
+  if (d.style) d.style.scrollBehavior = before;
+}
+
 const reducedMotion = () => {
   try {
     return !!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -148,6 +172,7 @@ const reducedMotion = () => {
 const typing = (el) => !!el?.closest?.('input, textarea, select, [contenteditable=""], [contenteditable="true"]');
 
 // Where each deck under root is, by label: a re-draw of the same screen keeps its slide.
+// Labels are the key, so every deck on one screen needs its own aria-label.
 export function deckPositions(root) {
   const out = new Map();
   for (const d of root?.querySelectorAll?.('[data-deck]') ?? []) {
@@ -172,6 +197,8 @@ export function initDecks(root, positions = null) {
     const count = controls.querySelector('[aria-live]');
     const dots = [...controls.querySelectorAll('.deck-dot')];
     let current = -1;
+    let target = null; // the slide a programmatic scroll is heading to
+    let settleTimer = 0;
 
     const show = (i) => {
       if (i === current) return;
@@ -182,26 +209,35 @@ export function initDecks(root, positions = null) {
       if (count) count.textContent = s.count;
       dots.forEach((dot, k) => dot.classList.toggle('is-current', k === i));
     };
+    // The scroll is over (scrollend, or the fallback timer): the position is the truth again.
+    const settle = () => {
+      clearTimeout(settleTimer);
+      target = null;
+      show(slideIndex(d.scrollLeft, d.clientWidth, n));
+    };
     // Only a phone-width deck is a row; at desktop width the slides are blocks and keys do nothing.
     const isRow = () => d.scrollWidth > d.clientWidth + 1;
-    const go = (i) => {
-      const to = Math.min(n - 1, Math.max(0, i));
-      if (to === current) return;
+    const go = (step) => {
+      const to = stepTarget(target, current, step, n);
+      if (to === (target ?? current)) return;
+      target = to;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(settle, 1000);
       d.scrollTo?.({ left: to * d.clientWidth, behavior: reducedMotion() ? 'auto' : 'smooth' });
       show(to);
       const slide = slides[to];
-      const target = slide.querySelector('h1, h2, h3, h4, h5, h6') || slide;
-      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-      target.focus?.({ preventScroll: true });
+      const heading = slide.querySelector('h1, h2, h3, h4, h5, h6') || slide;
+      if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+      heading.focus?.({ preventScroll: true });
     };
 
-    prev?.addEventListener('click', () => go(current - 1));
-    next?.addEventListener('click', () => go(current + 1));
+    prev?.addEventListener('click', () => go(-1));
+    next?.addEventListener('click', () => go(1));
     const onKey = (e) => {
       const step = deckStep(e.key);
       if (!step || e.altKey || e.ctrlKey || e.metaKey || typing(e.target) || !isRow()) return;
       e.preventDefault();
-      go(current + step);
+      go(step);
     };
     d.addEventListener('keydown', onKey);
     controls.addEventListener('keydown', onKey);
@@ -211,12 +247,21 @@ export function initDecks(root, positions = null) {
       const raf = globalThis.requestAnimationFrame || ((f) => setTimeout(f, 16));
       frame = raf(() => {
         frame = 0;
-        show(slideIndex(d.scrollLeft, d.clientWidth, n));
+        const r = resolveIndex(target, d.scrollLeft, d.clientWidth, n);
+        if (r.settled && target != null) settle();
+        else show(r.index);
       });
     }, { passive: true });
+    // A scroll that another tap cut short can end off target: only the target settles it
+    // (the timer catches a swipe that took over).
+    d.addEventListener('scrollend', () => {
+      if (target != null && resolveIndex(target, d.scrollLeft, d.clientWidth, n).settled) settle();
+    });
 
-    const kept = positions?.get?.(d.getAttribute?.('aria-label'));
-    if (kept > 0) d.scrollLeft = Math.min(kept, n - 1) * d.clientWidth;
-    show(slideIndex(d.scrollLeft, d.clientWidth, n));
+    // A redraw keeps its slide: jump there with no animation, and draw the count for it
+    // now (this runs before the first paint, so "1 of N" never shows).
+    const kept = Math.min(positions?.get?.(d.getAttribute?.('aria-label')) ?? 0, n - 1);
+    if (kept > 0) jumpTo(d, kept * d.clientWidth);
+    show(kept > 0 ? kept : slideIndex(d.scrollLeft, d.clientWidth, n));
   }
 }

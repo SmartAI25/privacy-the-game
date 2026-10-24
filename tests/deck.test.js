@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState } from '../src/components/deck.js';
+import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex } from '../src/components/deck.js';
 import { MISSIONS } from '../src/data/missions.js';
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
@@ -186,6 +186,76 @@ describe('initDecks', () => {
     expect(next.disabled).toBe(false);
     expect(count.textContent).toBe('1 of 3');
     expect(() => initDecks(null)).not.toThrow();
+  });
+
+  it('a programmatic scroll keeps its target: the half-way position does not pull the count back', () => {
+    // Two quick NEXT taps from slide 0: the second steps from the target, not the old slide.
+    expect(stepTarget(null, 0, 1, 4)).toBe(1);
+    expect(stepTarget(1, 0, 1, 4)).toBe(2);
+    expect(stepTarget(3, 2, 1, 4)).toBe(3);
+    expect(stepTarget(null, 0, -1, 4)).toBe(0);
+    // Mid-scroll toward slide 2 (still nearer slide 0): the target is shown, not settled.
+    expect(resolveIndex(2, 100, 390, 4)).toEqual({ index: 2, settled: false });
+    expect(resolveIndex(2, 780, 390, 4)).toEqual({ index: 2, settled: true });
+    // No programmatic scroll (a swipe): the position decides.
+    expect(resolveIndex(null, 400, 390, 4)).toEqual({ index: 1, settled: true });
+  });
+
+  it('two quick NEXT taps move two slides, scroll events mid-way do not undo them, a redraw restores instantly', () => {
+    const fake = (extra = {}) => {
+      const on = {};
+      return {
+        on, dataset: {}, disabled: false, textContent: '', style: { scrollBehavior: '' },
+        classList: { toggle() {} }, setAttribute() {}, hasAttribute: () => true, focus() {},
+        getAttribute: (a) => (a === 'aria-label' ? 'Briefing' : null),
+        addEventListener: (type, fn) => { on[type] = fn; },
+        querySelector: () => null, querySelectorAll: () => [], ...extra,
+      };
+    };
+    const make = () => {
+      const prev = fake(); const next = fake(); const count = fake();
+      const controls = fake({ hasAttribute: (a) => a === 'data-deck-controls', querySelector: (s) => ({ '[data-deck-prev]': prev, '[data-deck-next]': next, '[aria-live]': count }[s] || null) });
+      const scrolls = [];
+      const d = fake({
+        scrollLeft: 0, clientWidth: 390, scrollWidth: 1560, nextElementSibling: controls,
+        querySelectorAll: (s) => (s === ':scope > .slide' ? [fake(), fake(), fake(), fake()] : []),
+        scrollTo(o) { scrolls.push({ ...o, css: this.style.scrollBehavior }); },
+      });
+      return { d, prev, next, count, scrolls, root: { querySelectorAll: (s) => (s === '[data-deck]' ? [d] : []) } };
+    };
+    const raf = globalThis.requestAnimationFrame;
+    globalThis.requestAnimationFrame = (f) => { f(); return 0; };
+    try {
+      const a = make();
+      initDecks(a.root);
+      a.next.on.click();
+      a.d.scrollLeft = 40; // the smooth scroll has barely started
+      a.d.on.scroll();
+      expect(a.count.textContent).toBe('2 of 4');
+      a.next.on.click();
+      expect(a.scrolls.map((s) => s.left)).toEqual([390, 780]);
+      a.d.scrollLeft = 500;
+      a.d.on.scroll();
+      expect(a.count.textContent).toBe('3 of 4');
+      a.d.scrollLeft = 780;
+      a.d.on.scroll();
+      expect(a.count.textContent).toBe('3 of 4');
+      // Settled: a swipe now drives the count again.
+      a.d.scrollLeft = 1170;
+      a.d.on.scroll();
+      expect(a.count.textContent).toBe('4 of 4');
+      expect(a.next.disabled).toBe(true);
+
+      // A redraw kept at slide 3: an instant jump, and the count says so from the start.
+      const b = make();
+      initDecks(b.root, new Map([['Briefing', 2]]));
+      expect(b.scrolls).toEqual([{ left: 780, behavior: 'instant', css: 'auto' }]);
+      expect(b.d.style.scrollBehavior).toBe('');
+      expect(b.count.textContent).toBe('3 of 4');
+      expect(b.prev.disabled).toBe(false);
+    } finally {
+      globalThis.requestAnimationFrame = raf;
+    }
   });
 
   it('app.js calls initDecks(app) after every render', () => {
