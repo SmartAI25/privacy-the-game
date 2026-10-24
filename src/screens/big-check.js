@@ -4,6 +4,7 @@
 // `big-check` is in PRIVATE_UI (errorNoise.js), and no broker id or name goes in an id, name or
 // title attribute.
 import { renderHud } from '../components/hud.js';
+import { smallScout } from '../components/scout.js';
 import { optOutBlock, ownedRoutesBlock, bigCheckTick, TICK_CSS } from '../components/star-card.js';
 import { brokerDataStatusBlock } from './broker-map.js';
 import { brokerLighting } from '../utils/broker-lighting.js';
@@ -41,6 +42,8 @@ const STYLE = `<style>
 .big-check-mission-go a{display:inline-flex;align-items:center;min-height:44px;min-width:0}
 .big-check-ticked{font-size:12px;color:var(--lime)}
 .big-check-empty{font-size:13px;color:rgba(237,239,243,0.7)}
+.big-check-scout{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;padding:6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
+.big-check-scout p{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
 ${TICK_CSS}
 </style>`;
 
@@ -67,19 +70,24 @@ function groupHtml(g, map, byId, state) {
   return `<details><summary>${esc(g.label)} · <span data-big-check-count>${ticked}</span>/${g.rows.length}</summary><ul class="big-check-rows">${rows}</ul></details>`;
 }
 
-function loadedView(state, { map }, today, query) {
+// Scout's first-visit line, in the same bubble as the map's.
+const scoutBubble = (line) => (line ? `<div class="constellation-scout big-check-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p></div>` : '');
+
+function loadedView(state, { map }, today, query, scoutLine) {
   const lighting = brokerLighting(map, state, today);
   const groups = filterBigCheck(bigCheckGroups(map, lighting), query);
   const byId = new Map(map.brokers.map((b) => [b.id, b]));
   const empty = `<p class="big-check-empty" role="status"${groups.length ? ' hidden' : ''}>No brokers match</p>`;
   return '<h1 class="big-check-head">THE BIG CHECK</h1>'
     + `<p class="big-check-note">${esc(NOTE)}</p>`
+    + scoutBubble(scoutLine)
     + `<input type="search" data-big-check-filter class="big-check-filter" placeholder="Filter by name" aria-label="Filter brokers by name" autocomplete="off" value="${esc(query)}">`
     + groups.map((g) => groupHtml(g, map, byId, state)).join('')
     + empty;
 }
 
-export function renderBigCheck(state, { status = 'idle', data = null, today = localDay(), query = '' } = {}) {
-  const body = status === 'ready' && data?.map ? loadedView(state, data, today, query) : brokerDataStatusBlock(status);
+// scoutLine: Scout's one-time line for the first visit (broker-scout.js), or null.
+export function renderBigCheck(state, { status = 'idle', data = null, today = localDay(), query = '', scoutLine = null } = {}) {
+  const body = status === 'ready' && data?.map ? loadedView(state, data, today, query, scoutLine) : brokerDataStatusBlock(status);
   return `${renderHud(state)}${STYLE}<div class="big-check">${BACK}${body}</div>`;
 }

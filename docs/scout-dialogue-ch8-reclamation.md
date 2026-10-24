@@ -313,3 +313,45 @@
 **`return_idle_check_2`**
 
 > Still here? The next broker on the list won't opt you out of selling your data if you don't ask. That's the whole system — default is "sell." You have to make it "don't." Let's make it "don't."
+
+---
+
+## 7. Field Map
+
+The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation/big-check`). These live in `BROKER_MAP_DIALOGUE` in `src/data/dialogue.js`. They carry no digits, and they claim only what the map's records show. The one-time lines (`opened`, `firstHub`, `sweep`, `noOptOut`, `bigCheck`) each show once per save; the save remembers them in `brokerMap.scout`.
+
+**`firstVisit`** *(first map visit only; Liz's line)*
+
+> There's a whole constellation of data brokers up there, trading in what drifted up out of the city. The lit stars are the ones your opt-outs reach. Tap one to see its name.
+
+**`opened`** *(once, from the second map visit on)*
+
+> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
+
+**`firstHub`** *(once, on a map visit where a hub has newly lit)*
+
+> That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.
+
+**`sweep`** *(once, on a map visit where DROP has newly lit ten or more stars)*
+
+> One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.
+
+**`noOptOut`** *(once, on the first card opened for a star with no opt-out)*
+
+> Some of them don't let you leave. When there's no opt-out, a complaint to a regulator still puts it on the record.
+
+**`bigCheck`** *(once, on the first Big Check visit)*
+
+> This is the long tail: every broker on the map that none of your missions reaches. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.
+
+**`nudge`** *(while a filed mission has no recorded lines)*
+
+> Tell Scout which ones you filed.
+
+**`dropNotResident`** *(DROP filed, not a California resident)*
+
+> DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.
+
+**`dropUnsaid`** *(DROP filed, residency not said)*
+
+> We only light DROP if you tell us you live in California.

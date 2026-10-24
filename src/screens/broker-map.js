@@ -43,6 +43,8 @@ const STYLE = `<style>
 .star-card a{color:var(--cyan)}
 .star-card .star-card-go a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:#090B10;background:var(--cyan);border-radius:6px;text-decoration:none}
 .star-card-list{margin:0;padding-left:18px}
+.star-card-scout{display:flex;gap:8px;align-items:flex-start;margin:10px 0 4px;padding:6px 8px;background:rgba(9,11,16,0.6);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
+.star-card-scout p{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
 .star-card-list li{margin:3px 0}
 .star-card-claim{display:block;font-size:12px;color:rgba(237,239,243,0.7)}
 .star-card-src{display:block;font-size:11px}
@@ -167,29 +169,32 @@ export function brokerDataStatusBlock(status) {
     : '<div class="constellation constellation--loading" role="status"><p>LOADING THE FIELD…</p></div>';
 }
 
+// scoutLine: this visit's one-time Scout line (broker-scout.js), shown in the first-visit note's
+// place; the first visit's own line wins. cardScoutLine goes in the open star's card.
 export function renderBrokerMap(state, {
   status = 'idle', data = null, today = localDay(), selectedId = null, view = null, newlyLit = new Set(),
-  stage = null, firstVisit = false, editingResidency = false, listOpen = false,
+  stage = null, firstVisit = false, scoutLine = null, cardScoutLine = null, editingResidency = false, listOpen = false,
 } = {}) {
   const body = status === 'ready' && data
-    ? loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen })
+    ? loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, scoutLine, cardScoutLine, editingResidency, listOpen })
     : brokerDataStatusBlock(status);
   return `${renderHud(state)}${STYLE}<div class="screen broker-map">${BACK}${body}</div>`;
 }
 
-function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen }) {
+function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit, stage, firstVisit, scoutLine, cardScoutLine, editingResidency, listOpen }) {
   const lighting = brokerLighting(map, state, today);
   const ratio = stage?.w > 0 && stage?.h > 0 ? stage.h / stage.w : 1;
   const v = view ?? initialView(map, layout, lighting, ratio);
   const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: controlsFor(stage) });
   const selected = selectedId ? map.brokers.find((b) => b.id === selectedId) : null;
   // The tapped star's card: below the map on a phone, beside it from 900px.
-  const card = selected ? starCard(map, lighting, selectedId, state) : '';
+  const card = selected ? starCard(map, lighting, selectedId, state, { scoutLine: cardScoutLine }) : '';
   const height = stage?.h > 0 ? ` style="height:${Math.round(stage.h)}px"` : '';
-  // Scout's first-visit line floats over the top of the sky (dismissable), so the map keeps the
-  // phone's height; it leaves the zoom buttons' corner clear.
-  const scout = firstVisit
-    ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
+  // Scout's line (the first visit's, else this visit's one-time line) floats over the top of the
+  // sky (dismissable), so the map keeps the phone's height; it leaves the zoom buttons' corner clear.
+  const line = firstVisit ? BROKER_MAP_DIALOGUE.firstVisit : scoutLine;
+  const scout = line
+    ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
     : '';
   // Each half keeps to one line, so a phone never breaks "HUBS LIT" from its count.
   return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting)).split(' · ').map((part) => `<span class="nw">${esc(part)}</span>`).join(' · ')}</h1>`

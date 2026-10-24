@@ -8,6 +8,7 @@
 import { shortName } from '../utils/broker-view.js';
 import { MISSIONS } from '../data/missions.js';
 import { tickable } from '../utils/big-check.js';
+import { smallScout } from './scout.js';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ext = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
@@ -174,7 +175,8 @@ const STATE_LINE = {
   amber: (s) => `Re-check due: you filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. People-search sites often list people again, so check it.`,
 };
 
-export function starCard(map, lighting, id, state = null) {
+// scoutLine: Scout's one-time no-opt-out line, in the card's flow (never over it) under the route.
+export function starCard(map, lighting, id, state = null, { scoutLine = null } = {}) {
   if (typeof id !== 'string') return '';
   const brokers = Array.isArray(map?.brokers) ? map.brokers.filter((b) => isObj(b) && typeof b.id === 'string') : [];
   const byId = new Map(brokers.map((b) => [b.id, b]));
@@ -198,6 +200,7 @@ export function starCard(map, lighting, id, state = null) {
     + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')
     + stateLine + buyer + frozen + halo
     + `<div class="label">OPT-OUT ROUTE</div>${optOutBlock(b)}${ownedRoutesBlock(map, b, byId)}`
+    + (scoutLine ? `<div class="star-card-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(scoutLine)}</p></div>` : '')
     + (sells.length ? `<div class="label">WHAT ITS RECORDS SAY IT SELLS</div><ul class="star-card-list">${sells.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
     + linksBlock(map, id, byId)
     + sourcesBlock(b)

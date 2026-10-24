@@ -29,7 +29,8 @@ import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-dat
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, markScoutSeen, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
+import { mapScoutLine, cardScoutLine, bigCheckScoutLine } from './utils/broker-scout.js';
 import { brokerLighting } from './utils/broker-lighting.js';
 import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
@@ -81,6 +82,12 @@ let mapStage = null;
 let mapVisitPending = false;
 let mapFirstVisit = false;
 let mapScoutDismissed = false;
+// Scout's one-time lines (broker-scout.js), held for the visit (or the open card) that shows them:
+// the map's { key, line }, the card's { id, line } and the Big Check's line. Each is marked seen in
+// the save after the render that showed it, so a reload never repeats it.
+let mapScout = null;
+let cardScout = null;
+let bigCheckScout = null;
 let editingResidency = false;
 let mapListOpen = false;
 // When the player last saw the city map before this visit (Scout waves after a while away).
@@ -145,17 +152,21 @@ const screens = {
       if (mapVisitPending) {
         newlyLit = newlyLitIds(state, litIds(lighting));
         mapFirstVisit = !Array.isArray(state.brokerMap?.seenLit);
+        // The first visit has Liz's line; the one-time lines start from the second.
+        mapScout = mapFirstVisit ? null : mapScoutLine(state, data.map, lighting, newlyLit);
       }
       if (!view && mapStage) view = initialView(data.map, data.layout, lighting, mapStage.h / mapStage.w);
     }
     return renderBrokerMap(state, {
       status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
       firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
+      scoutLine: mapScoutDismissed ? null : mapScout?.line ?? null,
+      cardScoutLine: cardScout && cardScout.id === selectedId ? cardScout.line : null,
     });
   },
   'big-check': () => {
     if (brokerDataStatus() === 'idle') loadBrokerMapData();
-    return renderBigCheck(state, { status: brokerDataStatus(), data: brokerDataStatus() === 'ready' ? brokerData() : null, today: localDay() });
+    return renderBigCheck(state, { status: brokerDataStatus(), data: brokerDataStatus() === 'ready' ? brokerData() : null, today: localDay(), scoutLine: bigCheckScout });
   },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
@@ -212,6 +223,11 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
+    // The Big Check's line is drawn once the data is in; then it's seen.
+    if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {
+      const seen = markScoutSeen(state, 'bigCheck');
+      if (seen !== state) setState(seen);
+    }
     if (watched) {
       const seen = markSealedSeen(state, route.params.id, watched ?? []);
       if (seen !== state) setState(seen);
@@ -254,8 +270,11 @@ function startScreenVisit(route) {
     mapListOpen = false;
     mapFirstVisit = false;
     mapScoutDismissed = false;
+    mapScout = null;
+    cardScout = null;
     mapVisitPending = true;
   }
+  if (route.screen === 'big-check') bigCheckScout = bigCheckScoutLine(state);
   if (landingReaction) {
     const arriving = !landingReaction.landed && route.screen === 'district' && route.params.id === landingReaction.districtId;
     landingReaction = arriving ? { ...landingReaction, landed: true } : null;
@@ -293,7 +312,9 @@ function afterBrokerMapRender(renderFn, params) {
   sizeSheet();
   if (mapVisitPending && brokerDataStatus() === 'ready') {
     const data = brokerData();
-    const seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    let seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    // This draw showed the visit's one-time line (if any): it never shows on a later visit.
+    if (mapScout) seen = markScoutSeen(seen, mapScout.key);
     setState(seen);
     mapVisitPending = false;
     newlyLit = [];
@@ -335,7 +356,13 @@ function openCard(id, returnTo) {
   // Tapping a star is what Scout's first-visit note asks for; the note then gives the sky back.
   mapScoutDismissed = true;
   cardReturn = returnTo;
+  // The first no-opt-out card carries Scout's line (in the card's flow); seen once it's drawn.
+  const data = brokerData();
+  const line = data ? cardScoutLine(state, brokerLighting(data.map, state, localDay()), id) : null;
+  if (line) cardScout = { id, line };
+  else if (cardScout?.id !== id) cardScout = null;
   renderCurrentRoute();
+  if (line) setState(markScoutSeen(state, 'noOptOut'));
   keepSelectedInView();
   focusCard();
 }
@@ -344,6 +371,7 @@ function closeCard() {
   const back = cardReturn;
   selectedId = null;
   cardReturn = null;
+  cardScout = null;
   cardFocusPending = false;
   renderCurrentRoute();
   const el = (back && app.querySelector(back)) || app.querySelector('.map-stage');

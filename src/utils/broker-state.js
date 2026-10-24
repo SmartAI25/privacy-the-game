@@ -7,6 +7,9 @@ import { checklistFor, LEGACY_ALL_ANSWERS } from '../data/broker-checklists.js';
 
 export const RESIDENCY = ['yes', 'no', 'unsaid'];
 
+// Scout's one-time lines on the field map (broker-scout.js); brokerMap.scout[key] = 1 once shown.
+export const MAP_SCOUT_KEYS = Object.freeze(['opened', 'firstHub', 'sweep', 'noOptOut', 'bigCheck']);
+
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 // A real YYYY-MM-DD day (round-trips through Date), or null.
@@ -67,16 +70,45 @@ export function cleanBrokerState(state) {
   }
   if ('brokerMap' in state) {
     if (!isObj(state.brokerMap)) drop('brokerMap');
-    else if ('seenLit' in state.brokerMap) {
-      const { seenLit, ...rest } = state.brokerMap;
-      if (!Array.isArray(seenLit)) { next.brokerMap = rest; changed = true; }
-      else if (seenLit.some((id) => typeof id !== 'string')) {
-        next.brokerMap = { ...rest, seenLit: seenLit.filter((id) => typeof id === 'string') };
-        changed = true;
-      }
+    else {
+      const c = cleanBrokerMap(state.brokerMap);
+      if (c !== state.brokerMap) { next.brokerMap = c; changed = true; }
     }
   }
   return changed ? next : state;
+}
+
+// seenLit is a list of ids; scout keeps only known keys set to 1.
+function cleanBrokerMap(bm) {
+  let out = bm;
+  const set = (key, value) => {
+    if (out === bm) out = { ...bm };
+    if (value === undefined) delete out[key];
+    else out[key] = value;
+  };
+  if ('seenLit' in bm) {
+    if (!Array.isArray(bm.seenLit)) set('seenLit', undefined);
+    else if (bm.seenLit.some((id) => typeof id !== 'string')) set('seenLit', bm.seenLit.filter((id) => typeof id === 'string'));
+  }
+  if ('scout' in bm) {
+    if (!isObj(bm.scout)) set('scout', undefined);
+    else {
+      const scout = {};
+      for (const k of MAP_SCOUT_KEYS) if (Object.hasOwn(bm.scout, k) && bm.scout[k] === 1) scout[k] = 1;
+      if (Object.keys(scout).length !== Object.keys(bm.scout).length) set('scout', scout);
+    }
+  }
+  return out;
+}
+
+// One of Scout's map lines has been shown: it never shows again on this save. Never touches
+// seenLit (its absence is what makes a map visit the first).
+export function markScoutSeen(state, key) {
+  if (!MAP_SCOUT_KEYS.includes(key)) return state;
+  const prev = isObj(state?.brokerMap) ? state.brokerMap : {};
+  const scout = isObj(prev.scout) ? prev.scout : {};
+  if (scout[key] === 1) return state;
+  return { ...state, brokerMap: { ...prev, scout: { ...scout, [key]: 1 } } };
 }
 
 // The map's lit stars the player has already seen bloom. A save whose brokerMap isn't a plain
