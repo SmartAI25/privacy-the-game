@@ -1,0 +1,19 @@
+{
+  "author": "vagusstoff",
+  "body": "Resolves #150\n\nAutonomous documentation / schema resolution by Hermes Agent.",
+  "closingIssues": [
+    150
+  ],
+  "createdAt": "2026-10-19T16:48:39Z",
+  "files": [
+    {
+      "additions": 3,
+      "changeType": "ADDED",
+      "deletions": 0,
+      "path": "docs_update.md"
+    }
+  ],
+  "number": 254,
+  "title": "docs: resolve #150 - [opt-out check] Whitepages, Inc: confirm the opt-out route works",
+  "authorAssociation": "NONE"
+}
