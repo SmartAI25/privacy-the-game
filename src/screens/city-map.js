@@ -364,8 +364,8 @@ function renderDistrictLabels(state, startHere) {
       </div>
       <div class="city-label__name">${name}</div>
       <div class="city-label__meter">
-        <div class="city-label__bar">${cells}</div>
-        <span class="city-label__pct">${percent}%</span>
+        <div class="city-label__bar" role="img" aria-label="${percent}%">${cells}</div>
+        <span class="city-label__pct" aria-hidden="true">${percent}%</span>
       </div>
       <div class="city-label__sub">${total ? `${completed}/${total} MISSIONS${bonus}` : 'SURVEY TO UNLOCK'}</div>
       ${startTag}
@@ -777,6 +777,9 @@ const STYLE = `
       .city-horizon { top: 105px; }
       .city-labels { margin-top: -20px; }
     }
+    /* On a phone the bar says the percentage (its name, for a screen reader, at every width; the
+       written one is aria-hidden so it is heard once); the missions count sits under it. */
+    @media (max-width: 899px) { .city-label__pct { display: none; } }
     @media (prefers-reduced-motion: reduce) {
       .city-map *, .city-map *::before, .city-map *::after { animation: none !important; }
       .city-scan { display: none; }

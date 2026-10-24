@@ -275,7 +275,8 @@ img { image-rendering: pixelated; }
 .desk--note .interior-sources summary, .desk--note .interior-sources a { color: #1A1F2B; }
 @media (prefers-reduced-motion: reduce) { .desk--note .slip { transform: none; } }
 
-.entry { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; margin-top: 12px; align-items: start; }
+.entry { margin-top: 12px; }
+.entry-card { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; }
 .entry-lock { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 1px solid currentColor; }
 .entry--sealed .entry-lock { color: var(--lime); }
 .entry--open .entry-lock { color: var(--amber); }
@@ -346,3 +347,326 @@ img { image-rendering: pixelated; }
 .intro-more-toggle { font-family: var(--font-display); font-style: normal; font-size: 8px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.35); padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
 .intro-more-toggle::before { content: 'MORE ▾'; }
 .intro-more[open] .intro-more-toggle::before { content: 'LESS ▴'; }
+
+/* Debrief / re-check: the briefing's Scout line again, first sentence then "Remind me".
+   At 900px and up the whole line shows, as it always did. */
+.scout-remind { display: inline; }
+[data-scout-line]:has(.scout-remind[open]) .scout-cut-quote { display: none; }
+.scout-remind > summary { display: inline-block; min-height: 44px; line-height: 44px; padding: 0 4px; cursor: pointer; font-family: var(--font-display); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); }
+/* Open from 900px by script (data-open-desktop, app.js); there the tap isn't needed. */
+@media (min-width: 900px) {
+  .scout-remind > summary { display: none; }
+}
+
+/* map key: start */
+/* The broker map's legend: behind a KEY tap on phones, shown open from 900px. */
+.map-key { margin: 14px 0 4px; }
+.map-key > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.map-key > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.map-key[open] .map-legend { margin-top: 10px; }
+/* Open from 900px by script (data-open-desktop, app.js). */
+@media (min-width: 900px) {
+  .map-key > summary { display: none; }
+  .map-key .map-legend { margin-top: 0; }
+}
+/* map key: end */
+
+/* city explainer: start */
+/* The Whole City: Scout's explainer, one fact a slide on a phone. The long list of what
+   is sent shows after WHAT THAT IS is opened (the text sits after the <details>, not in
+   it, so on desktop it flows in the paragraph); the 50-player rule is drawn as dots
+   (aria-hidden). From 900px the slides flow as one paragraph, the list shown, as it always did. */
+.explainer-more { margin-top: 8px; }
+.explainer-more > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; cursor: pointer; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.explainer-more > summary::-webkit-details-marker { display: none; }
+.explainer-more > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.explainer-more:not([open]) + .explainer-more-text { display: none; }
+.explainer-more[open] + .explainer-more-text { display: block; margin-top: 8px; }
+.k-dots { display: flex; flex-wrap: wrap; gap: 5px; max-width: 125px; margin-top: 12px; }
+.k-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 4px rgba(0,229,255,0.5); }
+@media (min-width: 900px) {
+  .deck.explainer-deck { display: inline; }
+  .explainer-deck .slide { display: inline; }
+  .explainer-more { display: none; }
+  .explainer-more:not([open]) + .explainer-more-text { display: inline; }
+  .explainer-more[open] + .explainer-more-text { display: inline; margin-top: 0; }
+  .k-dots { display: none; }
+}
+/* city explainer: end */
+
+/* stats: start */
+/* Your City: the three dials and four findings. From 900px, as they always were. */
+.stats-dials { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.stat-dial { flex: 1 1 240px; padding: 24px; text-align: center; }
+.stat-dial-label { letter-spacing: 2px; }
+.stat-ring-value { font-size: 26px; }
+.stat-streak { height: 120px; margin: 0 auto 14px; }
+.stat-streak-value { font-size: 40px; }
+.stats-findings { display: flex; flex-wrap: wrap; gap: 16px; }
+.stat-finding { flex: 1 1 160px; text-align: center; padding: 16px 12px; }
+@media (max-width: 899px) {
+  /* Three dials in one row, four findings in a 2x2 grid: the same words, drawn tighter. */
+  .stats-dials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stats-dials .stat-dial { padding: 12px 4px; min-width: 0; }
+  .stat-dial { overflow-wrap: anywhere; }
+  .stat-dial-label { letter-spacing: 1px; }
+  .stats-dials .stat-ring { margin-bottom: 8px; }
+  .stat-ring-value { font-size: 20px; }
+  .stat-streak { height: auto; aspect-ratio: 1 / 1; max-width: 120px; margin-bottom: 8px; }
+  .stat-streak-value { font-size: 28px; }
+  .stats-findings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .stats-findings .stat-finding { min-width: 0; padding: 12px 6px; overflow-wrap: anywhere; }
+}
+/* stats: end */
+
+/* deck: start */
+/* A slide deck for phones (src/components/deck.js): a scroll-snap row under 900px,
+   ordinary stacked blocks at 900px and up. */
+.deck { scroll-behavior: smooth; }
+.slide:focus, .slide-heading:focus { outline: none; }
+.slide:focus-visible, .slide-heading:focus-visible { outline: 1px dashed rgba(0, 229, 255, 0.6); outline-offset: 2px; }
+.slide-heading { font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--cyan); margin: 0 0 10px; overflow-wrap: anywhere; }
+.deck-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.deck-btn {
+  min-height: 44px;
+  min-width: 76px;
+  padding: 0 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  cursor: pointer;
+}
+.deck-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.deck-btn:disabled { color: rgba(237, 239, 243, 0.3); background: transparent; border-color: rgba(237, 239, 243, 0.15); cursor: default; }
+.deck-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; flex: 1 1 auto; min-width: 0; }
+.deck-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(237, 239, 243, 0.25); transition: background 0.2s, box-shadow 0.2s; }
+.deck-dot.is-current { background: var(--cyan); box-shadow: var(--glow-cyan); }
+.deck-progress { flex: 1 1 auto; min-width: 0; height: 3px; background: rgba(237, 239, 243, 0.15); overflow: hidden; }
+.deck-progress-fill { display: block; height: 100%; background: var(--cyan); box-shadow: var(--glow-cyan); transition: width 0.2s ease; }
+.deck-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: rgba(237, 239, 243, 0.55); flex: 0 0 auto; }
+/* Named dots (the saints): a row of their own above BACK / NEXT, each a button with the name. */
+.deck-controls--named { flex-wrap: wrap; }
+.deck-dots--named { order: -1; flex: 1 1 100%; gap: 2px; }
+.deck-dot--named {
+  width: auto;
+  height: auto;
+  min-width: 34px;
+  min-height: 44px;
+  padding: 0 2px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgba(237, 239, 243, 0.2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: rgba(237, 239, 243, 0.55);
+  cursor: pointer;
+}
+.deck-dot--named.is-current { background: transparent; box-shadow: none; color: var(--cyan); border-bottom-color: var(--cyan); }
+.deck-dot--named:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+@media (max-width: 899px) {
+  .deck {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    align-items: flex-start;
+    overflow-y: hidden;
+    transition: height 0.2s ease;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    max-height: calc(100vh - 160px);
+    max-height: calc(100svh - 160px);
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+}
+@media (min-width: 900px) {
+  .deck { display: block; }
+  .slide { display: block; }
+  .slide.slide--phone { display: none; }
+  .deck-controls { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck { scroll-behavior: auto; transition: none; }
+  .deck-dot, .deck-progress-fill { transition: none; }
+}
+/* deck: end */
+
+/* briefing deck: start */
+/* A mission briefing as slides on a phone (src/screens/briefing.js). At 900px and up the
+   intel and step slides stack back into the two panels they always were, the Scout and last
+   slides hide, and the sidebar shows Scout, THIS LIBERATES and the lore as before. */
+.brief-side { display: flex; }
+.brief-intel { padding: 20px; margin-bottom: 24px; }
+.brief-steps { padding: 20px; margin-bottom: 28px; }
+.brief-scout { display: flex; flex-direction: column; align-items: center; }
+.brief-scout-name { font-family: var(--font-display); font-size: 9px; font-weight: 700; color: var(--cyan); margin-bottom: 16px; letter-spacing: 3px; text-shadow: 0 0 8px rgba(0,229,255,0.4); }
+.brief-scout-bubble { background: rgba(9,11,16,0.6); border: 1px solid rgba(0,229,255,0.15); padding: 14px; width: 100%; font-size: 14px; color: rgba(237,239,243,0.7); line-height: 1.6; font-style: italic; }
+.brief-last { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
+.brief-more { margin-top: 10px; }
+.brief-more > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); min-height: 44px; display: flex; align-items: center; }
+.brief-more[open] > summary { min-height: 0; margin-bottom: 6px; }
+@media (max-width: 899px) {
+  .brief--deck .brief-side { display: none; }
+  .brief-deck > .slide { max-height: calc(100vh - 330px); max-height: calc(100svh - 330px); min-height: 200px; }
+  .brief-deck .brief-intel, .brief-deck .brief-steps { margin-bottom: 0; }
+  /* A later intel or step slide says which panel it continues. */
+  .brief-deck .brief-intel:not(.is-first)::before, .brief-deck .brief-steps:not(.is-first)::before {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+  .brief-deck .brief-intel:not(.is-first)::before { content: 'THREAT INTEL'; color: rgba(0,229,255,0.5); }
+  .brief-deck .brief-steps:not(.is-first)::before { content: 'YOUR MOVE'; color: var(--cyan); margin-bottom: 14px; }
+  /* A step's further notes say whose they are: "04 · WHO RUNS IT". */
+  .brief-deck .brief-steps.brief-note::before { content: none; }
+  .brief-note-label::before { content: attr(data-step); }
+  .brief-note-cont::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(0,229,255,0.6);
+    text-transform: uppercase;
+  }
+}
+@media (min-width: 900px) {
+  .brief-scout, .brief-last { display: none; }
+  /* The intel slides are one THREAT INTEL panel, the step slides one YOUR MOVE panel. */
+  .brief-deck .brief-intel:not(.is-last), .brief-deck .brief-steps:not(.is-last) { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+  .brief-deck .brief-intel:not(.is-first) { padding-top: 0; border-top: 0; }
+  .brief-deck .brief-steps:not(.is-first) { padding-top: 14px; border-top: 0; }
+  .brief-deck .brief-steps:not(.is-first):not(.is-last), .brief-deck .brief-steps.is-last:not(.is-first) { box-shadow: none; }
+  /* A step's further notes sit under it, as they did inside its row. */
+  .brief-deck .brief-steps.brief-note:not(.is-first) { padding-top: 8px; }
+  .brief-deck .brief-note > div { margin-left: 42px; }
+  /* The rest of the intel shows in full, as it always did (open by script: data-open-desktop). */
+  .brief-more { margin-top: 0; }
+  .brief-more > summary { display: none; }
+}
+/* briefing deck: end */
+
+/* interiors slides: start */
+/* Saints and building interiors on a phone (src/screens/saints.js, building.js): a saint
+   per slide with the story folded, the records desk as one table, each ground-floor entry
+   one line that opens. At 900px and up: the slips, entries and stories as they were. */
+.saint-story > summary, .desk-more > summary, .entry-fold > summary { cursor: pointer; list-style: none; }
+.saint-story > summary::-webkit-details-marker, .desk-more > summary::-webkit-details-marker, .entry-fold > summary::-webkit-details-marker { display: none; }
+.saint-story > summary, .desk-more > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--cyan);
+}
+.saint-story > summary::before, .desk-more > summary::before { content: '▸ '; white-space: pre; }
+.saint-story[open] > summary::before, .desk-more[open] > summary::before { content: '▾ '; }
+.desk-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; line-height: 1.4; table-layout: fixed; }
+.desk-table thead th { text-align: left; padding: 4px 4px 6px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #9FB6FF; vertical-align: bottom; }
+.desk-table tbody { border-top: 1px dashed rgba(159,182,255,0.4); }
+.desk-cell { padding: 8px 4px 0; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.desk-who { color: #9FB6FF; font-weight: 700; }
+.desk-tool { color: rgba(237,239,243,0.8); }
+.desk-judge { color: var(--amber); }
+.desk-more-cell { padding: 0 4px 4px; }
+.desk-more .slip-note, .desk-more .slip-gets { margin-bottom: 4px; }
+.entry-line { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.entry-line::after { content: '▸'; margin-left: auto; color: rgba(237,239,243,0.45); }
+.entry-fold[open] > .entry-line::after { content: '▾'; }
+.entry-lock--line { flex: 0 0 auto; width: 28px; height: 28px; font-size: 13px; }
+.entry-line-where { flex: 0 0 auto; font-family: var(--font-display); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,239,243,0.55); }
+.entry-line-who { min-width: 0; color: #fff; font-weight: 700; overflow-wrap: anywhere; }
+@media (max-width: 899px) {
+  .desk--tabled { display: none; }
+  /* The open entry: the line already shows the lock and where. */
+  .entry-fold .entry-card { display: block; padding: 2px 0 4px 38px; }
+  .entry-fold .entry-card > .entry-lock, .entry-fold .entry-where { display: none; }
+}
+@media (min-width: 900px) {
+  .desk-table { display: none; }
+  .entry-lock--line { display: none; }
+  /* The stories and entries show in full, as they always did (open by script: data-open-desktop). */
+  .saint-story > summary, .entry-fold > summary { display: none; }
+}
+/* interiors slides: end */
+
+/* trim pass: start */
+/* Fewer words on a phone's first screen (Task 7a). Under 900px some text waits behind a tap or
+   on a later slide; at 900px and up every screen looks as it always did.
+   .phone-only / .desktop-only: two drawings of the same thing, one shown at each width (a screen
+   reader meets one, as the records desk does). */
+@media (max-width: 899px) { .desktop-only { display: none !important; } }
+@media (min-width: 900px) { .phone-only { display: none !important; } }
+/* .phone-fold: a <details data-open-desktop> closed on a phone, open from 900px by script with
+   its summary hidden, so desktop shows the text where it always was. */
+.phone-fold > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.phone-fold > summary::-webkit-details-marker { display: none; }
+.phone-fold > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.phone-fold > summary::after { content: ' ▾'; white-space: pre; }
+.phone-fold[open] > summary::after { content: ' ▴'; }
+.phone-fold[open] > summary { margin-bottom: 8px; }
+/* .more-fold + .more-fold-text: the text sits right after the <details>, not in it, so on desktop
+   it flows on in the same paragraph (as the city explainer's list does). */
+.more-fold { display: inline; }
+.more-fold > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; margin-left: 4px; cursor: pointer; list-style: none; font-family: var(--font-display); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); vertical-align: middle; }
+.more-fold > summary::-webkit-details-marker { display: none; }
+.more-fold > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.more-fold:not([open]) + .more-fold-text { display: none; }
+.more-fold[open] + .more-fold-text { display: block; margin-top: 8px; }
+/* A Scout line split into slides: from 900px the slides flow as one paragraph again. */
+@media (min-width: 900px) {
+  .phone-fold > summary, .more-fold { display: none; }
+  .phone-fold[open] > summary { margin-bottom: 0; }
+  .more-fold:not([open]) + .more-fold-text, .more-fold[open] + .more-fold-text { display: inline; margin-top: 0; }
+  .deck.deck--flow, .deck--flow > .slide { display: inline; }
+}
+/* Quick Quest on a phone: four tiles a slide, two columns. */
+.qq-grid { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; }
+.qq-tile { position: relative; display: flex; flex-direction: column; min-width: 0; background: rgba(26,31,43,0.6); border: 1px solid rgba(0,229,255,0.15); }
+.qq-go { display: block; min-height: 44px; padding: 12px 44px 12px 12px; font-family: var(--font-display); font-size: 12px; font-weight: 700; line-height: 1.35; letter-spacing: 0.5px; color: var(--offwhite); text-decoration: none; overflow-wrap: anywhere; }
+.qq-go:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
+.qq-signs { padding: 0 12px; }
+.qq-signs > summary { position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; cursor: pointer; list-style: none; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--cyan); }
+.qq-signs > summary::-webkit-details-marker { display: none; }
+.qq-signs > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: -4px; }
+.qq-signs[open] { padding-bottom: 12px; }
+.qq-badge { display: inline-block; font-size: 8px; letter-spacing: 1px; color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.15); }
+.qq-desc { margin-top: 6px; font-size: 12px; line-height: 1.5; color: rgba(237,239,243,0.6); }
+/* Surveys on a phone: one question, a chip per account (district.js). */
+.survey-ask { font-size: 14px; line-height: 1.5; color: var(--offwhite); margin-bottom: 10px; }
+.survey-chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.survey-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; font: inherit; font-size: 13px; color: rgba(237,239,243,0.6); background: rgba(255,255,255,0.02); border: 1px solid rgba(237,239,243,0.18); cursor: pointer; overflow-wrap: anywhere; text-align: left; }
+.survey-chip.is-on { color: var(--lime); background: rgba(198,255,0,0.08); border-color: rgba(198,255,0,0.45); }
+.survey-chip:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.survey-chip-mark { display: inline-block; min-width: 10px; font-weight: 700; }
+.survey-chip--soon { opacity: 0.55; cursor: default; }
+.survey-chip-soon { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; }
+/* Scout's district welcome: only its first sentence before MORE on a phone. */
+@media (max-width: 899px) { .intro-lead-more { display: none; } }
+@media (min-width: 900px) { .intro-lead-phone { display: none; } }
+/* A facility's title (or a timeline card's name) already names its building: the building's own label hides on a phone. */
+@media (max-width: 899px) { .facility-icon > div > div:last-child, .tl-icon--same > div > div:last-child { display: none; } }
+/* The Whole City: CITY FORTIFIED's definition opens under the ring on a phone. */
+.fortified-what { margin-top: 10px; }
+.fortified-what > summary { margin: 0 auto; }
+/* trim pass: end */

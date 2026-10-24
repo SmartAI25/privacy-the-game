@@ -1,7 +1,8 @@
 import { renderHud } from '../components/hud.js';
 import { renderScout } from '../components/scout.js';
 import { ringChart, renderGhostPending, renderNotice, esc } from './stats.js';
-import { podBoard, displayPodId, findPod, yourPart, fmt } from '../utils/collective.js';
+import { podBoard, displayPodId, findPod, yourPart, fmt, POD_MIN_PLAYERS } from '../utils/collective.js';
+import { deck, splitWords } from '../components/deck.js';
 import { isCityComplete, getGhostInfo, isGhostPending } from '../utils/ghost.js';
 import { COLLECTIVE_DIALOGUE } from '../data/dialogue.js';
 
@@ -10,8 +11,33 @@ const LABEL = 'color: rgba(0,229,255,0.4); margin-bottom: 16px;';
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 const plural = (n, one, many) => (n === 1 ? one : many);
 
+// The rule, drawn: one dot per player a place needs before it shows up. A picture
+// only (aria-hidden): the sentence beside it says the number; hidden from 900px.
+const minPlayersDots = () => `<span class="k-dots" aria-hidden="true">${'<span class="k-dot"></span>'.repeat(POD_MIN_PLAYERS)}</span>`;
+
+// Scout's explainer, one fact a slide on a phone: what is sent (the long list behind
+// a fold, open on desktop), what never is, the 50-player rule, deletion. Split at
+// sentence ends, word for word; from 900px the slides flow as one paragraph again.
+export function explainerSlides(text = COLLECTIVE_DIALOGUE.explainer) {
+  const sentences = splitWords(text, 1).map((x) => x.trim());
+  const at = (start) => sentences.findIndex((x) => x.startsWith(start));
+  const list = at("That's things like");
+  const never = at('Never your passwords');
+  const rule = at('Every night');
+  const off = at('Turn sharing off');
+  if (!(list > 0 && never === list + 1 && rule === never + 1 && off === rule + 1)) return [{ html: text }];
+  const join = (a, b) => sentences.slice(a, b).join(' ');
+  return [
+    { html: `${join(0, list)} <details class="explainer-more" data-fold="explainer-sent" data-open-desktop><summary>WHAT THAT IS</summary></details><span class="explainer-more-text">${sentences[list]}</span>` },
+    { html: ` ${sentences[never]}` },
+    { html: ` ${sentences[rule]}${minPlayersDots()}` },
+    { html: ` ${join(off)}` },
+  ];
+}
+
 function explainer() {
-  return `<div style="margin-bottom: 16px;">${renderScout(COLLECTIVE_DIALOGUE.explainer, { feeling: 'thinkingA', actionText: 'WHAT WE KNOW ABOUT YOU', actionHref: '#/stats' })}</div>`;
+  const body = deck(explainerSlides(), { label: 'How we know any of this', className: 'explainer-deck' });
+  return `<div style="margin-bottom: 16px;">${renderScout(body, { feeling: 'thinkingA', actionText: 'WHAT WE KNOW ABOUT YOU', actionHref: '#/stats' })}</div>`;
 }
 
 // GO GHOST for everyone: the final mission once the city is taken back, the
@@ -59,7 +85,7 @@ function cityScore(city) {
   <div class="panel" style="padding: 24px; margin-bottom: 16px; text-align: center; border-color: rgba(198,255,0,0.1);">
     ${ringChart({ fraction: f.pct / 100, color: '#C6FF00', glow: 'rgba(198,255,0,0.4)', track: 'rgba(198,255,0,0.08)', value: `${fmt(f.pct)}%`, unit: '' })}
     <div style="font-family: var(--font-display); font-size: 8px; font-weight: 600; color: rgba(198,255,0,0.5); letter-spacing: 2px;">CITY FORTIFIED</div>
-    <div style="${MUTED} margin-top: 10px;">Of email addresses found in a known breach by everyone in places with enough players to count, this share has been fixed.</div>
+    <details class="phone-fold fortified-what" data-fold="fortified-what" data-open-desktop><summary>What's this?</summary><div style="${MUTED} margin-top: 10px;">Of email addresses found in a known breach by everyone in places with enough players to count, this share has been fixed.</div></details>
   </div>`;
 }
 
@@ -199,7 +225,7 @@ function footer(data) {
   if (when && !Number.isNaN(when.getTime())) lines.push(`As of ${esc(when.toLocaleString())}.`);
   lines.push('Breach rates now count email addresses only.');
   lines.push('Loading this page doesn\'t track you.');
-  lines.push('“Players” are anonymous browser sessions. Places with fewer than 50 players are grouped into a bigger place.');
+  lines.push(`“Players” are anonymous browser sessions. Places with fewer than ${POD_MIN_PLAYERS} players are grouped into a bigger place.`);
   const tail = [];
   if (isNum(city.ghosts)) tail.push(`${fmt(city.ghosts)} people have gone ghost`);
   if (isNum(city.optedOut)) tail.push(`${fmt(city.optedOut)} opted out`);

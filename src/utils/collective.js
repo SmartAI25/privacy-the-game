@@ -4,6 +4,8 @@ import { addressChecks } from './calc.js';
 // Relative to /reclaim-city/: served by rc-collective behind Traefik.
 export const COLLECTIVE_URL = 'api/collective.json';
 export const WHOAMI_URL = 'api/whoami';
+// A place shows up only once it has at least this many players (the nightly job's K, collective/job/run.py).
+export const POD_MIN_PLAYERS = 50;
 
 
 export function parseCollective(json) {

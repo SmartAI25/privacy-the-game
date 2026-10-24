@@ -39,6 +39,13 @@ function getEras(joinYear) {
   ];
 }
 
+// The building beside a card's name: its own label says the same name (Instagram, Instagram),
+// so on a phone that label hides (tl-icon--same, style.css); a different name stays.
+function platformIcon(platform, bState) {
+  const same = ACCOUNTS[platform.id]?.name === platform.name;
+  return `<span class="tl-icon${same ? ' tl-icon--same' : ''}">${renderBuilding(platform.id, bState, 48)}</span>`;
+}
+
 function renderPlatformCard(state, platform) {
   const account = ACCOUNTS[platform.id];
   if (!account || !state.accounts[platform.id]?.enabled) return '';
@@ -68,7 +75,7 @@ function renderPlatformCard(state, platform) {
     return `
     <div style="background: rgba(26,31,43,0.5); border: 1px solid rgba(0,229,255,0.2); padding: 20px; margin-bottom: 16px;">
       <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
-        ${renderBuilding(platform.id, bState, 48)}
+        ${platformIcon(platform, bState)}
         <div style="flex: 1;">
           <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--offwhite); letter-spacing: 1px;">${esc(platform.name)}</div>
           <div style="font-family: var(--font-mono); font-size: 10px; color: rgba(0,229,255,0.6); margin-top: 3px;">Joined ${profile.joinYear} · ${yearsOn} year${yearsOn === 1 ? '' : 's'} of history</div>
@@ -86,10 +93,9 @@ function renderPlatformCard(state, platform) {
   return `
   <div style="background: rgba(26,31,43,0.3); border: 2px dashed rgba(0,229,255,0.15); padding: 20px; margin-bottom: 16px;">
     <div style="display: flex; align-items: center; gap: 14px;">
-      ${renderBuilding(platform.id, bState, 48)}
+      ${platformIcon(platform, bState)}
       <div style="flex: 1;">
         <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--offwhite); letter-spacing: 1px;">${esc(platform.name)}</div>
-        <div style="font-size: 11px; color: rgba(237,239,243,0.4); margin-top: 3px;">Tell us about your history here to plan your review.</div>
       </div>
       <span data-action="edit-social-profile" data-platform="${platform.id}" style="cursor: pointer; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #00E5FF; padding: 8px 16px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,229,255,0.08); box-shadow: 0 0 10px rgba(0,229,255,0.1);">SET UP</span>
     </div>
@@ -182,9 +188,10 @@ export function renderTimeline(state) {
     <div style="padding: 24px;">
       ${unconfigured > 0 ? `
         <div style="background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.15); padding: 14px 16px; margin-bottom: 20px;">
-          <div style="font-size: 13px; color: rgba(237,239,243,0.65); line-height: 1.6;">Tell us when you joined each platform and how active you were. We'll break your review into right-sized chunks — heavy years get their own missions, quiet years get grouped together. <strong style="color: var(--cyan);">No rushing.</strong></div>
+          <div style="font-size: 13px; color: rgba(237,239,243,0.65); line-height: 1.6;">Tell us when you joined each platform and how active you were. <details class="more-fold" data-fold="timeline-how" data-open-desktop><summary>MORE</summary></details><span class="more-fold-text">We'll break your review into right-sized chunks — heavy years get their own missions, quiet years get grouped together. <strong style="color: var(--cyan);">No rushing.</strong></span></div>
         </div>
       ` : ''}
+      ${unconfigured > 0 ? `<div data-setup-note style="font-size: 11px; color: rgba(237,239,243,0.4); margin-bottom: 10px;">Tell us about your history here to plan your review.</div>` : ''}
       ${cards}
       <div id="social-form-container"></div>
     </div>

@@ -24,6 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
+import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle, desktopFoldKey, rectOnScreen } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -60,6 +61,10 @@ let state = ensureBurst(loadState());
 let started = hasSavedState();
 
 const app = document.getElementById('app');
+// Folds the player set by hand this screen visit (see applyOpenDesktop), and the desktop width test.
+let handFolds = new Map();
+const desktopQuery = typeof matchMedia === 'function' ? matchMedia('(min-width: 900px)') : null;
+function isDesktopWide() { return !!desktopQuery?.matches; }
 
 let collectiveView = { status: 'idle' };
 let whoamiView = { status: 'idle' };
@@ -224,8 +229,17 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
     // The map re-draws on every zoom and tap: no screen fade on those (it flashes the sky).
     app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
+    // A re-draw (an action, data arriving) keeps each slide deck on its slide; arriving starts at slide 1.
+    const decksBefore = tracksPageview(cause) ? null : deckPositions(app);
+    // So does every fold the player opened (a saint's story, a full slip, an entry).
+    const foldsBefore = tracksPageview(cause) ? null : openFolds(app);
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
+    restoreFolds(app, foldsBefore);
+    // Arriving forgets the folds the player set by hand on the last screen.
+    if (tracksPageview(cause)) handFolds = new Map();
+    applyOpenDesktop(app, isDesktopWide(), handFolds);
+    initDecks(app, decksBefore);
     // The Big Check's line is drawn once the data is in; then it's seen.
     if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {
       const seen = markScoutSeen(state, 'bigCheck');
@@ -288,7 +302,10 @@ function startScreenVisit(route) {
 
 // Scout cheers the player off (goDoIt on the briefing), then the game moves on.
 function cheerThenGo(hash) {
-  const slot = app.querySelector('[data-scout="briefing"]');
+  // A phone shows the Scout slide's sprite, a desktop the sidebar's: cheer with the one on
+  // screen. A Scout slide scrolled out of its deck is not on screen: then go straight on.
+  const slots = [...app.querySelectorAll('[data-scout="briefing"]')];
+  const slot = slots.find((el) => rectOnScreen(el.getBoundingClientRect?.(), window.innerWidth, window.innerHeight));
   const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (!slot || still) return navigate(hash);
   leavingBriefing = true;
@@ -1013,6 +1030,8 @@ app.addEventListener('click', async (e) => {
       setState(toggleAccount(state, id, enabled));
       track('account-toggled', { account: id, enabled });
       renderCurrentRoute();
+      // A survey chip (a button, on a phone) keeps focus across the redraw.
+      if (el.tagName === 'BUTTON') [...app.querySelectorAll(`button[data-action="toggle-account"][data-account="${CSS.escape(id)}"]`)].find((b) => b.offsetParent !== null)?.focus();
     }
   } else if (action === 'toggle-analytics') {
     if (isAnalyticsOff()) {
@@ -1238,11 +1257,25 @@ app.addEventListener('click', async (e) => {
   }
 });
 
+// <details data-open-desktop>: closed on a phone, open from 900px (set after every render and
+// on a breakpoint change). A fold the player opens or closes by hand keeps that this screen visit.
+desktopQuery?.addEventListener?.('change', () => applyOpenDesktop(app, isDesktopWide(), handFolds));
+app.addEventListener('toggle', (e) => {
+  const d = e.target;
+  if (!(d instanceof HTMLDetailsElement) || !d.hasAttribute('data-open-desktop')) return;
+  recordHandToggle(d, [...app.querySelectorAll('details[data-open-desktop]')].indexOf(d), handFolds);
+}, true);
+
 // A building floor folded or unfolded. <details> toggle does not bubble, so
 // listen in the capture phase. Local state only: no track().
 app.addEventListener('toggle', (e) => {
   const details = e.target;
   if (!(details instanceof HTMLDetailsElement) || !details.dataset.floor) return;
+  // A floor the script opened or folded for the screen width (data-open-desktop) is not the player's choice.
+  if (details.hasAttribute('data-open-desktop')) {
+    const all = [...app.querySelectorAll('details[data-open-desktop]')];
+    if (!handFolds.has(desktopFoldKey(details, all.indexOf(details)))) return;
+  }
   const id = details.closest('[data-building]')?.dataset.building;
   if (!id) return;
   const next = setFloorOpen(state, id, details.dataset.floor, details.open);

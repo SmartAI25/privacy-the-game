@@ -13,7 +13,7 @@ import { canRecheck } from '../utils/debrief.js';
 import { renderScout } from '../components/scout.js';
 import { INTERIOR_LINES, pick } from '../data/dialogue.js';
 import { renderCandle } from './saints.js';
-import { devicesOf, isFloorOpen, newlySealed, interiorLineKind } from '../utils/interior-state.js';
+import { devicesOf, isFloorOpen, floorChoice, newlySealed, interiorLineKind } from '../utils/interior-state.js';
 
 const DAY = 864e5;
 const LIT = { ok: 4, warn: 2, crit: 1, 'not-checked': 0 };
@@ -48,9 +48,15 @@ function sourceLinks(sources = []) {
     .join('')}</details>`;
 }
 
-// Floors remember whether the player folded them (state.interior[id].floors).
+// Floors remember whether the player folded them (state.interior[id].floors). One the
+// player never touched, below the roof, starts folded on a phone and open from 900px
+// (data-open-desktop, set by script); the roof always starts open.
+const PHONE_FOLDED = new Set(['desk', 'ground', 'alcove']);
 function floor(ctx, kind, title, body) {
-  const open = isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
+  const unset = PHONE_FOLDED.has(kind) && floorChoice(ctx.state, ctx.accountId, kind) === undefined;
+  // An entry sealing right now is seen: its floor opens at every width (not saved).
+  const sealingHere = kind === 'ground' && ctx.sealing?.size > 0;
+  const open = unset && !sealingHere ? ' data-open-desktop' : unset || isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
   return `
     <details class="floor floor--${kind}"${open} data-floor="${kind}">
       <summary class="floor-head"><span>${title}</span><span class="floor-chev" aria-hidden="true">▾</span></summary>
@@ -127,15 +133,18 @@ function deviceList(state, accountId) {
     ? list.map((d, i) => `
         <li class="device"><span class="device-name">${esc(d)}</span><button type="button" class="device-x" data-action="remove-device" data-building="${esc(accountId)}" data-index="${i}" aria-label="Remove ${esc(d)}">×</button></li>`).join('')
     : '<li class="device dim">not listed</li>';
+  // On a phone the list waits behind "Your devices"; from 900px it shows as it always did.
   return `
       <div class="devices" data-devices>
-        <div class="devices-title">Your devices</div>
+        <details class="phone-fold devices-fold" data-fold="devices-${esc(accountId)}" data-open-desktop><summary>Your devices</summary>
+        <div class="devices-title desktop-only">Your devices</div>
         <ul class="devices-list">${items}</ul>
         <div class="devices-add">
           <input class="devices-input" type="text" maxlength="40" autocomplete="off" data-device-input aria-label="Add a device" placeholder="e.g. old tablet">
           <button type="button" class="interior-btn interior-btn--quiet" data-action="add-device" data-building="${esc(accountId)}">ADD</button>
         </div>
         <div class="dim interior-note">Kept on this phone only. Nothing here is sent anywhere.</div>
+        </details>
       </div>`;
 }
 
@@ -144,7 +153,50 @@ function roof(ctx, rows) {
   return floor(ctx, 'roof', '▲ Roof · Signal check', `
       <div class="ant">${rows.map((r) => roofRow(state, r)).join('')}</div>
       ${deviceList(state, accountId)}
-      <div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div>`);
+      <details class="phone-fold" data-fold="antenna-${esc(accountId)}" data-open-desktop><summary>Why antennas fade</summary><div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div></details>`);
+}
+
+// The desk table's last column: whether a judge signs off. Each part is a whole
+// sentence of the slip, quoted as it stands: its scope ("what you actually wrote"),
+// hedges and attributions included ("may", "Proton says", "Yahoo lists"). A slip
+// that doesn't say gets a dash.
+const JUDGE = [
+  /A 2703\(d\) court order adds [^.]*\./,
+  /To force [^.]*, police need a search warrant signed by a judge\./,
+  /Yahoo lists a search warrant, signed by a judge, [^.]*\./,
+  /Meta requires a search warrant, signed by a judge, [^.]*\./,
+  /An emergency request needs no judge at all[^.]*\./,
+  /^Everything on the police slip, plus National Security Letters: [^.]*\./,
+  /No warrant is needed for each one\./,
+  /Its 2026 status is unsettled: [^.]*court-approved certifications[^.]*\./,
+  /A subpoena signed by an agency official, not a judge\./,
+  /Since October 2022, [^.]*may answer without a US court being involved\./,
+  /Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge\./,
+];
+
+export function judgeCell(lane) {
+  const said = JUDGE.map((re) => lane.gets.match(re)?.[0]).filter(Boolean);
+  return said.length ? said.join(' · ') : '—';
+}
+
+function slipBody(lane) {
+  return `${lane.actorNote ? `<div class="dim slip-note">${esc(lane.actorNote)}</div>` : ''}
+        <div class="slip-gets">${esc(lane.gets)}</div>
+        ${sourceLinks(lane.sources)}`;
+}
+
+// On a phone the slips are one table: who asks, with what, and whether a judge
+// signs; each row's full slip opens under it. At 900px and up, the slips as before.
+function deskTable(accountId, lanes) {
+  const rows = lanes.map((lane) => `
+        <tbody data-desk-row="${esc(lane.id)}">
+          <tr><th scope="row" class="desk-cell desk-who">${esc(lane.actor)}</th><td class="desk-cell desk-tool">${esc(lane.tool)}</td><td class="desk-cell desk-judge">${esc(judgeCell(lane))}</td></tr>
+          <tr><td colspan="3" class="desk-more-cell"><details class="desk-more" data-fold="desk-${esc(accountId)}-${esc(lane.id)}"><summary>The full slip</summary>${slipBody(lane)}</details></td></tr>
+        </tbody>`).join('');
+  return `
+      <table class="desk-table">
+        <thead><tr><th scope="col">Who asks</th><th scope="col">With what</th><th scope="col">Judge needed?</th></tr></thead>${rows}
+      </table>`;
 }
 
 function desk(ctx, interior) {
@@ -152,15 +204,14 @@ function desk(ctx, interior) {
       <div class="slip" data-lane="${esc(lane.id)}">
         <div class="slip-stamp">${esc(lane.tool)}</div>
         <div class="slip-who">${esc(lane.actor)}</div>
-        ${lane.actorNote ? `<div class="dim slip-note">${esc(lane.actorNote)}</div>` : ''}
-        <div class="slip-gets">${esc(lane.gets)}</div>
-        ${sourceLinks(lane.sources)}
+        ${slipBody(lane)}
       </div>`).join('');
   // A desk with one lane (Signal's) is a single sticky note, not a stack of slips.
-  const note = interior.desk.length === 1 ? ' desk--note' : '';
+  const single = interior.desk.length === 1;
   return floor(ctx, 'desk', `▣ Records desk · ${esc(interior.company)}’s`, `
       <div class="dim interior-note">${esc(interior.deskIntro)}</div>
-      <div class="desk${note}">${slips}</div>`);
+      ${single ? '' : deskTable(ctx.accountId, interior.desk)}
+      <div class="desk${single ? ' desk--note' : ' desk--tabled'}">${slips}</div>`);
 }
 
 // Where SEAL IT (or START) goes: { href, recheck }, or null for no button.
@@ -202,9 +253,18 @@ function entry(state, accountId, e, sealing) {
   } else {
     status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${target.href}">${target.recheck ? 'RE-CHECK' : 'START'}</a>` : ''}`;
   }
+  // On a phone, one line (lock, where, who) that opens to the rest; at 900px and
+  // up the line hides and the entry shows in full, as before (style.css).
+  const actors = String(e.actor).split(' · ');
+  const first = actors[0].split(/\s+/).length > 6 ? `${actors[0].split(/[,(]/)[0].trim()}…` : actors[0];
+  const who = `${first}${actors.length > 1 ? ` +${actors.length - 1}` : ''}`;
+  const label = STATE_LABEL[s.state] ?? 'Not checked yet';
+  const icon = ICON[s.state] ?? '?';
   return `
       <div class="entry entry--${s.state}${sealing.has(e.id) ? ' entry--sealing' : ''}" data-entry="${esc(e.id)}" data-state="${s.state}">
-        <div class="entry-lock" role="img" aria-label="${STATE_LABEL[s.state] ?? 'Not checked yet'}">${ICON[s.state] ?? '?'}</div>
+        <details class="entry-fold" data-fold="entry-${esc(accountId)}-${esc(e.id)}" data-open-desktop><summary class="entry-line"><span class="entry-lock entry-lock--line" role="img" aria-label="${label}">${icon}</span><span class="entry-line-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</span><span class="entry-line-who">${esc(who)}</span></summary>
+        <div class="entry-card">
+        <div class="entry-lock" role="img" aria-label="${label}">${icon}</div>
         <div class="entry-text">
           <div class="entry-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</div>
           <div class="entry-actors">${actorLines(e.actor)}</div>
@@ -213,6 +273,7 @@ function entry(state, accountId, e, sealing) {
           ${status}
           ${sourceLinks(e.sources)}
         </div>
+        </div></details>
       </div><!-- /entry -->`;
 }
 
@@ -257,8 +318,8 @@ export function renderBuildingInterior(state, accountId, { now = new Date() } = 
   const district = DISTRICTS.find((d) => d.id === account.district);
   const rows = checkupRows(state, accountId, now);
   const saints = (interior.saints ?? []).map((id) => SAINTS[id]).filter(Boolean);
-  const ctx = { state, accountId };
   const sealing = new Set(newlySealed(state, accountId));
+  const ctx = { state, accountId, sealing };
   const kind = interiorLineKind(state, accountId);
   const scout = kind
     ? `<div class="interior-scout" data-scout="interior">${renderScout(esc(pick(INTERIOR_LINES[kind]).replace(/\{name\}/g, account.name)))}</div>`

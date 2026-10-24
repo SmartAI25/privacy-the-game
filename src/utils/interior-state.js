@@ -90,6 +90,12 @@ export function isFloorOpen(state, accountId, floorId) {
   return interiorOf(state, accountId).floors?.[floorId] !== false;
 }
 
+// The player's own choice for a floor: true, false, or undefined (never folded or unfolded).
+export function floorChoice(state, accountId, floorId) {
+  const v = interiorOf(state, accountId).floors?.[floorId];
+  return typeof v === 'boolean' ? v : undefined;
+}
+
 export function setFloorOpen(state, accountId, floorId, open) {
   if (isFloorOpen(state, accountId, floorId) === Boolean(open)) return state;
   const cur = interiorOf(state, accountId);

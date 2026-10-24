@@ -9,6 +9,7 @@ import { PM_MISSION_ID } from '../utils/password-need.js';
 import { PM_BURST_ID, pmNumbers } from '../utils/bursts.js';
 import { twoFactorMethod, CODE_METHODS } from '../utils/two-factor.js';
 import { scoutSprite } from '../components/scout.js';
+import { splitWords } from '../components/deck.js';
 import { renderBrokerChecklist } from '../components/broker-checklist.js';
 import { checklistFor } from '../data/broker-checklists.js';
 import { isChecklistPending } from '../utils/broker-lighting.js';
@@ -229,6 +230,29 @@ function mostSevere(mission, stored, values) {
   return values.reduce((best, v) => (best === undefined || rank(v) > rank(best) ? v : best), undefined);
 }
 
+// The briefing already said this line. Said again here, only its first
+// sentence shows; the rest waits behind "Remind me". Any other line is as it is.
+export function scoutLineOnce(line, briefingLine) {
+  if (!line || line !== briefingLine) return line;
+  const [first, ...rest] = splitWords(line, 1);
+  if (!rest.length) return line;
+  const head = first.trim();
+  return `${head}${cutQuote(head)} <details class="scout-remind" data-open-desktop><summary>Remind me</summary>${rest.join('').trim()}</details>`;
+}
+
+// A quote the first sentence opens and doesn't close: close it at the cut, for as long as the
+// rest is folded away (style.css hides it once the details opens).
+const QUOTE_PAIRS = [['"', '"'], ['\u201c', '\u201d'], ['&ldquo;', '&rdquo;']];
+function cutQuote(head) {
+  const pair = QUOTE_PAIRS.find(([open]) => head.startsWith(open));
+  if (!pair) return '';
+  const [open, close] = pair;
+  const opens = head.split(open).length - 1;
+  const closes = open === close ? 0 : head.split(close).length - 1;
+  const unclosed = open === close ? opens % 2 === 1 : opens > closes;
+  return unclosed ? `<span class="scout-cut-quote" aria-hidden="true">${close}</span>` : '';
+}
+
 // Scout's reaction to a filed report: the line, the feeling, and any progress
 // check-in. Shown on the debrief when reopened, and on the screen the player
 // lands on right after SUBMIT REPORT. null unless the mission is completed.
@@ -344,7 +368,7 @@ export function renderDebrief(state, missionId, { recheck = false } = {}) {
         </div>
         <div style="background: rgba(26,31,43,0.7); border: 1px solid rgba(0,229,255,0.15); padding: 12px 16px; flex: 1;">
           <div style="font-size: 14px; color: rgba(237,239,243,0.75); line-height: 1.6;">${completed ? 'Report filed. Good work, agent.' : recheck ? 'Still true? Confirm each answer, or change it.' : 'Welcome back, agent. What did you find?'}</div>
-          <div style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLine}</div>
+          <div data-scout-line style="font-size: 13px; color: rgba(237,239,243,0.55); line-height: 1.6; font-style: italic; margin-top: 8px;">${scoutLineOnce(scoutLine, mission.scoutDialog?.briefing)}</div>
         </div>
       </div>
       ${questions}

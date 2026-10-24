@@ -5,6 +5,7 @@ import { renderHud } from '../components/hud.js';
 import { isCandleLit } from '../utils/interior-state.js';
 import { ACCOUNTS } from '../data/accounts.js';
 import { hasInterior } from '../data/interiors/index.js';
+import { deck } from '../components/deck.js';
 
 export const SAINT_ORDER = ['swartz', 'snowden', 'klein', 'zimmermann', 'ellsberg', 'manning', 'drake', 'binney', 'poitras'];
 
@@ -29,16 +30,18 @@ function sources(list = []) {
     .join('')}</details>`;
 }
 
+// One saint: on a phone, one slide. The story waits behind "Their story"; at 900px
+// and up it shows in full, as it always did (style.css, interiors slides).
 function card(state, s) {
   return `
-      <section class="saint-card" data-saint-card="${esc(s.id)}">
+      <div class="saint-card" data-saint-card="${esc(s.id)}">
         <h2 class="saint-name">${esc(s.name)}</h2>
         <div class="dim alcove-title">${esc(s.title)} · ${esc(s.years)}</div>
         <div class="alcove-tribute"><span>Scout: “${esc(s.tribute)}”</span></div>
-        <div class="alcove-story">${esc(s.story)}</div>
-        ${sources(s.sources)}
+        <details class="saint-story" data-fold="saint-story-${esc(s.id)}" data-open-desktop><summary>Their story</summary><div class="alcove-story">${esc(s.story)}</div>
+        ${sources(s.sources)}</details>
         ${renderCandle(state, s)}
-      </section>`;
+      </div>`;
 }
 
 // Back to the building the player came from (app memory, never the URL),
@@ -59,8 +62,8 @@ export function renderSaints(state, { from = null } = {}) {
       ${backLink(state, from)}
       <div class="interior-title">SAINTS</div>
       <div class="interior-sub">People whose work made this map knowable</div>
-      <div class="dim interior-note">Candles stay on this phone. Nothing here is sent anywhere.</div>
-      ${saints.map((s) => card(state, s)).join('')}
+      <details class="phone-fold" data-fold="saints-candles" data-open-desktop><summary>About candles</summary><div class="dim interior-note">Candles stay on this phone. Nothing here is sent anywhere.</div></details>
+      ${deck(saints.map((s) => ({ html: card(state, s) })), { label: 'Saints', className: 'saints-deck', names: saints.map((s) => s.name) })}
     </div>
   </div>`;
 }

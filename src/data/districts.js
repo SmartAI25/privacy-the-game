@@ -1,3 +1,8 @@
+import { withArticle } from '../utils/article.js';
+
+// "Do you have an Outlook account?", "Do you have an Investment Account?": a/an by sound, "account" once.
+export const haveAccount = (name) => `Do you have ${withArticle(/\baccount$/i.test(name) ? name : `${name} account`)}?`;
+
 export const DISTRICTS = [
   {
     id: 'master-keys',
@@ -6,7 +11,7 @@ export const DISTRICTS = [
     chapter: 1,
     description: 'Email & Identity Providers — the foundation everything else sits on',
     flavor: 'Secure this first or nothing else matters.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
     askPasswordManager: true,
   },
   {
@@ -16,7 +21,7 @@ export const DISTRICTS = [
     chapter: 2,
     description: 'Financial — banks, payment apps, investments',
     flavor: 'Your money lives here.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
   },
   {
     id: 'square',
@@ -43,7 +48,7 @@ export const DISTRICTS = [
     chapter: 5,
     description: 'Shopping & streaming',
     flavor: 'Lower stakes but real attack surface — stored payment methods, your address.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
   },
   {
     id: 'capitol',
@@ -81,7 +86,7 @@ export const DISTRICTS = [
     chapter: 9,
     description: 'Connected vehicles — your car is a surveillance device on wheels',
     flavor: 'Your car knows where you go, how you drive, and who you call. Time to take the wheel back.',
-    surveyQuestion: (name) => `Do you own a ${name} vehicle?`,
+    surveyQuestion: (name) => `Do you own ${withArticle(name)} vehicle?`,
     hasGarage: true,
   },
   {
