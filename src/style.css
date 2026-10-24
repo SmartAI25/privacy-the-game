@@ -666,4 +666,7 @@ img { image-rendering: pixelated; }
 @media (min-width: 900px) { .intro-lead-phone { display: none; } }
 /* A facility's title (or a timeline card's name) already names its building: the building's own label hides on a phone. */
 @media (max-width: 899px) { .facility-icon > div > div:last-child, .tl-icon--same > div > div:last-child { display: none; } }
+/* The Whole City: CITY FORTIFIED's definition opens under the ring on a phone. */
+.fortified-what { margin-top: 10px; }
+.fortified-what > summary { margin: 0 auto; }
 /* trim pass: end */

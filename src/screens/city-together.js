@@ -85,7 +85,7 @@ function cityScore(city) {
   <div class="panel" style="padding: 24px; margin-bottom: 16px; text-align: center; border-color: rgba(198,255,0,0.1);">
     ${ringChart({ fraction: f.pct / 100, color: '#C6FF00', glow: 'rgba(198,255,0,0.4)', track: 'rgba(198,255,0,0.08)', value: `${fmt(f.pct)}%`, unit: '' })}
     <div style="font-family: var(--font-display); font-size: 8px; font-weight: 600; color: rgba(198,255,0,0.5); letter-spacing: 2px;">CITY FORTIFIED</div>
-    <div style="${MUTED} margin-top: 10px;">Of email addresses found in a known breach by everyone in places with enough players to count, this share has been fixed.</div>
+    <details class="phone-fold fortified-what" data-fold="fortified-what" data-open-desktop><summary>What's this?</summary><div style="${MUTED} margin-top: 10px;">Of email addresses found in a known breach by everyone in places with enough players to count, this share has been fixed.</div></details>
   </div>`;
 }
 
