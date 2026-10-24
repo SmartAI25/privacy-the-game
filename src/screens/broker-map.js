@@ -133,7 +133,7 @@ function leftBlock(rows) {
     const text = `${esc(r.name)} · reach ${r.reach}`;
     return r.mission
       ? `<li><a href="#/mission/${esc(r.mission)}/briefing">${text}</a></li>`
-      : `<li><a href="${BIG_CHECK_HASH}">${text}</a><span class="none">No mission covers this one yet: tick it in the Big Check</span></li>`;
+      : `<li><a href="${BIG_CHECK_HASH}">${text}</a><span class="none">No mission covers this one yet: file with them, then tick it in the Big Check</span></li>`;
   }).join('');
   return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`
     + `<a class="map-big-check" href="${BIG_CHECK_HASH}">THE BIG CHECK →</a>`;

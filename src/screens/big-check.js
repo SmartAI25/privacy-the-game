@@ -36,7 +36,9 @@ const STYLE = `<style>
 .big-check-row .star-card-note,.big-check-row .star-card-owned{font-size:12px;color:rgba(237,239,243,0.75)}
 .big-check-row .star-card-list{margin:0;padding-left:18px}
 .big-check-row .star-card-list a{display:inline-flex;align-items:center;min-height:44px}
-.big-check-mission a{display:inline-flex;align-items:center;min-height:44px}
+.big-check-mission{margin:4px 0}
+.big-check-mission-go{display:flex;flex-wrap:wrap;align-items:center;gap:0 6px;min-height:44px}
+.big-check-mission-go a{display:inline-flex;align-items:center;min-height:44px;min-width:0}
 .big-check-ticked{font-size:12px;color:var(--lime)}
 .big-check-empty{font-size:13px;color:rgba(237,239,243,0.7)}
 ${TICK_CSS}
@@ -47,8 +49,8 @@ const missionTitle = (id) => MISSIONS.find((m) => m.id === id)?.title ?? id;
 function missionLine(id, state) {
   const done = state?.missions?.[id]?.status === 'completed';
   return done
-    ? `<p class="big-check-mission">In a mission: ${esc(missionTitle(id))} · <a href="#/mission/${esc(id)}/recheck">RE-CHECK</a></p>`
-    : `<p class="big-check-mission">In a mission: <a href="#/mission/${esc(id)}/briefing">${esc(missionTitle(id))}</a></p>`;
+    ? `<div class="big-check-mission">In a mission:<div class="big-check-mission-go">${esc(missionTitle(id))} · <a href="#/mission/${esc(id)}/recheck">RE-CHECK</a></div></div>`
+    : `<div class="big-check-mission">In a mission:<div class="big-check-mission-go"><a href="#/mission/${esc(id)}/briefing">${esc(missionTitle(id))}</a></div></div>`;
 }
 
 function rowHtml(r, b, map, byId, state) {

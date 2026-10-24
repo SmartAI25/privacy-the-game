@@ -592,8 +592,12 @@ function bigCheckChange(e) {
     const count = box.closest('details')?.querySelector('[data-big-check-count]');
     if (count) count.textContent = String(Math.max(0, Number(count.textContent) + (box.checked ? 1 : -1)));
   } else if (screen === 'broker-map') {
+    // The re-draw builds a new card: keep the sheet where it was, so the tapped box stays in view.
+    const scrollTop = app.querySelector('.star-card')?.scrollTop ?? 0;
     renderCurrentRoute();
-    app.querySelector(`.star-card [data-big-check="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
+    const card = app.querySelector('.star-card');
+    if (card) card.scrollTop = scrollTop;
+    card?.querySelector(`[data-big-check="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
   }
 }
 

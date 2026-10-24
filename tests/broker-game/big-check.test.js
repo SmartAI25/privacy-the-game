@@ -213,6 +213,31 @@ describe('the Big Check', () => {
     expect(html).toMatch(/<a [^>]*href="#\/reclamation\/big-check"[^>]*>THE BIG CHECK →<\/a>/);
     const left = html.slice(html.indexOf('map-whats-left'));
     expect(left).toMatch(/href="#\/reclamation\/big-check"[^>]*>[^<]*· reach/);
+    expect(left).toContain('No mission covers this one yet: file with them, then tick it in the Big Check');
+  });
+
+  it('a tick on the map keeps the star card sheet scrolled where it was', () => {
+    const src = readFileSync('src/app.js', 'utf8');
+    const i = src.indexOf('function bigCheckChange');
+    const body = src.slice(i, src.indexOf('\n}\n', i));
+    const save = body.indexOf(".star-card')?.scrollTop");
+    const draw = body.indexOf('renderCurrentRoute()', save);
+    const restore = body.indexOf('card.scrollTop = scrollTop', draw);
+    const focus = body.indexOf('.focus(', restore);
+    expect(save).toBeGreaterThan(-1);
+    expect(draw).toBeGreaterThan(save);
+    expect(restore).toBeGreaterThan(draw);
+    expect(focus).toBeGreaterThan(restore);
+  });
+
+  it('"In a mission:" always puts its link on a line of its own', () => {
+    const done = { ...fresh(), missions: { [WF]: { status: 'completed', completedAt: '2026-10-01T12:00:00.000Z' } } };
+    for (const s of [fresh(), done]) {
+      const lines = [...render(s).matchAll(/<div class="big-check-mission">In a mission:<div class="big-check-mission-go">([\s\S]*?)<\/div><\/div>/g)];
+      expect(lines.length).toBeGreaterThan(0);
+      for (const [, go] of lines) expect(go).toMatch(/<a href="#\/mission\/[^"]+\/(briefing|recheck)">/);
+    }
+    expect(render(fresh())).toMatch(/\.big-check-mission-go\{[^}]*min-height:44px/);
   });
 
   it('the tick wiring stays in memory and never tracks', () => {
