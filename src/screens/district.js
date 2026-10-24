@@ -321,7 +321,7 @@ export function surveyAsk(questionFn) {
 function surveyChips(state, districtAccounts, questionFn) {
   const chips = districtAccounts.map(([id, account]) => {
     if (!state.accounts[id]) {
-      return `<span class="survey-chip survey-chip--soon" aria-disabled="true">${esc(account.name)} <span class="survey-chip-soon">COMING SOON</span></span>`;
+      return `<button type="button" class="survey-chip survey-chip--soon" disabled>${esc(account.name)} <span class="survey-chip-soon">COMING SOON</span></button>`;
     }
     const on = !!state.accounts[id].enabled;
     return `<button type="button" class="survey-chip${on ? ' is-on' : ''}" data-action="toggle-account" data-account="${id}" aria-pressed="${on}" aria-label="${esc(questionFn(account.name))}"><span class="survey-chip-mark" aria-hidden="true">${on ? '✓' : ''}</span>${esc(account.name)}</button>`;

@@ -373,8 +373,11 @@ export function restoreFolds(root, keys) {
 // ::details-content, which older browsers lack). One the player opened or
 // closed by hand this screen visit keeps that choice (`hand`: key -> open).
 
+// A building floor is keyed by its floor id: saving one floor drops it from the list, and an
+// index key would then hand its choice to the next floor down.
 export function desktopFoldKey(d, index) {
-  return d.getAttribute('data-fold') || `${(d.getAttribute('class') || '').split(/\s+/)[0]}#${index}`;
+  const floor = d.getAttribute('data-floor');
+  return d.getAttribute('data-fold') || (floor ? `floor-${floor}` : `${(d.getAttribute('class') || '').split(/\s+/)[0]}#${index}`);
 }
 
 export function applyOpenDesktop(root, wide, hand = new Map()) {

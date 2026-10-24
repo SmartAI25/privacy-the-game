@@ -54,7 +54,9 @@ function sourceLinks(sources = []) {
 const PHONE_FOLDED = new Set(['desk', 'ground', 'alcove']);
 function floor(ctx, kind, title, body) {
   const unset = PHONE_FOLDED.has(kind) && floorChoice(ctx.state, ctx.accountId, kind) === undefined;
-  const open = unset ? ' data-open-desktop' : isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
+  // An entry sealing right now is seen: its floor opens at every width (not saved).
+  const sealingHere = kind === 'ground' && ctx.sealing?.size > 0;
+  const open = unset && !sealingHere ? ' data-open-desktop' : unset || isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
   return `
     <details class="floor floor--${kind}"${open} data-floor="${kind}">
       <summary class="floor-head"><span>${title}</span><span class="floor-chev" aria-hidden="true">▾</span></summary>
@@ -154,25 +156,24 @@ function roof(ctx, rows) {
       <details class="phone-fold" data-fold="antenna-${esc(accountId)}" data-open-desktop><summary>Why antennas fade</summary><div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div></details>`);
 }
 
-// The desk table's last column: whether a judge signs off. Only what the slip
-// itself says, in its own words; a slip that doesn't say gets a dash.
+// The desk table's last column: whether a judge signs off. Each part is the slip's
+// own words, quoted as they stand, hedges and attributions included ("may",
+// "Proton says", "Yahoo lists"); a slip that doesn't say gets a dash.
 const JUDGE = [
-  [/A 2703\(d\) court order/, '2703(d): a court order'],
-  [/search warrant,? signed by a judge/, 'For content: yes'],
-  [/emergency request needs no judge/, 'Emergency: no'],
-  [/^Everything on the police slip/, 'Police tools: as on the police slip'],
-  [/National Security Letters: subscriber records with no judge/, 'For a National Security Letter: no'],
-  [/No warrant is needed for each one/, 'No warrant per target'],
-  [/the court-approved certifications/, 'Certifications: court-approved'],
-  [/signed by an agency official, not a judge/, 'No: an agency official, not a judge'],
-  // The slip's own hedge: "may".
-  [/which may answer without a US court being involved/, 'May answer without a US court being involved'],
-  // The slip's own hedge: Proton says so.
-  [/Subject lines[^.]*Proton says reaching them takes an order approved by a Swiss judge/, 'For subject lines: a Swiss judge, Proton says'],
+  /A 2703\(d\) court order/,
+  /(?:police need|Yahoo lists|Meta requires) a search warrant,? signed by a judge/,
+  /An emergency request needs no judge at all/,
+  /^Everything on the police slip/,
+  /National Security Letters: subscriber records with no judge involved/,
+  /No warrant is needed for each one/,
+  /the court-approved certifications/,
+  /A subpoena signed by an agency official, not a judge/,
+  /may answer without a US court being involved/,
+  /Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge/,
 ];
 
 export function judgeCell(lane) {
-  const said = JUDGE.filter(([re]) => re.test(lane.gets)).map(([, text]) => text);
+  const said = JUDGE.map((re) => lane.gets.match(re)?.[0]).filter(Boolean);
   return said.length ? said.join(' · ') : '—';
 }
 
@@ -315,8 +316,8 @@ export function renderBuildingInterior(state, accountId, { now = new Date() } = 
   const district = DISTRICTS.find((d) => d.id === account.district);
   const rows = checkupRows(state, accountId, now);
   const saints = (interior.saints ?? []).map((id) => SAINTS[id]).filter(Boolean);
-  const ctx = { state, accountId };
   const sealing = new Set(newlySealed(state, accountId));
+  const ctx = { state, accountId, sealing };
   const kind = interiorLineKind(state, accountId);
   const scout = kind
     ? `<div class="interior-scout" data-scout="interior">${renderScout(esc(pick(INTERIOR_LINES[kind]).replace(/\{name\}/g, account.name)))}</div>`

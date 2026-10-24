@@ -86,38 +86,33 @@ describe('the records desk is a table on phones', () => {
     });
   });
 
-  it('the judge column says only what the slip itself says', () => {
+  it("the judge column quotes the slip: each part a verbatim piece of the lane's own text, hedges and all", () => {
     const gmail = Object.fromEntries(getInterior('gmail').desk.map((l) => [l.id, judgeCell(l)]));
-    // Each lane's own hedges stay ("may", "Proton says"); nothing the slip doesn't say.
     expect(gmail).toEqual({
-      'local-police': '2703(d): a court order · For content: yes · Emergency: no',
-      fbi: 'Police tools: as on the police slip · For a National Security Letter: no',
-      'nsa-702': 'No warrant per target · Certifications: court-approved',
-      'ice-hsi': 'No: an agency official, not a judge',
-      'uk-cloud-act': 'May answer without a US court being involved',
+      'local-police': 'A 2703(d) court order · police need a search warrant signed by a judge · An emergency request needs no judge at all',
+      fbi: 'Everything on the police slip · National Security Letters: subscriber records with no judge involved',
+      'nsa-702': 'No warrant is needed for each one · the court-approved certifications',
+      'ice-hsi': 'A subpoena signed by an agency official, not a judge',
+      'uk-cloud-act': 'may answer without a US court being involved',
     });
     const proton = Object.fromEntries(getInterior('protonmail').desk.map((l) => [l.id, judgeCell(l)]));
-    expect(proton).toEqual({ 'swiss-order': 'For subject lines: a Swiss judge, Proton says', 'foreign-via-swiss': '—' });
-    // Every desk in the game: a cell is a dash or backed by the slip's own words.
-    const backing = {
-      '2703(d): a court order': /A 2703\(d\) court order/,
-      'For content: yes': /search warrant,? signed by a judge/,
-      'Emergency: no': /emergency request needs no judge/,
-      'Police tools: as on the police slip': /^Everything on the police slip/,
-      'For a National Security Letter: no': /National Security Letters: subscriber records with no judge/,
-      'No warrant per target': /No warrant is needed for each one/,
-      'Certifications: court-approved': /the court-approved certifications/,
-      'No: an agency official, not a judge': /signed by an agency official, not a judge/,
-      'May answer without a US court being involved': /which may answer without a US court being involved/,
-      'For subject lines: a Swiss judge, Proton says': /Subject lines[^.]*Proton says reaching them takes an order approved by a Swiss judge/,
-    };
+    expect(proton).toEqual({ 'swiss-order': 'Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge', 'foreign-via-swiss': '—' });
+    // The attributions stay: Yahoo lists it, Meta requires it.
+    expect(getInterior('yahoo').desk.map(judgeCell).join(' · ')).toContain('Yahoo lists a search warrant, signed by a judge');
+    // Every desk in the game: a cell is a dash, or every part of it is in the slip word for word.
+    let parts = 0;
     for (const i of Object.values(INTERIORS)) {
       for (const lane of i.desk) {
         const cell = judgeCell(lane);
         if (cell === '—') continue;
-        for (const part of cell.split(' · ')) expect(lane.gets, `${i.accountId}/${lane.id}: ${part}`).toMatch(backing[part]);
+        for (const part of cell.split(' · ')) {
+          expect(lane.gets, `${i.accountId}/${lane.id}: ${part}`).toContain(part);
+          parts += 1;
+        }
+        expect(cell, `${i.accountId}/${lane.id}`).not.toMatch(/(^|· )(yes|no)($| ·)/i);
       }
     }
+    expect(parts).toBeGreaterThan(20);
   });
 
   it("Signal's single lane stays a sticky note; no table", () => {

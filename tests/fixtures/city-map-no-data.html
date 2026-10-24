@@ -232,7 +232,8 @@
       .city-horizon { top: 105px; }
       .city-labels { margin-top: -20px; }
     }
-    /* On a phone the bar says the percentage (its name for a screen reader); the missions count sits under it. */
+    /* On a phone the bar says the percentage (its name, for a screen reader, at every width; the
+       written one is aria-hidden so it is heard once); the missions count sits under it. */
     @media (max-width: 899px) { .city-label__pct { display: none; } }
     @media (prefers-reduced-motion: reduce) {
       .city-map *, .city-map *::before, .city-map *::after { animation: none !important; }
@@ -510,7 +511,7 @@
       <div class="city-label__name">MASTER KEYS</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/27 MISSIONS <span style="color: rgba(0,229,255,0.45);">+ 22 BONUS</span></div>
       <div class="city-label__start">▶ START HERE</div>
@@ -524,7 +525,7 @@
       <div class="city-label__name">VAULT</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/18 MISSIONS</div>
       
@@ -538,7 +539,7 @@
       <div class="city-label__name">SQUARE</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/40 MISSIONS</div>
       
@@ -552,7 +553,7 @@
       <div class="city-label__name">ARCHIVES</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/8 MISSIONS</div>
       
@@ -566,7 +567,7 @@
       <div class="city-label__name">MARKETPLACE</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/14 MISSIONS</div>
       
@@ -580,7 +581,7 @@
       <div class="city-label__name">CAPITOL</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/11 MISSIONS</div>
       
@@ -594,7 +595,7 @@
       <div class="city-label__name">PERIMETER</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/15 MISSIONS</div>
       
@@ -608,7 +609,7 @@
       <div class="city-label__name">RECLAMATION</div>
       <div class="city-label__meter">
         <div class="city-label__bar" role="img" aria-label="0%"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
-        <span class="city-label__pct">0%</span>
+        <span class="city-label__pct" aria-hidden="true">0%</span>
       </div>
       <div class="city-label__sub">0/30 MISSIONS</div>
       

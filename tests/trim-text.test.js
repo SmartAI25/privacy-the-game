@@ -42,6 +42,33 @@ describe('every string these screens drew before still reaches the page', () => 
   });
 });
 
+// What a phone shows: the page without its desktop-only copies (on Quick Quest and the surveys a
+// .desktop-only block is followed by its .phone-only twin).
+const phonePage = (html) => String(html).replace(/<div class="desktop-only[\s\S]*?(?=<div class="phone-only)/g, ' ');
+// Ruled changes on a phone (Task 7a): a survey row's question becomes its chip's name (aria-label)
+// under one question; ON/OFF becomes the chip's ✓ and aria-pressed.
+const PHONE_ALLOWED = (t, phoneHtml) => /^(ON|OFF)$/.test(t)
+  || (/^(Do you have|Do you use|Have you registered for) .+\?$/.test(t) && phoneHtml.includes(`aria-label="${t.replace(/"/g, '&quot;')}"`));
+
+describe('every string these screens drew before still reaches a phone', () => {
+  it('old text nodes are on the phone copy too, or are a ruled change', () => {
+    const now = Object.fromEntries(screens());
+    for (const [key, old] of Object.entries(BEFORE)) {
+      const phoneHtml = phonePage(now[key]);
+      const page = textNodes(phoneHtml).join(' ');
+      for (const t of old) {
+        if (page.includes(t) || PHONE_ALLOWED(t, phoneHtml)) continue;
+        let from = 0;
+        for (const s of splitWords(t, 1)) {
+          const at = page.indexOf(s.trim(), from);
+          expect(at, `${key} (phone): ${s.slice(0, 80)}`).toBeGreaterThanOrEqual(0);
+          from = at + s.trim().length;
+        }
+      }
+    }
+  });
+});
+
 describe('the trim CSS', () => {
   it('no nowrap and no fixed width over 360px', () => {
     expect(TRIM_CSS.length).toBeGreaterThan(0);
@@ -117,7 +144,7 @@ describe('surveys: one question and a grid of chips on a phone', async () => {
       for (const id of ids) {
         const name = ACCOUNTS[id].name;
         if (!s.accounts[id]) {
-          expect(grid, `${d.id}/${id}`).toMatch(new RegExp(`<span class="survey-chip survey-chip--soon"[^>]*>[^<]*${name.replace(/[()]/g, '\\$&')}`));
+          expect(grid, `${d.id}/${id}`).toMatch(new RegExp(`<button type="button" class="survey-chip survey-chip--soon" disabled>[^<]*${name.replace(/[()]/g, '\\$&')}`));
           continue;
         }
         const chip = grid.match(new RegExp(`<button type="button" class="survey-chip[^"]*" data-action="toggle-account" data-account="${id}" aria-pressed="(true|false)" aria-label="([^"]*)">`));
@@ -238,8 +265,71 @@ describe('the city map on a phone: each district\'s percentage is drawn, not wri
   it('the bar carries the percentage as its name; the written one hides under 900px', () => {
     const bars = [...html.matchAll(/<div class="city-label__bar" role="img" aria-label="(\d+)%">/g)];
     expect(bars).toHaveLength(8);
-    const pcts = [...html.matchAll(/<span class="city-label__pct">(\d+)%<\/span>/g)];
+    // Heard once: the written percentage is aria-hidden, the bar's name says it.
+    const pcts = [...html.matchAll(/<span class="city-label__pct" aria-hidden="true">(\d+)%<\/span>/g)];
     expect(pcts.map((m) => m[1])).toEqual(bars.map((m) => m[1]));
     expect(html).toMatch(/@media \(max-width: 899px\) \{ \.city-label__pct \{ display: none; \} \}/);
+  });
+});
+
+describe('building floors: a fold keyed by its floor, not its place in the page (review I-1)', async () => {
+  const { renderBuildingInterior } = await import('../src/screens/building.js');
+  const { toggleAccount } = await import('../src/state.js');
+  const { setFloorOpen } = await import('../src/utils/interior-state.js');
+  const { applyOpenDesktop, desktopFoldKey } = await import('../src/components/deck.js');
+  const NOW = new Date('2026-10-20T00:00:00Z');
+  // The page's data-open-desktop <details>, as stand-ins with their attributes.
+  const foldsOf = (html) => [...html.matchAll(/<details([^>]*\sdata-open-desktop[^>]*)>/g)].map((m) => {
+    const attrs = Object.fromEntries([...m[1].matchAll(/([\w-]+)(?:="([^"]*)")?/g)].map((a) => [a[1], a[2] ?? '']));
+    return { open: false, dataset: {}, getAttribute: (k) => attrs[k] ?? null };
+  });
+  const rootOf = (list) => ({ querySelectorAll: (sel) => (sel === 'details[data-open-desktop]' ? list : []) });
+  const keyOf = (list, floorId) => {
+    const i = list.findIndex((d) => d.getAttribute('data-floor') === floorId);
+    return i < 0 ? null : desktopFoldKey(list[i], i);
+  };
+  const s0 = toggleAccount(createInitialState(), 'gmail', true);
+  const r = (st) => renderBuildingInterior(st, 'gmail', { now: NOW });
+
+  it("a floor's key is its floor id, the same before and after another floor is saved", () => {
+    const before = foldsOf(r(s0));
+    const after = foldsOf(r(setFloorOpen(s0, 'gmail', 'desk', false)));
+    expect(keyOf(before, 'ground')).toBe('floor-ground');
+    expect(keyOf(after, 'ground')).toBe('floor-ground');
+    expect(keyOf(before, 'desk')).toBe('floor-desk');
+    expect(keyOf(after, 'desk')).toBeNull(); // saved: no longer the script's to open
+    expect(keyOf(after, 'alcove')).toBe('floor-alcove');
+  });
+
+  for (const [width, wide] of [['desktop', true], ['phone', false]]) {
+    it(`${width}: folding the desk and redrawing leaves ground and alcove as they were`, () => {
+      const hand = new Map();
+      const first = foldsOf(r(s0));
+      applyOpenDesktop(rootOf(first), wide, hand);
+      // On a phone the player had opened ground by hand; on desktop it is open by script.
+      if (!wide) hand.set(keyOf(first, 'ground'), true);
+      // The player folds the desk (a hand toggle), and it is saved.
+      hand.set(keyOf(first, 'desk'), false);
+      const redraw = foldsOf(r(setFloorOpen(s0, 'gmail', 'desk', false)));
+      applyOpenDesktop(rootOf(redraw), wide, hand);
+      const open = (id) => redraw.find((d) => d.getAttribute('data-floor') === id).open;
+      expect(open('ground')).toBe(true);
+      expect(open('alcove')).toBe(wide);
+    });
+  }
+});
+
+describe('a newly sealed entry is seen on a phone too (review M-3)', async () => {
+  const { renderBuildingInterior } = await import('../src/screens/building.js');
+  const { toggleAccount, updateMission } = await import('../src/state.js');
+  it('the ground floor renders open (at every width, not saved) while an entry is sealing', () => {
+    let g = toggleAccount(createInitialState(), 'gmail', true);
+    g = updateMission(g, 'gmail-fortify-password', { status: 'completed', action: 'reset-password', completedAt: '2026-10-17T00:00:00Z' });
+    g = updateMission(g, 'gmail-fortify-2fa', { status: 'completed', method: 'passkey', completedAt: '2026-10-17T00:00:00Z' });
+    g = { ...g, interior: { ...(g.interior || {}), gmail: { ...(g.interior?.gmail || {}), visited: true, sealedSeen: [] } } };
+    const html = renderBuildingInterior(g, 'gmail', { now: new Date('2026-10-20T00:00:00Z') });
+    if (!html.includes('entry--sealing')) throw new Error('fixture: expected a sealing entry');
+    expect(html).toContain('<details class="floor floor--ground" open data-floor="ground">');
+    expect(html).toContain('<details class="floor floor--desk" data-open-desktop data-floor="desk">');
   });
 });
