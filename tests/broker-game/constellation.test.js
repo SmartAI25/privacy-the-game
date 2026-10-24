@@ -105,6 +105,23 @@ describe('constellationSvg', () => {
     }
   });
 
+  it("a crowded own star's name covers dim dots but never another of the player's stars; amber names are amber", () => {
+    // Free Data Services (re-check due) once took a spot right over lit Intelius.
+    const ring = [[-6, 0], [0, -4], [0, 4], [-6, -4], [6, -4], [-6, 4], [6, 4], [-12, 0], [0, -8], [0, 8]];
+    const brokers = [{ id: 'fds', name: 'Free Data Services' }, { id: 'int', name: 'Intelius' }, ...ring.map((_, i) => ({ id: `d${i}`, name: `Dim ${i}` }))];
+    const lay = { stars: [['fds', 500, 500, 2], ['int', 506, 500, 2], ...ring.map(([dx, dy], i) => [`d${i}`, 500 + dx, 500 + dy, 2])] };
+    const lit = { stars: { fds: { state: 'amber', litOn: '2026-06-01' }, int: { state: 'lit', litOn: '2026-10-20' } } };
+    const s = constellationSvg({ map: { brokers, links: [] }, layout: lay, lighting: lit, view: { x: 400, y: 440, w: 200, h: 136.85 }, px: 928 });
+    const ls = labelsOf(s);
+    const intMark = { left: 504, right: 508, top: 498, bottom: 502 };
+    const fdsMark = { left: 498, right: 502, top: 498, bottom: 502 };
+    for (const l of ls) {
+      if (l.text === 'Free Data Services') expect(intersects(l.box, intMark)).toBe(false);
+      if (l.text === 'Intelius') expect(intersects(l.box, fdsMark)).toBe(false);
+    }
+    expect(s).toMatch(/<text class="star-label"[^>]*fill="#FF9F00"[^>]*>Free Data Services<\/text>/);
+  });
+
   it("the player's lit star keeps its name when dim stars crowd every side", () => {
     // Intelius once sat boxed in by dim neighbours on desktop and went unnamed.
     const ring = [[-6, 0], [6, 0], [0, -4], [0, 4], [-6, -4], [6, -4], [-6, 4], [6, 4], [-12, 0], [12, 0], [0, -8], [0, 8]];
