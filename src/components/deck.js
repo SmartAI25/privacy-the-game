@@ -101,6 +101,12 @@ export function splitWords(html, max = 35) {
 const attr = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const headingHtml = (heading) => (heading ? `<h3 class="slide-heading">${heading}</h3>` : '');
 
+const DOTS_MAX = 8;
+
+export function progressWidth(index, count) {
+  return `${((index + 1) / count) * 100}%`;
+}
+
 export function deck(slides, { label, className = '' } = {}) {
   const list = (slides || []).filter(Boolean);
   if (list.length === 0) return '';
@@ -112,10 +118,14 @@ export function deck(slides, { label, className = '' } = {}) {
     .map((s, i) => `<section class="slide" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
     .join('');
   const dots = list.map((_, i) => `<span class="deck-dot${i === 0 ? ' is-current' : ''}"></span>`).join('');
+  // Past DOTS_MAX slides the dots wrap; a thin bar says the same thing in one line.
+  const progress = m > DOTS_MAX
+    ? `<span class="deck-progress" aria-hidden="true"><span class="deck-progress-fill" style="width: ${progressWidth(0, m)}"></span></span>`
+    : `<span class="deck-dots" aria-hidden="true">${dots}</span>`;
   return `<div class="${attr(cls)}" data-deck aria-roledescription="carousel" aria-label="${attr(label)}">${sections}</div>`
     + '<div class="deck-controls" data-deck-controls>'
     + '<button type="button" class="deck-btn" data-deck-prev disabled>BACK</button>'
-    + `<span class="deck-dots" aria-hidden="true">${dots}</span>`
+    + progress
     + `<span class="deck-count" aria-live="polite">1 of ${m}</span>`
     + '<button type="button" class="deck-btn" data-deck-next>NEXT</button>'
     + '</div>';
@@ -131,6 +141,17 @@ export function slideIndex(scrollLeft, width, count) {
 
 export function deckStep(key) {
   return key === 'ArrowRight' ? 1 : key === 'ArrowLeft' ? -1 : 0;
+}
+
+// The deck's height for the slide on screen: only a phone row follows its slide.
+export function deckHeight(slideHeight, isRow) {
+  return isRow && slideHeight > 0 ? `${Math.ceil(slideHeight)}px` : '';
+}
+
+// Where focus goes after a move: a BACK / NEXT press keeps it on the button (keyboard users
+// press again), unless that button is now disabled; an arrow key moves it to the slide heading.
+export function focusAfter(via, pressedDisabled) {
+  return via === 'button' && !pressedDisabled ? 'button' : 'heading';
 }
 
 export function controlState(index, count) {
@@ -196,13 +217,21 @@ export function initDecks(root, positions = null) {
     const next = controls.querySelector('[data-deck-next]');
     const count = controls.querySelector('[aria-live]');
     const dots = [...controls.querySelectorAll('.deck-dot')];
+    const fill = controls.querySelector('.deck-progress-fill');
     let current = -1;
     let target = null; // the slide a programmatic scroll is heading to
     let settleTimer = 0;
 
+    // Only a phone-width deck is a row; at desktop width the slides are blocks and keys do nothing.
+    const isRow = () => d.scrollWidth > d.clientWidth + 1;
+    const fit = () => {
+      if (d.style && current >= 0) d.style.height = deckHeight(slides[current]?.offsetHeight, isRow());
+    };
     const show = (i) => {
       if (i === current) return;
       current = i;
+      fit();
+      if (fill?.style) fill.style.width = progressWidth(i, n);
       const s = controlState(i, n);
       if (prev) prev.disabled = s.prevDisabled;
       if (next) next.disabled = s.nextDisabled;
@@ -215,9 +244,7 @@ export function initDecks(root, positions = null) {
       target = null;
       show(slideIndex(d.scrollLeft, d.clientWidth, n));
     };
-    // Only a phone-width deck is a row; at desktop width the slides are blocks and keys do nothing.
-    const isRow = () => d.scrollWidth > d.clientWidth + 1;
-    const go = (step) => {
+    const go = (step, pressed = null) => {
       const to = stepTarget(target, current, step, n);
       if (to === (target ?? current)) return;
       target = to;
@@ -225,14 +252,18 @@ export function initDecks(root, positions = null) {
       settleTimer = setTimeout(settle, 1000);
       d.scrollTo?.({ left: to * d.clientWidth, behavior: reducedMotion() ? 'auto' : 'smooth' });
       show(to);
+      if (focusAfter(pressed ? 'button' : 'key', !!pressed?.disabled) === 'button') {
+        pressed.focus?.({ preventScroll: true });
+        return;
+      }
       const slide = slides[to];
       const heading = slide.querySelector('h1, h2, h3, h4, h5, h6') || slide;
       if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
       heading.focus?.({ preventScroll: true });
     };
 
-    prev?.addEventListener('click', () => go(-1));
-    next?.addEventListener('click', () => go(1));
+    prev?.addEventListener('click', () => go(-1, prev));
+    next?.addEventListener('click', () => go(1, next));
     const onKey = (e) => {
       const step = deckStep(e.key);
       if (!step || e.altKey || e.ctrlKey || e.metaKey || typing(e.target) || !isRow()) return;
@@ -263,5 +294,11 @@ export function initDecks(root, positions = null) {
     const kept = Math.min(positions?.get?.(d.getAttribute?.('aria-label')) ?? 0, n - 1);
     if (kept > 0) jumpTo(d, kept * d.clientWidth);
     show(kept > 0 ? kept : slideIndex(d.scrollLeft, d.clientWidth, n));
+    // A slide that changes size (a resize, a font arriving, a <details> opened) refits the deck;
+    // so does crossing to or from desktop width, where the height is cleared.
+    if (typeof ResizeObserver === 'function') {
+      const ro = new ResizeObserver(() => fit());
+      for (const s of slides) ro.observe(s);
+    }
   }
 }

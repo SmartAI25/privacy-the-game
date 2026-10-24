@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex } from '../src/components/deck.js';
+import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex, progressWidth, deckHeight, focusAfter } from '../src/components/deck.js';
 import { MISSIONS } from '../src/data/missions.js';
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
@@ -272,5 +272,66 @@ describe('initDecks', () => {
     // Not inside a screen-specific branch: it runs on REFRESH and NAVIGATE alike.
     const line = body.slice(body.lastIndexOf('\n', init), body.indexOf('\n', init));
     expect(line.trim()).toMatch(/^initDecks\(app/);
+  });
+
+  it('more than 8 slides: a thin progress bar instead of dots, and the live count stays', () => {
+    const slides = (n) => Array.from({ length: n }, (_, i) => ({ html: `<p>Slide ${i}</p>` }));
+    const eight = deck(slides(8), { label: 'Eight' });
+    expect(eight.match(/class="deck-dot[ "]/g)).toHaveLength(8);
+    expect(eight).not.toContain('deck-progress');
+    const nine = deck(slides(9), { label: 'Nine' });
+    expect(nine).not.toContain('deck-dot');
+    expect(nine).toMatch(/<span class="deck-progress" aria-hidden="true"><span class="deck-progress-fill" style="width: 11\.\d+%"><\/span><\/span>/);
+    expect(nine).toContain('<span class="deck-count" aria-live="polite">1 of 9</span>');
+    expect(progressWidth(0, 9)).toBe(`${100 / 9}%`);
+    expect(progressWidth(8, 9)).toBe('100%');
+    const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
+    expect(css).toMatch(/\.deck-progress \{[^}]*height: [1-4]px/);
+    expect(css).toMatch(/\.deck-progress-fill \{[^}]*transition: width/);
+  });
+
+  it('the deck is as tall as the slide on screen (a row only; a desktop stack has its own height)', () => {
+    expect(deckHeight(312.4, true)).toBe('313px');
+    expect(deckHeight(0, true)).toBe('');
+    expect(deckHeight(undefined, true)).toBe('');
+    expect(deckHeight(312, false)).toBe('');
+    const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
+    const phone = css.slice(css.indexOf('@media (max-width: 899px)', css.indexOf('/* deck: start */')));
+    expect(phone).toMatch(/\.deck \{[^}]*align-items: flex-start;[^}]*overflow-y: hidden;[^}]*transition: height/);
+    const reduced = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)', css.indexOf('/* deck: start */')));
+    expect(reduced).toMatch(/\.deck \{[^}]*transition: none/);
+  });
+
+  it('BACK / NEXT keep focus on the pressed button; arrow keys move focus to the slide heading', () => {
+    expect(focusAfter('button', false)).toBe('button');
+    // The press reached the end and its button is now disabled: focus goes to the slide.
+    expect(focusAfter('button', true)).toBe('heading');
+    expect(focusAfter('key', false)).toBe('heading');
+
+    const focused = [];
+    const fake = (name, extra = {}) => {
+      const on = {};
+      return {
+        name, on, dataset: {}, disabled: false, textContent: '', style: {},
+        classList: { toggle() {} }, setAttribute() {}, hasAttribute: () => true,
+        focus() { focused.push(name); },
+        getAttribute: () => 'Deck',
+        addEventListener: (type, fn) => { on[type] = fn; },
+        querySelector: () => null, querySelectorAll: () => [], ...extra,
+      };
+    };
+    const heading = (i) => fake(`heading${i}`);
+    const slides = [0, 1, 2].map((i) => fake(`slide${i}`, { offsetHeight: 200 + i * 100, querySelector: () => heading(i) }));
+    const prev = fake('prev'); const next = fake('next'); const count = fake('count');
+    const controls = fake('controls', { hasAttribute: (a) => a === 'data-deck-controls', querySelector: (s) => ({ '[data-deck-prev]': prev, '[data-deck-next]': next, '[aria-live]': count }[s] || null) });
+    const d = fake('deck', { scrollLeft: 0, clientWidth: 390, scrollWidth: 1170, nextElementSibling: controls, querySelectorAll: (s) => (s === ':scope > .slide' ? slides : []), scrollTo() {} });
+    initDecks({ querySelectorAll: (s) => (s === '[data-deck]' ? [d] : []) });
+    expect(d.style.height).toBe('200px');
+    next.on.click();
+    expect(focused).toEqual(['next']);
+    expect(d.style.height).toBe('300px');
+    d.on.keydown({ key: 'ArrowRight', preventDefault() {}, target: { closest: () => null } });
+    expect(focused).toEqual(['next', 'heading2']);
+    expect(d.style.height).toBe('400px');
   });
 });

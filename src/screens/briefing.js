@@ -51,26 +51,25 @@ export function renderBriefing(state, missionId, opts = {}) {
   const titleTop = colon > -1 ? mission.title.slice(0, colon) : '';
   const titleBottom = colon > -1 ? mission.title.slice(colon + 1).trim() : mission.title;
 
-  const stepRows = missionStepList.map((step, i) => {
+  // A step's row; `notes` lets a phone slide carry only the first note (the rest get slides).
+  const stepRow = (step, i, notes = step.note) => {
     const num = String(i + 1).padStart(2, '0');
     const body = step.url
       ? `<a href="${step.url}" target="_blank" rel="noopener" data-action="mission-step" data-mission="${mission.id}" style="color: var(--cyan); font-weight: 600;">${step.text}</a>`
       : step.text;
     // A step that needs its reasons on screen (the Pwned Passwords check asks
     // for a real password, so it says why, who, and why that's safe).
-    const note = step.note?.length ? `
+    const note = notes?.length ? `
         <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
-          ${step.note.map((n) => `
-          <div style="font-size: 13px; color: rgba(237,239,243,0.7); line-height: 1.55;">
-            <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: rgba(0,229,255,0.6); text-transform: uppercase;">${n.label}</span><br>${n.text}
-          </div>`).join('')}
+          ${notes.map((n) => stepNote(n)).join('')}
         </div>` : '';
     return `
     <div data-brief-step style="display: flex; gap: 14px; align-items: flex-start;">
       <div data-step-num style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--cyan); width: 28px; text-align: center; flex-shrink: 0; text-shadow: 0 0 8px rgba(0,229,255,0.4);">${num}</div>
       <div style="font-size: 15px; color: var(--offwhite); line-height: 1.5; min-width: 0; overflow-wrap: anywhere;">${body}${note}</div>
     </div>`;
-  });
+  };
+  const stepRows = missionStepList.map((step, i) => stepRow(step, i));
   const steps = stepRows.join('');
 
   const preview = account?.building && account?.buildingDark ? `
@@ -119,7 +118,7 @@ export function renderBriefing(state, missionId, opts = {}) {
   // A briefing that fits one phone screen stays as it is; a longer one is slides on a phone.
   const stepWords = missionStepList.reduce((n, st) => n + countWords(st.text) + (st.note || []).reduce((k, x) => k + countWords(`${x.label} ${x.text}`), 0), 0);
   const slides = countWords(mission.briefing) + (noReset ? 60 : stepWords) + countWords(scoutLine) > SHORT_WORDS
-    ? briefingSlides({ header, briefing: mission.briefing, stepRows, missionStepList, noResetPanel: noReset ? renderNoResetPanel(state, mission) : '', scoutLine, scoutFeeling, preview, loreData })
+    ? briefingSlides({ header, briefing: mission.briefing, stepRows, stepRow, missionStepList, noResetPanel: noReset ? renderNoResetPanel(state, mission) : '', scoutLine, scoutFeeling, preview, loreData })
     : null;
 
   const main = slides ? `${deck(slides, { label: 'Mission briefing', className: 'brief-deck' })}
@@ -172,7 +171,7 @@ const MORE_INTEL_AFTER = 3; // intel slides before the rest goes behind "More in
 // The slides, in order: title + first intel; up to two more intel; Scout; the steps; THIS
 // LIBERATES + lore. At 900px and up they stack: the intel and step slides join into the
 // panels they always were (style.css), and the Scout and last slides hide (the sidebar has them).
-function briefingSlides({ header, briefing, stepRows, missionStepList, noResetPanel, scoutLine, scoutFeeling, preview, loreData }) {
+function briefingSlides({ header, briefing, stepRows, stepRow, missionStepList, noResetPanel, scoutLine, scoutFeeling, preview, loreData }) {
   const slides = [];
   // Slide 1's title and badges come out of its word budget.
   const firstBudget = Math.max(1, SLIDE_WORDS - countWords(header));
@@ -199,14 +198,27 @@ function briefingSlides({ header, briefing, stepRows, missionStepList, noResetPa
 
   if (noResetPanel) slides.push({ html: noResetPanel });
   else {
-    // Steps in order, at most SLIDE_WORDS a slide; a step with notes has a slide of its own.
+    // Steps in order, at most SLIDE_WORDS a slide. A step with notes has a slide of its own
+    // with its first note; each further note follows on its own slide(s), labelled "04 · WHO
+    // RUNS IT", so the reasons all come before the next step.
     const groups = [];
     let words = SLIDE_WORDS + 1;
     stepRows.forEach((row, i) => {
       const st = missionStepList[i];
+      if (st.note?.length) {
+        groups.push({ rows: [stepRow(st, i, st.note.slice(0, 1))], alone: true });
+        const num = String(i + 1).padStart(2, '0');
+        for (const n of st.note.slice(1)) {
+          splitWords(n.text, Math.max(1, SLIDE_WORDS - countWords(n.label))).forEach((chunk, k) => {
+            groups.push({ note: stepNote(n, { num, chunk, first: k === 0 }), alone: true });
+          });
+        }
+        words = SLIDE_WORDS + 1;
+        return;
+      }
       const n = countWords(row) - 1; // not its number
-      if (st.note?.length || words + n > SLIDE_WORDS || groups.at(-1)?.alone) {
-        groups.push({ rows: [row], alone: !!st.note?.length });
+      if (words + n > SLIDE_WORDS || groups.at(-1)?.alone) {
+        groups.push({ rows: [row] });
         words = n;
       } else {
         groups.at(-1).rows.push(row);
@@ -216,13 +228,26 @@ function briefingSlides({ header, briefing, stepRows, missionStepList, noResetPa
     groups.forEach((g, i) => {
       const pos = `${i === 0 ? ' is-first' : ''}${i === groups.length - 1 ? ' is-last' : ''}`;
       const label = i === 0 ? '<div class="section-label" style="color: var(--cyan); margin-bottom: 14px; text-shadow: 0 0 8px rgba(0,229,255,0.3);">YOUR MOVE</div>' : '';
-      slides.push({ html: `<div class="panel panel--active brief-steps${pos}">${label}<div style="display: flex; flex-direction: column; gap: 14px;">${g.rows.join('')}</div></div>` });
+      slides.push({ html: g.note
+        ? `<div class="panel panel--active brief-steps brief-note${pos}">${g.note}</div>`
+        : `<div class="panel panel--active brief-steps${pos}">${label}<div style="display: flex; flex-direction: column; gap: 14px;">${g.rows.join('')}</div></div>` });
     });
   }
 
   if (preview) slides.push({ html: `<div class="brief-last">${preview}</div>` });
   for (const html of loreSlides(loreData)) slides.push({ html });
   return slides;
+}
+
+// One of a step's notes. On a phone slide of its own (num set) its label reads "04 · WHO RUNS
+// IT" (the number from style.css, so the text is said once); a continuation names it the same way.
+function stepNote(n, { num = '', chunk = n.text, first = true } = {}) {
+  const label = `<span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: rgba(0,229,255,0.6); text-transform: uppercase;"${num ? ` class="brief-note-label" data-step="${num} · "` : ''}>${n.label}</span><br>`;
+  const cont = num && !first ? ` class="brief-note-cont" data-label="${num} · ${n.label}"` : '';
+  return `
+          <div${cont} style="font-size: 13px; color: rgba(237,239,243,0.7); line-height: 1.55;">
+            ${first ? label : ''}${num ? `<span data-chunk>${chunk}</span>` : chunk}
+          </div>`;
 }
 
 const BRIEFING_SCOUT = 'margin-bottom: 12px; filter: drop-shadow(0 0 8px rgba(0,229,255,0.3));';

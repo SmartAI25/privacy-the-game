@@ -79,15 +79,32 @@ describe('briefings are slides on phones', () => {
     expect(block).not.toMatch(/white-space:\s*nowrap/);
   });
 
-  it('the steps are packed in order, and a step with notes has a slide of its own', () => {
+  it('the steps are packed in order; a step with notes keeps its first note, and each further note is a slide labelled with the step', () => {
     const m = MISSIONS.find((x) => x.id === 'gmail-recon-breach');
     const slides = slidesOf(renderBriefing(state, m.id));
-    const withNotes = m.steps.findIndex((s) => s.note?.length);
-    expect(withNotes).toBeGreaterThan(-1);
-    const own = slides.find((s) => s.includes(m.steps[withNotes].note[0].label));
+    const i = m.steps.findIndex((s) => s.note?.length);
+    const step = m.steps[i];
+    const num = String(i + 1).padStart(2, '0');
+    expect(step.note.length).toBe(3);
+    const own = slides.find((s) => norm(s).includes(norm(step.text)));
     expect((own.match(/data-brief-step/g) || []).length).toBe(1);
-    const order = m.steps.map((s) => norm(slides.join('')).indexOf(norm(s.text)));
-    expect(order.every((x, i) => x > -1 && (i === 0 || x > order[i - 1]))).toBe(true);
+    expect(norm(own)).toContain(norm(step.note[0].text));
+    expect(own).not.toContain(step.note[1].label);
+    // Each further note: its own slide(s), straight after, labelled "04 · WHO RUNS IT" on a phone.
+    const at = slides.indexOf(own);
+    expect(slides[at + 1]).toContain(`data-step="${num} · ">${step.note[1].label}<`);
+    expect(norm(slides[at + 1])).toContain(norm(step.note[1].text));
+    expect(slides[at + 2]).toContain(`data-step="${num} · ">${step.note[2].label}<`);
+    // A note over the budget goes on at sentence ends; its next slide says whose note it is.
+    expect(slides[at + 3]).toContain(`data-label="${num} · ${step.note[2].label}"`);
+    expect(norm(slides[at + 2] + slides[at + 3]).replace(/\s+/g, ' ')).toContain(norm(step.note[2].text));
+    for (const s of slides.slice(at + 1, at + 4)) {
+      expect(s).not.toContain('data-brief-step');
+      expect(countWords(body(s))).toBeLessThanOrEqual(35);
+    }
+    const all = read(slides.join(''));
+    const order = [...m.steps.map((s) => s.text), ...step.note.map((n) => n.text)].map((t) => all.indexOf(norm(t)));
+    expect(order.every((x, k) => x > -1 && (k === 0 || x > order[k - 1]))).toBe(true);
   });
 
   it('long intel: two more slides, then More intel behind a details', () => {

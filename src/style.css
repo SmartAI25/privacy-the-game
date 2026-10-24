@@ -373,6 +373,8 @@ img { image-rendering: pixelated; }
 .deck-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; flex: 1 1 auto; min-width: 0; }
 .deck-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(237, 239, 243, 0.25); transition: background 0.2s, box-shadow 0.2s; }
 .deck-dot.is-current { background: var(--cyan); box-shadow: var(--glow-cyan); }
+.deck-progress { flex: 1 1 auto; min-width: 0; height: 3px; background: rgba(237, 239, 243, 0.15); overflow: hidden; }
+.deck-progress-fill { display: block; height: 100%; background: var(--cyan); box-shadow: var(--glow-cyan); transition: width 0.2s ease; }
 .deck-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: rgba(237, 239, 243, 0.55); flex: 0 0 auto; }
 @media (max-width: 899px) {
   .deck {
@@ -381,6 +383,8 @@ img { image-rendering: pixelated; }
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     align-items: flex-start;
+    overflow-y: hidden;
+    transition: height 0.2s ease;
     scrollbar-width: none;
   }
   .deck::-webkit-scrollbar { display: none; }
@@ -401,8 +405,8 @@ img { image-rendering: pixelated; }
   .deck-controls { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .deck { scroll-behavior: auto; }
-  .deck-dot { transition: none; }
+  .deck { scroll-behavior: auto; transition: none; }
+  .deck-dot, .deck-progress-fill { transition: none; }
 }
 /* deck: end */
 
@@ -435,6 +439,19 @@ img { image-rendering: pixelated; }
   }
   .brief-deck .brief-intel:not(.is-first)::before { content: 'THREAT INTEL'; color: rgba(0,229,255,0.5); }
   .brief-deck .brief-steps:not(.is-first)::before { content: 'YOUR MOVE'; color: var(--cyan); margin-bottom: 14px; }
+  /* A step's further notes say whose they are: "04 · WHO RUNS IT". */
+  .brief-deck .brief-steps.brief-note::before { content: none; }
+  .brief-note-label::before { content: attr(data-step); }
+  .brief-note-cont::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(0,229,255,0.6);
+    text-transform: uppercase;
+  }
 }
 @media (min-width: 900px) {
   .brief-scout, .brief-last { display: none; }
@@ -443,6 +460,9 @@ img { image-rendering: pixelated; }
   .brief-deck .brief-intel:not(.is-first) { padding-top: 0; border-top: 0; }
   .brief-deck .brief-steps:not(.is-first) { padding-top: 14px; border-top: 0; }
   .brief-deck .brief-steps:not(.is-first):not(.is-last), .brief-deck .brief-steps.is-last:not(.is-first) { box-shadow: none; }
+  /* A step's further notes sit under it, as they did inside its row. */
+  .brief-deck .brief-steps.brief-note:not(.is-first) { padding-top: 8px; }
+  .brief-deck .brief-note > div { margin-left: 42px; }
   /* The rest of the intel shows in full, as it always did. */
   .brief-more { margin-top: 0; }
   @supports selector(::details-content) {
