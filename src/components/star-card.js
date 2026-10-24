@@ -1,0 +1,146 @@
+// The card a tapped star opens: who the company is, what its records say it sells, the links we
+// documented, and what the player can do. Pure: (map, lighting, id, state) in, markup out.
+//
+// Every opt-out link is one the dataset's checker marked `verified`; every other external link is
+// a source's archived (Wayback) copy or a complaint form from tests/fixtures/verified-urls.json.
+// External links open in a new tab with no referrer. No broker id or name goes in an id, name or
+// title attribute (Sentry selectors carry those); the card's class `star-card` is in PRIVATE_UI.
+import { shortName } from '../utils/broker-view.js';
+import { MISSIONS } from '../data/missions.js';
+
+const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const ext = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+export const COMPLAINT_FORMS = Object.freeze([
+  { url: 'https://cppa.ca.gov/webapplications/complaint', label: 'California Privacy Protection Agency' },
+  { url: 'https://reportfraud.ftc.gov/', label: 'FTC' },
+]);
+
+const OPT_OUT_TEXT = 'OPT OUT ↗';
+
+// The opt-out hrefs a card shows (for the tests' "only verified" check).
+export function optOutHrefs(html) {
+  return [...String(html).matchAll(/<a href="([^"]*)"[^>]*>OPT OUT ↗<\/a>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
+}
+
+// Each link touching `id`, worded from this star's side.
+const SIDE = {
+  owns: ['Owns', 'Owned by'],
+  supplies: ['Supplies', 'Supplied by'],
+  buys: ['Buys from', 'Sells to'],
+};
+
+const SOURCE_KIND = {
+  journalism: 'reporting',
+  'privacy-policy': 'privacy page',
+  'sec-10k': 'SEC 10-K',
+  'sec-8k': 'SEC 8-K',
+  'sec-20f': 'SEC 20-F',
+  other: 'other',
+  procurement: 'government contract',
+  'annual-report': 'annual report',
+  'ftc-order': 'FTC order',
+  'ftc-complaint': 'FTC complaint',
+  'cfpb-order': 'CFPB order',
+  'press-release': 'press release',
+  court: 'court record',
+};
+
+function host(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+}
+
+const archivedLinks = (sources) => (Array.isArray(sources) ? sources : [])
+  .filter((s) => isObj(s) && typeof s.archived === 'string' && s.archived.startsWith('https://web.archive.org/'))
+  .map((s) => ext(s.archived, 'archived ↗'));
+
+function optOutBlock(b) {
+  const o = b.optOut;
+  if (!isObj(o)) return `<p>We don't know an opt-out route for this one yet.</p>`;
+  if (o.method === 'none') {
+    const forms = COMPLAINT_FORMS.map((f) => `<li>${ext(f.url, `${esc(f.label)} ↗`)}</li>`).join('');
+    return `<p class="star-card-none">No opt-out exists.</p><p>What you can do instead: file a complaint, so it's on the record.</p><ul class="star-card-list">${forms}</ul>`;
+  }
+  if (o.status === 'verified' && typeof o.url === 'string' && /^https:\/\//.test(o.url)) {
+    const email = typeof o.email === 'string' && o.email ? `<p>Or email ${esc(o.email)}</p>` : '';
+    return `<p class="star-card-go">${ext(o.url, OPT_OUT_TEXT)}</p>${email}`;
+  }
+  if (o.status === 'verified' && typeof o.email === 'string' && o.email) return `<p>Opt out by email: ${esc(o.email)}</p>`;
+  const day = typeof o.verifiedAt === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(o.verifiedAt) ? o.verifiedAt : null;
+  return day
+    ? `<p>We couldn't confirm their opt-out page when we last checked (${day}).</p>`
+    : `<p>We couldn't confirm their opt-out page.</p>`;
+}
+
+function linksBlock(map, id, byId) {
+  const name = (other) => esc(shortName(byId.get(other)?.name ?? other));
+  const rows = (Array.isArray(map?.links) ? map.links : []).filter((k) => isObj(k) && SIDE[k.type] && (k.from === id || k.to === id) && k.from !== k.to);
+  if (!rows.length) return '';
+  const items = rows.map((k) => {
+    const mine = k.from === id;
+    const verb = SIDE[k.type][mine ? 0 : 1];
+    const src = archivedLinks(k.sources);
+    return `<li><strong>${verb} ${name(mine ? k.to : k.from)}</strong>${k.claim ? `<span class="star-card-claim">${esc(k.claim)}</span>` : ''}${src.length ? `<span class="star-card-src">${src.join(' · ')}</span>` : ''}</li>`;
+  }).join('');
+  return `<div class="label">DOCUMENTED LINKS</div><ul class="star-card-list">${items}</ul>`;
+}
+
+function sourcesBlock(b) {
+  const items = (Array.isArray(b.sources) ? b.sources : [])
+    .filter((s) => isObj(s) && typeof s.archived === 'string' && s.archived.startsWith('https://web.archive.org/'))
+    .map((s) => `<li>${esc(SOURCE_KIND[s.kind] ?? 'source')}${host(s.url) ? ` · ${esc(host(s.url))}` : ''} · ${ext(s.archived, 'archived ↗')}</li>`)
+    .join('');
+  return items ? `<div class="label">SOURCES</div><ul class="star-card-list">${items}</ul>` : '';
+}
+
+function coverageBlock(b, state) {
+  const missions = (Array.isArray(b.missions) ? b.missions : [])
+    .filter((m) => typeof m === 'string' && !m.includes('-recon-'))
+    .map((m) => MISSIONS.find((x) => x.id === m))
+    .filter(Boolean);
+  if (!missions.length) return `<div class="label">COVERED BY</div><p>No mission covers this one yet.</p>`;
+  const done = (m) => state?.missions?.[m]?.status === 'completed';
+  const items = missions.map((m) => `<li><a href="#/mission/${esc(m.id)}/${done(m.id) ? 'recheck' : 'briefing'}">${esc(m.title)}</a>${done(m.id) ? ' · done: re-check' : ''}</li>`).join('');
+  return `<div class="label">COVERED BY</div><ul class="star-card-list">${items}</ul>`;
+}
+
+const STATE_LINE = {
+  lit: (s) => `You filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. Your opt-out reaches this one.`,
+  amber: (s) => `Re-check due: you filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. People-search sites often list people again, so check it.`,
+};
+
+export function starCard(map, lighting, id, state = null) {
+  if (typeof id !== 'string') return '';
+  const brokers = Array.isArray(map?.brokers) ? map.brokers.filter((b) => isObj(b) && typeof b.id === 'string') : [];
+  const byId = new Map(brokers.map((b) => [b.id, b]));
+  const b = byId.get(id);
+  if (!b) return '';
+  const short = shortName(b.name ?? b.id);
+  const full = String(b.name ?? '');
+  const parent = typeof b.parent === 'string' && byId.has(b.parent) ? byId.get(b.parent) : null;
+  const star = lighting?.stars?.[id] ?? null;
+  const stateLine = star && STATE_LINE[star.state] ? `<p class="star-card-state">${STATE_LINE[star.state](star)}</p>` : '';
+  const buyer = Array.isArray(b.kind) && b.kind.includes('buyer') ? `<p class="star-card-state">A buyer: our sources show it buying people's data.</p>` : '';
+  const sells = (Array.isArray(b.sells) ? b.sells : []).filter((x) => typeof x === 'string' && x);
+  const frozen = Array.isArray(lighting?.frozen) && lighting.frozen.includes(id)
+    ? `<p class="star-card-note">Your credit is frozen here. A freeze stops new credit in your name; it doesn't stop this company selling what it holds.</p>` : '';
+  const halo = Array.isArray(lighting?.halo) && lighting.halo.includes(id)
+    ? '<p class="star-card-note">You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.</p>' : '';
+  return `<section class="star-card" tabindex="-1">`
+    + `<h2 class="star-card-name">${esc(short)}</h2>`
+    + (full && full !== short ? `<p class="star-card-full">${esc(full)}</p>` : '')
+    + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')
+    + stateLine + buyer + frozen + halo
+    + `<div class="label">OPT-OUT ROUTE</div>${optOutBlock(b)}`
+    + (sells.length ? `<div class="label">WHAT ITS RECORDS SAY IT SELLS</div><ul class="star-card-list">${sells.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
+    + linksBlock(map, id, byId)
+    + sourcesBlock(b)
+    + coverageBlock(b, state)
+    + '<button type="button" class="star-card-close" data-action="close-star">CLOSE</button>'
+    + '</section>';
+}

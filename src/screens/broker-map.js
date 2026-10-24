@@ -7,6 +7,7 @@ import { smallScout } from '../components/scout.js';
 import { constellationSvg, RECHECK_OPACITY } from '../components/constellation.js';
 import { brokerLighting, fieldCoverage, fieldHeader, isBuyer } from '../utils/broker-lighting.js';
 import { whatsLeft, initialView, shortName } from '../utils/broker-view.js';
+import { starCard } from '../components/star-card.js';
 import { BROKER_MAP_DIALOGUE } from '../data/dialogue.js';
 import { MISSIONS } from '../data/missions.js';
 import { localDay } from '../state.js';
@@ -24,8 +25,27 @@ const STYLE = `<style>
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
 .map-scout{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;padding:8px 10px;background:rgba(26,31,43,0.9);border:1px solid rgba(0,229,255,0.25)}
 .map-scout p{margin:0;font-size:12px;line-height:1.5;color:var(--offwhite)}
-.map-stage{position:relative;width:100%;height:calc(100svh - 150px);min-height:320px;border-radius:8px;overflow:hidden;background:#090B10}
+.map-stage{position:relative;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;cursor:grab;height:calc(100svh - 150px);min-height:320px;border-radius:8px;overflow:hidden;background:#090B10}
 .map-stage>svg.constellation{width:100%;height:100%;border-radius:8px}
+.constellation-wrap.has-card .star-card{margin-top:12px}
+@media (min-width:900px){.constellation-wrap.has-card{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}.constellation-wrap.has-card .star-card{margin-top:0;max-height:calc(100svh - 40px);overflow-y:auto;position:sticky;top:12px}}
+.star-card{padding:14px 16px;background:rgba(17,21,31,0.96);border:1px solid rgba(0,229,255,0.3);border-radius:8px;font-size:13px;line-height:1.6;color:var(--offwhite);overflow-wrap:anywhere;outline:none}
+.star-card h2{margin:0;font-family:var(--font-display);font-size:16px;font-weight:800;letter-spacing:1px;color:var(--offwhite)}
+.star-card p{margin:4px 0}
+.star-card .star-card-full,.star-card .star-card-parent{font-size:12px;color:rgba(237,239,243,0.6)}
+.star-card .star-card-state{color:var(--lime)}
+.star-card .star-card-note{font-size:12px;color:rgba(237,239,243,0.75)}
+.star-card .star-card-none{color:#FF2D9B;font-weight:700}
+.star-card .label{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(0,229,255,0.6);margin:12px 0 4px}
+.star-card a{color:var(--cyan)}
+.star-card .star-card-go a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:#090B10;background:var(--cyan);border-radius:6px;text-decoration:none}
+.star-card-list{margin:0;padding-left:18px}
+.star-card-list li{margin:3px 0}
+.star-card-claim{display:block;font-size:12px;color:rgba(237,239,243,0.7)}
+.star-card-src{display:block;font-size:11px}
+.star-card-close{min-height:44px;margin-top:12px;padding:0 18px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,0.4);border-radius:6px;cursor:pointer}
+.star-card-close:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.map-stage.is-dragging{cursor:grabbing}
 .constellation-controls{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;gap:6px}
 .constellation-zoom{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--offwhite);background:rgba(9,11,16,0.82);border:1px solid rgba(0,229,255,0.35);border-radius:8px;cursor:pointer;padding:0}
 .constellation-zoom--reset{font-size:10px;letter-spacing:1px}
@@ -140,6 +160,8 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
   const v = view ?? initialView(map, layout, lighting, ratio);
   const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: CONTROLS });
   const selected = selectedId ? map.brokers.find((b) => b.id === selectedId) : null;
+  // The tapped star's card: below the map on a phone, beside it from 900px.
+  const card = selected ? starCard(map, lighting, selectedId, state) : '';
   const height = stage?.h > 0 ? ` style="height:${Math.round(stage.h)}px"` : '';
   // Above the map, compact, so it reads on a 375×812 phone without scrolling.
   const scout = firstVisit
@@ -148,7 +170,7 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
   return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting))}</h1>`
     + '<p class="map-sub">estimated share of the field your opt-outs reach</p>'
     + scout
-    + '<div class="constellation-wrap">'
+    + `<div class="constellation-wrap${card ? ' has-card' : ''}"><div class="map-col">`
     + `<div class="map-stage"${height}>${svg}<div class="constellation-controls">`
     + '<button type="button" class="constellation-zoom" data-action="map-zoom" data-dir="in" aria-label="Zoom in">+</button>'
     + '<button type="button" class="constellation-zoom" data-action="map-zoom" data-dir="out" aria-label="Zoom out">−</button>'
@@ -156,7 +178,7 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
     + '</div></div>'
     + `<p class="constellation-pick" aria-live="polite">${selected ? esc(shortName(selected.name)) : ''}</p>`
     + starList(map, layout, lighting, selectedId, listOpen)
-    + '</div>'
+    + `</div>${card}</div>`
     + `<ul class="map-legend">${LEGEND.map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul>`
     + nudgeBlock(lighting.pending)
     + residencyBlock(state, editingResidency)

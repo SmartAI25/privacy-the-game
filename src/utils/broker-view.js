@@ -27,6 +27,12 @@ export function nearestStar(layout, x, y, maxDist = Infinity) {
   return best;
 }
 
+// The id of the star nearest (x, y) within maxDist map units, or null.
+export function nearestStarId(layout, x, y, maxDist = Infinity) {
+  const i = nearestStar(layout, x, y, maxDist);
+  return i >= 0 ? layout.stars[i][0] : null;
+}
+
 // Zoom a viewBox { x, y, w } (square) or { x, y, w, h } by `factor` (>1 zooms in) about the map
 // point (cx, cy), which stays put on screen. The width is held to [minW, maxW], the h:w ratio is
 // kept, and the box is kept on the map (a side longer than the map is centred on it).
@@ -47,7 +53,8 @@ export function zoomViewBox(viewBox, factor, cx, cy, bounds = {}) {
   // padY: how far (as a share of the box's height) it may run past the map's top or bottom edge.
   // The sky and the skyline draw out there, so a star near the rim can still sit mid-screen.
   const padY = Number.isFinite(bounds.padY) ? bounds.padY : 0;
-  const clamp = (v, side, pad = 0) => (side >= size ? (size - side) / 2 : Math.min(size - side + side * pad, Math.max(-side * pad, v)));
+  // (+ 0 turns a -0 into 0.)
+  const clamp = (v, side, pad = 0) => (side >= size ? (size - side) / 2 : Math.min(size - side + side * pad, Math.max(-side * pad, v))) + 0;
   const out = { x: clamp(px - (px - x) * k, nw), y: clamp(py - (py - y) * k, nh, padY), w: nw };
   if (h !== null) out.h = nh;
   return out;
@@ -55,6 +62,27 @@ export function zoomViewBox(viewBox, factor, cx, cy, bounds = {}) {
 
 // The map screen's view bounds: up to half a screen of sky past the top or bottom of the map.
 export const VIEW_BOUNDS = Object.freeze({ padY: 0.5 });
+
+// Step zoom: widths 1000 -> 500 -> 250 and back, centred on the map point (cx, cy) and clamped
+// to the map (or to `bounds`, e.g. VIEW_BOUNDS). A width between steps goes to the next step.
+// A non-square { x, y, w, h } keeps its ratio.
+const STEPS = [1000, 500, 250];
+export function zoomView(view, dir, cx, cy, bounds = {}) {
+  const w = Number.isFinite(view?.w) && view.w > 0 ? view.w : 1000;
+  const h = Number.isFinite(view?.h) && view.h > 0 ? view.h : null;
+  const x = Number.isFinite(view?.x) ? view.x : 0;
+  const y = Number.isFinite(view?.y) ? view.y : 0;
+  const px = Number.isFinite(cx) ? cx : x + w / 2;
+  const py = Number.isFinite(cy) ? cy : y + (h ?? w) / 2;
+  const eps = 1e-6;
+  const nw = dir === 'in'
+    ? (STEPS.find((s) => s < w - eps) ?? w)
+    : ([...STEPS].reverse().find((s) => s > w + eps) ?? STEPS[0]);
+  const nh = h === null ? nw : (h * nw) / w;
+  const box = { x: px - nw / 2, y: py - nh / 2, w: nw };
+  if (h !== null) box.h = nh;
+  return zoomViewBox(box, 1, px, py, { ...bounds, minW: Math.min(nw, 100), maxW: Math.max(nw, 1000) });
+}
 
 // The same view drawn into a box `ratio` times as tall as it is wide: same centre, same width.
 export function withRatio(view, ratio) {

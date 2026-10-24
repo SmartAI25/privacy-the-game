@@ -29,7 +29,8 @@ import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
 import { brokerLighting } from './utils/broker-lighting.js';
-import { litIds, initialView, withRatio, zoomViewBox, zoomAnchor, nearestStar, VIEW_BOUNDS } from './utils/broker-view.js';
+import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
+import { isTap, panView, pinchView, wheelView, TAP_MAX_PX } from './utils/map-gestures.js';
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { checklistFor } from './data/broker-checklists.js';
@@ -289,15 +290,160 @@ function afterBrokerMapRender(renderFn, params) {
   }
 }
 
-// A tap on the sky selects the nearest star within a 44px target, or clears the selection.
-function tapSky(svg, e) {
+// A tap on the sky selects the nearest star within a 44px target (24 css px). A miss with the
+// whole sky in view zooms in on that point; any other miss clears the selection. A hit opens the
+// star's card (below the map on a phone, so the page scrolls to it).
+function tapSky(svg, clientX, clientY) {
   const data = brokerData();
   const ctm = svg.getScreenCTM?.();
   if (!data || !ctm || !ctm.a) return;
-  const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
-  const i = nearestStar(data.layout, p.x, p.y, (HIT_PX + 2) / ctm.a);
-  selectedId = i >= 0 ? data.layout.stars[i][0] : null;
+  const p = new DOMPoint(clientX, clientY).matrixTransform(ctm.inverse());
+  const id = nearestStarId(data.layout, p.x, p.y, (HIT_PX + 2) / ctm.a);
+  if (id) {
+    selectedId = id;
+    renderCurrentRoute();
+    revealCard(clientY);
+    return;
+  }
+  const v = mapViewNow(data);
+  if (v.w >= 1000) view = zoomView(v, 'in', p.x, p.y, VIEW_BOUNDS);
+  else selectedId = null;
   renderCurrentRoute();
+}
+
+const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+// On a phone the card sits below a map that fills the screen: scroll so its top shows at mid-screen,
+// and if that would carry the tapped star off the top, pan the sky so the star stays in sight.
+function revealCard(starClientY) {
+  const card = app.querySelector('.star-card');
+  const stage = app.querySelector('.map-stage');
+  if (!card || !stage) return;
+  const top = card.getBoundingClientRect().top;
+  const by = top - window.innerHeight * 0.5;
+  if (by <= 0) return focusCard();
+  const r = stage.getBoundingClientRect();
+  const visTop = Math.max(0, r.top - by) + 8;
+  const visBottom = Math.min(window.innerHeight * 0.5, r.bottom - by) - 8;
+  const starAfter = starClientY - by;
+  if (visBottom > visTop && (starAfter < visTop + 24 || starAfter > visBottom - 24)) {
+    const svg = stage.querySelector('svg.constellation');
+    const data = brokerData();
+    if (svg && data) {
+      view = panView(mapViewNow(data), svg.getBoundingClientRect(), 0, (visTop + visBottom) / 2 - starAfter, VIEW_BOUNDS);
+      renderCurrentRoute();
+    }
+  }
+  window.scrollBy({ top: by, behavior: reducedMotion() ? 'auto' : 'smooth' });
+  focusCard();
+}
+
+// Focus moves to the card. A touch tap's compatibility mouse events land after pointerup and would
+// blur it, so it is focused again when the tap's click is swallowed.
+let cardFocusPending = false;
+function focusCard() {
+  cardFocusPending = true;
+  app.querySelector('.star-card')?.focus({ preventScroll: true });
+}
+
+// Pinch-zoom and pan on the map stage (Liz: "I can't zoom"), with Pointer Events: up to two
+// pointers. The stage has touch-action: none, so the page neither scrolls nor zooms on it; the
+// rest of the page scrolls as usual. A drag writes the viewBox directly (no re-render); when the
+// gesture ends the map re-draws once so labels and hit targets fit the new view. A press that
+// stays within TAP_MAX_PX for under TAP_MAX_MS is a tap and selects; a drag never selects.
+// Memory only: nothing here calls navigate, track or history.
+let gesture = null;
+// The click a handled press makes is swallowed (in the capture phase), so that a tap that
+// scrolls the card under the finger never also clicks a link on it.
+let swallowClickUntil = 0;
+let wheelTimer = null;
+
+const stageSvg = () => app.querySelector('.map-stage svg.constellation');
+const pt = (e) => ({ x: e.clientX, y: e.clientY });
+
+function drawViewBox(v) {
+  const svg = stageSvg();
+  if (svg) svg.setAttribute('viewBox', `${v.x} ${v.y} ${v.w} ${v.h ?? v.w}`);
+}
+
+function mapPointerDown(e) {
+  const stage = e.target.closest?.('.map-stage');
+  if (!stage || !app.contains(stage) || e.target.closest('.constellation-controls')) return;
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  const data = brokerData();
+  if (!data || !stageSvg()) return;
+  if (!gesture) {
+    gesture = { pointers: new Map(), start: { ...pt(e), t: e.timeStamp }, maxMoved: 0, multi: false, dragging: false, view: mapViewNow(data) };
+  } else if (gesture.pointers.size >= 2) return;
+  gesture.pointers.set(e.pointerId, pt(e));
+  if (gesture.pointers.size > 1) gesture.multi = true;
+  try { stage.setPointerCapture(e.pointerId); } catch { /* the pointer may already be gone */ }
+}
+
+function mapPointerMove(e) {
+  if (!gesture || !gesture.pointers.has(e.pointerId)) return;
+  const svg = stageSvg();
+  if (!svg) return;
+  e.preventDefault();
+  const rect = svg.getBoundingClientRect();
+  const prev = gesture.pointers.get(e.pointerId);
+  const next = pt(e);
+  if (gesture.pointers.size === 2) {
+    const [ida, idb] = [...gesture.pointers.keys()];
+    const before = [gesture.pointers.get(ida), gesture.pointers.get(idb)];
+    gesture.pointers.set(e.pointerId, next);
+    const after = [gesture.pointers.get(ida), gesture.pointers.get(idb)];
+    gesture.view = pinchView(gesture.view, rect, before, after, VIEW_BOUNDS);
+    gesture.dragging = true;
+  } else {
+    gesture.pointers.set(e.pointerId, next);
+    if (!gesture.multi) gesture.maxMoved = Math.max(gesture.maxMoved, Math.hypot(next.x - gesture.start.x, next.y - gesture.start.y));
+    if (!gesture.dragging && (gesture.multi || gesture.maxMoved >= TAP_MAX_PX)) {
+      // Past the tap slop: the map catches up with the whole move so far.
+      gesture.dragging = true;
+      const from = gesture.multi ? prev : gesture.start;
+      gesture.view = panView(gesture.view, rect, next.x - from.x, next.y - from.y, VIEW_BOUNDS);
+    } else if (gesture.dragging) {
+      gesture.view = panView(gesture.view, rect, next.x - prev.x, next.y - prev.y, VIEW_BOUNDS);
+    }
+  }
+  if (gesture.dragging) {
+    view = gesture.view;
+    drawViewBox(view);
+    app.querySelector('.map-stage')?.classList.add('is-dragging');
+  }
+}
+
+function mapPointerUp(e) {
+  if (!gesture || !gesture.pointers.has(e.pointerId)) return;
+  gesture.pointers.delete(e.pointerId);
+  if (gesture.pointers.size > 0) return; // one finger of a pinch lifted: the other pans on
+  const g = gesture;
+  gesture = null;
+  swallowClickUntil = performance.now() + 400; // the click that follows this press is handled here
+  const tap = e.type === 'pointerup' && !g.multi && isTap(g.start, { ...pt(e), t: e.timeStamp }, g.maxMoved);
+  const svg = stageSvg();
+  if (tap && svg) tapSky(svg, e.clientX, e.clientY);
+  else if (g.dragging) renderCurrentRoute();
+}
+
+// A mouse wheel or trackpad over the stage zooms about the pointer (a trackpad pinch arrives as a
+// ctrl+wheel with small deltas). The page does not scroll while the pointer is on the stage.
+function mapWheel(e) {
+  const stage = e.target.closest?.('.map-stage');
+  if (!stage || !app.contains(stage)) return;
+  const svg = stageSvg();
+  const data = brokerData();
+  if (!svg || !data) return;
+  e.preventDefault();
+  const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+  const dy = e.deltaY * unit * (e.ctrlKey ? 4 : 1);
+  view = wheelView(mapViewNow(data), svg.getBoundingClientRect(), dy, e.clientX, e.clientY, VIEW_BOUNDS);
+  drawViewBox(view);
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    if (parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
+  }, 180);
 }
 
 function mapViewNow(data) {
@@ -330,6 +476,14 @@ function mapAction(action, el) {
     view = zoomViewBox({ ...v, x: s[1] - v.w / 2, y: s[2] - h / 2 }, 1, s[1], s[2], VIEW_BOUNDS);
     renderCurrentRoute();
     app.querySelector(`[data-action="select-star"][data-star="${Number(el.dataset.star)}"]`)?.focus();
+  } else if (action === 'close-star') {
+    const index = data?.layout?.stars?.findIndex((st) => st?.[0] === selectedId) ?? -1;
+    selectedId = null;
+    renderCurrentRoute();
+    const stage = app.querySelector('.map-stage');
+    if (stage && stage.getBoundingClientRect().top < 0) stage.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    const back = app.querySelector(`[data-action="select-star"][data-star="${index}"]`) ?? app.querySelector('[data-action="map-zoom"][data-dir="in"]');
+    back?.focus({ preventScroll: true });
   } else if (action === 'map-list') {
     mapListOpen = !mapListOpen;
     renderCurrentRoute();
@@ -346,7 +500,7 @@ function mapAction(action, el) {
   }
 }
 
-const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'map-list', 'set-residency', 'change-residency']);
+const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'set-residency', 'change-residency']);
 
 function renderCurrentRoute(cause = RENDER_CAUSE.REFRESH) {
   render(parseRoute(location.hash), cause);
@@ -589,7 +743,9 @@ async function handleShareCard(districtId) {
 app.addEventListener('click', async (e) => {
   const sky = e.target.closest?.('svg.constellation');
   if (sky && app.contains(sky)) {
-    tapSky(sky, e);
+    // Pointer presses are handled on pointerup (tap vs drag) and their clicks swallowed; a click
+    // with no press before it (an older browser, a synthetic click) still selects.
+    tapSky(sky, e.clientX, e.clientY);
     return;
   }
   const el = e.target.closest('[data-action]');
@@ -927,6 +1083,10 @@ app.addEventListener('keydown', (e) => {
     if (btn) { e.preventDefault(); btn.click(); }
     return;
   }
+  if (e.key === 'Escape' && selectedId && app.querySelector('.star-card')) {
+    const close = app.querySelector('[data-action="close-star"]');
+    if (close) { e.preventDefault(); close.click(); return; }
+  }
   const el = keyActivationTarget(e);
   if (!el || !app.contains(el)) return;
   e.preventDefault();
@@ -968,6 +1128,27 @@ function refreshDebriefForm(e) {
   const shown = new Set(visibleQuestions(mission, readAnswers(form, mission)).map((q) => q.id));
   for (const group of form.querySelectorAll('[data-question]')) group.hidden = !shown.has(group.dataset.question);
 }
+document.addEventListener('click', (e) => {
+  if (!swallowClickUntil) return;
+  const late = performance.now() > swallowClickUntil;
+  swallowClickUntil = 0;
+  const refocus = cardFocusPending;
+  cardFocusPending = false;
+  if (late) return;
+  e.preventDefault();
+  e.stopPropagation();
+  if (refocus) app.querySelector('.star-card')?.focus({ preventScroll: true });
+}, true);
+app.addEventListener('pointerdown', mapPointerDown);
+app.addEventListener('pointermove', mapPointerMove, { passive: false });
+app.addEventListener('pointerup', mapPointerUp);
+app.addEventListener('pointercancel', mapPointerUp);
+app.addEventListener('wheel', mapWheel, { passive: false });
+// Older Safari pinch-zooms the page on its own gesture events; not on the map.
+app.addEventListener('gesturestart', (e) => {
+  if (e.target.closest?.('.map-stage')) e.preventDefault();
+});
+
 app.addEventListener('change', refreshDebriefForm);
 app.addEventListener('input', refreshDebriefForm);
 
