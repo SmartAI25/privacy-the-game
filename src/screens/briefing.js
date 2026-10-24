@@ -87,7 +87,8 @@ export function renderBriefing(state, missionId, opts = {}) {
   const loreData = loreEntry(districtId, state);
   const lore = renderLoreSection(loreData);
 
-  const scoutLine = noReset ? noResetScoutLine(state, mission) : mission.id === PM_BURST_ID ? pmBurstBriefingLine(state) : (reopenedLine(state, mission) || mission.scoutDialog?.briefing || 'Follow the steps above and report back when you\u2019re done.');
+  // The burst's line needs the password-manager report; until then (no numbers) the mission's own line.
+  const scoutLine = noReset ? noResetScoutLine(state, mission) : (mission.id === PM_BURST_ID && pmBurstBriefingLine(state)) || reopenedLine(state, mission) || mission.scoutDialog?.briefing || 'Follow the steps above and report back when you\u2019re done.';
   const scoutFeeling = noReset ? 'happy' : undefined;
 
   const header = `

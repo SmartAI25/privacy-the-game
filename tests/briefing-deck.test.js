@@ -28,7 +28,7 @@ describe('briefings are slides on phones', () => {
     for (const m of MISSIONS) {
       const page = read(renderBriefing(state, m.id));
       expect(page, m.id).toContain(norm(m.briefing));
-      const scout = m.id === PM_BURST_ID ? pmBurstBriefingLine(state) : m.scoutDialog.briefing;
+      const scout = (m.id === PM_BURST_ID && pmBurstBriefingLine(state)) || m.scoutDialog.briefing;
       expect(page, m.id).toContain(norm(scout));
       for (const s of missionSteps(m, state)) expect(page, m.id).toContain(norm(s.text));
     }
@@ -60,10 +60,9 @@ describe('briefings are slides on phones', () => {
       const d = deckOf(html);
       if (!d) continue;
       checked++;
-      const scout = m.id === PM_BURST_ID ? pmBurstBriefingLine(state) : m.scoutDialog.briefing;
+      const scout = (m.id === PM_BURST_ID && pmBurstBriefingLine(state)) || m.scoutDialog.briefing;
       const scoutSlides = slidesOf(html).filter((x) => x.includes('class="brief-scout"')).join(' ');
-      // (The "change the next 3" burst has no line before the manager's report is in: pre-existing.)
-      if (scout) {
+      {
         expect(read(scoutSlides), m.id).toContain(norm(scout));
         // Scout and closing slides are phone-only sections: on desktop no empty slide is left.
         expect(d.match(/<section class="slide slide--phone"[^>]*><div class="brief-scout"/g)?.length, m.id).toBeGreaterThan(0);
@@ -155,5 +154,15 @@ describe('briefings are slides on phones', () => {
     expect(html).not.toContain('data-deck');
     expect(html).not.toContain('brief--deck');
     expect(norm(html)).toContain(norm(short.briefing));
+  });
+});
+
+describe('the "change the next 3" burst before the report is in', () => {
+  it('Scout says the mission\'s own line, never "null"', () => {
+    const m = MISSIONS.find((x) => x.id === PM_BURST_ID);
+    const html = renderBriefing(state, PM_BURST_ID);
+    expect(pmBurstBriefingLine(state)).toBeNull();
+    expect(html).not.toMatch(/>\s*null\s*</);
+    expect(read(html)).toContain(norm(m.scoutDialog.briefing));
   });
 });
