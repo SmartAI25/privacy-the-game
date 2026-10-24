@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex, progressWidth, deckHeight, focusAfter } from '../src/components/deck.js';
 import { MISSIONS } from '../src/data/missions.js';
@@ -333,5 +333,80 @@ describe('initDecks', () => {
     d.on.keydown({ key: 'ArrowRight', preventDefault() {}, target: { closest: () => null } });
     expect(focused).toEqual(['next', 'heading2']);
     expect(d.style.height).toBe('400px');
+  });
+
+  it('a slide can carry its own class (a phone-only slide hides whole on desktop)', () => {
+    const html = deck([{ html: '<p>a</p>' }, { html: '<p>b</p>', className: 'slide--phone' }], { label: 'X' });
+    expect(html).toContain('<section class="slide" aria-roledescription="slide" aria-label="1 of 2"');
+    expect(html).toContain('<section class="slide slide--phone" aria-roledescription="slide" aria-label="2 of 2"');
+    const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
+    const desk = css.slice(css.indexOf('@media (min-width: 900px)', css.indexOf('/* deck: start */')));
+    expect(desk).toMatch(/^@media[^@]*\.slide\.slide--phone \{ display: none; \}/);
+  });
+
+  it('the height fits only when the scroll lands: a swipe does not jump mid-gesture, NEXT to a shorter slide shrinks after landing', () => {
+    vi.useFakeTimers();
+    const raf = globalThis.requestAnimationFrame;
+    globalThis.requestAnimationFrame = (f) => { f(); return 0; };
+    try {
+      const fake = (extra = {}) => {
+        const on = {};
+        return {
+          on, dataset: {}, disabled: false, textContent: '', style: {},
+          classList: { toggle() {} }, setAttribute() {}, hasAttribute: () => true, focus() {},
+          getAttribute: () => 'Deck', addEventListener: (type, fn) => { on[type] = fn; },
+          querySelector: () => null, querySelectorAll: () => [], ...extra,
+        };
+      };
+      const slides = [400, 200, 300].map((h) => fake({ offsetHeight: h }));
+      const prev = fake(); const next = fake(); const count = fake();
+      const controls = fake({ hasAttribute: (a) => a === 'data-deck-controls', querySelector: (s) => ({ '[data-deck-prev]': prev, '[data-deck-next]': next, '[aria-live]': count }[s] || null) });
+      const d = fake({ scrollLeft: 0, clientWidth: 390, scrollWidth: 1170, nextElementSibling: controls, querySelectorAll: (s) => (s === ':scope > .slide' ? slides : []), scrollTo() {} });
+      initDecks({ querySelectorAll: (s) => (s === '[data-deck]' ? [d] : []) });
+      expect(d.style.height).toBe('400px');
+      // NEXT to a shorter slide: no shrink while the scroll runs (the outgoing slide would clip).
+      next.on.click();
+      expect(count.textContent).toBe('2 of 3');
+      expect(d.style.height).toBe('400px');
+      d.scrollLeft = 200; d.on.scroll();
+      expect(d.style.height).toBe('400px');
+      d.scrollLeft = 390; d.on.scroll();
+      expect(d.style.height).toBe('200px');
+      // A swipe: the count follows at half-way, the height waits for the swipe to stop.
+      d.scrollLeft = 600; d.on.scroll();
+      expect(count.textContent).toBe('3 of 3');
+      expect(d.style.height).toBe('200px');
+      d.scrollLeft = 780; d.on.scroll();
+      expect(d.style.height).toBe('200px');
+      vi.advanceTimersByTime(200);
+      expect(d.style.height).toBe('300px');
+      // Or scrollend says so straight away.
+      d.scrollLeft = 390; d.on.scroll(); d.on.scrollend();
+      expect(d.style.height).toBe('200px');
+    } finally {
+      globalThis.requestAnimationFrame = raf;
+      vi.useRealTimers();
+    }
+  });
+
+  it('a deck that leaves the page stops its ResizeObserver', () => {
+    const made = [];
+    const RO = globalThis.ResizeObserver;
+    globalThis.ResizeObserver = class { constructor(cb) { this.cb = cb; this.off = false; made.push(this); } observe() {} disconnect() { this.off = true; } };
+    try {
+      const el = (extra = {}) => ({ dataset: {}, style: {}, textContent: '', classList: { toggle() {} }, setAttribute() {}, hasAttribute: () => false, addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], ...extra });
+      const controls = el({ hasAttribute: (a) => a === 'data-deck-controls' });
+      const slides = [el({ offsetHeight: 100 }), el({ offsetHeight: 150 })];
+      const d = el({ isConnected: true, scrollLeft: 0, clientWidth: 390, scrollWidth: 780, nextElementSibling: controls, querySelectorAll: (s) => (s === ':scope > .slide' ? slides : []) });
+      initDecks({ querySelectorAll: (s) => (s === '[data-deck]' ? [d] : []) });
+      expect(made).toHaveLength(1);
+      made[0].cb();
+      expect(made[0].off).toBe(false);
+      d.isConnected = false;
+      made[0].cb();
+      expect(made[0].off).toBe(true);
+    } finally {
+      globalThis.ResizeObserver = RO;
+    }
   });
 });

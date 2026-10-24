@@ -5,6 +5,9 @@ import { createInitialState } from '../src/state.js';
 import { MISSIONS } from '../src/data/missions.js';
 import { countWords, splitWords } from '../src/components/deck.js';
 import { missionSteps } from '../src/utils/debrief.js';
+import { ACCOUNTS } from '../src/data/accounts.js';
+import { DISTRICT_DIALOGUE } from '../src/data/dialogue.js';
+import { missionDistrict } from '../src/data/missions.js';
 import { PM_BURST_ID, pmBurstBriefingLine } from '../src/utils/bursts.js';
 
 const state = createInitialState();
@@ -12,7 +15,7 @@ const state = createInitialState();
 const read = (html) => norm(html.replace(/<summary>[^<]*<\/summary>/g, ' '));
 const norm = (s) => String(s).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 const deckOf = (html) => html.match(/<div class="deck[^"]*"[^>]*data-deck[\s\S]*?<\/div><div class="deck-controls"/)?.[0] ?? '';
-const slidesOf = (html) => deckOf(html).split('<section class="slide"').slice(1).map((s) => s.slice(s.indexOf('>') + 1, s.lastIndexOf('</section>')));
+const slidesOf = (html) => deckOf(html).split(/<section class="slide[ "]/).slice(1).map((s) => s.slice(s.indexOf('>') + 1, s.lastIndexOf('</section>')));
 
 // A slide's body: its words minus labels, step numbers and text behind a closed <details>.
 const body = (slide) => slide
@@ -48,6 +51,39 @@ describe('briefings are slides on phones', () => {
       }
     }
     expect(decks).toBeGreaterThan(250);
+  });
+
+  it("the phone slides themselves carry the Scout line, and THIS LIBERATES and the lore close the deck", () => {
+    let checked = 0;
+    for (const m of MISSIONS) {
+      const html = renderBriefing(state, m.id);
+      const d = deckOf(html);
+      if (!d) continue;
+      checked++;
+      const scout = m.id === PM_BURST_ID ? pmBurstBriefingLine(state) : m.scoutDialog.briefing;
+      const scoutSlides = slidesOf(html).filter((x) => x.includes('class="brief-scout"')).join(' ');
+      // (The "change the next 3" burst has no line before the manager's report is in: pre-existing.)
+      if (scout) {
+        expect(read(scoutSlides), m.id).toContain(norm(scout));
+        // Scout and closing slides are phone-only sections: on desktop no empty slide is left.
+        expect(d.match(/<section class="slide slide--phone"[^>]*><div class="brief-scout"/g)?.length, m.id).toBeGreaterThan(0);
+      }
+      const slides = slidesOf(html);
+      const tail = [];
+      for (let k = slides.length - 1; k >= 0 && slides[k].includes('class="brief-last'); k--) tail.unshift(slides[k]);
+      const account = ACCOUNTS[m.accountId];
+      const lore = Object.values(DISTRICT_DIALOGUE[missionDistrict(m)]?.lore || {})[0];
+      if (account?.building && account?.buildingDark) {
+        expect(read(tail.join(' ')), m.id).toContain('THIS LIBERATES');
+        expect(read(tail.join(' ')), m.id).toContain(norm(account.name));
+      }
+      if (lore) {
+        expect(read(tail.join(' ')), m.id).toContain(norm(lore.title));
+        expect(read(tail.join(' ')), m.id).toContain(norm(lore.text));
+      }
+      if (tail.length) expect(d.match(/<section class="slide slide--phone"[^>]*><div class="brief-last/g)?.length, m.id).toBe(tail.length);
+    }
+    expect(checked).toBeGreaterThan(250);
   });
 
   it('the action row is outside the deck', () => {

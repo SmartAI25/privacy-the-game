@@ -166,6 +166,8 @@ ${main}
 // The whole briefing (intel, steps, Scout) within this many words fits a phone's first screen.
 const SHORT_WORDS = 60;
 const SLIDE_WORDS = 35;
+// Scout and the closing slides: on a desktop the sidebar has them, so the whole section hides.
+const PHONE_ONLY = 'slide--phone';
 const MORE_INTEL_AFTER = 3; // intel slides before the rest goes behind "More intel"
 
 // The slides, in order: title + first intel; up to two more intel; Scout; the steps; THIS
@@ -193,7 +195,7 @@ function briefingSlides({ header, briefing, stepRows, stepRow, missionStepList, 
 
   // Scout, phone only (the sidebar shows the line on a desktop).
   splitWords(scoutLine, SLIDE_WORDS).forEach((chunk, i) => {
-    slides.push({ html: `<div class="brief-scout">${i === 0 ? `${briefingScout(scoutFeeling)}<div class="section-label brief-scout-name">SCOUT</div>` : ''}<div class="brief-scout-bubble" data-chunk>${chunk}</div></div>` });
+    slides.push({ className: PHONE_ONLY, html: `<div class="brief-scout">${i === 0 ? `${briefingScout(scoutFeeling)}<div class="section-label brief-scout-name">SCOUT</div>` : ''}<div class="brief-scout-bubble" data-chunk>${chunk}</div></div>` });
   });
 
   if (noResetPanel) slides.push({ html: noResetPanel });
@@ -234,8 +236,8 @@ function briefingSlides({ header, briefing, stepRows, stepRow, missionStepList, 
     });
   }
 
-  if (preview) slides.push({ html: `<div class="brief-last">${preview}</div>` });
-  for (const html of loreSlides(loreData)) slides.push({ html });
+  if (preview) slides.push({ className: PHONE_ONLY, html: `<div class="brief-last">${preview}</div>` });
+  for (const html of loreSlides(loreData)) slides.push({ className: PHONE_ONLY, html });
   return slides;
 }
 

@@ -115,7 +115,7 @@ export function deck(slides, { label, className = '' } = {}) {
   const m = list.length;
   const cls = ['deck', className].filter(Boolean).join(' ');
   const sections = list
-    .map((s, i) => `<section class="slide" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
+    .map((s, i) => `<section class="${attr(['slide', s.className].filter(Boolean).join(' '))}" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
     .join('');
   const dots = list.map((_, i) => `<span class="deck-dot${i === 0 ? ' is-current' : ''}"></span>`).join('');
   // Past DOTS_MAX slides the dots wrap; a thin bar says the same thing in one line.
@@ -224,13 +224,25 @@ export function initDecks(root, positions = null) {
 
     // Only a phone-width deck is a row; at desktop width the slides are blocks and keys do nothing.
     const isRow = () => d.scrollWidth > d.clientWidth + 1;
+    // The height follows the slide only once the scroll has landed: mid-swipe the controls
+    // would jump, and shrinking early clips the slide still scrolling out.
     const fit = () => {
       if (d.style && current >= 0) d.style.height = deckHeight(slides[current]?.offsetHeight, isRow());
+    };
+    // Heading to a taller slide: grow now so it arrives whole (fit trims it on landing).
+    const grow = (to) => {
+      if (!d.style || !isRow()) return;
+      const h = Math.max(parseFloat(d.style.height) || 0, slides[to]?.offsetHeight || 0);
+      d.style.height = deckHeight(h, true);
+    };
+    let fitTimer = 0;
+    const fitWhenStill = () => {
+      clearTimeout(fitTimer);
+      fitTimer = setTimeout(fit, 150);
     };
     const show = (i) => {
       if (i === current) return;
       current = i;
-      fit();
       if (fill?.style) fill.style.width = progressWidth(i, n);
       const s = controlState(i, n);
       if (prev) prev.disabled = s.prevDisabled;
@@ -243,6 +255,7 @@ export function initDecks(root, positions = null) {
       clearTimeout(settleTimer);
       target = null;
       show(slideIndex(d.scrollLeft, d.clientWidth, n));
+      fit();
     };
     const go = (step, pressed = null) => {
       const to = stepTarget(target, current, step, n);
@@ -250,6 +263,7 @@ export function initDecks(root, positions = null) {
       target = to;
       clearTimeout(settleTimer);
       settleTimer = setTimeout(settle, 1000);
+      grow(to);
       d.scrollTo?.({ left: to * d.clientWidth, behavior: reducedMotion() ? 'auto' : 'smooth' });
       show(to);
       if (focusAfter(pressed ? 'button' : 'key', !!pressed?.disabled) === 'button') {
@@ -280,13 +294,20 @@ export function initDecks(root, positions = null) {
         frame = 0;
         const r = resolveIndex(target, d.scrollLeft, d.clientWidth, n);
         if (r.settled && target != null) settle();
-        else show(r.index);
+        else {
+          show(r.index);
+          if (target == null) fitWhenStill(); // a swipe: fit once it stops
+        }
       });
     }, { passive: true });
     // A scroll that another tap cut short can end off target: only the target settles it
     // (the timer catches a swipe that took over).
     d.addEventListener('scrollend', () => {
       if (target != null && resolveIndex(target, d.scrollLeft, d.clientWidth, n).settled) settle();
+      else if (target == null) {
+        clearTimeout(fitTimer);
+        fit();
+      }
     });
 
     // A redraw keeps its slide: jump there with no animation, and draw the count for it
@@ -294,10 +315,14 @@ export function initDecks(root, positions = null) {
     const kept = Math.min(positions?.get?.(d.getAttribute?.('aria-label')) ?? 0, n - 1);
     if (kept > 0) jumpTo(d, kept * d.clientWidth);
     show(kept > 0 ? kept : slideIndex(d.scrollLeft, d.clientWidth, n));
+    fit();
     // A slide that changes size (a resize, a font arriving, a <details> opened) refits the deck;
     // so does crossing to or from desktop width, where the height is cleared.
     if (typeof ResizeObserver === 'function') {
-      const ro = new ResizeObserver(() => fit());
+      const ro = new ResizeObserver(() => {
+        if (d.isConnected === false) return ro.disconnect(); // a redraw replaced this deck
+        if (target == null) fit();
+      });
       for (const s of slides) ro.observe(s);
     }
   }

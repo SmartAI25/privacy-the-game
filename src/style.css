@@ -402,6 +402,7 @@ img { image-rendering: pixelated; }
 @media (min-width: 900px) {
   .deck { display: block; }
   .slide { display: block; }
+  .slide.slide--phone { display: none; }
   .deck-controls { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
