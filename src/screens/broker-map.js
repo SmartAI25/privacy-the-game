@@ -7,12 +7,13 @@ import { smallScout } from '../components/scout.js';
 import { constellationSvg, RECHECK_OPACITY } from '../components/constellation.js';
 import { brokerLighting, fieldCoverage, fieldHeader, isBuyer } from '../utils/broker-lighting.js';
 import { whatsLeft, initialView, shortName } from '../utils/broker-view.js';
-import { starCard } from '../components/star-card.js';
+import { starCard, TICK_CSS } from '../components/star-card.js';
 import { BROKER_MAP_DIALOGUE } from '../data/dialogue.js';
 import { MISSIONS } from '../data/missions.js';
 import { localDay } from '../state.js';
 
 const BACK = '<a class="back-link" href="#/district/reclamation">← THE RECLAMATION</a>';
+const BIG_CHECK_HASH = '#/reclamation/big-check';
 const DROP_MISSION = 'people_search-reclaim-stragglers';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -72,6 +73,10 @@ const STYLE = `<style>
 .map-left{list-style:none;margin:0;padding:0}
 .map-left li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
 .map-left .none{display:block;font-size:11px;color:rgba(237,239,243,0.45)}
+.map-left a{display:inline-flex;align-items:center;min-height:44px}
+.map-big-check{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:var(--cyan);text-decoration:none}
+.map-big-check:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+${TICK_CSS}
 </style>`;
 
 const swatch = (inner) => `<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">${inner}</svg>`;
@@ -128,9 +133,10 @@ function leftBlock(rows) {
     const text = `${esc(r.name)} · reach ${r.reach}`;
     return r.mission
       ? `<li><a href="#/mission/${esc(r.mission)}/briefing">${text}</a></li>`
-      : `<li>${text}<span class="none">No mission covers this one yet</span></li>`;
+      : `<li><a href="${BIG_CHECK_HASH}">${text}</a><span class="none">No mission covers this one yet: tick it in the Big Check</span></li>`;
   }).join('');
-  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`;
+  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`
+    + `<a class="map-big-check" href="${BIG_CHECK_HASH}">THE BIG CHECK →</a>`;
 }
 
 const STATE_WORD = { lit: 'You filed', amber: 'Re-check due', dim: 'Not yet', 'no-opt-out': 'No opt-out exists' };
@@ -154,18 +160,20 @@ function starList(map, layout, lighting, selectedId, open) {
   return `${toggle}<ul class="constellation-stars">${items}</ul>`;
 }
 
+// The loading and error states, shared with the Big Check (it reads the same file).
+export function brokerDataStatusBlock(status) {
+  return status === 'error'
+    ? `<div class="constellation constellation--error" role="alert"><p>COULDN'T LOAD THE MAP</p><button type="button" class="btn" data-action="retry-broker-data">TRY AGAIN</button></div>`
+    : '<div class="constellation constellation--loading" role="status"><p>LOADING THE FIELD…</p></div>';
+}
+
 export function renderBrokerMap(state, {
   status = 'idle', data = null, today = localDay(), selectedId = null, view = null, newlyLit = new Set(),
   stage = null, firstVisit = false, editingResidency = false, listOpen = false,
 } = {}) {
-  let body;
-  if (status === 'error') {
-    body = `<div class="constellation constellation--error" role="alert"><p>COULDN'T LOAD THE MAP</p><button type="button" class="btn" data-action="retry-broker-data">TRY AGAIN</button></div>`;
-  } else if (status === 'ready' && data) {
-    body = loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen });
-  } else {
-    body = '<div class="constellation constellation--loading" role="status"><p>LOADING THE FIELD…</p></div>';
-  }
+  const body = status === 'ready' && data
+    ? loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen })
+    : brokerDataStatusBlock(status);
   return `${renderHud(state)}${STYLE}<div class="screen broker-map">${BACK}${body}</div>`;
 }
 

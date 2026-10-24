@@ -14,6 +14,7 @@ const ROUTES = [
   { pattern: /^#\/building\/([^/]+)$/, screen: 'building', params: (m) => ({ id: m[1] }) },
   { pattern: /^#\/milestone\/([^/]+)$/, screen: 'milestone', params: (m) => ({ districtId: m[1] }) },
   { pattern: /^#\/reclamation\/map$/, screen: 'broker-map', params: () => ({}) },
+  { pattern: /^#\/reclamation\/big-check$/, screen: 'big-check', params: () => ({}) },
   { pattern: /^#\/saints$/, screen: 'saints', params: () => ({}) },
   { pattern: /^#\/garage$/, screen: 'garage', params: () => ({}) },
   { pattern: /^#\/timeline$/, screen: 'timeline', params: () => ({}) },

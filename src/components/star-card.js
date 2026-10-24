@@ -7,6 +7,7 @@
 // title attribute (Sentry selectors carry those); the card's class `star-card` is in PRIVATE_UI.
 import { shortName } from '../utils/broker-view.js';
 import { MISSIONS } from '../data/missions.js';
+import { tickable } from '../utils/big-check.js';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ext = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
@@ -71,7 +72,7 @@ const archivedLinks = (sources) => (Array.isArray(sources) ? sources : [])
   .filter((s) => isObj(s) && typeof s.archived === 'string' && s.archived.startsWith('https://web.archive.org/'))
   .map((s) => ext(s.archived, 'archived ↗'));
 
-function optOutBlock(b) {
+export function optOutBlock(b) {
   const o = b.optOut;
   if (!isObj(o)) return `<p>We don't know an opt-out route for this one yet.</p>`;
   if (o.method === 'none') {
@@ -102,7 +103,7 @@ function optOutBlock(b) {
 
 // A holding company often takes no opt-outs itself; the companies a published link shows it owning
 // may. Their checker-confirmed pages, each named, when this record has no confirmed link of its own.
-function ownedRoutesBlock(map, b, byId) {
+export function ownedRoutesBlock(map, b, byId) {
   const o = b.optOut;
   if (isObj(o) && (o.method === 'none' || (o.status === 'verified' && parseUrl(o.url)))) return '';
   const seen = new Set();
@@ -153,6 +154,21 @@ function coverageBlock(b, state) {
   return `<div class="label">COVERED BY</div><ul class="star-card-list">${items}</ul>`;
 }
 
+// The tick's look, shared by the map's STYLE and the Big Check's: a 44px row, a 24px box.
+export const TICK_CSS = '.big-check-tick{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;color:var(--offwhite);cursor:pointer}.big-check-tick input{width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--lime);cursor:pointer}.big-check-tick input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}';
+
+// The Big Check's tick: "I filed with them", for a broker no mission covers. The id rides in
+// data-big-check (error-report selectors leave data attributes out), never in an id or name.
+export function bigCheckTick(id, ticked) {
+  return `<label class="big-check-tick"><input type="checkbox" data-big-check="${esc(id)}"${ticked ? ' checked' : ''}> I filed with them</label>`;
+}
+
+function tickBlock(b, star) {
+  if (!tickable(b)) return '';
+  const ticked = Array.isArray(star?.via) && star.via.includes('big-check');
+  return `<div class="label">THE BIG CHECK</div>${bigCheckTick(b.id, ticked)}`;
+}
+
 const STATE_LINE = {
   lit: (s) => `You filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. Your opt-out reaches this one.`,
   amber: (s) => `Re-check due: you filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. People-search sites often list people again, so check it.`,
@@ -186,6 +202,7 @@ export function starCard(map, lighting, id, state = null) {
     + linksBlock(map, id, byId)
     + sourcesBlock(b)
     + coverageBlock(b, state)
+    + tickBlock(b, star)
     + '<button type="button" class="star-card-close" data-action="close-star">CLOSE</button>'
     + '</section>';
 }

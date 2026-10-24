@@ -304,7 +304,7 @@ describe('the card on the map screen', () => {
     const spokeo = byId.get('spokeo');
     const screen = html.slice(html.indexOf('<div class="screen broker-map">')); // the HUD is shared
     for (const h of hrefs(screen)) {
-      const ok = /^#\/(district\/reclamation|reclamation\/map|mission\/[^/]+\/(briefing|recheck))$/.test(h) || allowedExternal(h, spokeo);
+      const ok = /^#\/(district\/reclamation|reclamation\/map|reclamation\/big-check|mission\/[^/]+\/(briefing|recheck))$/.test(h) || allowedExternal(h, spokeo);
       expect(ok, h).toBe(true);
     }
   });

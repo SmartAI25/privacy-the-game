@@ -23,11 +23,13 @@ import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
+import { renderBigCheck } from './screens/big-check.js';
+import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
 import { brokerLighting } from './utils/broker-lighting.js';
 import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
@@ -150,6 +152,10 @@ const screens = {
       status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
       firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
     });
+  },
+  'big-check': () => {
+    if (brokerDataStatus() === 'idle') loadBrokerMapData();
+    return renderBigCheck(state, { status: brokerDataStatus(), data: brokerDataStatus() === 'ready' ? brokerData() : null, today: localDay() });
   },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
@@ -571,6 +577,55 @@ function mapAction(action, el) {
     renderCurrentRoute();
     app.querySelector('[data-action="set-residency"]')?.focus();
   }
+}
+
+// A Big Check tick, on the Big Check or on a star's card. Saved in the game only: no track(), no
+// navigate(), nothing in the URL. The Big Check isn't re-drawn (its scroll and open groups stay);
+// its group count changes in place. The map re-draws (a REFRESH), so the star lights.
+function bigCheckChange(e) {
+  const box = e.target;
+  if (!(box instanceof HTMLInputElement) || box.type !== 'checkbox' || !box.matches('[data-big-check]')) return;
+  const id = box.dataset.bigCheck;
+  setState(setBigCheck(state, id, box.checked, localDay()));
+  const screen = parseRoute(location.hash).screen;
+  if (screen === 'big-check') {
+    const count = box.closest('details')?.querySelector('[data-big-check-count]');
+    if (count) count.textContent = String(Math.max(0, Number(count.textContent) + (box.checked ? 1 : -1)));
+  } else if (screen === 'broker-map') {
+    renderCurrentRoute();
+    app.querySelector(`.star-card [data-big-check="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
+  }
+}
+
+// The Big Check's filter hides rows in place (nothing is re-drawn, nothing leaves the page). While
+// it holds a query, groups with a match open; clearing it puts each group back as it was.
+function bigCheckFilter(e) {
+  const input = e.target;
+  if (!(input instanceof HTMLInputElement) || !input.matches('[data-big-check-filter]')) return;
+  const screen = input.closest('.big-check');
+  if (!screen) return;
+  const query = input.value;
+  const active = query.trim() !== '';
+  let any = false;
+  for (const details of screen.querySelectorAll('details')) {
+    let shown = 0;
+    for (const row of details.querySelectorAll('.big-check-row')) {
+      const hit = nameMatches(row.querySelector('.big-check-name')?.textContent, query);
+      row.hidden = !hit;
+      if (hit) shown += 1;
+    }
+    details.hidden = shown === 0;
+    if (active) {
+      if (details.dataset.wasOpen === undefined) details.dataset.wasOpen = details.open ? '1' : '';
+      details.open = shown > 0;
+    } else if (details.dataset.wasOpen !== undefined) {
+      details.open = details.dataset.wasOpen === '1';
+      delete details.dataset.wasOpen;
+    }
+    if (shown) any = true;
+  }
+  const empty = screen.querySelector('.big-check-empty');
+  if (empty) empty.hidden = any;
 }
 
 const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'set-residency', 'change-residency']);
@@ -1233,6 +1288,8 @@ app.addEventListener('gesturestart', (e) => {
 
 app.addEventListener('change', refreshDebriefForm);
 app.addEventListener('input', refreshDebriefForm);
+app.addEventListener('change', bigCheckChange);
+app.addEventListener('input', bigCheckFilter);
 
 window.reclaimCity = {
   navigate,
