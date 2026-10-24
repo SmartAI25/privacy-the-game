@@ -13,7 +13,7 @@ import { canRecheck } from '../utils/debrief.js';
 import { renderScout } from '../components/scout.js';
 import { INTERIOR_LINES, pick } from '../data/dialogue.js';
 import { renderCandle } from './saints.js';
-import { devicesOf, isFloorOpen, newlySealed, interiorLineKind } from '../utils/interior-state.js';
+import { devicesOf, isFloorOpen, floorChoice, newlySealed, interiorLineKind } from '../utils/interior-state.js';
 
 const DAY = 864e5;
 const LIT = { ok: 4, warn: 2, crit: 1, 'not-checked': 0 };
@@ -48,9 +48,13 @@ function sourceLinks(sources = []) {
     .join('')}</details>`;
 }
 
-// Floors remember whether the player folded them (state.interior[id].floors).
+// Floors remember whether the player folded them (state.interior[id].floors). One the
+// player never touched, below the roof, starts folded on a phone and open from 900px
+// (data-open-desktop, set by script); the roof always starts open.
+const PHONE_FOLDED = new Set(['desk', 'ground', 'alcove']);
 function floor(ctx, kind, title, body) {
-  const open = isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
+  const unset = PHONE_FOLDED.has(kind) && floorChoice(ctx.state, ctx.accountId, kind) === undefined;
+  const open = unset ? ' data-open-desktop' : isFloorOpen(ctx.state, ctx.accountId, kind) ? ' open' : '';
   return `
     <details class="floor floor--${kind}"${open} data-floor="${kind}">
       <summary class="floor-head"><span>${title}</span><span class="floor-chev" aria-hidden="true">▾</span></summary>
@@ -127,15 +131,18 @@ function deviceList(state, accountId) {
     ? list.map((d, i) => `
         <li class="device"><span class="device-name">${esc(d)}</span><button type="button" class="device-x" data-action="remove-device" data-building="${esc(accountId)}" data-index="${i}" aria-label="Remove ${esc(d)}">×</button></li>`).join('')
     : '<li class="device dim">not listed</li>';
+  // On a phone the list waits behind "Your devices"; from 900px it shows as it always did.
   return `
       <div class="devices" data-devices>
-        <div class="devices-title">Your devices</div>
+        <details class="phone-fold devices-fold" data-fold="devices-${esc(accountId)}" data-open-desktop><summary>Your devices</summary>
+        <div class="devices-title desktop-only">Your devices</div>
         <ul class="devices-list">${items}</ul>
         <div class="devices-add">
           <input class="devices-input" type="text" maxlength="40" autocomplete="off" data-device-input aria-label="Add a device" placeholder="e.g. old tablet">
           <button type="button" class="interior-btn interior-btn--quiet" data-action="add-device" data-building="${esc(accountId)}">ADD</button>
         </div>
         <div class="dim interior-note">Kept on this phone only. Nothing here is sent anywhere.</div>
+        </details>
       </div>`;
 }
 
@@ -144,19 +151,24 @@ function roof(ctx, rows) {
   return floor(ctx, 'roof', '▲ Roof · Signal check', `
       <div class="ant">${rows.map((r) => roofRow(state, r)).join('')}</div>
       ${deviceList(state, accountId)}
-      <div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div>`);
+      <details class="phone-fold" data-fold="antenna-${esc(accountId)}" data-open-desktop><summary>Why antennas fade</summary><div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div></details>`);
 }
 
 // The desk table's last column: whether a judge signs off. Only what the slip
 // itself says, in its own words; a slip that doesn't say gets a dash.
 const JUDGE = [
+  [/A 2703\(d\) court order/, '2703(d): a court order'],
   [/search warrant,? signed by a judge/, 'For content: yes'],
   [/emergency request needs no judge/, 'Emergency: no'],
+  [/^Everything on the police slip/, 'Police tools: as on the police slip'],
   [/National Security Letters: subscriber records with no judge/, 'For a National Security Letter: no'],
   [/No warrant is needed for each one/, 'No warrant per target'],
-  [/not a judge/, 'No'],
-  [/without a US court/, 'No US court'],
-  [/Subject lines[^.]*approved by a Swiss judge/, 'For subject lines: a Swiss judge'],
+  [/the court-approved certifications/, 'Certifications: court-approved'],
+  [/signed by an agency official, not a judge/, 'No: an agency official, not a judge'],
+  // The slip's own hedge: "may".
+  [/which may answer without a US court being involved/, 'May answer without a US court being involved'],
+  // The slip's own hedge: Proton says so.
+  [/Subject lines[^.]*Proton says reaching them takes an order approved by a Swiss judge/, 'For subject lines: a Swiss judge, Proton says'],
 ];
 
 export function judgeCell(lane) {

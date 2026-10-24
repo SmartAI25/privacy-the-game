@@ -24,7 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
-import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle } from './components/deck.js';
+import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle, desktopFoldKey } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -1270,6 +1270,11 @@ app.addEventListener('toggle', (e) => {
 app.addEventListener('toggle', (e) => {
   const details = e.target;
   if (!(details instanceof HTMLDetailsElement) || !details.dataset.floor) return;
+  // A floor the script opened or folded for the screen width (data-open-desktop) is not the player's choice.
+  if (details.hasAttribute('data-open-desktop')) {
+    const all = [...app.querySelectorAll('details[data-open-desktop]')];
+    if (!handFolds.has(desktopFoldKey(details, all.indexOf(details)))) return;
+  }
   const id = details.closest('[data-building]')?.dataset.building;
   if (!id) return;
   const next = setFloorOpen(state, id, details.dataset.floor, details.open);

@@ -34,7 +34,8 @@ describe('building screen', () => {
   it('renders four floors for gmail with the five desk actors named', () => {
     const html = render(createInitialState());
     expect(html.match(/<details class="floor/g)).toHaveLength(4);
-    expect(html.match(/<details class="floor[^"]*" open/g)).toHaveLength(4);
+    // The roof open; the floors below open from 900px by script (folded on a phone until chosen).
+    expect(html.match(/<details class="floor[^"]*" (open|data-open-desktop) /g)).toHaveLength(4);
     expect(html).toContain('Roof · Signal check');
     expect(html).toContain('Records desk · Google’s');
     expect(html).toContain('Ground floor · Entries');

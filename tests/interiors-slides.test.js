@@ -88,24 +88,28 @@ describe('the records desk is a table on phones', () => {
 
   it('the judge column says only what the slip itself says', () => {
     const gmail = Object.fromEntries(getInterior('gmail').desk.map((l) => [l.id, judgeCell(l)]));
+    // Each lane's own hedges stay ("may", "Proton says"); nothing the slip doesn't say.
     expect(gmail).toEqual({
-      'local-police': 'For content: yes · Emergency: no',
-      fbi: 'For a National Security Letter: no',
-      'nsa-702': 'No warrant per target',
-      'ice-hsi': 'No',
-      'uk-cloud-act': 'No US court',
+      'local-police': '2703(d): a court order · For content: yes · Emergency: no',
+      fbi: 'Police tools: as on the police slip · For a National Security Letter: no',
+      'nsa-702': 'No warrant per target · Certifications: court-approved',
+      'ice-hsi': 'No: an agency official, not a judge',
+      'uk-cloud-act': 'May answer without a US court being involved',
     });
     const proton = Object.fromEntries(getInterior('protonmail').desk.map((l) => [l.id, judgeCell(l)]));
-    expect(proton).toEqual({ 'swiss-order': 'For subject lines: a Swiss judge', 'foreign-via-swiss': '—' });
+    expect(proton).toEqual({ 'swiss-order': 'For subject lines: a Swiss judge, Proton says', 'foreign-via-swiss': '—' });
     // Every desk in the game: a cell is a dash or backed by the slip's own words.
     const backing = {
-      'For content: yes': /search warrant,? signed by a judge|requires a search warrant, signed by a judge/,
+      '2703(d): a court order': /A 2703\(d\) court order/,
+      'For content: yes': /search warrant,? signed by a judge/,
       'Emergency: no': /emergency request needs no judge/,
+      'Police tools: as on the police slip': /^Everything on the police slip/,
       'For a National Security Letter: no': /National Security Letters: subscriber records with no judge/,
       'No warrant per target': /No warrant is needed for each one/,
-      No: /not a judge/,
-      'No US court': /without a US court/,
-      'For subject lines: a Swiss judge': /Subject lines[^.]*approved by a Swiss judge/,
+      'Certifications: court-approved': /the court-approved certifications/,
+      'No: an agency official, not a judge': /signed by an agency official, not a judge/,
+      'May answer without a US court being involved': /which may answer without a US court being involved/,
+      'For subject lines: a Swiss judge, Proton says': /Subject lines[^.]*Proton says reaching them takes an order approved by a Swiss judge/,
     };
     for (const i of Object.values(INTERIORS)) {
       for (const lane of i.desk) {

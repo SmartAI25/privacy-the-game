@@ -162,3 +162,38 @@ describe("the Big Check: Scout's first-visit line as two slides", async () => {
     expect(html).toContain('class="deck deck--flow"');
   });
 });
+
+describe("a building's roof: the device list and the antenna note behind a tap on a phone", async () => {
+  const { renderBuildingInterior } = await import('../src/screens/building.js');
+  const { toggleAccount } = await import('../src/state.js');
+  const html = renderBuildingInterior(toggleAccount(createInitialState(), 'gmail', true), 'gmail', { now: new Date('2026-10-20T00:00:00Z') });
+
+  it('Your devices is a fold, open on desktop, its list, ADD and note inside', () => {
+    const fold = html.match(/<details class="phone-fold devices-fold" data-fold="devices-gmail" data-open-desktop><summary>Your devices<\/summary>([\s\S]*?)<\/details>/)?.[1] ?? '';
+    expect(fold).toContain('<div class="devices-title desktop-only">Your devices</div>');
+    expect(fold).toContain('data-action="add-device"');
+    expect(fold).toContain('Kept on this phone only. Nothing here is sent anywhere.');
+  });
+
+  it('the antenna note is a fold, open on desktop', () => {
+    expect(html).toMatch(/<details class="phone-fold" data-fold="antenna-gmail" data-open-desktop><summary>Why antennas fade<\/summary><div class="dim interior-note">The antennas fade as your last check gets older\. A fresh sweep lights them back up\.<\/div><\/details>/);
+  });
+});
+
+describe('a building on a phone: the floors below the roof start folded until the player chooses', async () => {
+  const { renderBuildingInterior } = await import('../src/screens/building.js');
+  const { toggleAccount } = await import('../src/state.js');
+  const { setFloorOpen } = await import('../src/utils/interior-state.js');
+  const APP = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
+  const s = toggleAccount(createInitialState(), 'gmail', true);
+  const r = (st) => renderBuildingInterior(st, 'gmail', { now: new Date('2026-10-20T00:00:00Z') });
+
+  it('untouched: desk, ground and alcove are data-open-desktop (open from 900px by script); a choice wins', () => {
+    for (const k of ['desk', 'ground', 'alcove']) expect(r(s)).toContain(`<details class="floor floor--${k}" data-open-desktop data-floor="${k}">`);
+    expect(r(setFloorOpen(s, 'gmail', 'desk', false))).toContain('<details class="floor floor--desk" data-floor="desk">');
+  });
+
+  it("a fold the script makes for the screen width is not saved as the player's", () => {
+    expect(APP).toMatch(/if \(details\.hasAttribute\('data-open-desktop'\)\) \{[\s\S]*?if \(!handFolds\.has\(desktopFoldKey\(details, all\.indexOf\(details\)\)\)\) return;/);
+  });
+});
