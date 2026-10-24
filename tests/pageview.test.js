@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { parseRoute } from '../src/router.js';
 import { pageviewUrl, sanitizeHref, errorContext, scrubEventUrls } from '../src/utils/pageview-url.js';
 
 describe('trackPageview', () => {
@@ -7,6 +8,10 @@ describe('trackPageview', () => {
     const store = {};
     globalThis.localStorage = { getItem: (k) => store[k] ?? null, setItem: (k, v) => { store[k] = String(v); }, removeItem: (k) => { delete store[k]; } };
     globalThis.umami = { track: vi.fn() };
+  });
+
+  it('the broker map hash goes out unchanged', () => {
+    expect(pageviewUrl(parseRoute('#/reclamation/map'), 'https://x.test/#/reclamation/map')).toBe('https://x.test/#/reclamation/map');
   });
 
   it('leaves the page load to Umami, then sends each screen change with Umami\'s own props', async () => {

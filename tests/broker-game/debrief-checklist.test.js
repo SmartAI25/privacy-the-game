@@ -21,7 +21,7 @@ describe('broker debrief checklist', () => {
     expect(lineIds(html)).toEqual(['spokeo', 'whitepages', 'beenverified']);
     expect(html).toContain(`data-broker-checklist="${WEB}"`);
     expect(html).toContain('WHICH OF THESE DID YOU FILE?');
-    expect(html).toContain('Only this browser keeps this. It\'s never sent anywhere.');
+    expect(html).toContain('Only this browser keeps this. It\'s what lights stars in the sky above the city, and it\'s never sent anywhere.');
     expect(html).not.toMatch(/name="filed"[^>]*checked/);
   });
 
@@ -79,5 +79,21 @@ describe('broker debrief checklist', () => {
     const filed = fileDebrief(createInitialState(), mission, { optout_result: 'some-submitted' });
     const next = applyChecklistFiling(filed.state, WEB, filed.event.status, ['spokeo'], '2026-10-23');
     expect(calcDistrictProgress(next, 'reclamation')).toEqual(calcDistrictProgress(filed.state, 'reclamation'));
+  });
+});
+
+describe('site-only lines', () => {
+  it("say the site doesn't have its own star", async () => {
+    const { BROKER_CHECKLISTS } = await import('../../src/data/broker-checklists.js');
+    const { renderBrokerChecklist } = await import('../../src/components/broker-checklist.js');
+    const { MISSIONS } = await import('../../src/data/missions.js');
+    let seen = 0;
+    for (const [mid, lines] of Object.entries(BROKER_CHECKLISTS)) {
+      const html = renderBrokerChecklist(MISSIONS.find((m) => m.id === mid) ?? { id: mid }, {}, 'file');
+      const siteOnly = lines.filter((l) => l.notLit && !l.brokers).length;
+      seen += siteOnly;
+      expect((html.match(/This site doesn't have its own star\./g) ?? []).length).toBe(siteOnly);
+    }
+    expect(seen).toBeGreaterThan(0);
   });
 });

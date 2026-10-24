@@ -109,4 +109,19 @@ describe('buildExport', () => {
     const dir = await fixture({ links: [{ from: 'b', to: 'c', type: 'supplies', tier: 'A', claim: 'x', sources: ['nope'], published: true }] });
     await expect(buildExport(dir)).rejects.toThrow(/unknown source "nope"/);
   });
+  it('export gives each broker its non-registry sources, sorted by url', async () => {
+    const sources = {
+      reg: { url: 'https://reg.test/', archived: 'https://web.archive.org/reg', kind: 'registry', title: 't', accessed: '2026-10-18' },
+      z: { url: 'https://z.test/', archived: 'https://web.archive.org/z', kind: 'filing', title: 't', accessed: '2026-10-18' },
+      m: { url: 'https://m.test/', archived: 'https://web.archive.org/m', kind: 'enforcement', title: 't', accessed: '2026-10-18' },
+    };
+    const out = await buildExport(await fixture({ sources, links: [], edit: { a: (b) => { b.sources = ['reg', 'z', { id: 'm' }]; }, b: (b) => { b.sources = ['reg']; } } }));
+    expect(out.brokers.find((x) => x.id === 'a').sources).toEqual([
+      { url: 'https://m.test/', archived: 'https://web.archive.org/m', kind: 'enforcement' },
+      { url: 'https://z.test/', archived: 'https://web.archive.org/z', kind: 'filing' },
+    ]);
+    expect(out.brokers.find((x) => x.id === 'b').sources).toEqual([]);
+    expect(out.brokers.find((x) => x.id === 'c').sources).toEqual([]);
+    expect(out.formatVersion).toBe(1);
+  });
 });

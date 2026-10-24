@@ -214,7 +214,8 @@ Reading these numbers:
 { "formatVersion": 1, "asOf": "2026-10-19",
   "brokers": [ { "id": "…", "name": "…", "parent": null, "kind": [], "registries": {}, "sells": [],
                  "optOut": { "method": "web-form", "url": "…", "status": "verified", "verifiedAt": "2026-10-19" },
-                 "missions": [], "reach": 1, "hub": false } ],
+                 "missions": [], "reach": 1, "hub": false,
+                 "sources": [ { "url": "…", "archived": "https://web.archive.org/…", "kind": "filing" } ] } ],
   "links": [ { "from": "…", "to": "…", "type": "owns", "tier": "A", "claim": "…",
                "sources": [ { "url": "…", "archived": "https://web.archive.org/…" } ] } ] }
 ```
@@ -232,9 +233,10 @@ Reading these numbers:
 | `brokers[].optOut.alternates` | Other documented routes. Their URLs are not checked yet. |
 | `brokers[].missions` | Reclaim City missions that file with this broker; `[]` when none. |
 | `brokers[].reach`, `hub` | Reach and hub status (see "Reach and hubs"). |
+| `brokers[].sources` | The record's sources whose `kind` is not `registry`, as `url`, `archived` and `kind`, sorted by `url`; `[]` when none. Added without changing `formatVersion`, since readers that ignore it are unaffected. |
 | `links` | Published links only, sorted by `from`, `to`, `type`. Each source is given as its `url` and `archived` copy. |
 
-Not in the export: `aliases`, `website`, `size`, `sources` on broker records, and every unpublished link. Use the dataset files for those.
+Not in the export: `aliases`, `website`, `size`, registry-kind `sources` on broker records, and every unpublished link. Use the dataset files for those.
 
 ## How to rebuild
 
@@ -276,9 +278,16 @@ node research/data-brokers/build/map-missions.js
 npm run brokers:check-urls
 npm run brokers:validate
 npm run brokers:export
+
+# 7. Lay out the constellation map
+npm run brokers:layout
 ```
 
 `merge-staging.js <family> --dry-run` shows what a merge would change without writing. `brokers:validate` exits non-zero on any error and prints the counts. `brokers:export` writes `src/data/broker-map.json` and prints the hubs.
+
+### Layout
+
+`brokers:layout` reads `src/data/broker-map.json` (and each record's `size.known`) and writes `src/data/broker-layout.json`: one star `[id, x, y, r]` per broker in a 1000×1000 square, so the game draws the Broker Constellation without running a simulation on the phone. Buyers sit on the rim (radius 470). Brokers in any published link are placed by a seeded force layout inside radius 330. The 12 hubs stay within radius 230, at least 140 apart, and each linked broker is drawn toward the hubs it is linked to (or toward its linked neighbours when it has no hub), so every hub is a bright star with its crowd as a nebula around it. Links to buyers pull only weakly, so hubs are not dragged to the rim. Brokers with no documented links fill the outer ring between 350 and 440, on a golden-angle spiral with seeded jitter in angle and radius. A star's radius is `2 + 2.2 × log2(reach)`, plus 1 when the company's size is known. The script is deterministic: the same map gives a byte-identical file, so re-run it after every export and commit the result.
 
 Steps 1, 2, 4 and 5 are deterministic. The URL checks are not: they depend on the day and on how each site treats automated requests, so `status` and `verifiedAt` will differ from ours. Because the merge replaces a registry opt-out URL marked `blocked` when research found one on the broker's own domain, a different step 3 result can also change which opt-out URL a record ends up with.
 

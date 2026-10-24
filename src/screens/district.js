@@ -501,6 +501,21 @@ function reactionBlock(reaction) {
   </div>`;
 }
 
+// The Reclamation's way up to the Broker Constellation: the night sky above the city, where the
+// player's data drifted (Liz, 2026-10-24). Controller ruling: the label is LOOK UP.
+const MAP_WAY_IN = `
+    <div style="padding: 16px 16px 4px;">
+      <a class="map-way-in" href="#/reclamation/map" style="display: flex; align-items: center; gap: 14px; min-height: 44px; padding: 14px 16px; text-decoration: none; background: linear-gradient(180deg, #090B10 0%, #121826 100%); border: 1px solid rgba(198,255,0,0.3); box-shadow: 0 0 18px rgba(198,255,0,0.08);">
+        <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true" style="flex-shrink: 0;"><path d="M6 12 L18 7 L30 14 L24 26" fill="none" stroke="#00E5FF" stroke-opacity=".5" stroke-width="1"/><circle cx="6" cy="12" r="2" fill="#3a4256"/><circle cx="18" cy="7" r="2.5" fill="#C6FF00"/><circle cx="30" cy="14" r="2" fill="#3a4256"/><circle cx="24" cy="26" r="1.8" fill="#C6FF00"/><path d="M0 40 V33 H6 V30 H12 V35 H18 V28 H24 V34 H30 V31 H36 V36 H40 V40 Z" fill="#1A1F2B"/></svg>
+        <span style="flex: 1; min-width: 0;">
+          <span style="display: block; font-family: var(--font-display); font-size: 14px; font-weight: 800; color: var(--lime); letter-spacing: 3px;">LOOK UP</span>
+          <span style="display: block; font-size: 13px; color: var(--offwhite); margin-top: 4px; line-height: 1.5;">Your data drifted up out of the city. Go find it.</span>
+          <span style="display: block; font-size: 11px; color: rgba(237,239,243,0.5); margin-top: 2px; line-height: 1.5;">Every data broker we could find, and which ones your opt-outs reach.</span>
+        </span>
+        <span aria-hidden="true" style="color: var(--lime); font-size: 18px;">↑</span>
+      </a>
+    </div>`;
+
 function renderFacilityDistrict(state, district, reaction) {
   const districtAccounts = Object.entries(ACCOUNTS).filter(([, a]) => a.district === district.id);
   const progress = calcDistrictProgress(state, district.id);
@@ -541,6 +556,7 @@ function renderFacilityDistrict(state, district, reaction) {
         ${buildings}
       </div>
     </div>
+    ${district.id === 'reclamation' ? MAP_WAY_IN : ''}
     ${renderDistrictIntro(state, district.id)}
     ${district.facilityIntro && (state.seenIntros?.[district.id]) ? `
     <div style="padding: 16px 24px 8px;">

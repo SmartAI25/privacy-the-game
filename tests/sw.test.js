@@ -21,4 +21,8 @@ describe('service worker', () => {
   it('cache name moved past v1 so old stored API answers are dropped', () => {
     expect(CACHE_NAME).not.toBe('reclaim-city-v1');
   });
+  it('caches the broker map data files', () => {
+    expect(shouldIntercept(new URL('https://x.test/reclaim-city/data/broker-map.json'))).toBe(true);
+    expect(shouldIntercept(new URL('https://x.test/reclaim-city/data/broker-layout.json'))).toBe(true);
+  });
 });

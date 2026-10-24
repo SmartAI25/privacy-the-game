@@ -22,10 +22,16 @@ import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
+import { renderBrokerMap } from './screens/broker-map.js';
+import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
+import { brokerLighting } from './utils/broker-lighting.js';
+import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
+import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
+import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { checklistFor } from './data/broker-checklists.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
@@ -63,6 +69,18 @@ let resetAnywayMission = null;
 // The last route drawn, and the building #/saints was opened from (memory only).
 let lastRoute = null;
 let saintsFrom = null;
+// The broker map's view state (memory only, never in the URL).
+let selectedId = null;
+let view = null;
+let newlyLit = [];
+// The map's drawn size in CSS px ({ w, h }), measured after a render; it fills the phone's height.
+let mapStage = null;
+// This visit's bloom is still to be drawn (the data can arrive after the pageview render).
+let mapVisitPending = false;
+let mapFirstVisit = false;
+let mapScoutDismissed = false;
+let editingResidency = false;
+let mapListOpen = false;
 // When the player last saw the city map before this visit (Scout waves after a while away).
 let cityArrival;
 // The first-2FA hug was on screen this visit; it counts as seen once they leave.
@@ -72,6 +90,10 @@ let leavingBriefing = false;
 // Scout's reaction to the report just filed, shown on the district the player
 // lands on: { districtId, reaction, landed }. Kept for that one visit.
 let landingReaction = null;
+
+function loadBrokerMapData() {
+  loadBrokerData().then(() => renderCurrentRoute(), () => renderCurrentRoute());
+}
 
 function setNotice(text, hash = location.hash) {
   notice = { hash, text };
@@ -111,6 +133,24 @@ const screens = {
   }),
   building: ({ id }) => renderBuildingInterior(state, id),
   saints: () => renderSaints(state, { from: saintsFrom }),
+  'broker-map': () => {
+    if (brokerDataStatus() === 'idle') loadBrokerMapData();
+    const data = brokerDataStatus() === 'ready' ? brokerData() : null;
+    if (data) {
+      const lighting = brokerLighting(data.map, state, localDay());
+      // The first draw of this visit blooms what the player hasn't seen lit yet (on a first
+      // visit, every lit star). markMapSeen runs after it, and later re-draws pass none.
+      if (mapVisitPending) {
+        newlyLit = newlyLitIds(state, litIds(lighting));
+        mapFirstVisit = !Array.isArray(state.brokerMap?.seenLit);
+      }
+      if (!view && mapStage) view = initialView(data.map, data.layout, lighting, mapStage.h / mapStage.w);
+    }
+    return renderBrokerMap(state, {
+      status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
+      firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
+    });
+  },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
   recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
@@ -162,7 +202,10 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     // The seal animation and Scout's line are in this render; remember they were seen
     // so a later re-render (a device add) does not replay them.
     const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
+    // The map re-draws on every zoom and tap: no screen fade on those (it flashes the sky).
+    app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
     app.innerHTML = renderFn(route.params);
+    if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
     if (watched) {
       const seen = markSealedSeen(state, route.params.id, watched ?? []);
       if (seen !== state) setState(seen);
@@ -195,6 +238,18 @@ function startScreenVisit(route) {
     setState(markTwoFactorHugSeen(state));
   }
   if (route.screen === 'city') cityArrival = { before: state.lastCityVisit || null };
+  // Each visit to the map opens fresh: zoomed in on the player's stars, nothing selected.
+  if (route.screen === 'broker-map') {
+    selectedId = null;
+    cardReturn = null;
+    view = null;
+    newlyLit = [];
+    editingResidency = false;
+    mapListOpen = false;
+    mapFirstVisit = false;
+    mapScoutDismissed = false;
+    mapVisitPending = true;
+  }
   if (landingReaction) {
     const arriving = !landingReaction.landed && route.screen === 'district' && route.params.id === landingReaction.districtId;
     landingReaction = arriving ? { ...landingReaction, landed: true } : null;
@@ -213,6 +268,310 @@ function cheerThenGo(hash) {
     if (leavingBriefing) navigate(hash);
   }, feelingDuration('goDoIt') + 150);
 }
+
+// The map fills the viewport height below its header on a phone (Liz: "too tiny"), and stays
+// about square on a wide screen. Measured after the draw; a changed size draws once more, in the
+// same task, so nothing paints in between. Then this visit's bloom is marked seen.
+function afterBrokerMapRender(renderFn, params) {
+  const stage = app.querySelector('.map-stage');
+  if (!stage) return;
+  const w = stage.clientWidth;
+  const top = stage.getBoundingClientRect().top + window.scrollY;
+  const fill = window.innerHeight - top - 8;
+  const h = Math.round(Math.max(320, window.innerWidth >= 900 ? Math.min(fill, w) : fill));
+  if (w > 0 && (!mapStage || Math.abs(mapStage.w - w) > 1 || Math.abs(mapStage.h - h) > 1)) {
+    mapStage = { w, h };
+    if (view) view = withRatio(view, h / w);
+    app.innerHTML = renderFn(params);
+  }
+  sizeSheet();
+  if (mapVisitPending && brokerDataStatus() === 'ready') {
+    const data = brokerData();
+    const seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    setState(seen);
+    mapVisitPending = false;
+    newlyLit = [];
+  }
+}
+
+// A tap on the sky selects the nearest star within a 44px target (24 css px) and opens its card.
+// A miss closes an open card; with no card open, a miss at the widest view zooms in on that point.
+function tapSky(svg, clientX, clientY) {
+  const data = brokerData();
+  const ctm = svg.getScreenCTM?.();
+  if (!data || !ctm || !ctm.a) return;
+  const p = new DOMPoint(clientX, clientY).matrixTransform(ctm.inverse());
+  const id = nearestStarId(data.layout, p.x, p.y, (HIT_PX + 2) / ctm.a);
+  if (id) {
+    openCard(id, selectedId ? cardReturn : '.map-stage');
+    return;
+  }
+  if (selectedId) {
+    closeCard();
+    return;
+  }
+  const v = mapViewNow(data);
+  if (isWidest(v)) {
+    view = zoomView(v, 'in', p.x, p.y, VIEW_BOUNDS);
+    renderCurrentRoute();
+  }
+}
+
+// The star card. On a phone (<900px) it is a bottom sheet over the map (CSS: fixed, at most 60%
+// of the screen, scrolls inside); from 900px it sits beside the map. Opening never scrolls the
+// page: focus moves into the card, and on a phone the sky pans so the star shows above the sheet.
+// Closing returns focus to whatever opened it (the stage, a zoom button or a list item).
+let cardReturn = null;
+const isPhone = () => !window.matchMedia?.('(min-width: 900px)').matches;
+
+function openCard(id, returnTo) {
+  selectedId = id;
+  cardReturn = returnTo;
+  renderCurrentRoute();
+  keepSelectedInView();
+  focusCard();
+}
+
+function closeCard() {
+  const back = cardReturn;
+  selectedId = null;
+  cardReturn = null;
+  cardFocusPending = false;
+  renderCurrentRoute();
+  const el = (back && app.querySelector(back)) || app.querySelector('.map-stage');
+  el?.focus({ preventScroll: true });
+}
+
+function keepSelectedInView() {
+  if (!isPhone() || !selectedId) return;
+  const data = brokerData();
+  const svg = stageSvg();
+  const card = app.querySelector('.star-card');
+  const s = data?.layout?.stars?.find((x) => x?.[0] === selectedId);
+  if (!s || !card || !svg) return;
+  const r = svg.getBoundingClientRect();
+  const visTop = Math.max(0, r.top);
+  const visBottom = Math.min(r.bottom, card.getBoundingClientRect().top);
+  let v = mapViewNow(data);
+  // Screen point of the star for a view drawn in the same box (meet, same ratio).
+  const onScreen = (w) => {
+    const k = r.width / w.w;
+    return { x: r.left + (s[1] - w.x) * k, y: r.top + (s[2] - w.y) * k };
+  };
+  let next = keepStarInView(v, r, onScreen(v), visTop, visBottom, VIEW_BOUNDS);
+  if (!next) return;
+  // The whole sky in view can't pan (it is centred on the map): step in on the star, then pan.
+  const p0 = onScreen(next);
+  if (p0.y > visBottom - 24 || p0.y < visTop + 24) {
+    v = zoomView(v, 'in', s[1], s[2], VIEW_BOUNDS);
+    next = keepStarInView(v, r, onScreen(v), visTop, visBottom, VIEW_BOUNDS) ?? v;
+  }
+  view = next;
+  renderCurrentRoute();
+}
+
+// On a phone the sheet takes at most 60% of the map's visible height (and of the screen), so the
+// sky above it always shows the selected star.
+function sizeSheet() {
+  const card = app.querySelector('.star-card');
+  const stage = app.querySelector('.map-stage');
+  if (!card || !stage) return;
+  if (!isPhone()) { card.style.maxHeight = ''; return; }
+  const r = stage.getBoundingClientRect();
+  const visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+  card.style.maxHeight = `${Math.round(Math.max(200, Math.min(window.innerHeight * 0.6, visible * 0.6)))}px`;
+}
+
+// Focus moves to the card. A touch tap's compatibility mouse events land after pointerup and would
+// blur it, so it is focused again when the tap's click is swallowed.
+let cardFocusPending = false;
+function focusCard() {
+  cardFocusPending = true;
+  app.querySelector('.star-card')?.focus({ preventScroll: true });
+}
+
+// Swipe the sheet's grab handle down to close it (phones).
+let sheetDrag = null;
+function sheetPointerDown(e) {
+  const grab = e.target.closest?.('.star-card-grab');
+  if (!grab || !app.contains(grab)) return;
+  sheetDrag = { id: e.pointerId, y0: e.clientY, dy: 0 };
+  try { grab.setPointerCapture(e.pointerId); } catch { /* the pointer may already be gone */ }
+}
+function sheetPointerMove(e) {
+  if (!sheetDrag || e.pointerId !== sheetDrag.id) return;
+  e.preventDefault();
+  sheetDrag.dy = Math.max(0, e.clientY - sheetDrag.y0);
+  const card = app.querySelector('.star-card');
+  if (card) card.style.transform = `translateY(${sheetDrag.dy}px)`;
+}
+function sheetPointerUp(e) {
+  if (!sheetDrag || e.pointerId !== sheetDrag.id) return;
+  const { dy } = sheetDrag;
+  sheetDrag = null;
+  if (e.type === 'pointerup' && dy > SHEET_CLOSE_PX) {
+    swallowClickUntil = performance.now() + 400;
+    closeCard();
+  } else {
+    const card = app.querySelector('.star-card');
+    if (card) card.style.transform = '';
+  }
+}
+const SHEET_CLOSE_PX = 60;
+
+// Pinch-zoom and pan on the map stage (Liz: "I can't zoom"), with Pointer Events: up to two
+// pointers. The stage has touch-action: none, so the page neither scrolls nor zooms on it; the
+// rest of the page scrolls as usual. A drag writes the viewBox directly (no re-render); when the
+// gesture ends the map re-draws once so labels and hit targets fit the new view. A press that
+// stays within TAP_MAX_PX for under TAP_MAX_MS is a tap and selects; a drag never selects.
+// Memory only: nothing here calls navigate, track or history.
+let gesture = null;
+// The click a handled press makes is swallowed (in the capture phase), so that a tap that
+// scrolls the card under the finger never also clicks a link on it.
+let swallowClickUntil = 0;
+let wheelTimer = null;
+
+const stageSvg = () => app.querySelector('.map-stage svg.constellation');
+const pt = (e) => ({ x: e.clientX, y: e.clientY });
+
+function drawViewBox(v) {
+  const svg = stageSvg();
+  if (svg) svg.setAttribute('viewBox', `${v.x} ${v.y} ${v.w} ${v.h ?? v.w}`);
+}
+
+function mapPointerDown(e) {
+  const stage = e.target.closest?.('.map-stage');
+  if (!stage || !app.contains(stage) || e.target.closest('.constellation-controls, .constellation-scout')) return;
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  const data = brokerData();
+  if (!data || !stageSvg()) return;
+  if (!gesture) {
+    gesture = { pointers: new Map(), start: { ...pt(e), t: e.timeStamp }, maxMoved: 0, multi: false, dragging: false, view: mapViewNow(data) };
+  } else if (gesture.pointers.size >= 2) return;
+  gesture.pointers.set(e.pointerId, pt(e));
+  if (gesture.pointers.size > 1) gesture.multi = true;
+  try { stage.setPointerCapture(e.pointerId); } catch { /* the pointer may already be gone */ }
+}
+
+function mapPointerMove(e) {
+  if (!gesture || !gesture.pointers.has(e.pointerId)) return;
+  const svg = stageSvg();
+  if (!svg) return;
+  e.preventDefault();
+  const rect = svg.getBoundingClientRect();
+  const prev = gesture.pointers.get(e.pointerId);
+  const next = pt(e);
+  if (gesture.pointers.size === 2) {
+    const [ida, idb] = [...gesture.pointers.keys()];
+    const before = [gesture.pointers.get(ida), gesture.pointers.get(idb)];
+    gesture.pointers.set(e.pointerId, next);
+    const after = [gesture.pointers.get(ida), gesture.pointers.get(idb)];
+    gesture.view = pinchView(gesture.view, rect, before, after, VIEW_BOUNDS);
+    gesture.dragging = true;
+  } else {
+    gesture.pointers.set(e.pointerId, next);
+    if (!gesture.multi) gesture.maxMoved = Math.max(gesture.maxMoved, Math.hypot(next.x - gesture.start.x, next.y - gesture.start.y));
+    if (!gesture.dragging && (gesture.multi || gesture.maxMoved >= TAP_MAX_PX)) {
+      // Past the tap slop: the map catches up with the whole move so far.
+      gesture.dragging = true;
+      const from = gesture.multi ? prev : gesture.start;
+      gesture.view = panView(gesture.view, rect, next.x - from.x, next.y - from.y, VIEW_BOUNDS);
+    } else if (gesture.dragging) {
+      gesture.view = panView(gesture.view, rect, next.x - prev.x, next.y - prev.y, VIEW_BOUNDS);
+    }
+  }
+  if (gesture.dragging) {
+    view = gesture.view;
+    drawViewBox(view);
+    app.querySelector('.map-stage')?.classList.add('is-dragging');
+  }
+}
+
+function mapPointerUp(e) {
+  if (!gesture || !gesture.pointers.has(e.pointerId)) return;
+  gesture.pointers.delete(e.pointerId);
+  if (gesture.pointers.size > 0) return; // one finger of a pinch lifted: the other pans on
+  const g = gesture;
+  gesture = null;
+  swallowClickUntil = performance.now() + 400; // the click that follows this press is handled here
+  const tap = e.type === 'pointerup' && !g.multi && isTap(g.start, { ...pt(e), t: e.timeStamp }, g.maxMoved);
+  const svg = stageSvg();
+  if (tap && svg) tapSky(svg, e.clientX, e.clientY);
+  else if (g.dragging) renderCurrentRoute();
+}
+
+// Ctrl/cmd + wheel over the stage zooms about the pointer (a trackpad pinch arrives as a ctrl+wheel
+// with small deltas). A plain wheel scrolls the page as usual; the +/- buttons are always there.
+function mapWheel(e) {
+  const stage = e.target.closest?.('.map-stage');
+  if (!stage || !app.contains(stage)) return;
+  const svg = stageSvg();
+  const data = brokerData();
+  if (!svg || !data || !wheelZooms(e)) return;
+  e.preventDefault();
+  const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+  const dy = e.deltaY * unit * (e.ctrlKey ? 4 : 1);
+  view = wheelView(mapViewNow(data), svg.getBoundingClientRect(), dy, e.clientX, e.clientY, VIEW_BOUNDS);
+  drawViewBox(view);
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    if (parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
+  }, 180);
+}
+
+function mapViewNow(data) {
+  if (view) return view;
+  const ratio = mapStage ? mapStage.h / mapStage.w : 1;
+  return initialView(data.map, data.layout, brokerLighting(data.map, state, localDay()), ratio);
+}
+
+// Map controls: in-memory only. No track(), no navigate(), nothing in the URL.
+function mapAction(action, el) {
+  const data = brokerData();
+  if (action === 'map-zoom') {
+    if (!data) return;
+    const dir = el.dataset.dir;
+    if (dir === 'reset') view = initialView(data.map, data.layout, brokerLighting(data.map, state, localDay()), mapStage ? mapStage.h / mapStage.w : 1);
+    else {
+      // About the selected star, else the lit bunch, else the centre: the player's stars stay in frame.
+      const v = mapViewNow(data);
+      const at = zoomAnchor(v, data.layout, brokerLighting(data.map, state, localDay()), selectedId);
+      view = zoomViewBox(v, dir === 'in' ? 2 : 0.5, at?.x, at?.y, VIEW_BOUNDS);
+    }
+    renderCurrentRoute();
+    app.querySelector(`[data-action="map-zoom"][data-dir="${dir === 'out' ? 'out' : dir === 'in' ? 'in' : 'reset'}"]`)?.focus();
+  } else if (action === 'select-star') {
+    const index = Number(el.dataset.star);
+    const s = data?.layout?.stars?.[index];
+    if (!s) return;
+    const v = mapViewNow(data);
+    const h = v.h ?? v.w;
+    view = zoomViewBox({ ...v, x: s[1] - v.w / 2, y: s[2] - h / 2 }, 1, s[1], s[2], VIEW_BOUNDS);
+    // Focus moves into the card (on a phone, the sheet) and comes back to this row on close.
+    openCard(s[0], `[data-action="select-star"][data-star="${index}"]`);
+  } else if (action === 'close-star') {
+    closeCard();
+  } else if (action === 'dismiss-scout') {
+    mapScoutDismissed = true;
+    renderCurrentRoute();
+    app.querySelector('.map-stage')?.focus({ preventScroll: true });
+  } else if (action === 'map-list') {
+    mapListOpen = !mapListOpen;
+    renderCurrentRoute();
+    app.querySelector('[data-action="map-list"]')?.focus();
+  } else if (action === 'set-residency') {
+    setState(setResidency(state, el.dataset.value));
+    editingResidency = false;
+    renderCurrentRoute();
+    app.querySelector('[data-action="change-residency"]')?.focus();
+  } else if (action === 'change-residency') {
+    editingResidency = true;
+    renderCurrentRoute();
+    app.querySelector('[data-action="set-residency"]')?.focus();
+  }
+}
+
+const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'set-residency', 'change-residency']);
 
 function renderCurrentRoute(cause = RENDER_CAUSE.REFRESH) {
   render(parseRoute(location.hash), cause);
@@ -453,9 +812,20 @@ async function handleShareCard(districtId) {
 }
 
 app.addEventListener('click', async (e) => {
+  const sky = e.target.closest?.('svg.constellation');
+  if (sky && app.contains(sky)) {
+    // Pointer presses are handled on pointerup (tap vs drag) and their clicks swallowed; a click
+    // with no press before it (an older browser, a synthetic click) still selects.
+    tapSky(sky, e.clientX, e.clientY);
+    return;
+  }
   const el = e.target.closest('[data-action]');
   if (!el || !app.contains(el)) return;
   const action = el.dataset.action;
+  if (MAP_ACTIONS.has(action)) {
+    mapAction(action, el);
+    return;
+  }
 
   if (leavingBriefing && (action === 'go-do-it' || action === 'i-did-it')) {
     e.preventDefault();
@@ -502,6 +872,9 @@ app.addEventListener('click', async (e) => {
     setTimeout(() => renderCurrentRoute(), 0);
   } else if (action === 'submit-debrief') {
     submitDebrief(el.dataset.mission);
+  } else if (action === 'retry-broker-data') {
+    loadBrokerMapData();
+    renderCurrentRoute();
   } else if (action === 'submit-recheck') {
     submitRecheck(el.dataset.mission);
   } else if (action === 'password-not-needed') {
@@ -781,6 +1154,13 @@ app.addEventListener('keydown', (e) => {
     if (btn) { e.preventDefault(); btn.click(); }
     return;
   }
+  if (e.key === 'Escape' && selectedId && app.querySelector('.star-card')) {
+    // Straight to closeCard: a click on CLOSE could be swallowed by a tap's click window.
+    e.preventDefault();
+    swallowClickUntil = 0;
+    closeCard();
+    return;
+  }
   const el = keyActivationTarget(e);
   if (!el || !app.contains(el)) return;
   e.preventDefault();
@@ -822,6 +1202,33 @@ function refreshDebriefForm(e) {
   const shown = new Set(visibleQuestions(mission, readAnswers(form, mission)).map((q) => q.id));
   for (const group of form.querySelectorAll('[data-question]')) group.hidden = !shown.has(group.dataset.question);
 }
+document.addEventListener('click', (e) => {
+  if (!swallowClickUntil) return;
+  const late = performance.now() > swallowClickUntil;
+  swallowClickUntil = 0;
+  const refocus = cardFocusPending;
+  cardFocusPending = false;
+  if (late) return;
+  // A deliberate CLOSE right after a tap is never eaten.
+  if (e.target?.closest?.('[data-action="close-star"]')) return;
+  e.preventDefault();
+  e.stopPropagation();
+  if (refocus) app.querySelector('.star-card')?.focus({ preventScroll: true });
+}, true);
+app.addEventListener('pointerdown', mapPointerDown);
+app.addEventListener('pointerdown', sheetPointerDown);
+app.addEventListener('pointermove', sheetPointerMove, { passive: false });
+app.addEventListener('pointerup', sheetPointerUp);
+app.addEventListener('pointercancel', sheetPointerUp);
+app.addEventListener('pointermove', mapPointerMove, { passive: false });
+app.addEventListener('pointerup', mapPointerUp);
+app.addEventListener('pointercancel', mapPointerUp);
+app.addEventListener('wheel', mapWheel, { passive: false });
+// Older Safari pinch-zooms the page on its own gesture events; not on the map.
+app.addEventListener('gesturestart', (e) => {
+  if (e.target.closest?.('.map-stage')) e.preventDefault();
+});
+
 app.addEventListener('change', refreshDebriefForm);
 app.addEventListener('input', refreshDebriefForm);
 
@@ -836,6 +1243,26 @@ window.reclaimCity = {
   toggleAccount,
   setState,
 };
+
+// A rotated phone or a resized window re-measures the map (not the URL bar sliding on scroll).
+let lastSize = { w: window.innerWidth, h: window.innerHeight };
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const size = { w: window.innerWidth, h: window.innerHeight };
+    const big = size.w !== lastSize.w || Math.abs(size.h - lastSize.h) > 120;
+    lastSize = size;
+    // Leaving phone width: the sheet's inline height cap must not follow the card to the side layout.
+    if (!isPhone()) app.querySelector('.star-card')?.style.removeProperty('max-height');
+    if (big && parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
+  }, 150);
+});
+
+// Web fonts landing can move the header; the phone's map is sized from where it starts, so measure again.
+document.fonts?.addEventListener?.('loadingdone', () => {
+  if (parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
+});
 
 initRouter(render);
 checkStreakReminder(state);

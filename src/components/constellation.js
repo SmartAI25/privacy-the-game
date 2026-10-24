@@ -1,0 +1,325 @@
+// The Broker Constellation, drawn as one SVG string. Pure: (map, layout, lighting) in, markup out.
+//
+// Kept lean for ~900 stars on a phone: no per-star filters, only a few shared gradients in <defs>,
+// and every animation is CSS inside a no-preference motion query (colours stay, motion stops).
+// No href, no <a>, and no broker id in any attribute: ids stay in the layout arrays the app reads.
+
+import { isBuyer } from '../utils/broker-lighting.js';
+import { shortName } from '../utils/broker-view.js';
+
+// Fill opacity of an amber (re-check due) star. It still counts in full; it just draws dimmer.
+export const RECHECK_OPACITY = 0.55;
+
+const LIME = '#C6FF00';
+const AMBER = '#FF9F00';
+const MAGENTA = '#FF2D9B';
+const DIM = '#3a4256';
+const CYAN = '#00E5FF';
+const BUYER = '#8a93a6';
+const PALE = '#EDEFF3';
+const MIDNIGHT = '#090B10';
+const CHARCOAL = '#1A1F2B';
+
+// Sizes when the caller does not say how wide the SVG is drawn (user units of the 1000-unit map).
+const LABEL_SIZE = 22;
+const LABEL_GAP = 6;
+// Sizes in CSS px when it does (`px`), so they hold steady as the viewBox zooms.
+const LABEL_PX = 12;
+const STAR_LABEL_PX = 10;
+const MIN_STAR_PX = 1.6;
+export const HIT_PX = 22; // tap radius: a 44px target round every star, whatever its drawn size
+// Non-hub stars get names once the map is zoomed to at least this many CSS px per map unit.
+export const STAR_LABEL_SCALE = 1.8;
+const ASSUMED_PX = 343; // a 375px phone less 16px gutters, for hit radii when `px` is not given
+const LABEL_WRAP = 20;
+const BLOOM_STEP_MS = 60;
+export const BUYER_LINK_OPACITY = 0.15;
+export const SELECTED_LINK_OPACITY = 0.8;
+const BLOOM_WAVE = 20;
+
+const n = (v) => String(Math.round(v * 100) / 100);
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const STYLE = `<style>
+.constellation{display:block;width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#121826 0%,${MIDNIGHT} 70%);border-radius:8px}
+.constellation .skyline,.constellation .sky,.constellation .links,.constellation .stars,.constellation .rings,.constellation .effects,.constellation .labels{pointer-events:none}
+.constellation .link{stroke:${CYAN};stroke-width:1.4}
+.constellation .link,.constellation .star-x,.constellation .buyer,.constellation .ring-frozen,.constellation .selected,.constellation .burst{vector-effect:non-scaling-stroke}
+.constellation .hub-label,.constellation .star-label{font-family:'JetBrains Mono',ui-monospace,monospace;paint-order:stroke;stroke:${MIDNIGHT};stroke-linejoin:round;letter-spacing:.5px}
+.constellation .hub-label{font-weight:700}
+.constellation .star-hit{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.constellation .burst{opacity:0}
+@media (prefers-reduced-motion: no-preference){
+.constellation .star--new,.constellation .glow,.constellation .burst,.constellation .selected{transform-box:fill-box;transform-origin:center}
+@keyframes rc-bloom{0%{transform:scale(0);opacity:0}55%{transform:scale(2.4);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes rc-glow-in{0%{opacity:0;transform:scale(.2)}50%{opacity:1;transform:scale(1.8)}100%{opacity:1;transform:scale(1)}}
+@keyframes rc-burst{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(6)}}
+@keyframes rc-twinkle{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes rc-select{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.15)}}
+.constellation .star--new{animation:rc-bloom 900ms cubic-bezier(.2,.8,.3,1) both}
+.constellation .glow--new{animation:rc-glow-in 1200ms ease-out both}
+.constellation .burst{animation:rc-burst 1100ms ease-out both}
+.constellation .glow--hub{animation:rc-twinkle 4.2s ease-in-out infinite}
+.constellation .selected{animation:rc-select 1.6s ease-in-out infinite}
+}
+</style>`;
+
+const DEFS = `<defs>
+<linearGradient id="rc-sky" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000"><stop offset="0" stop-color="${MIDNIGHT}"/><stop offset=".55" stop-color="#0d1220"/><stop offset="1" stop-color="${CHARCOAL}"/></linearGradient>
+<linearGradient id="rc-city" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a26"/><stop offset="1" stop-color="${MIDNIGHT}"/></linearGradient>
+<radialGradient id="rc-glow"><stop offset="0" stop-color="${LIME}" stop-opacity=".6"/><stop offset=".35" stop-color="${LIME}" stop-opacity=".18"/><stop offset="1" stop-color="${LIME}" stop-opacity="0"/></radialGradient>
+<radialGradient id="rc-neb"><stop offset="0" stop-color="${CYAN}" stop-opacity=".13"/><stop offset=".5" stop-color="${CYAN}" stop-opacity=".04"/><stop offset="1" stop-color="${CYAN}" stop-opacity="0"/></radialGradient>
+<radialGradient id="rc-neb-lit"><stop offset="0" stop-color="${LIME}" stop-opacity=".16"/><stop offset=".5" stop-color="${CYAN}" stop-opacity=".05"/><stop offset="1" stop-color="${CYAN}" stop-opacity="0"/></radialGradient>
+</defs>`;
+
+// Reclaim City along the bottom of whatever is in view: the player is looking up from it.
+// Built once, deterministically, in a 1000-wide local frame (y up from 0 to -SKYLINE_MAX):
+// one path for the buildings and one for their lit windows.
+const SKYLINE_MAX = 64;
+const SKYLINE = (() => {
+  let seed = 20261019;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  let d = 'M0 0';
+  let win = '';
+  let x = 0;
+  while (x < 1000) {
+    const w = Math.min(1000 - x, 14 + Math.floor(rnd() * 30));
+    const tall = rnd() < 0.12;
+    const h = Math.round(tall ? 42 + rnd() * 22 : 12 + rnd() * 26);
+    d += `L${x} ${-h}`;
+    if (tall && rnd() < 0.7) { const m = x + Math.round(w / 2); d += `L${m - 1} ${-h}L${m - 1} ${-h - 10}L${m + 1} ${-h - 10}L${m + 1} ${-h}`; }
+    d += `L${x + w} ${-h}`;
+    for (let wy = h - 6; wy > 4; wy -= 7) for (let wx = x + 3; wx < x + w - 4; wx += 6) if (rnd() < 0.18) win += `M${wx} ${-wy}h2v2h-2z`;
+    x += w;
+  }
+  return { body: `${d}L1000 0Z`, windows: win };
+})();
+
+// A long name goes on two lines, split at the space nearest its middle.
+function wrapLabel(text) {
+  if (text.length <= LABEL_WRAP) return [text];
+  let best = -1;
+  for (let i = text.indexOf(' '); i !== -1; i = text.indexOf(' ', i + 1)) {
+    if (best === -1 || Math.abs(i - text.length / 2) < Math.abs(best - text.length / 2)) best = i;
+  }
+  return best === -1 ? [text] : [text.slice(0, best), text.slice(best + 1)];
+}
+
+// Label geometry, shared with the tests: monospace glyphs ~0.6em wide (0.62 for slack in the
+// fallback fonts), plus the .5px letter-spacing per glyph (user units inside the SVG), plus room
+// for the outline stroke and rounding (LABEL_PAD_EM in all). Lines 1.1em apart.
+export const LABEL_CHAR_EM = 0.62;
+export const LABEL_TRACK = 0.5;
+export const LABEL_PAD_EM = 0.6;
+export const LABEL_LINE_EM = 1.1;
+
+// The box a label covers: anchor x `lx` ('start' | 'end' | 'middle'), vertical centre `cy`.
+export function labelBox(lines, fontSize, lx, anchor, cy) {
+  const w = Math.max(...lines.map((t) => t.length)) * (fontSize * LABEL_CHAR_EM + LABEL_TRACK) + fontSize * LABEL_PAD_EM;
+  const h = lines.length * fontSize * LABEL_LINE_EM;
+  const left = anchor === 'end' ? lx - w : anchor === 'middle' ? lx - w / 2 : lx;
+  return { left, right: left + w, top: cy - h / 2, bottom: cy + h / 2 };
+}
+
+const overlaps = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+
+function labelMarkup({ cls, fill, fontSize, lines, lx, anchor, cy }) {
+  const top = cy - (lines.length * fontSize * LABEL_LINE_EM) / 2;
+  const base = (i) => n(top + fontSize * LABEL_LINE_EM * i + fontSize * 0.85);
+  const a = anchor === 'start' ? '' : ` text-anchor="${anchor}"`;
+  const head = `<text class="${cls}" x="${n(lx)}" y="${base(0)}" font-size="${n(fontSize)}" stroke-width="${n(fontSize * 0.28)}" fill="${fill}"${a}>`;
+  if (lines.length === 1) return `${head}${esc(lines[0])}</text>`;
+  return `${head}${lines.map((t, i) => `<tspan x="${n(lx)}" y="${base(i)}">${esc(t)}</tspan>`).join('')}</text>`;
+}
+
+function starState(broker, lighting) {
+  if (isBuyer(broker)) return 'buyer';
+  const s = lighting?.stars?.[broker.id]?.state;
+  if (s === 'lit' || s === 'amber' || s === 'no-opt-out') return s;
+  if (s === undefined && broker?.optOut?.method === 'none') return 'no-opt-out';
+  return 'dim';
+}
+
+// `controls`: { w, h } in CSS px, a block in the top-right corner of the drawn SVG (the zoom
+// buttons) that labels keep clear of. Needs `px`.
+export function constellationSvg({ map, layout, lighting, selectedId = null, newlyLit = new Set(), view = { x: 0, y: 0, w: 1000 }, px = null, controls = null }) {
+  const vx = Number.isFinite(view?.x) ? view.x : 0;
+  const vy = Number.isFinite(view?.y) ? view.y : 0;
+  const vw = Number.isFinite(view?.w) && view.w > 0 ? view.w : 1000;
+  // A view may be taller than wide (a phone's map fills its height); square when h is not given.
+  const vh = Number.isFinite(view?.h) && view.h > 0 ? view.h : vw;
+  // CSS px per map unit, when the caller knows how wide the SVG is drawn.
+  const scale = Number.isFinite(px) && px > 0 ? px / vw : null;
+  const hitR = HIT_PX / (scale ?? ASSUMED_PX / vw);
+  const labelSize = scale ? LABEL_PX / scale : LABEL_SIZE;
+  const minR = scale ? MIN_STAR_PX / scale : 0;
+  const nameStars = scale !== null && scale >= STAR_LABEL_SCALE;
+
+  const byId = new Map();
+  for (const b of Array.isArray(map?.brokers) ? map.brokers : []) if (b && typeof b.id === 'string') byId.set(b.id, b);
+
+  // Drawn stars: in the layout and in the map, in layout order. `index` is the star's place in
+  // layout.stars, the only handle the hit layer carries.
+  const stars = [];
+  const pos = new Map();
+  const laid = Array.isArray(layout?.stars) ? layout.stars : [];
+  laid.forEach((s, index) => {
+    if (!Array.isArray(s)) return;
+    const [id, x, y, r0] = s;
+    const broker = byId.get(id);
+    if (!broker || pos.has(id) || ![x, y, r0].every(Number.isFinite)) return;
+    const st = { id, index, x, y, r: Math.max(r0, minR), broker, state: starState(broker, lighting) };
+    stars.push(st);
+    pos.set(id, st);
+  });
+
+  // Newly lit stars bloom in waves, in id order. Only lit ones: an amber (re-check due) star is
+  // an old filing going stale, not new light, so it never blooms (by design).
+  const blooming = [...(newlyLit instanceof Set ? newlyLit : new Set(newlyLit ?? []))]
+    .filter((id) => pos.get(id)?.state === 'lit')
+    .sort();
+  const delay = new Map(blooming.map((id, i) => [id, (i % BLOOM_WAVE) * BLOOM_STEP_MS]));
+
+  const sky = [];
+  const links = [];
+  const glows = [];
+  const marks = [];
+  const rings = [];
+  const halos = [];
+  const effects = [];
+  const labels = [];
+  const hits = [];
+
+  const selId = selectedId !== null && pos.has(selectedId) ? selectedId : null;
+  for (const l of Array.isArray(map?.links) ? map.links : []) {
+    const a = pos.get(l?.from);
+    const b = pos.get(l?.to);
+    if (!a || !b) continue;
+    const count = Array.isArray(l.sources) ? l.sources.length : 0;
+    // Controller ruling M3 (2026-10-24): a buyer's links stay faint so the rim doesn't drown the map;
+    // links touching the selected star brighten.
+    let op = Math.min(0.6, 0.15 * (1 + count));
+    if (a.state === 'buyer' || b.state === 'buyer') op = Math.min(op, BUYER_LINK_OPACITY);
+    const touching = selId !== null && (a.id === selId || b.id === selId);
+    if (touching) op = SELECTED_LINK_OPACITY;
+    const dash = l.tier === 'C' ? ' stroke-dasharray="6 5"' : '';
+    links.push(`<line class="link${touching ? ' link--selected' : ''}" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}" opacity="${n(op)}"${dash}/>`);
+  }
+
+  const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vh;
+  const wanted = [];
+  let lit = 0;
+  let amber = 0;
+  let none = 0;
+  for (const s of stars) {
+    const { x, y, r, state } = s;
+    const cx = n(x);
+    const cy = n(y);
+    const hub = s.broker.hub === true;
+    const d = delay.get(s.id);
+    const anim = d === undefined ? '' : ` style="animation-delay:${d}ms"`;
+
+    if (hub) sky.push(`<circle class="nebula" cx="${cx}" cy="${cy}" r="${n(70 + r * 6)}" fill="url(#${state === 'lit' || state === 'amber' ? 'rc-neb-lit' : 'rc-neb'})"/>`);
+
+    if (state === 'buyer') {
+      marks.push(`<rect class="buyer" x="${n(x - r)}" y="${n(y - r)}" width="${n(2 * r)}" height="${n(2 * r)}" fill="none" stroke="${BUYER}" stroke-width="1.2" transform="rotate(45 ${cx} ${cy})"/>`);
+    } else if (state === 'no-opt-out') {
+      none += 1;
+      const k = r + 1;
+      marks.push(`<path class="star-x" d="M${n(x - k)} ${n(y - k)}L${n(x + k)} ${n(y + k)}M${n(x + k)} ${n(y - k)}L${n(x - k)} ${n(y + k)}" stroke="${MAGENTA}" stroke-width="1.8" stroke-linecap="round" fill="none"/>`);
+    } else if (state === 'lit') {
+      lit += 1;
+      const g = hub ? ' glow--hub' : '';
+      const gn = d === undefined ? '' : ' glow--new';
+      glows.push(`<circle class="glow${g}${gn}" cx="${cx}" cy="${cy}" r="${n(Math.max(7, r * 3.2))}" fill="url(#rc-glow)"${anim}/>`);
+      marks.push(`<circle class="star star--lit${d === undefined ? '' : ' star--new'}" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${LIME}"${anim}/>`);
+      if (d !== undefined) effects.push(`<circle class="burst" cx="${cx}" cy="${cy}" r="${n(r + 2)}" fill="none" stroke="${LIME}" stroke-width="1"${anim}/>`);
+    } else if (state === 'amber') {
+      amber += 1;
+      marks.push(`<circle class="star star--amber" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${AMBER}" fill-opacity="${RECHECK_OPACITY}"/>`);
+    } else {
+      marks.push(`<circle class="star star--dim" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${DIM}"/>`);
+    }
+
+    if (hub || s.id === selId || (nameStars && inView(s))) wanted.push(s);
+
+    hits.push(`<circle class="star-hit" cx="${cx}" cy="${cy}" r="${n(Math.max(hitR, r))}" data-star="${s.index}" fill="transparent" pointer-events="all"/>`);
+  }
+
+  // Labels, placed without overlaps: the selected star first (it always shows), then by reach
+  // (ties by id). Each tries right, left, above, below; one that fits nowhere in view without
+  // touching a placed label waits for a zoom or a tap.
+  const reach = (s) => (Number.isFinite(s.broker.reach) ? s.broker.reach : 0);
+  wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const placed = [];
+  const ctl = scale && Number.isFinite(controls?.w) && Number.isFinite(controls?.h)
+    ? (controls.corner === 'bottom-right'
+      ? { left: vx + vw - controls.w / scale, right: vx + vw, top: vy + vh - controls.h / scale, bottom: vy + vh }
+      : { left: vx + vw - controls.w / scale, right: vx + vw, top: vy, bottom: vy + controls.h / scale })
+    : null;
+  // Every drawn star mark is an obstacle a label must not sit on (a ✕ reaches r+1 either side, a
+  // buyer's diamond r√2). Only marks in view matter.
+  const markBox = (s) => {
+    const m = s.state === 'no-opt-out' ? s.r + 2 : s.state === 'buyer' ? s.r * 1.42 : s.r;
+    return { id: s.id, left: s.x - m, right: s.x + m, top: s.y - m, bottom: s.y + m };
+  };
+  const marksInView = stars.filter((s) => s.x >= vx - 40 && s.x <= vx + vw + 40 && s.y >= vy - 40 && s.y <= vy + vh + 40).map(markBox);
+  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh && !(ctl && overlaps(b, ctl));
+  for (const s of wanted) {
+    const hub = s.broker.hub === true;
+    const fontSize = hub ? labelSize : (scale ? STAR_LABEL_PX / scale : labelSize * (STAR_LABEL_PX / LABEL_PX));
+    const gap = (fontSize / LABEL_SIZE) * LABEL_GAP;
+    const lines = wrapLabel(shortName(s.broker.name ?? ''));
+    const h = lines.length * fontSize * LABEL_LINE_EM;
+    const options = [
+      { lx: s.x + s.r + gap, anchor: 'start', cy: s.y },
+      { lx: s.x - s.r - gap, anchor: 'end', cy: s.y },
+      { lx: s.x, anchor: 'middle', cy: s.y - s.r - gap - h / 2 },
+      { lx: s.x, anchor: 'middle', cy: s.y + s.r + gap + h / 2 },
+    ];
+    const pad = fontSize * 0.1;
+    const clear = (o, avoidMarks) => {
+      const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
+      const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
+      return fits(b) && !placed.some((q) => overlaps(padded, q.box))
+        && !(avoidMarks && marksInView.some((m) => m.id !== s.id && overlaps(b, m)));
+    };
+    let pick = options.find((o) => clear(o, true));
+    // A hub always keeps a name: when every side touches a star, take one that only clears labels.
+    if (!pick && hub) pick = options.find((o) => clear(o, false));
+    if (!pick && s.id === selId) pick = options.find((o) => fits(labelBox(lines, fontSize, o.lx, o.anchor, o.cy))) ?? options[0];
+    if (!pick) continue;
+    const cls = hub ? 'hub-label' : 'star-label';
+    const fill = s.state === 'lit' ? LIME : hub ? PALE : BUYER;
+    placed.push({ s, box: labelBox(lines, fontSize, pick.lx, pick.anchor, pick.cy), markup: labelMarkup({ cls, fill, fontSize, lines, ...pick }) });
+  }
+  placed.sort((a, b) => a.s.index - b.s.index);
+  for (const p of placed) labels.push(p.markup);
+
+  const frozen = new Set(Array.isArray(lighting?.frozen) ? lighting.frozen : []);
+  const halo = new Set(Array.isArray(lighting?.halo) ? lighting.halo : []);
+  for (const s of stars) {
+    if (frozen.has(s.id)) rings.push(`<circle class="ring-frozen" cx="${n(s.x)}" cy="${n(s.y)}" r="${n(s.r + 3)}" fill="none" stroke="${CYAN}" stroke-width="1.2" stroke-dasharray="2 2"/>`);
+  }
+  for (const s of stars) {
+    if (halo.has(s.id)) halos.push(`<circle class="halo" cx="${n(s.x)}" cy="${n(s.y)}" r="${n(s.r + 4)}" fill="${PALE}" opacity="0.12"/>`);
+  }
+
+  const sel = selectedId === null ? null : pos.get(selectedId);
+  if (sel) effects.push(`<circle class="selected" cx="${n(sel.x)}" cy="${n(sel.y)}" r="${n(sel.r + 6)}" fill="none" stroke="${PALE}" stroke-width="1.5"/>`);
+
+  const aria = `Map of data brokers: ${stars.length} companies, ${lit + amber} lit by your opt-outs (${amber} due for a re-check), ${none} with no opt-out`;
+
+  // Hit circles sit on top and overlap in the dense crowd; the app resolves a tap with
+  // nearestStar (broker-view.js) on the tap point, not with whichever circle is uppermost.
+  return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vh)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
+    + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/>${sky.join('')}</g>`
+    + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vh)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
+    + `<g class="links">${links.join('')}</g>`
+    + `<g class="stars">${glows.join('')}${marks.join('')}</g>`
+    + `<g class="rings">${rings.join('')}${halos.join('')}</g>`
+    + `<g class="effects">${effects.join('')}</g>`
+    + `<g class="labels">${labels.join('')}</g>`
+    + `<g class="hits">${hits.join('')}</g>`
+    + '</svg>';
+}

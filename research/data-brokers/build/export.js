@@ -29,6 +29,20 @@ export function backedParent(b, { published, sources, recordOverrides }) {
 // optOut as the game reads it: a missing status means never checked.
 const exportOptOut = (o) => (o ? { ...o, status: o.status ?? 'unchecked' } : null);
 
+// The record's own sources minus registry filings (those are everywhere and say little), sorted by url.
+export function brokerSources(b, sources) {
+  return (b.sources ?? [])
+    .map((s) => (typeof s === 'string' ? s : s?.id))
+    .map((id) => {
+      const s = sources[id];
+      if (!s) throw new Error(`broker ${b.id}: unknown source "${id}"`);
+      return s;
+    })
+    .filter((s) => s.kind !== 'registry')
+    .map((s) => ({ url: s.url, archived: s.archived, kind: s.kind }))
+    .sort((a, b) => cmp(a.url, b.url));
+}
+
 export async function buildExport(dir) {
   const { asOf } = await readJson(join(dir, 'DATASET.json'));
   const sources = await readJson(join(dir, 'sources.json'));
@@ -47,7 +61,7 @@ export async function buildExport(dir) {
   const brokers = raw.map((b) => ({
     id: b.id, name: b.name, parent: backedParent(b, { published, sources, recordOverrides }), kind: b.kind,
     registries: b.registries, sells: b.sells ?? [], optOut: exportOptOut(b.optOut), missions: b.missions ?? [],
-    reach: reach.get(b.id), hub: hubs.has(b.id),
+    reach: reach.get(b.id), hub: hubs.has(b.id), sources: brokerSources(b, sources),
   }));
   const links = published
     .map((l) => ({
@@ -62,7 +76,7 @@ export async function buildExport(dir) {
   return { formatVersion: FORMAT_VERSION, asOf, brokers, links };
 }
 
-export const serialize = (data) => JSON.stringify(data, null, 2) + '\n';
+export const serialize = (data) => JSON.stringify(data) + '\n';
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
