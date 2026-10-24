@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE } from '../../src/components/constellation.js';
+import {
+  constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE, labelBox, LABEL_LINE_EM, BUYER_LINK_OPACITY, SELECTED_LINK_OPACITY,
+} from '../../src/components/constellation.js';
 import { shortName, nearestStar, zoomViewBox } from '../../src/utils/broker-view.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
 
@@ -40,6 +42,21 @@ lighting.stars['hub-a'] = star('lit', '2026-10-01');
 lighting.stars.whitepages = star('lit', '2026-10-01');
 
 const render = (over = {}) => constellationSvg({ map, layout, lighting, ...over });
+const realLight = brokerLighting(realMap, {}, '2026-10-19');
+// Every whitespace-separated token of every attribute value.
+const attrTokens = (s) => new Set([...s.matchAll(/="([^"]*)"/g)].flatMap((m) => m[1].split(/\s+/)));
+// The visible labels and the boxes they cover, read back from the markup.
+function labelsOf(s) {
+  return [...s.matchAll(/<text class="(hub-label|star-label)" x="([-\d.]+)" y="([-\d.]+)" font-size="([\d.]+)"[^>]*?(?: text-anchor="(\w+)")?>(.*?)<\/text>/g)].map((m) => {
+    const [, cls, x, y, fs, anchor = 'start', body] = m;
+    const lines = body.includes('<tspan') ? [...body.matchAll(/<tspan[^>]*>([^<]*)<\/tspan>/g)].map((t) => t[1]) : [body];
+    const f = Number(fs);
+    const cy = Number(y) - f * 0.85 + (lines.length * f * LABEL_LINE_EM) / 2;
+    return { cls, text: lines.join(' '), box: labelBox(lines, f, Number(x), anchor, cy) };
+  });
+}
+const intersects = (a, b) => a.left < b.right - 1e-6 && b.left < a.right - 1e-6 && a.top < b.bottom - 1e-6 && b.top < a.bottom - 1e-6;
+const realAt = (id) => realLayout.stars.find((s) => s[0] === id);
 const svg = render();
 // The opening tag of the star drawn at a broker's layout position.
 const at = (id) => layout.stars.find((s) => s[0] === id);
@@ -250,10 +267,22 @@ describe('constellationSvg', () => {
   });
 
   it('the SVG carries no links and no broker ids', () => {
-    const s = render({ selectedId: 'spokeo', newlyLit: new Set(['acxiom', 'whitepages']) });
-    expect(s).not.toMatch(/href=|<a\b/);
-    expect(s).not.toMatch(/spokeo/);
-    for (const b of mini.brokers) expect(s, b.id).not.toMatch(new RegExp(`="[^"]*\\b${b.id}\\b`));
+    const renders = [
+      svg,
+      render({ selectedId: 'spokeo', newlyLit: new Set(['acxiom', 'whitepages']) }),
+      render({ selectedId: 'spokeo', view: { x: 80, y: 80, w: 381 }, px: 686 }), // zoomed: every star named
+    ];
+    for (const s of renders) {
+      expect(s).not.toMatch(/href=|<a\b/);
+      const tokens = attrTokens(s);
+      for (const b of mini.brokers) expect(tokens.has(b.id), b.id).toBe(false);
+    }
+    // The real map, zoomed in on a cluster with a star selected.
+    const ids = realMap.brokers.map((b) => b.id);
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: realLight, selectedId: 'transunion', view: { x: 520, y: 420, w: 160 }, px: 343 });
+    expect(s).toMatch(/class="star-label"/);
+    const tokens = attrTokens(s);
+    for (const id of ids) if (tokens.has(id)) throw new Error(`broker id in an attribute: ${id}`);
   });
 
   it('renders the real map in under 200ms in node', () => {
@@ -267,7 +296,7 @@ describe('constellationSvg', () => {
     expect(ms).toBeLessThan(200);
     const marks = s.match(/<circle class="star[ "]|<path class="star-x"|<rect class="buyer"/g).length;
     expect(marks).toBe(903);
-    expect(s.match(/<text class="hub-label"/g)).toHaveLength(12);
+    expect(s.match(/<text class="hub-label"/g).length).toBeGreaterThanOrEqual(10);
     expect(s.match(/<line class="link"/g).length).toBeGreaterThan(0);
     expect(s).not.toMatch(/\bfilter="/);
   });
@@ -380,5 +409,96 @@ describe('constellationSvg: tappable and zoomable', () => {
     expect(sky[1]).toBe('translate(200 500) scale(0.4)');
     expect(sky[2].match(/<path/g)).toHaveLength(2);
     expect(svg.indexOf('class="skyline"')).toBeLessThan(svg.indexOf('class="hub-label"'));
+  });
+});
+
+describe('constellationSvg: labels never collide (controller fix round 1)', () => {
+  const tu = realAt('transunion');
+  const cases = [
+    ['full view, unknown width', {}],
+    ['full view at 343px', { px: 343 }],
+    ['full view at 900px', { px: 900 }],
+    ['TransUnion zoom w330 at 343px', { view: { x: tu[1] - 165, y: tu[2] - 165, w: 330 }, px: 343 }],
+    ['deep zoom w150 at 343px (star names)', { view: { x: tu[1] - 75, y: tu[2] - 75, w: 150 }, px: 343 }],
+    ['TransUnion zoom, TRADS selected', { view: { x: tu[1] - 165, y: tu[2] - 165, w: 330 }, px: 343, selectedId: 'transunion-risk-and-alternative-data-solutions' }],
+  ];
+  for (const [name, over] of cases) {
+    it(`no two visible labels intersect and none leaves the view: ${name}`, () => {
+      const view = over.view ?? { x: 0, y: 0, w: 1000 };
+      const s = constellationSvg({ map: realMap, layout: realLayout, lighting: realLight, ...over });
+      const ls = labelsOf(s);
+      expect(ls.length).toBeGreaterThan(0);
+      expect(ls.length).toBe((s.match(/<text class="(hub|star)-label"/g) ?? []).length);
+      for (let i = 0; i < ls.length; i += 1) {
+        const b = ls[i].box;
+        expect(b.left, ls[i].text).toBeGreaterThanOrEqual(view.x - 1e-6);
+        expect(b.right, ls[i].text).toBeLessThanOrEqual(view.x + view.w + 1e-6);
+        expect(b.top, ls[i].text).toBeGreaterThanOrEqual(view.y - 1e-6);
+        expect(b.bottom, ls[i].text).toBeLessThanOrEqual(view.y + view.w + 1e-6);
+        for (let j = i + 1; j < ls.length; j += 1) expect(intersects(b, ls[j].box), `${ls[i].text} / ${ls[j].text}`).toBe(false);
+      }
+      // TransUnion (reach 18) outranks TransUnion RADS (reach 7): it always reads.
+      expect(ls.map((l) => l.text)).toContain('TransUnion');
+      if (over.selectedId) expect(ls.map((l) => l.text)).toContain('TransUnion Risk and Alternative Data Solutions');
+    });
+  }
+
+  it('the selected star is always labelled, even a crowded non-hub at full view', () => {
+    const id = realLayout.stars.find((st) => !realMap.brokers.find((b) => b.id === st[0]).hub && st[2] > 400 && st[2] < 600)[0];
+    const name = shortName(realMap.brokers.find((b) => b.id === id).name);
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: realLight, selectedId: id, px: 343 });
+    expect(labelsOf(s).map((l) => l.text.replace(/&amp;/g, '&'))).toContain(name);
+  });
+
+  it('labels come right of the star when there is room', () => {
+    const [, x, , r] = at('hub-a');
+    const l = labelsOf(svg).find((q) => q.cls === 'hub-label');
+    expect(l.box.left).toBeGreaterThan(x + r);
+  });
+});
+
+describe('constellationSvg: links (controller ruling M3)', () => {
+  const m = { ...map, links: [...map.links, { from: 'us-ice', to: 'hub-a', type: 'supplies', tier: 'A', sources: [{ url: 'a' }, { url: 'b' }, { url: 'c' }] }] };
+  const linkTags = (s) => s.match(/<line class="link[^"]*"[^>]*>/g);
+  const [, bx, by] = at('us-ice');
+
+  it("a buyer's links stay faint", () => {
+    expect(BUYER_LINK_OPACITY).toBeLessThanOrEqual(0.15);
+    const tag = linkTags(constellationSvg({ map: m, layout, lighting })).find((t) => t.includes(`x1="${bx}" y1="${by}"`));
+    expect(Number(tag.match(/opacity="([\d.]+)"/)[1])).toBeLessThanOrEqual(0.15);
+    // On the real map too.
+    const buyers = new Set(realMap.brokers.filter((b) => b.kind.includes('buyer')).map((b) => b.id));
+    const pts = new Set(realLayout.stars.filter((st) => buyers.has(st[0])).map((st) => `${st[1]},${st[2]}`));
+    const real = linkTags(constellationSvg({ map: realMap, layout: realLayout, lighting: realLight }));
+    let n = 0;
+    for (const t of real) {
+      const [, x1, y1, x2, y2, op] = t.match(/x1="([\d.]+)" y1="([\d.]+)" x2="([\d.]+)" y2="([\d.]+)" opacity="([\d.]+)"/);
+      if (pts.has(`${x1},${y1}`) || pts.has(`${x2},${y2}`)) { n += 1; expect(Number(op)).toBeLessThanOrEqual(0.15); }
+    }
+    expect(n).toBeGreaterThan(0);
+  });
+
+  it("the selected star's links brighten", () => {
+    expect(SELECTED_LINK_OPACITY).toBeGreaterThanOrEqual(0.8);
+    const s = constellationSvg({ map: m, layout, lighting, selectedId: 'acxiom' });
+    const sel = s.match(/<line class="link link--selected"[^>]*>/g);
+    expect(sel).toHaveLength(1);
+    expect(sel[0]).toMatch(/opacity="0.8"/);
+    const [, ax, ay] = at('acxiom');
+    expect(sel[0]).toContain(`x2="${ax}" y2="${ay}"`);
+    // Selecting the buyer brightens its faint link too.
+    const b = constellationSvg({ map: m, layout, lighting, selectedId: 'us-ice' }).match(/<line class="link link--selected"[^>]*>/g);
+    expect(b).toHaveLength(1);
+    expect(b[0]).toMatch(/opacity="0.8"/);
+    expect(svg).not.toMatch(/link--selected/);
+  });
+});
+
+describe('constellationSvg: the skyline hides no star', () => {
+  it('draws under every star, link and label', () => {
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: realLight, px: 343 });
+    const sky = s.indexOf('<g class="skyline"');
+    expect(sky).toBeGreaterThan(s.indexOf('<g class="sky"'));
+    for (const g of ['links', 'stars', 'rings', 'effects', 'labels', 'hits']) expect(s.indexOf(`<g class="${g}"`), g).toBeGreaterThan(sky);
   });
 });

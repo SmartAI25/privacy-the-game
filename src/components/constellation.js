@@ -33,6 +33,8 @@ export const STAR_LABEL_SCALE = 1.8;
 const ASSUMED_PX = 343; // a 375px phone less 16px gutters, for hit radii when `px` is not given
 const LABEL_WRAP = 20;
 const BLOOM_STEP_MS = 60;
+export const BUYER_LINK_OPACITY = 0.15;
+export const SELECTED_LINK_OPACITY = 0.8;
 const BLOOM_WAVE = 20;
 
 const n = (v) => String(Math.round(v * 100) / 100);
@@ -103,9 +105,27 @@ function wrapLabel(text) {
   return best === -1 ? [text] : [text.slice(0, best), text.slice(best + 1)];
 }
 
-function labelBody(lines, x) {
-  if (lines.length === 1) return esc(lines[0]);
-  return lines.map((t, i) => `<tspan x="${n(x)}" dy="${i === 0 ? '-0.5em' : '1.1em'}">${esc(t)}</tspan>`).join('');
+// Label geometry, shared with the tests: monospace glyphs ~0.6em wide, lines 1.1em apart.
+export const LABEL_CHAR_EM = 0.6;
+export const LABEL_LINE_EM = 1.1;
+
+// The box a label covers: anchor x `lx` ('start' | 'end' | 'middle'), vertical centre `cy`.
+export function labelBox(lines, fontSize, lx, anchor, cy) {
+  const w = Math.max(...lines.map((t) => t.length)) * fontSize * LABEL_CHAR_EM;
+  const h = lines.length * fontSize * LABEL_LINE_EM;
+  const left = anchor === 'end' ? lx - w : anchor === 'middle' ? lx - w / 2 : lx;
+  return { left, right: left + w, top: cy - h / 2, bottom: cy + h / 2 };
+}
+
+const overlaps = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+
+function labelMarkup({ cls, fill, fontSize, lines, lx, anchor, cy }) {
+  const top = cy - (lines.length * fontSize * LABEL_LINE_EM) / 2;
+  const base = (i) => n(top + fontSize * LABEL_LINE_EM * i + fontSize * 0.85);
+  const a = anchor === 'start' ? '' : ` text-anchor="${anchor}"`;
+  const head = `<text class="${cls}" x="${n(lx)}" y="${base(0)}" font-size="${n(fontSize)}" stroke-width="${n(fontSize * 0.28)}" fill="${fill}"${a}>`;
+  if (lines.length === 1) return `${head}${esc(lines[0])}</text>`;
+  return `${head}${lines.map((t, i) => `<tspan x="${n(lx)}" y="${base(i)}">${esc(t)}</tspan>`).join('')}</text>`;
 }
 
 function starState(broker, lighting) {
@@ -124,7 +144,6 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   const scale = Number.isFinite(px) && px > 0 ? px / vw : null;
   const hitR = HIT_PX / (scale ?? ASSUMED_PX / vw);
   const labelSize = scale ? LABEL_PX / scale : LABEL_SIZE;
-  const labelGap = scale ? LABEL_GAP * (labelSize / LABEL_SIZE) : LABEL_GAP;
   const minR = scale ? MIN_STAR_PX / scale : 0;
   const nameStars = scale !== null && scale >= STAR_LABEL_SCALE;
 
@@ -162,33 +181,24 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   const labels = [];
   const hits = [];
 
+  const selId = selectedId !== null && pos.has(selectedId) ? selectedId : null;
   for (const l of Array.isArray(map?.links) ? map.links : []) {
     const a = pos.get(l?.from);
     const b = pos.get(l?.to);
     if (!a || !b) continue;
     const count = Array.isArray(l.sources) ? l.sources.length : 0;
-    const op = Math.min(0.6, 0.15 * (1 + count));
+    // Controller ruling M3 (2026-10-24): a buyer's links stay faint so the rim doesn't drown the map;
+    // links touching the selected star brighten.
+    let op = Math.min(0.6, 0.15 * (1 + count));
+    if (a.state === 'buyer' || b.state === 'buyer') op = Math.min(op, BUYER_LINK_OPACITY);
+    const touching = selId !== null && (a.id === selId || b.id === selId);
+    if (touching) op = SELECTED_LINK_OPACITY;
     const dash = l.tier === 'C' ? ' stroke-dasharray="6 5"' : '';
-    links.push(`<line class="link" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}" opacity="${n(op)}"${dash}/>`);
+    links.push(`<line class="link${touching ? ' link--selected' : ''}" x1="${n(a.x)}" y1="${n(a.y)}" x2="${n(b.x)}" y2="${n(b.y)}" opacity="${n(op)}"${dash}/>`);
   }
 
-  const size = Number.isFinite(layout?.size) ? layout.size : 1000;
   const inView = (s) => s.x >= vx && s.x <= vx + vw && s.y >= vy && s.y <= vy + vw;
-  const label = (s, cls, fontSize, fill) => {
-    const { x, y, r } = s;
-    const gap = scale ? (fontSize / labelSize) * labelGap : labelGap;
-    const lines = wrapLabel(shortName(s.broker.name ?? ''));
-    const width = Math.max(...lines.map((t) => t.length)) * fontSize * 0.6;
-    // Right of the star; flipped left only where the name would run out of view and there is more room on the left.
-    const right = x + r + gap;
-    const roomRight = Math.min(size, vx + vw) - right;
-    const roomLeft = x - r - gap - Math.max(0, vx);
-    const flip = width > roomRight && roomLeft > roomRight;
-    const lx = flip ? x - r - gap : right;
-    const anchor = flip ? ' text-anchor="end"' : '';
-    return `<text class="${cls}" x="${n(lx)}" y="${n(y + fontSize * 0.35)}" font-size="${n(fontSize)}" stroke-width="${n(fontSize * 0.28)}" fill="${fill}"${anchor}>${labelBody(lines, lx)}</text>`;
-  };
-
+  const wanted = [];
   let lit = 0;
   let amber = 0;
   let none = 0;
@@ -222,11 +232,44 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       marks.push(`<circle class="star star--dim" cx="${cx}" cy="${cy}" r="${n(r)}" fill="${DIM}"/>`);
     }
 
-    if (hub) labels.push(label(s, 'hub-label', labelSize, state === 'lit' ? LIME : PALE));
-    else if (nameStars && inView(s)) labels.push(label(s, 'star-label', STAR_LABEL_PX / scale, state === 'lit' ? LIME : BUYER));
+    if (hub || s.id === selId || (nameStars && inView(s))) wanted.push(s);
 
     hits.push(`<circle class="star-hit" cx="${cx}" cy="${cy}" r="${n(Math.max(hitR, r))}" data-star="${s.index}" fill="transparent" pointer-events="all"/>`);
   }
+
+  // Labels, placed without overlaps: the selected star first (it always shows), then by reach
+  // (ties by id). Each tries right, left, above, below; one that fits nowhere in view without
+  // touching a placed label waits for a zoom or a tap.
+  const reach = (s) => (Number.isFinite(s.broker.reach) ? s.broker.reach : 0);
+  wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const placed = [];
+  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vw;
+  for (const s of wanted) {
+    const hub = s.broker.hub === true;
+    const fontSize = hub ? labelSize : (scale ? STAR_LABEL_PX / scale : labelSize * (STAR_LABEL_PX / LABEL_PX));
+    const gap = (fontSize / LABEL_SIZE) * LABEL_GAP;
+    const lines = wrapLabel(shortName(s.broker.name ?? ''));
+    const h = lines.length * fontSize * LABEL_LINE_EM;
+    const options = [
+      { lx: s.x + s.r + gap, anchor: 'start', cy: s.y },
+      { lx: s.x - s.r - gap, anchor: 'end', cy: s.y },
+      { lx: s.x, anchor: 'middle', cy: s.y - s.r - gap - h / 2 },
+      { lx: s.x, anchor: 'middle', cy: s.y + s.r + gap + h / 2 },
+    ];
+    const pad = fontSize * 0.1;
+    let pick = options.find((o) => {
+      const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
+      const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
+      return fits(b) && !placed.some((q) => overlaps(padded, q.box));
+    });
+    if (!pick && s.id === selId) pick = options.find((o) => fits(labelBox(lines, fontSize, o.lx, o.anchor, o.cy))) ?? options[0];
+    if (!pick) continue;
+    const cls = hub ? 'hub-label' : 'star-label';
+    const fill = s.state === 'lit' ? LIME : hub ? PALE : BUYER;
+    placed.push({ s, box: labelBox(lines, fontSize, pick.lx, pick.anchor, pick.cy), markup: labelMarkup({ cls, fill, fontSize, lines, ...pick }) });
+  }
+  placed.sort((a, b) => a.s.index - b.s.index);
+  for (const p of placed) labels.push(p.markup);
 
   const frozen = new Set(Array.isArray(lighting?.frozen) ? lighting.frozen : []);
   const halo = new Set(Array.isArray(lighting?.halo) ? lighting.halo : []);
@@ -246,11 +289,11 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   // nearestStar (broker-view.js) on the tap point, not with whichever circle is uppermost.
   return `<svg class="constellation" viewBox="${n(vx)} ${n(vy)} ${n(vw)} ${n(vw)}" role="img" aria-label="${esc(aria)}" xmlns="http://www.w3.org/2000/svg">${STYLE}${DEFS}`
     + `<g class="sky"><rect x="-1000" y="-1000" width="3000" height="3000" fill="url(#rc-sky)"/>${sky.join('')}</g>`
+    + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vw)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
     + `<g class="links">${links.join('')}</g>`
     + `<g class="stars">${glows.join('')}${marks.join('')}</g>`
     + `<g class="rings">${rings.join('')}${halos.join('')}</g>`
     + `<g class="effects">${effects.join('')}</g>`
-    + `<g class="skyline" transform="translate(${n(vx)} ${n(vy + vw)}) scale(${n(vw / 1000)})"><path d="${SKYLINE.body}" fill="url(#rc-city)" stroke="${CYAN}" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${SKYLINE.windows}" fill="${LIME}" opacity=".55"/></g>`
     + `<g class="labels">${labels.join('')}</g>`
     + `<g class="hits">${hits.join('')}</g>`
     + '</svg>';
