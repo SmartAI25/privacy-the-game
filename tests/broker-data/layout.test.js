@@ -71,6 +71,49 @@ describe('computeLayout', () => {
     for (const s of inner) expect(dist(s)).toBeLessThanOrEqual(330.1);
   });
 
+  describe('M1: hubs with their crowd as a nebula (controller ruling, mockup A)', () => {
+    const hubIds = new Set(map.brokers.filter((b) => b.hub).map((b) => b.id));
+    const neighbours = new Map();
+    for (const l of map.links) {
+      for (const [a, b] of [[l.from, l.to], [l.to, l.from]]) {
+        if (!neighbours.has(a)) neighbours.set(a, new Set());
+        neighbours.get(a).add(b);
+      }
+    }
+    const linkedNonHubs = map.brokers.filter((b) => !isBuyer(b) && linked.has(b.id) && !b.hub);
+
+    it('a linked non-hub sits near its nearest linked hub (median <= 90)', () => {
+      const ds = [];
+      for (const b of linkedNonHubs) {
+        const hubs = [...neighbours.get(b.id)].filter((id) => hubIds.has(id));
+        if (!hubs.length) continue;
+        const [, x, y] = byId.get(b.id);
+        ds.push(Math.min(...hubs.map((h) => Math.hypot(x - byId.get(h)[1], y - byId.get(h)[2]))));
+      }
+      expect(ds.length).toBeGreaterThan(10);
+      ds.sort((a, b) => a - b);
+      expect(ds[Math.floor(ds.length / 2)]).toBeLessThanOrEqual(90);
+    });
+
+    it('linked non-hubs do not pile on the r=330 clamp (<= 10% at r >= 315)', () => {
+      const edge = linkedNonHubs.filter((b) => dist(byId.get(b.id)) >= 315);
+      expect(edge.length / linkedNonHubs.length).toBeLessThanOrEqual(0.1);
+    });
+
+    it('the unlinked crowd is jittered, not a constant-angle spiral', () => {
+      const crowd = pick((b) => !isBuyer(b) && !linked.has(b.id));
+      const steps = [];
+      for (let i = 1; i < crowd.length; i++) {
+        const a0 = Math.atan2(crowd[i - 1][2] - 500, crowd[i - 1][1] - 500);
+        const a1 = Math.atan2(crowd[i][2] - 500, crowd[i][1] - 500);
+        steps.push((((a1 - a0) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
+      }
+      const mean = steps.reduce((s, x) => s + x, 0) / steps.length;
+      const sd = Math.sqrt(steps.reduce((s, x) => s + (x - mean) ** 2, 0) / steps.length);
+      expect(sd / mean).toBeGreaterThan(0.05);
+    });
+  });
+
   it('no two hubs are closer than 140', () => {
     const hubs = pick((b) => b.hub);
     expect(hubs.length).toBe(12);

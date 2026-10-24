@@ -19,6 +19,19 @@ const T_START = 60;
 const T_END = 0.5;
 const HUB_GAP = 140;
 const PUSH_PASSES = 200;
+// Controller ruling M1 (2026-10-23, mockup A): hubs are bright stars with their crowd as a nebula around them.
+const REPULSION = 0.06; // scale on FR repulsion k^2/d
+const BUYER_PULL = 0.05; // weight of attraction along a link to a fixed buyer
+const HUB_GRAVITY = 0.02; // pull of each hub toward the centre, per unit distance
+const HUB_REPULSION = 2; // extra push between hubs closer than HUB_GAP + HUB_MARGIN
+const HUB_MARGIN = 20;
+const NEBULA_SPRING = 1; // spring from a non-hub to its anchor
+const NEBULA_DIST = 60; // rest length of that spring
+const HUB_LIMIT = 230; // hubs stay inside this radius so their nebula fits inside INNER
+const GRAVITY = 0.25; // pull of each non-hub toward the centre, per unit distance
+const CROWD_SEED = SEED + 1;
+const CROWD_ANGLE_JITTER = 0.5; // radians, full width
+const CROWD_RADIUS_JITTER = 0.3; // in sqrt-area units, full width
 
 const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 const round1 = (n) => Math.round(n * 10) / 10 + 0; // + 0 turns -0 into 0
@@ -55,11 +68,14 @@ export function computeLayout(map, sizeKnown) {
     pos.set(b.id, { x: C + RIM * Math.cos(a), y: C + RIM * Math.sin(a) });
   });
 
-  // Unlinked non-buyers in the outer annulus (sunflower spiral, id order).
+  // Unlinked non-buyers in the outer annulus: a golden-angle spiral in id order, jittered in angle and
+  // radius by a seeded PRNG so the crowd reads as a nebula, not a grid.
   const unlinked = brokers.filter((b) => !isBuyer(b) && !linkedIds.has(b.id));
+  const crowdRand = mulberry32(CROWD_SEED);
   unlinked.forEach((b, i) => {
-    const a = i * GOLDEN;
-    const r = OUTER_MIN + OUTER_SPAN * Math.sqrt((i + 0.5) / unlinked.length);
+    const a = i * GOLDEN + (crowdRand() - 0.5) * CROWD_ANGLE_JITTER;
+    const u = Math.min(1, Math.max(0, (i + 0.5) / unlinked.length + (crowdRand() - 0.5) * CROWD_RADIUS_JITTER));
+    const r = OUTER_MIN + OUTER_SPAN * Math.sqrt(u);
     pos.set(b.id, { x: C + r * Math.cos(a), y: C + r * Math.sin(a) });
   });
 
@@ -72,6 +88,8 @@ export function computeLayout(map, sizeKnown) {
     pos.set(b.id, { x: C + r * Math.cos(a), y: C + r * Math.sin(a) });
   }
   const moving = new Set(movers.map((b) => b.id));
+  const buyerIds = new Set(buyers.map((b) => b.id));
+  const hubIds = new Set(movers.filter((b) => b.hub).map((b) => b.id));
   const edgeKeys = new Set();
   const edges = [];
   for (const l of map.links) {
@@ -83,6 +101,27 @@ export function computeLayout(map, sizeKnown) {
     edges.push([u, v]);
   }
   edges.sort((a, b) => cmp(a[0], b[0]) || cmp(a[1], b[1]));
+  const neighbours = new Map(movers.map((b) => [b.id, []]));
+  for (const [u, v] of edges) {
+    if (neighbours.has(u)) neighbours.get(u).push(v);
+    if (neighbours.has(v)) neighbours.get(v).push(u);
+  }
+  // Each non-hub's nebula anchors: the hubs it is linked to, else its linked non-buyer neighbours, else
+  // (linked only to buyers) the centre.
+  const anchorsOf = new Map();
+  for (const b of movers) {
+    if (b.hub) continue;
+    const nb = neighbours.get(b.id);
+    const hubsLinked = nb.filter((id) => hubIds.has(id));
+    anchorsOf.set(b.id, hubsLinked.length ? hubsLinked : nb.filter((id) => moving.has(id)));
+  }
+  const anchorPoint = (id) => {
+    const ids = anchorsOf.get(id);
+    if (!ids.length) return { x: C, y: C };
+    let x = 0, y = 0;
+    for (const a of ids) { x += pos.get(a).x; y += pos.get(a).y; }
+    return { x: x / ids.length, y: y / ids.length };
+  };
 
   const n = movers.length;
   if (n > 0) {
@@ -91,6 +130,7 @@ export function computeLayout(map, sizeKnown) {
     for (let it = 0; it < ITERATIONS; it++) {
       const t = ITERATIONS === 1 ? T_END : T_START + ((T_END - T_START) * it) / (ITERATIONS - 1);
       const disp = new Map(movers.map((b) => [b.id, { x: 0, y: 0 }]));
+      const add = (id, dx, dy, f) => { const dd = disp.get(id); dd.x += dx * f; dd.y += dy * f; };
       for (let i = 0; i < n; i++) {
         const p = pos.get(movers[i].id);
         for (let j = i + 1; j < n; j++) {
@@ -98,10 +138,11 @@ export function computeLayout(map, sizeKnown) {
           let dx = p.x - q.x, dy = p.y - q.y;
           let d = Math.hypot(dx, dy);
           if (d < 0.01) { dx = 0.01; dy = 0; d = 0.01; }
-          const f = k2 / d;
-          const di = disp.get(movers[i].id), dj = disp.get(movers[j].id);
-          di.x += (dx / d) * f; di.y += (dy / d) * f;
-          dj.x -= (dx / d) * f; dj.y -= (dy / d) * f;
+          let f = (REPULSION * k2) / d;
+          const bothHubs = movers[i].hub && movers[j].hub;
+          if (bothHubs && d < HUB_GAP + HUB_MARGIN) f += HUB_REPULSION * (HUB_GAP + HUB_MARGIN - d);
+          add(movers[i].id, dx / d, dy / d, f);
+          add(movers[j].id, dx / d, dy / d, -f);
         }
       }
       for (const [u, v] of edges) {
@@ -109,9 +150,25 @@ export function computeLayout(map, sizeKnown) {
         const dx = p.x - q.x, dy = p.y - q.y;
         const d = Math.hypot(dx, dy);
         if (d < 0.01) continue;
-        const f = (d * d) / k;
-        if (moving.has(u)) { const du = disp.get(u); du.x -= (dx / d) * f; du.y -= (dy / d) * f; }
-        if (moving.has(v)) { const dv = disp.get(v); dv.x += (dx / d) * f; dv.y += (dy / d) * f; }
+        // Buyers are fixed anchors whose pull is weak, so hubs are not dragged to the rim.
+        const w = buyerIds.has(u) || buyerIds.has(v) ? BUYER_PULL : 1;
+        const f = (w * d * d) / k;
+        if (moving.has(u)) add(u, dx / d, dy / d, -f);
+        if (moving.has(v)) add(v, dx / d, dy / d, f);
+      }
+      for (const b of movers) {
+        const p = pos.get(b.id);
+        if (b.hub) {
+          // Hubs: gentle gravity toward the centre keeps them off the edge.
+          add(b.id, C - p.x, C - p.y, HUB_GRAVITY);
+        } else {
+          // Nebula spring: settle NEBULA_DIST from the anchor (hub(s) linked to, else linked neighbours).
+          const a = anchorPoint(b.id);
+          const dx = a.x - p.x, dy = a.y - p.y;
+          const d = Math.hypot(dx, dy);
+          if (d > 0.01) add(b.id, dx / d, dy / d, NEBULA_SPRING * (d - NEBULA_DIST));
+          add(b.id, C - p.x, C - p.y, GRAVITY);
+        }
       }
       for (const b of movers) {
         const p = pos.get(b.id), dv = disp.get(b.id);
@@ -120,17 +177,18 @@ export function computeLayout(map, sizeKnown) {
           const step = Math.min(len, t);
           p.x += (dv.x / len) * step; p.y += (dv.y / len) * step;
         }
-        clamp(p, INNER);
+        clamp(p, b.hub ? HUB_LIMIT : INNER);
       }
     }
 
-    // Spread the hubs: no two closer than HUB_GAP.
-    const hubs = movers.filter((b) => b.hub).map((b) => pos.get(b.id));
+    // Spread the hubs: no two closer than HUB_GAP. A hub's nebula moves with it.
+    const hubList = movers.filter((b) => b.hub).map((b) => b.id);
+    const before = new Map(hubList.map((id) => [id, { ...pos.get(id) }]));
     for (let pass = 0; pass < PUSH_PASSES; pass++) {
       let moved = false;
-      for (let i = 0; i < hubs.length; i++) {
-        for (let j = i + 1; j < hubs.length; j++) {
-          const p = hubs[i], q = hubs[j];
+      for (let i = 0; i < hubList.length; i++) {
+        for (let j = i + 1; j < hubList.length; j++) {
+          const p = pos.get(hubList[i]), q = pos.get(hubList[j]);
           let dx = q.x - p.x, dy = q.y - p.y;
           let d = Math.hypot(dx, dy);
           if (d >= HUB_GAP) continue;
@@ -138,11 +196,20 @@ export function computeLayout(map, sizeKnown) {
           const push = (HUB_GAP - d) / 2 + 0.05;
           p.x -= (dx / d) * push; p.y -= (dy / d) * push;
           q.x += (dx / d) * push; q.y += (dy / d) * push;
-          clamp(p, INNER); clamp(q, INNER);
+          clamp(p, HUB_LIMIT); clamp(q, HUB_LIMIT);
           moved = true;
         }
       }
       if (!moved) break;
+    }
+    for (const [id, anchors] of anchorsOf) {
+      const hubAnchors = anchors.filter((a) => hubIds.has(a));
+      if (!hubAnchors.length) continue;
+      let sx = 0, sy = 0;
+      for (const h of hubAnchors) { sx += pos.get(h).x - before.get(h).x; sy += pos.get(h).y - before.get(h).y; }
+      const p = pos.get(id);
+      p.x += sx / hubAnchors.length; p.y += sy / hubAnchors.length;
+      clamp(p, INNER);
     }
   }
 
