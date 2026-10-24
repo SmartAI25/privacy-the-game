@@ -96,7 +96,8 @@ export function splitWords(html, max = 35) {
 }
 
 // ---------------------------------------------------------------------------
-// deck: the markup.
+// deck: the markup. The APG carousel: the deck a named region, each slide a group (not a
+// landmark of its own).
 
 const attr = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const headingHtml = (heading) => (heading ? `<h3 class="slide-heading">${heading}</h3>` : '');
@@ -122,7 +123,7 @@ export function deck(slides, { label, className = '', names = null } = {}) {
   const m = list.length;
   const cls = ['deck', className].filter(Boolean).join(' ');
   const sections = list
-    .map((s, i) => `<section class="${attr(['slide', s.className].filter(Boolean).join(' '))}" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
+    .map((s, i) => `<section class="${attr(['slide', s.className].filter(Boolean).join(' '))}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
     .join('');
   const named = Array.isArray(names) && names.length === m;
   const dots = named
@@ -134,7 +135,7 @@ export function deck(slides, { label, className = '', names = null } = {}) {
     : m > DOTS_MAX
       ? `<span class="deck-progress" aria-hidden="true"><span class="deck-progress-fill" style="width: ${progressWidth(0, m)}"></span></span>`
       : `<span class="deck-dots" aria-hidden="true">${dots}</span>`;
-  return `<div class="${attr(cls)}" data-deck aria-roledescription="carousel" aria-label="${attr(label)}">${sections}</div>`
+  return `<div class="${attr(cls)}" data-deck role="region" aria-roledescription="carousel" aria-label="${attr(label)}">${sections}</div>`
     + `<div class="deck-controls${named ? ' deck-controls--named' : ''}" data-deck-controls>`
     + '<button type="button" class="deck-btn" data-deck-prev disabled>BACK</button>'
     + progress
@@ -164,6 +165,11 @@ export function deckHeight(slideHeight, isRow) {
 // press again), unless that button is now disabled; an arrow key moves it to the slide heading.
 export function focusAfter(via, pressedDisabled) {
   return via === 'button' && !pressedDisabled ? 'button' : 'heading';
+}
+
+// Some of this box is inside a w×h viewport: not hidden, not a slide scrolled out of its deck.
+export function rectOnScreen(r, w, h) {
+  return !!r && r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < w && r.top < h;
 }
 
 export function controlState(index, count) {
@@ -370,8 +376,11 @@ export function restoreFolds(root, keys) {
 // ---------------------------------------------------------------------------
 // Open on desktop: a <details data-open-desktop> is closed on a phone and open
 // from 900px, set by script after every render and on a breakpoint change (no
-// ::details-content, which older browsers lack). One the player opened or
-// closed by hand this screen visit keeps that choice (`hand`: key -> open).
+// ::details-content, which older browsers lack). From 900px every one is open,
+// whatever the player did: its summary is hidden there, so a closed one would be
+// out of reach. Under 900px one the player opened or closed by hand this screen
+// visit keeps that choice (`hand`: key -> open), kept too across a trip to
+// desktop width and back (a rotation).
 
 // A building floor is keyed by its floor id: saving one floor drops it from the list, and an
 // index key would then hand its choice to the next floor down.
@@ -384,7 +393,7 @@ export function applyOpenDesktop(root, wide, hand = new Map()) {
   const list = [...(root?.querySelectorAll?.('details[data-open-desktop]') ?? [])];
   list.forEach((d, i) => {
     const key = desktopFoldKey(d, i);
-    const want = hand.has(key) ? hand.get(key) : !!wide;
+    const want = wide ? true : hand.has(key) ? hand.get(key) : false;
     d.dataset.autoOpen = want ? '1' : '0';
     if (d.open !== want) d.open = want;
   });

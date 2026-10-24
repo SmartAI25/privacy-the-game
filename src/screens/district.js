@@ -312,8 +312,14 @@ function renderMissionList(state, districtId, activeTab) {
 }
 
 // The one question over a phone's chip grid: what each row asks, of all of them at once.
+// A question that ends on the name ("Do you use X?") asks "… any of these?"; any other shape
+// (a vehicle question, say) gets the plain "Which of these do you have?".
 export function surveyAsk(questionFn) {
-  return questionFn === haveAccount ? 'Which of these accounts do you have?' : questionFn('any of these');
+  if (questionFn === haveAccount) return 'Which of these accounts do you have?';
+  const MARK = '\u0000';
+  const q = String(questionFn(MARK));
+  const at = q.indexOf(MARK);
+  return at > 0 && q.slice(at) === `${MARK}?` ? `${q.slice(0, at)}any of these?` : 'Which of these do you have?';
 }
 
 // On a phone the accounts are chips under one question; each chip is a button, pressed when

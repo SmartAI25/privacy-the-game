@@ -156,20 +156,22 @@ function roof(ctx, rows) {
       <details class="phone-fold" data-fold="antenna-${esc(accountId)}" data-open-desktop><summary>Why antennas fade</summary><div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div></details>`);
 }
 
-// The desk table's last column: whether a judge signs off. Each part is the slip's
-// own words, quoted as they stand, hedges and attributions included ("may",
-// "Proton says", "Yahoo lists"); a slip that doesn't say gets a dash.
+// The desk table's last column: whether a judge signs off. Each part is a whole
+// sentence of the slip, quoted as it stands: its scope ("what you actually wrote"),
+// hedges and attributions included ("may", "Proton says", "Yahoo lists"). A slip
+// that doesn't say gets a dash.
 const JUDGE = [
-  /A 2703\(d\) court order/,
-  /(?:police need|Yahoo lists|Meta requires) a search warrant,? signed by a judge/,
-  /An emergency request needs no judge at all/,
-  /^Everything on the police slip/,
-  /National Security Letters: subscriber records with no judge involved/,
-  /No warrant is needed for each one/,
-  /the court-approved certifications/,
-  /A subpoena signed by an agency official, not a judge/,
-  /may answer without a US court being involved/,
-  /Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge/,
+  /A 2703\(d\) court order adds [^.]*\./,
+  /To force [^.]*, police need a search warrant signed by a judge\./,
+  /Yahoo lists a search warrant, signed by a judge, [^.]*\./,
+  /Meta requires a search warrant, signed by a judge, [^.]*\./,
+  /An emergency request needs no judge at all[^.]*\./,
+  /^Everything on the police slip, plus National Security Letters: [^.]*\./,
+  /No warrant is needed for each one\./,
+  /Its 2026 status is unsettled: [^.]*court-approved certifications[^.]*\./,
+  /A subpoena signed by an agency official, not a judge\./,
+  /Since October 2022, [^.]*may answer without a US court being involved\./,
+  /Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge\./,
 ];
 
 export function judgeCell(lane) {

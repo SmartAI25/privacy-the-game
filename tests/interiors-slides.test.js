@@ -6,9 +6,8 @@ import { renderBuildingInterior, judgeCell } from '../src/screens/building.js';
 import { SAINTS } from '../src/data/interiors/saints.js';
 import { INTERIORS, getInterior } from '../src/data/interiors/index.js';
 import { countWords } from '../src/components/deck.js';
-import { screens, textNodes } from './fixtures/interiors-text-screens.mjs';
+import { onPage } from './helpers/on-page.mjs';
 
-const BEFORE = JSON.parse(readFileSync(new URL('./fixtures/interiors-text-before.json', import.meta.url), 'utf8'));
 const norm = (s) => String(s).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 const deckOf = (html) => html.match(/<div class="deck[^"]*"[^>]*data-deck[\s\S]*?<\/div><div class="deck-controls/)?.[0] ?? '';
 const slidesOf = (html) => deckOf(html).split(/<section class="slide[ "]/).slice(1).map((s) => s.slice(s.indexOf('>') + 1, s.lastIndexOf('</section>')));
@@ -17,13 +16,21 @@ const NOW = new Date('2026-10-20T00:00:00Z');
 const building = (id) => renderBuildingInterior(toggleAccount(createInitialState(), id, true), id, { now: NOW });
 const CSS = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
 
-describe('every string the saints and buildings drew before still reaches the page', () => {
-  it('old text nodes, screen by screen, are all in the new page', () => {
-    const now = Object.fromEntries(screens());
-    expect(Object.keys(now).sort()).toEqual(Object.keys(BEFORE).sort());
-    for (const [key, old] of Object.entries(BEFORE)) {
-      const page = textNodes(now[key]).join(' ');
-      for (const t of old) expect(page, `${key}: ${t.slice(0, 80)}`).toContain(t);
+describe('every string from the saints and interiors data reaches the page', () => {
+  const saintStrings = (sa) => [sa.name, sa.title, sa.years, sa.tribute, sa.story, ...sa.sources.map((x) => x.label)];
+
+  it('the saints gallery: each saint, title, years, tribute, story and source', () => {
+    const html = renderSaints(createInitialState());
+    for (const id of SAINT_ORDER) for (const t of saintStrings(SAINTS[id])) onPage(html, t, `saints/${id}`);
+  });
+
+  it('every building: the desk (each lane whole), each entry, its fix, and its saints', () => {
+    for (const i of Object.values(INTERIORS)) {
+      const html = building(i.accountId);
+      const lanes = i.desk.flatMap((l) => [l.actor, l.actorNote, l.tool, l.gets, ...l.sources.map((x) => x.label)]);
+      const entries = i.entries.flatMap((e) => [...String(e.actor).split(' · '), e.actorNote, e.how, ...e.sources.map((x) => x.label)]);
+      const saints = (i.saints ?? []).map((id) => SAINTS[id]).filter(Boolean).flatMap(saintStrings);
+      for (const t of [i.deskIntro, ...lanes, ...entries, ...saints].filter(Boolean)) onPage(html, t, i.accountId);
     }
   });
 });
@@ -86,19 +93,15 @@ describe('the records desk is a table on phones', () => {
     });
   });
 
-  it("the judge column quotes the slip: each part a verbatim piece of the lane's own text, hedges and all", () => {
-    const gmail = Object.fromEntries(getInterior('gmail').desk.map((l) => [l.id, judgeCell(l)]));
-    expect(gmail).toEqual({
-      'local-police': 'A 2703(d) court order · police need a search warrant signed by a judge · An emergency request needs no judge at all',
-      fbi: 'Everything on the police slip · National Security Letters: subscriber records with no judge involved',
-      'nsa-702': 'No warrant is needed for each one · the court-approved certifications',
-      'ice-hsi': 'A subpoena signed by an agency official, not a judge',
-      'uk-cloud-act': 'may answer without a US court being involved',
-    });
-    const proton = Object.fromEntries(getInterior('protonmail').desk.map((l) => [l.id, judgeCell(l)]));
-    expect(proton).toEqual({ 'swiss-order': 'Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge', 'foreign-via-swiss': '—' });
-    // The attributions stay: Yahoo lists it, Meta requires it.
-    expect(getInterior('yahoo').desk.map(judgeCell).join(' · ')).toContain('Yahoo lists a search warrant, signed by a judge');
+  it("the judge column quotes the slip: whole sentences, word for word, scope and hedges and all", () => {
+    const cells = (id) => Object.fromEntries(getInterior(id).desk.map((l) => [l.id, judgeCell(l)]));
+    // The warrant sentence keeps its scope: what you actually wrote (a subpoena needs no warrant).
+    expect(cells('gmail')['local-police']).toBe('A 2703(d) court order adds who you wrote to and when. · To force Google to hand over what you actually wrote, police need a search warrant signed by a judge. · An emergency request needs no judge at all, and Google decides whether to answer it.');
+    expect(cells('yahoo')['local-police']).toContain('Yahoo lists a search warrant, signed by a judge, as the way to get what you actually wrote.');
+    expect(cells('facebook')['local-police']).toContain('Meta requires a search warrant, signed by a judge, before handing over your messages, photos, videos and posts.');
+    expect(cells('gmail')['uk-cloud-act']).toBe('Since October 2022, UK orders in serious-crime cases can go straight to Google, which may answer without a US court being involved.');
+    expect(cells('gmail')['ice-hsi']).toBe('A subpoena signed by an agency official, not a judge.');
+    expect(cells('protonmail')).toEqual({ 'swiss-order': 'Subject lines aren’t end-to-end encrypted, and Proton says reaching them takes an order approved by a Swiss judge.', 'foreign-via-swiss': '—' });
     // Every desk in the game: a cell is a dash, or every part of it is in the slip word for word.
     let parts = 0;
     for (const i of Object.values(INTERIORS)) {
@@ -107,12 +110,16 @@ describe('the records desk is a table on phones', () => {
         if (cell === '—') continue;
         for (const part of cell.split(' · ')) {
           expect(lane.gets, `${i.accountId}/${lane.id}: ${part}`).toContain(part);
+          // A whole sentence: it starts the slip or follows a sentence end, and ends with one.
+          const at = lane.gets.indexOf(part);
+          expect(at === 0 || /[.!?]\s$/.test(lane.gets.slice(0, at)), `${i.accountId}/${lane.id}: starts mid-sentence: ${part}`).toBe(true);
+          expect(part, `${i.accountId}/${lane.id}`).toMatch(/[.!?]$/);
           parts += 1;
         }
         expect(cell, `${i.accountId}/${lane.id}`).not.toMatch(/(^|· )(yes|no)($| ·)/i);
       }
     }
-    expect(parts).toBeGreaterThan(20);
+    expect(parts).toBeGreaterThan(15);
   });
 
   it("Signal's single lane stays a sticky note; no table", () => {

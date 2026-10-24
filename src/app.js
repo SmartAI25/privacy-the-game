@@ -24,7 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
-import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle, desktopFoldKey } from './components/deck.js';
+import { initDecks, deckPositions, openFolds, restoreFolds, applyOpenDesktop, recordHandToggle, desktopFoldKey, rectOnScreen } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -302,9 +302,10 @@ function startScreenVisit(route) {
 
 // Scout cheers the player off (goDoIt on the briefing), then the game moves on.
 function cheerThenGo(hash) {
-  // A phone shows the Scout slide's sprite, a desktop the sidebar's: cheer with the one on screen.
+  // A phone shows the Scout slide's sprite, a desktop the sidebar's: cheer with the one on
+  // screen. A Scout slide scrolled out of its deck is not on screen: then go straight on.
   const slots = [...app.querySelectorAll('[data-scout="briefing"]')];
-  const slot = slots.find((el) => el.getClientRects?.().length) || slots[0];
+  const slot = slots.find((el) => rectOnScreen(el.getBoundingClientRect?.(), window.innerWidth, window.innerHeight));
   const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (!slot || still) return navigate(hash);
   leavingBriefing = true;

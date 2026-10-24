@@ -72,7 +72,7 @@ describe('splitWords', () => {
 describe('deck', () => {
   it('deck renders sections, labels and controls', () => {
     const html = deck([{ html: '<p>A</p>', heading: 'First' }, { html: '<p>B</p>' }, { html: '<p>C</p>' }], { label: 'Mission briefing', className: 'brief-deck' });
-    expect(html).toContain('<div class="deck brief-deck" data-deck aria-roledescription="carousel" aria-label="Mission briefing">');
+    expect(html).toContain('<div class="deck brief-deck" data-deck role="region" aria-roledescription="carousel" aria-label="Mission briefing">');
     expect(html.match(/<section class="slide"/g)).toHaveLength(3);
     expect(html).toContain('aria-roledescription="slide" aria-label="1 of 3"');
     expect(html).toContain('aria-label="2 of 3"');
@@ -337,8 +337,8 @@ describe('initDecks', () => {
 
   it('a slide can carry its own class (a phone-only slide hides whole on desktop)', () => {
     const html = deck([{ html: '<p>a</p>' }, { html: '<p>b</p>', className: 'slide--phone' }], { label: 'X' });
-    expect(html).toContain('<section class="slide" aria-roledescription="slide" aria-label="1 of 2"');
-    expect(html).toContain('<section class="slide slide--phone" aria-roledescription="slide" aria-label="2 of 2"');
+    expect(html).toContain('<section class="slide" role="group" aria-roledescription="slide" aria-label="1 of 2"');
+    expect(html).toContain('<section class="slide slide--phone" role="group" aria-roledescription="slide" aria-label="2 of 2"');
     const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
     const desk = css.slice(css.indexOf('@media (min-width: 900px)', css.indexOf('/* deck: start */')));
     expect(desk).toMatch(/^@media[^@]*\.slide\.slide--phone \{ display: none; \}/);
@@ -489,5 +489,17 @@ describe('folds kept across a redraw', () => {
   it('app.js keeps folds open across a redraw', () => {
     const app = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
     expect(app).toMatch(/openFolds\(app\)[\s\S]*app\.innerHTML = renderFn[\s\S]*restoreFolds\(app,/);
+  });
+});
+
+describe('rectOnScreen (review M1: no cheer on a slide scrolled out of the deck)', async () => {
+  const { rectOnScreen } = await import('../src/components/deck.js');
+  it('in view, partly in view, scrolled off to either side, hidden', () => {
+    expect(rectOnScreen({ left: 20, right: 300, top: 200, bottom: 400, width: 280, height: 200 }, 390, 844)).toBe(true);
+    expect(rectOnScreen({ left: 380, right: 660, top: 200, bottom: 400, width: 280, height: 200 }, 390, 844)).toBe(true);
+    expect(rectOnScreen({ left: 400, right: 680, top: 200, bottom: 400, width: 280, height: 200 }, 390, 844)).toBe(false);
+    expect(rectOnScreen({ left: -400, right: -120, top: 200, bottom: 400, width: 280, height: 200 }, 390, 844)).toBe(false);
+    expect(rectOnScreen({ left: 0, right: 0, top: 0, bottom: 0, width: 0, height: 0 }, 390, 844)).toBe(false);
+    expect(rectOnScreen(undefined, 390, 844)).toBe(false);
   });
 });

@@ -32,14 +32,40 @@ describe('open on desktop, by script', () => {
     expect(list.map((d) => d.open)).toEqual([false, false]);
   });
 
-  it("a details the player opened or closed by hand keeps the player's choice", () => {
+  it("under 900px a details the player opened or closed by hand keeps the player's choice", () => {
     const a = fakeDetails({ class: 'saint-story', 'data-fold': 'saint-story-x' });
     const b = fakeDetails({ class: 'map-key' });
     const hand = new Map([[desktopFoldKey(a, 0), false], [desktopFoldKey(b, 1), true]]);
-    applyOpenDesktop(rootOf([a, b]), true, hand);
-    expect(a.open).toBe(false);
     applyOpenDesktop(rootOf([a, b]), false, hand);
-    expect(b.open).toBe(true);
+    expect([a.open, b.open]).toEqual([false, true]);
+  });
+
+  it('from 900px every one is open, whatever the hand state (its summary is hidden there)', () => {
+    const a = fakeDetails({ class: 'saint-story', 'data-fold': 'saint-story-x' });
+    const hand = new Map([[desktopFoldKey(a, 0), false]]);
+    applyOpenDesktop(rootOf([a]), true, hand);
+    expect(a.open).toBe(true);
+    expect(hand.get(desktopFoldKey(a, 0))).toBe(false); // kept for the way back under 900px
+  });
+
+  it('rotate: closed by hand on a phone, wider open with its content, narrower closed again as the player left it', () => {
+    const d = fakeDetails({ class: 'entry-fold', 'data-fold': 'entry-gmail-x' });
+    const hand = new Map();
+    applyOpenDesktop(rootOf([d]), false, hand);
+    d.open = true; recordHandToggle(d, 0, hand); // the player opens it
+    d.open = false; recordHandToggle(d, 0, hand); // and closes it again
+    expect(d.open).toBe(false);
+    applyOpenDesktop(rootOf([d]), true, hand); // rotated to 900px+
+    expect(d.open).toBe(true);
+    recordHandToggle(d, 0, hand); // the script's own toggle event
+    applyOpenDesktop(rootOf([d]), false, hand); // and back
+    expect(d.open).toBe(false);
+    // One opened by hand stays open through the same trip.
+    d.open = true; recordHandToggle(d, 0, hand);
+    applyOpenDesktop(rootOf([d]), true, hand);
+    recordHandToggle(d, 0, hand);
+    applyOpenDesktop(rootOf([d]), false, hand);
+    expect(d.open).toBe(true);
   });
 
   it('a toggle the script made is not a hand toggle; a toggle against it is', () => {
