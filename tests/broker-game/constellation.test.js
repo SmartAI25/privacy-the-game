@@ -1,0 +1,384 @@
+import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { constellationSvg, RECHECK_OPACITY, HIT_PX, STAR_LABEL_SCALE } from '../../src/components/constellation.js';
+import { shortName, nearestStar, zoomViewBox } from '../../src/utils/broker-view.js';
+import { brokerLighting } from '../../src/utils/broker-lighting.js';
+
+const mini = JSON.parse(readFileSync('tests/fixtures/broker-map-mini.json', 'utf8'));
+const realMap = JSON.parse(readFileSync('src/data/broker-map.json', 'utf8'));
+const realLayout = JSON.parse(readFileSync('src/data/broker-layout.json', 'utf8'));
+
+// One star per fixture broker, on a simple grid; hub-a is big.
+const layout = {
+  formatVersion: 1,
+  asOf: mini.asOf,
+  size: 1000,
+  stars: mini.brokers.map((b, i) => [b.id, 100 + (i % 4) * 200, 100 + Math.floor(i / 4) * 200, b.hub ? 10 : 2]),
+};
+const map = {
+  ...mini,
+  brokers: mini.brokers.map((b) => (b.id === 'hub-a' ? { ...b, name: 'Hub Alpha Holdings, Inc.' } : b)),
+  links: [
+    { from: 'hub-a', to: 'acxiom', type: 'owns', tier: 'A', sources: [{ url: 'u1' }, { url: 'u2' }] },
+    { from: 'hub-a', to: 'tail-1', type: 'supplies', tier: 'B', sources: [{ url: 'u1' }] },
+    { from: 'hub-a', to: 'tail-2', type: 'supplies', tier: 'C', sources: [{ url: 'u1' }, { url: 'u2' }, { url: 'u3' }, { url: 'u4' }] },
+    { from: 'hub-a', to: 'ghost', type: 'owns', tier: 'A', sources: [] },
+  ],
+};
+
+const star = (state, litOn = null) => ({ state, litOn, via: state === 'lit' || state === 'amber' ? ['checklist'] : [] });
+const lighting = {
+  stars: Object.fromEntries(mini.brokers.map((b) => [b.id, star(b.optOut?.method === 'none' ? 'no-opt-out' : 'dim')])),
+  frozen: ['equifax-information-services'],
+  halo: ['criteo'],
+  pending: [],
+  drop: 'off',
+};
+lighting.stars.spokeo = star('amber', '2026-03-01');
+lighting.stars.acxiom = star('lit', '2026-10-01');
+lighting.stars['hub-a'] = star('lit', '2026-10-01');
+lighting.stars.whitepages = star('lit', '2026-10-01');
+
+const render = (over = {}) => constellationSvg({ map, layout, lighting, ...over });
+const svg = render();
+// The opening tag of the star drawn at a broker's layout position.
+const at = (id) => layout.stars.find((s) => s[0] === id);
+const starTag = (s, id) => {
+  const [, x, y] = at(id);
+  return s.match(new RegExp(`<circle class="star(?: [^"]*)?" cx="${x}" cy="${y}"[^>]*>`))?.[0];
+};
+
+describe('shortName', () => {
+  it('strips one trailing legal suffix or comma', () => {
+    expect(shortName('Experian plc')).toBe('Experian');
+    expect(shortName('TransUnion Risk and Alternative Data Solutions, Inc.')).toBe('TransUnion Risk and Alternative Data Solutions');
+    expect(shortName('Experian Information Solutions, Inc')).toBe('Experian Information Solutions');
+    expect(shortName('General Motors LLC')).toBe('General Motors');
+    expect(shortName('RELX PLC')).toBe('RELX');
+    expect(shortName('West Publishing Corp')).toBe('West Publishing');
+    expect(shortName('Acme L.L.C.')).toBe('Acme');
+    expect(shortName('Acme Ltd')).toBe('Acme');
+    expect(shortName('Acme Corporation')).toBe('Acme');
+    expect(shortName('Acme Company')).toBe('Acme');
+    expect(shortName('Acme Co.')).toBe('Acme');
+    expect(shortName('Acme,')).toBe('Acme');
+    expect(shortName('TransUnion')).toBe('TransUnion');
+    expect(shortName('Acme Inc. Inc.')).toBe('Acme Inc.');
+  });
+});
+
+describe('constellationSvg', () => {
+  it('is one svg with a viewBox from the view and an accessible label', () => {
+    expect(svg).toMatch(/^<svg class="constellation" viewBox="0 0 1000 1000" role="img" aria-label="Map of data brokers: [^"]+"/);
+    expect(render({ view: { x: 100, y: 50, w: 400 } })).toMatch(/viewBox="100 50 400 400"/);
+    expect(svg.trim().endsWith('</svg>')).toBe(true);
+  });
+
+  it('draws one mark per laid-out broker', () => {
+    const circles = svg.match(/<circle class="star[ "]/g).length;
+    const xs = svg.match(/<path class="star-x"/g).length;
+    const diamonds = svg.match(/<rect class="buyer"/g).length;
+    expect(circles + xs + diamonds).toBe(12);
+  });
+
+  it('lit, amber and dim stars get their class', () => {
+    expect(starTag(svg, 'acxiom')).toMatch(/class="star star--lit"/);
+    expect(starTag(svg, 'spokeo')).toMatch(/class="star star--amber"/);
+    expect(starTag(svg, 'beenverified')).toMatch(/class="star star--dim"/);
+    expect(starTag(svg, 'acxiom')).toMatch(/C6FF00/i);
+    expect(starTag(svg, 'spokeo')).toMatch(/FF9F00/i);
+    expect(starTag(svg, 'beenverified')).toMatch(/3a4256/i);
+  });
+
+  it('a re-check-due star draws dimmer than a freshly filed one', () => {
+    expect(RECHECK_OPACITY).toBe(0.55);
+    expect(starTag(svg, 'spokeo')).toMatch(/class="star star--amber"/);
+    expect(starTag(svg, 'spokeo')).toContain('fill-opacity="0.55"');
+    expect(starTag(svg, 'acxiom')).toMatch(/class="star star--lit"/);
+    expect(starTag(svg, 'acxiom')).not.toMatch(/fill-opacity/);
+  });
+
+  it('only a freshly lit star glows; an amber one does not, and never blooms', () => {
+    const glows = svg.match(/<circle class="glow[^"]*"[^>]*>/g);
+    expect(glows).toHaveLength(3); // acxiom, whitepages, hub-a
+    const [, sx, sy] = at('spokeo');
+    expect(glows.join('')).not.toContain(`cx="${sx}" cy="${sy}"`);
+    const s = render({ newlyLit: new Set(['spokeo']) });
+    expect(starTag(s, 'spokeo')).not.toMatch(/star--new/);
+  });
+
+  it('a no-opt-out star is a magenta ✕', () => {
+    const x = svg.match(/<path class="star-x"[^>]*>/g);
+    expect(x).toHaveLength(1);
+    expect(x[0]).toMatch(/stroke="#FF2D9B"/i);
+    expect(x[0]).toMatch(/d="M[^"]+L[^"]+M[^"]+L[^"]+"/);
+  });
+
+  it('a buyer is a diamond', () => {
+    const d = svg.match(/<rect class="buyer"[^>]*>/g);
+    expect(d).toHaveLength(1);
+    expect(d[0]).toMatch(/stroke="#8a93a6"/);
+    expect(d[0]).toMatch(/fill="none"/);
+    const [, x, y] = at('us-ice');
+    expect(d[0]).toContain(`rotate(45 ${x} ${y})`);
+  });
+
+  it('a frozen star gets the frozen ring', () => {
+    const rings = svg.match(/<circle class="ring-frozen"[^>]*>/g);
+    expect(rings).toHaveLength(1);
+    const [, x, y, r] = at('equifax-information-services');
+    expect(rings[0]).toContain(`cx="${x}" cy="${y}" r="${r + 3}"`);
+    expect(rings[0]).toMatch(/stroke="#00E5FF"/i);
+    expect(rings[0]).toMatch(/stroke-dasharray/);
+  });
+
+  it('a halo star gets a faint halo', () => {
+    const halos = svg.match(/<circle class="halo"[^>]*>/g);
+    expect(halos).toHaveLength(1);
+    const [, x, y, r] = at('criteo');
+    expect(halos[0]).toContain(`cx="${x}" cy="${y}" r="${r + 4}"`);
+    expect(halos[0]).toMatch(/fill="#EDEFF3"/);
+    expect(halos[0]).toMatch(/opacity="0.12"/);
+  });
+
+  it('a halo is never lime', () => {
+    expect(svg.match(/<circle class="halo"[^>]*>/g).join('')).not.toMatch(/C6FF00/i);
+    // Even when the halo star is itself lit.
+    const both = { ...lighting, stars: { ...lighting.stars, criteo: star('lit', '2026-10-01') } };
+    expect(render({ lighting: both }).match(/<circle class="halo"[^>]*>/g).join('')).not.toMatch(/C6FF00/i);
+  });
+
+  it('newly lit stars bloom', () => {
+    const s = render({ newlyLit: new Set(['whitepages', 'acxiom', 'hub-a']) });
+    // Id order: acxiom 0, hub-a 1, whitepages 2.
+    expect(starTag(s, 'acxiom')).toMatch(/class="star star--lit star--new" [^>]*style="animation-delay:0ms"/);
+    expect(starTag(s, 'hub-a')).toMatch(/style="animation-delay:60ms"/);
+    expect(starTag(s, 'whitepages')).toMatch(/style="animation-delay:120ms"/);
+    expect(s.match(/star--new/g).length).toBeGreaterThanOrEqual(3);
+    expect(svg).not.toMatch(/class="star [^"]*star--new/);
+    // A dim star in the set does not bloom.
+    expect(starTag(render({ newlyLit: new Set(['beenverified']) }), 'beenverified')).not.toMatch(/star--new/);
+  });
+
+  it('the bloom delay wraps every 20 stars', () => {
+    const ids = Array.from({ length: 25 }, (_, i) => `s${String(i).padStart(2, '0')}`);
+    const m = { brokers: ids.map((id) => ({ id, name: id, kind: [], optOut: { method: 'web-form' }, hub: false })), links: [] };
+    const l = { stars: Object.fromEntries(ids.map((id) => [id, star('lit', '2026-10-01')])), frozen: [], halo: [] };
+    const lay = { stars: ids.map((id, i) => [id, i * 10, 500, 2]) };
+    const s = constellationSvg({ map: m, layout: lay, lighting: l, newlyLit: new Set(ids) });
+    const delays = [...s.matchAll(/class="star [^"]*" [^>]*style="animation-delay:(\d+)ms"/g)].map((x) => Number(x[1]));
+    expect(delays).toHaveLength(25);
+    expect(delays[19]).toBe(19 * 60);
+    expect(delays[20]).toBe(0);
+    expect(delays[24]).toBe(240);
+  });
+
+  it('keeps the bloom inside a no-preference motion query', () => {
+    const style = svg.match(/<style>([\s\S]*?)<\/style>/)[1];
+    expect(style).toMatch(/@keyframes/);
+    const motion = style.indexOf('@media (prefers-reduced-motion: no-preference)');
+    expect(motion).toBeGreaterThanOrEqual(0);
+    const before = style.slice(0, motion);
+    expect(before).not.toMatch(/@keyframes|animation/);
+  });
+
+  it('the selected star gets a selection ring', () => {
+    expect(svg).not.toMatch(/class="selected"/);
+    const s = render({ selectedId: 'spokeo' });
+    const [, x, y] = at('spokeo');
+    expect(s).toMatch(new RegExp(`<circle class="selected" cx="${x}" cy="${y}"`));
+    expect(render({ selectedId: 'ghost' })).not.toMatch(/class="selected"/);
+  });
+
+  it('draws the layers in order: links, stars, rings and halos, effects, labels', () => {
+    const s = render({ selectedId: 'spokeo', newlyLit: new Set(['acxiom']) });
+    const pos = ['<line class="link"', '<circle class="star', '<circle class="ring-frozen"', '<circle class="halo"', '<circle class="selected"', '<text class="hub-label"']
+      .map((t) => s.indexOf(t));
+    expect(pos.every((p) => p > 0)).toBe(true);
+    expect([...pos].sort((a, b) => a - b)).toEqual(pos);
+  });
+
+  it('links fade with fewer sources and dash only tier C', () => {
+    const lines = svg.match(/<line class="link"[^>]*>/g);
+    expect(lines).toHaveLength(3); // the ghost link is skipped
+    expect(lines[0]).toMatch(/opacity="0.45"/);
+    expect(lines[1]).toMatch(/opacity="0.3"/);
+    expect(lines[2]).toMatch(/opacity="0.6"/);
+    expect(lines[0]).not.toMatch(/dasharray/);
+    expect(lines[1]).not.toMatch(/dasharray/);
+    expect(lines[2]).toMatch(/stroke-dasharray/);
+    const [, x1, y1] = at('hub-a');
+    const [, x2, y2] = at('acxiom');
+    expect(lines[0]).toContain(`x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"`);
+  });
+
+  it('stars missing from the layout or the map are skipped', () => {
+    const lay = { stars: [...layout.stars.filter((s) => s[0] !== 'acxiom'), ['not-in-map', 5, 5, 2]] };
+    const s = constellationSvg({ map, layout: lay, lighting });
+    const marks = s.match(/<circle class="star[ "]|<path class="star-x"|<rect class="buyer"/g).length;
+    expect(marks).toBe(11);
+    expect(s).not.toMatch(/cx="5" cy="5"/);
+    // The link to the missing star goes too.
+    expect(s.match(/<line class="link"/g)).toHaveLength(2);
+    // A broker with no lighting entry still draws, dim.
+    const noLight = { ...lighting, stars: { ...lighting.stars } };
+    delete noLight.stars.tail1;
+    delete noLight.stars['tail-1'];
+    expect(starTag(constellationSvg({ map, layout, lighting: noLight }), 'tail-1')).toMatch(/star--dim/);
+  });
+
+  it('hub labels use the short name', () => {
+    const labels = svg.match(/<text class="hub-label"[^>]*>[^<]*<\/text>/g);
+    expect(labels).toHaveLength(1);
+    expect(labels[0]).toMatch(/>Hub Alpha Holdings<\/text>/);
+    const [, x, y, r] = at('hub-a');
+    const lx = Number(labels[0].match(/ x="([\d.]+)"/)[1]);
+    expect(lx).toBeGreaterThan(x + r);
+    expect(labels[0]).toMatch(/font-size="22"/);
+  });
+
+  it('a long hub name wraps onto two lines', () => {
+    const m = { ...map, brokers: map.brokers.map((b) => (b.id === 'hub-a' ? { ...b, name: 'TransUnion Risk and Alternative Data Solutions, Inc.' } : b)) };
+    const label = constellationSvg({ map: m, layout, lighting }).match(/<text class="hub-label"[^>]*>(.*?)<\/text>/)[1];
+    const parts = [...label.matchAll(/<tspan[^>]*>([^<]*)<\/tspan>/g)].map((x) => x[1]);
+    expect(parts).toEqual(['TransUnion Risk and', 'Alternative Data Solutions']);
+  });
+
+  it('escapes names', () => {
+    const m = { ...map, brokers: map.brokers.map((b) => (b.id === 'hub-a' ? { ...b, name: 'A&B <Data>' } : b)) };
+    expect(constellationSvg({ map: m, layout, lighting })).toContain('>A&amp;B &lt;Data&gt;</text>');
+  });
+
+  it('the SVG carries no links and no broker ids', () => {
+    const s = render({ selectedId: 'spokeo', newlyLit: new Set(['acxiom', 'whitepages']) });
+    expect(s).not.toMatch(/href=|<a\b/);
+    expect(s).not.toMatch(/spokeo/);
+    for (const b of mini.brokers) expect(s, b.id).not.toMatch(new RegExp(`="[^"]*\\b${b.id}\\b`));
+  });
+
+  it('renders the real map in under 200ms in node', () => {
+    const l = brokerLighting(realMap, {}, '2026-10-19');
+    const lit = { ...l, stars: { ...l.stars } };
+    const ids = Object.keys(lit.stars);
+    for (const id of ids.slice(0, 300)) if (lit.stars[id].state === 'dim') lit.stars[id] = star('lit', '2026-10-01');
+    const t0 = performance.now();
+    const s = constellationSvg({ map: realMap, layout: realLayout, lighting: lit, newlyLit: new Set(ids.slice(0, 300)) });
+    const ms = performance.now() - t0;
+    expect(ms).toBeLessThan(200);
+    const marks = s.match(/<circle class="star[ "]|<path class="star-x"|<rect class="buyer"/g).length;
+    expect(marks).toBe(903);
+    expect(s.match(/<text class="hub-label"/g)).toHaveLength(12);
+    expect(s.match(/<line class="link"/g).length).toBeGreaterThan(0);
+    expect(s).not.toMatch(/\bfilter="/);
+  });
+});
+
+// Liz feedback 2026-10-24: "the map is too tiny and I can't tap it" / "or zoom".
+describe('nearestStar', () => {
+  const lay = { stars: [['a', 100, 100, 2], ['b', 110, 100, 2], ['c', 500, 500, 8], 'junk', ['d', NaN, 1, 2]] };
+  it('resolves to the nearest centre, not the uppermost circle', () => {
+    expect(nearestStar(lay, 104, 100, 50)).toBe(0);
+    expect(nearestStar(lay, 106, 101, 50)).toBe(1);
+    expect(nearestStar(lay, 480, 470, 50)).toBe(2);
+  });
+  it('returns -1 beyond maxDist or for an empty layout', () => {
+    expect(nearestStar(lay, 300, 300, 50)).toBe(-1);
+    expect(nearestStar({}, 1, 1, 50)).toBe(-1);
+    expect(nearestStar(lay, 300, 300)).not.toBe(-1);
+  });
+  it('is fast enough to run per tap on the real map', () => {
+    const t0 = performance.now();
+    for (let i = 0; i < 100; i += 1) nearestStar(realLayout, i * 10, 500, 60);
+    expect(performance.now() - t0).toBeLessThan(100);
+  });
+});
+
+describe('zoomViewBox', () => {
+  it('zooms in about a point that stays put', () => {
+    const v = zoomViewBox({ x: 0, y: 0, w: 1000 }, 2, 400, 600);
+    expect(v.w).toBe(500);
+    // (400, 600) sits at the same fraction of the box before and after.
+    expect((400 - v.x) / v.w).toBeCloseTo(0.4);
+    expect((600 - v.y) / v.w).toBeCloseTo(0.6);
+  });
+  it('zooms out and keeps the box on the map', () => {
+    expect(zoomViewBox({ x: 600, y: 600, w: 300 }, 0.5, 900, 900)).toEqual({ x: 300, y: 300, w: 600 });
+    expect(zoomViewBox({ x: 100, y: 100, w: 500 }, 0.1, 0, 0)).toEqual({ x: 0, y: 0, w: 1000 });
+  });
+  it('holds the width to its bounds', () => {
+    expect(zoomViewBox({ x: 0, y: 0, w: 200 }, 10, 100, 100, { minW: 120 }).w).toBe(120);
+    expect(zoomViewBox({ x: 0, y: 0, w: 200 }, 10, 100, 100).w).toBe(100);
+    expect(zoomViewBox({ x: 0, y: 0, w: 800 }, 0.5, 0, 0, { maxW: 900 }).w).toBe(900);
+  });
+  it('a bad factor or point is a no-op about the centre', () => {
+    expect(zoomViewBox({ x: 100, y: 100, w: 400 }, NaN)).toEqual({ x: 100, y: 100, w: 400 });
+    expect(zoomViewBox({ x: 100, y: 100, w: 400 }, 2).w).toBe(200);
+    expect(zoomViewBox({ x: 100, y: 100, w: 400 }, 2).x).toBe(200);
+  });
+});
+
+describe('constellationSvg: tappable and zoomable', () => {
+  const hitsOf = (s) => s.match(/<circle class="star-hit"[^>]*>/g) ?? [];
+  const rOf = (tag) => Number(tag.match(/ r="([\d.]+)"/)[1]);
+
+  it('every drawn star gets a hit circle keyed by its layout index, on top of everything', () => {
+    const s = render({ selectedId: 'spokeo' });
+    const hits = hitsOf(s);
+    expect(hits).toHaveLength(12);
+    const idx = hits.map((h) => Number(h.match(/data-star="(\d+)"/)[1]));
+    expect(idx.sort((a, b) => a - b)).toEqual([...Array(12).keys()]);
+    for (const h of hits) expect(h).toMatch(/fill="transparent" pointer-events="all"/);
+    expect(s.indexOf('<circle class="star-hit"')).toBeGreaterThan(s.lastIndexOf('<text class="hub-label"'));
+    // Only the hit layer takes pointer events.
+    expect(s).toMatch(/\.constellation \.labels\{pointer-events:none\}/);
+  });
+
+  it(`a hit circle is at least ${HIT_PX} CSS px in radius at the drawn scale`, () => {
+    expect(HIT_PX).toBeGreaterThanOrEqual(22);
+    for (const [view, px] of [[{ x: 0, y: 0, w: 1000 }, 343], [{ x: 300, y: 300, w: 330 }, 343], [{ x: 400, y: 400, w: 150 }, 900]]) {
+      const unitsPerPx = view.w / px;
+      for (const h of hitsOf(render({ view, px }))) expect(rOf(h) / unitsPerPx).toBeGreaterThanOrEqual(HIT_PX - 0.01);
+    }
+    // With no px given, it assumes a phone's 343px.
+    for (const h of hitsOf(render())) expect(rOf(h) * (343 / 1000)).toBeGreaterThanOrEqual(HIT_PX - 0.01);
+  });
+
+  it('labels hold a steady on-screen size as the view zooms', () => {
+    const fs = (s) => Number(s.match(/<text class="hub-label"[^>]*font-size="([\d.]+)"/)[1]);
+    const a = render({ view: { x: 0, y: 0, w: 1000 }, px: 343 });
+    const b = render({ view: { x: 300, y: 300, w: 330 }, px: 343 });
+    expect(fs(a) * (343 / 1000)).toBeCloseTo(12, 0);
+    expect(fs(b) * (343 / 330)).toBeCloseTo(12, 0);
+    expect(fs(render())).toBe(22); // unit-sized when the drawn width is unknown
+  });
+
+  it('strokes do not scale with zoom', () => {
+    const style = svg.match(/<style>([\s\S]*?)<\/style>/)[1];
+    for (const cls of ['link', 'star-x', 'buyer', 'ring-frozen', 'selected', 'burst']) {
+      expect(style).toMatch(new RegExp(`\\.${cls}[^{]*\\{[^}]*vector-effect:non-scaling-stroke|\\.${cls},[^{]*\\{vector-effect:non-scaling-stroke`));
+    }
+  });
+
+  it('non-hub stars are named only once zoomed in, and only those in view', () => {
+    expect(render({ px: 343 })).not.toMatch(/class="star-label"/);
+    // Grid stars sit 200 apart from (100, 100); this view covers the four in the top-left corner.
+    const w = 686 / STAR_LABEL_SCALE;
+    const s = render({ view: { x: 80, y: 80, w }, px: 686 });
+    const names = [...s.matchAll(/<text class="star-label"[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]);
+    expect(names).toEqual(['spokeo', 'whitepages', 'lexisnexis-risk-solutions', 'equifax-information-services']);
+    expect(render({ view: { x: 80, y: 80, w: w * 1.2 }, px: 686 })).not.toMatch(/class="star-label"/);
+  });
+
+  it('nothing blocks the browser or the map from zooming', () => {
+    expect(svg).not.toMatch(/touch-action:\s*none/);
+    expect(svg).not.toMatch(/user-scalable/);
+  });
+
+  it('is the night sky over Reclaim City: a sky gradient and one skyline along the bottom of the view', () => {
+    expect(svg).toMatch(/<linearGradient id="rc-sky"/);
+    const sky = render({ view: { x: 200, y: 100, w: 400 } }).match(/<g class="skyline" transform="([^"]+)">([\s\S]*?)<\/g>/);
+    expect(sky[1]).toBe('translate(200 500) scale(0.4)');
+    expect(sky[2].match(/<path/g)).toHaveLength(2);
+    expect(svg.indexOf('class="skyline"')).toBeLessThan(svg.indexOf('class="hub-label"'));
+  });
+});
