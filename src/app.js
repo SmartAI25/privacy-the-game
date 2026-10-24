@@ -292,7 +292,9 @@ function startScreenVisit(route) {
 
 // Scout cheers the player off (goDoIt on the briefing), then the game moves on.
 function cheerThenGo(hash) {
-  const slot = app.querySelector('[data-scout="briefing"]');
+  // A phone shows the Scout slide's sprite, a desktop the sidebar's: cheer with the one on screen.
+  const slots = [...app.querySelectorAll('[data-scout="briefing"]')];
+  const slot = slots.find((el) => el.getClientRects?.().length) || slots[0];
   const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (!slot || still) return navigate(hash);
   leavingBriefing = true;

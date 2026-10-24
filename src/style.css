@@ -405,3 +405,49 @@ img { image-rendering: pixelated; }
   .deck-dot { transition: none; }
 }
 /* deck: end */
+
+/* briefing deck: start */
+/* A mission briefing as slides on a phone (src/screens/briefing.js). At 900px and up the
+   intel and step slides stack back into the two panels they always were, the Scout and last
+   slides hide, and the sidebar shows Scout, THIS LIBERATES and the lore as before. */
+.brief-side { display: flex; }
+.brief-intel { padding: 20px; margin-bottom: 24px; }
+.brief-steps { padding: 20px; margin-bottom: 28px; }
+.brief-scout { display: flex; flex-direction: column; align-items: center; }
+.brief-scout-name { font-family: var(--font-display); font-size: 9px; font-weight: 700; color: var(--cyan); margin-bottom: 16px; letter-spacing: 3px; text-shadow: 0 0 8px rgba(0,229,255,0.4); }
+.brief-scout-bubble { background: rgba(9,11,16,0.6); border: 1px solid rgba(0,229,255,0.15); padding: 14px; width: 100%; font-size: 14px; color: rgba(237,239,243,0.7); line-height: 1.6; font-style: italic; }
+.brief-last { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
+.brief-more { margin-top: 10px; }
+.brief-more > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); min-height: 44px; display: flex; align-items: center; }
+.brief-more[open] > summary { min-height: 0; margin-bottom: 6px; }
+@media (max-width: 899px) {
+  .brief--deck .brief-side { display: none; }
+  .brief-deck > .slide { max-height: calc(100vh - 330px); max-height: calc(100svh - 330px); min-height: 200px; }
+  .brief-deck .brief-intel, .brief-deck .brief-steps { margin-bottom: 0; }
+  /* A later intel or step slide says which panel it continues. */
+  .brief-deck .brief-intel:not(.is-first)::before, .brief-deck .brief-steps:not(.is-first)::before {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+  .brief-deck .brief-intel:not(.is-first)::before { content: 'THREAT INTEL'; color: rgba(0,229,255,0.5); }
+  .brief-deck .brief-steps:not(.is-first)::before { content: 'YOUR MOVE'; color: var(--cyan); margin-bottom: 14px; }
+}
+@media (min-width: 900px) {
+  .brief-scout, .brief-last { display: none; }
+  /* The intel slides are one THREAT INTEL panel, the step slides one YOUR MOVE panel. */
+  .brief-deck .brief-intel:not(.is-last), .brief-deck .brief-steps:not(.is-last) { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+  .brief-deck .brief-intel:not(.is-first) { padding-top: 0; border-top: 0; }
+  .brief-deck .brief-steps:not(.is-first) { padding-top: 14px; border-top: 0; }
+  .brief-deck .brief-steps:not(.is-first):not(.is-last), .brief-deck .brief-steps.is-last:not(.is-first) { box-shadow: none; }
+  /* The rest of the intel shows in full, as it always did. */
+  .brief-more { margin-top: 0; }
+  @supports selector(::details-content) {
+    .brief-more > summary { display: none; }
+    .brief-more::details-content { content-visibility: visible; display: contents; }
+  }
+}
+/* briefing deck: end */
