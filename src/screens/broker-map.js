@@ -21,7 +21,7 @@ const STYLE = `<style>
 #app.map-refresh>*{animation:none}
 .broker-map{padding:0 16px 24px;max-width:960px;margin:0 auto;box-sizing:border-box}
 .broker-map .back-link{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none}
-.broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}
+.broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}.broker-map .map-head .nw{display:inline-block}
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
 .constellation-scout{position:absolute;top:8px;left:8px;right:68px;display:flex;gap:8px;align-items:flex-start;padding:6px 4px 6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px;cursor:default}
 .constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite)}
@@ -183,7 +183,8 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
   const scout = firstVisit
     ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
     : '';
-  return `<h1 class="map-head">${esc(fieldHeader(fieldCoverage(map, lighting)))}</h1>`
+  // Each half keeps to one line, so a phone never breaks "HUBS LIT" from its count.
+  return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting)).split(' · ').map((part) => `<span class="nw">${esc(part)}</span>`).join(' · ')}</h1>`
     + '<p class="map-sub">estimated share of the field your opt-outs reach</p>'
     + `<div class="constellation-wrap${card ? ' has-card' : ''}"><div class="map-col">`
     + `<div class="map-stage" tabindex="-1"${height}>${svg}${scout}<div class="constellation-controls">`

@@ -27,12 +27,15 @@ const fresh = () => createInitialState();
 const draw = (state, opts = {}) => renderBrokerMap(state, { status: 'ready', data, today: T, ...opts });
 const withLines = (state, missionId, lines) => ({ ...state, brokerFiled: { ...(state.brokerFiled ?? {}), [missionId]: { lines, since: '2026-10-01' } } });
 const filedState = () => withLines(fresh(), WF, { spokeo: '2026-10-01', whitepages: '2026-10-01' });
+// The header's text, its no-wrap spans removed.
+const head = (html) => (html.match(/<h1 class="map-head">(.*?)<\/h1>/)?.[1] ?? '').replace(/<[^>]+>/g, '');
 const countNew = (html) => (html.match(/class="star star--lit star--new"/g) ?? []).length;
 
 describe('the map screen', () => {
   const html = draw(fresh());
 
-  it('a new player sees 0% and 0/12', () => expect(html).toContain('FIELD COVERED: 0% · HUBS LIT 0/12'));
+  it('a new player sees 0% and 0/12', () => expect(head(html)).toBe('FIELD COVERED: 0% · HUBS LIT 0/12'));
+  it('neither half of the header breaks across lines', () => expect(html).toMatch(/<span class="nw">FIELD COVERED: 0%<\/span> · <span class="nw">HUBS LIT 0\/12<\/span>/));
   it('labels the number as an estimate', () => expect(html).toContain('estimated share of the field your opt-outs reach'));
   it('has the back link and the SVG', () => {
     expect(html).toContain('href="#/district/reclamation"');
@@ -387,10 +390,9 @@ describe('fix round 1: framing', () => {
 
   it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 63%', () => {
     const h = draw(withLines(fresh(), WF, { spokeo: '2026-10-01' }));
-    expect(h).toContain('FIELD COVERED: &lt;1% · HUBS LIT 0/12');
-    expect(h).not.toContain('FIELD COVERED: 0%');
+    expect(head(h)).toBe('FIELD COVERED: &lt;1% · HUBS LIT 0/12');
     const drop = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), 'yes'));
-    expect(drop).toContain('FIELD COVERED: 63% · HUBS LIT 6/12');
+    expect(head(drop)).toBe('FIELD COVERED: 63% · HUBS LIT 6/12');
   });
 
   it('DROP with "rather not say" has its own line', () => {
