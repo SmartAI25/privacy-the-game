@@ -162,6 +162,24 @@ describe('mergeStaging', () => {
     expect(out.reg).toMatchObject({ url: 'https://example.gov/doc', archived: fresh, accessed: '2026-10-24', kind: 'ftc-complaint' });
   });
 
+  it('a refreshed source is logged as a warning, old to new archived and accessed', async () => {
+    const fresh = 'https://web.archive.org/web/20261024073937/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: fresh, accessed: '2026-10-24' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.warnings).toContain(`source reg refreshed: archived ${src().archived} -> ${fresh}; accessed 2026-10-18 -> 2026-10-24`);
+  });
+
+  it('a re-staged source read earlier than the existing one is rejected and the existing kept', async () => {
+    const old = 'https://web.archive.org/web/20250101000000/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: old, accessed: '2025-01-01' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.sourcesUpdated).toBe(0);
+    expect(r.rejected.some((x) => /source reg: staged accessed 2025-01-01 is older than existing 2026-10-18; existing kept/.test(x.reason))).toBe(true);
+    const out = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8'));
+    expect(out.reg).toEqual(src());
+  });
+
   it('new broker without source is rejected', async () => {
     await setup({ staged: { brokers: [{ id: 'nu', name: 'Nu', kind: ['marketing'], sources: [] }] } });
     const r = await mergeStaging(dir, 'fam');

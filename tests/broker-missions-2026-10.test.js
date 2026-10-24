@@ -167,3 +167,24 @@ describe('the NAI is a signpost, not a bulk opt-out', async () => {
     expect(line.hint).toMatch(/no longer opts you out in one go.*It lights nothing on the map\./);
   });
 });
+
+// Review M5 (2026-10-24): the copy hedges the cookie tool and keeps "about a hundred" tied to the data.
+describe('the WebChoices copy says what the tool can do', async () => {
+  const { DISTRICT_DIALOGUE } = await import('../src/data/dialogue.js');
+  const map = JSON.parse(readFileSync(new URL('../src/data/broker-map.json', import.meta.url), 'utf8'));
+  it('"about a hundred" holds while the DAA sweep has 90-110 members', () => {
+    const copy = everything('ad_trackers-fortify-bulk') + DISTRICT_DIALOGUE.reclamation.facilityIntros.ad_trackers;
+    expect(copy).toMatch(/about a hundred/);
+    expect(mission('ad_trackers-fortify-bulk').title).toBe('Bulk Opt-Out: About 100 Ad Companies');
+    expect(map.sweeps.daa.members.length).toBeGreaterThanOrEqual(90);
+    expect(map.sweeps.daa.members.length).toBeLessThanOrEqual(110);
+  });
+  it('says the tool tries, and that blocking third-party cookies can make it fail', () => {
+    const m = mission('ad_trackers-fortify-bulk');
+    for (const t of [m.briefing, m.scoutDialog.briefing, DISTRICT_DIALOGUE.reclamation.facilityIntros.ad_trackers]) {
+      expect(t).toMatch(/tries/);
+      expect(t).toMatch(/blocks? third-party cookies/);
+    }
+    expect(everything('ad_trackers-fortify-bulk')).not.toMatch(/alternative is government regulation|fear more/);
+  });
+});

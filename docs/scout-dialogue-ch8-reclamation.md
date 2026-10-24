@@ -60,7 +60,7 @@
 >
 > Acxiom — now rebranded as LiveRamp — has profiles on 2.5 billion consumers worldwide. That is not a metaphor for "a lot." That is the literal number they report to investors. Two and a half billion individual behavioral profiles maintained by a single company most people have never heard of.
 >
-> The good news: there is a bulk opt-out. DAA WebChoices opts your browser out of interest-based ads from about a hundred participating companies in one run. The NAI no longer has a one-click tool: its page points you to each member's own opt-out and to a Global Privacy Control extension. And Global Privacy Control — a browser signal supported by Firefox, Brave, and DuckDuckGo — tells every website you visit that you opt out of data sale and sharing. Under California law, businesses must honor it.
+> The good news: there is a bulk opt-out. DAA WebChoices tries to opt your browser out of interest-based ads from about a hundred participating companies in one run, by cookie, so a browser that blocks third-party cookies can make some of them fail. The NAI no longer has a one-click tool: its page points you to each member's own opt-out and to a Global Privacy Control extension. And Global Privacy Control — a browser signal supported by Firefox, Brave, and DuckDuckGo — tells every website you visit that you opt out of data sale and sharing. Under California law, businesses must honor it.
 
 ### Location Data Brokers
 

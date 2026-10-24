@@ -34,7 +34,7 @@ By legal name: `legalKey(name)` against each existing record's `name`, the first
   - cuebiq, datonics, definitive-healthcare, demandbase, dstillery, google, healthlink-dimensions, illumin, index-exchange, kargo-global, liveintent, liveramp
   - loopme, magnite, merkle, nextroll, nexxen, pebblepost, place-exchange, pubmatic, pulsepoint, resonate, samba-tv, semasio, sharethrough
   - sojern, sovrn, stackadapt, taboola, tapad, throtle, triplelift, unacast, videoamp, wunderkind, yieldmo, zeta-global, ziff-davis
-- **17 pins in `build/id-map.json` (`membership`), each with a reason.** Liz's rule (2026-10-19): a new record only for a listed company the registries don't list. So a listing is pinned only on a documented tie. There are three kinds:
+- **19 pins in `build/id-map.json` (`membership`), each with a reason.** Liz's rule (2026-10-19): a new record only for a listed company the registries don't list. So a listing is pinned only on a documented tie. There are five kinds:
   - **Registry DBA (6).** The CA registry snapshot (2026-10-18) lists the record with the list's brand in its "Doing Business As" column. Each was checked against the CSV row:
     - `adelphic` to `viant-us` (Viant US LLC, DBA "Adelphic LLC; Viant Technology LLC")
     - `audigent` to `predictive-pop` (DBA "Audigent")
@@ -42,13 +42,22 @@ By legal name: `legalKey(name)` against each existing record's `name`, the first
     - `inmarket` to `inmarket-media` (DBA "InMarket")
     - `perion` to `hivestack-technologies` (DBA "Perion")
     - `sharethis` to `predactiv` (DBA "ShareThis")
+  - **Registry name (1).** `the-nielsen-marketing-cloud` goes to `nielsen-marketing-cloud`.
+    - The VT registry (2026-10-19) lists "Nielsen Marketing Cloud" (https://www.nielsen.com/).
+    - The CA registry gives "Nielsen Marketing Cloud" as the DBA of both "The Nielsen Company, LLC" and "eXelate, Inc." (www.nielsen.com).
+    - The DAA's "The Nielsen Marketing Cloud" missed the legal-name match only because of the leading "The".
+    - It is pinned to the record registered under that name, not to either CA entity.
+  - **The list's own description (1).** `nielsen` goes to `nielsen-marketing-cloud`. The NAI directory's "Nielsen" entry (https://www.nielsen.com) begins "The Nielsen Marketing Cloud is the first and largest marketplace for privacy friendly targeting data". This listing was earlier collapsed into a new `nielsen` record (review I1).
+  - **Suffix-only difference, same website (1, ruling T1-f).** `eyeota-2` goes to `eyeota-pte`. The CA registry lists "Eyeota Pte Ltd" (https://www.eyeota.com); both lists say "Eyeota" with eyeota.com.
+    - The global SUFFIXES list is unchanged.
+    - The same scan found no other case. `experian-2` ("Experian") is not pinned: Experian plc has no website in the dataset, and the DAA's Experian participant gives tapad.com.
   - **Tier A source on the record (1).** A tier A source (`TIER_A_SOURCE_KINDS`) already on the existing record must name the list's brand as that same company or as its former legal name. The pin's reason quotes the archived line.
     - `lotame` to `lotame-solutions`. Publicis's 2025 URD Note 3 says "in April 2025, 100% of Lotame Solutions, Inc., an independent specialist in data and digital identity solutions" and then calls it "Lotame" in its acquisitions table ("Cash consideration Lotame 122"). The record's archived copy of Note 3 (and of Note 36) is not in the Wayback Machine (see below), so the quote is from a fresh capture: https://web.archive.org/web/20261024073937/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/279/
-  - **Same company on the same website (10).** The NAI directory's website and the DAA participants file's website are the same (or share a registrable domain, as the reason says):
+  - **Same company on the same website (9).** The NAI directory's website and the DAA participants file's website are the same (or share a registrable domain, as the reason says):
     - onto a record that matched the other list by legal name: `kargo` to `kargo-global` (kargo.com), `wunderkind-formerly-bouncex` to `wunderkind` (wunderkind.co);
-    - two listings collapsed into one new record: `adobe-marketing-cloud` to `adobe`, `amazon-ad-system` to `amazon-ads` (amazon.com), `mountain` to `mntn`, `catalina-buyervision` to `catalina` (catalina.com), `the-nielsen-marketing-cloud` to `nielsen`, `outbrain-direct-response-odr-by-teads` to `outbrain`, `beeswax-freewheel` to `freewheel`, `viant-specific-media-vindico` to `viant`.
-- **69 new records:** `kind: ["ad-network"]`, `registries: {}`, `optOut: null`, unknown size, the list(s) as source.
-- **127 records cite a list** (58 existing, 69 new); 47 are on both lists. The DAA sweep has 99 members.
+    - two listings collapsed into one new record: `adobe-marketing-cloud` to `adobe`, `amazon-ad-system` to `amazon-ads` (amazon.com), `mountain` to `mntn`, `catalina-buyervision` to `catalina` (catalina.com), `outbrain-direct-response-odr-by-teads` to `outbrain`, `beeswax-freewheel` to `freewheel`, `viant-specific-media-vindico` to `viant`.
+- **67 new records:** `kind: ["ad-network"]`, `registries: {}`, `optOut: null`, unknown size, the list(s) as source.
+- **127 records cite a list** (60 existing, 67 new); 47 are on both lists. The DAA sweep has 99 members.
 - **REJECTED.json is empty:** the merge rejected nothing.
 - **The merge's three warnings** (dun-and-bradstreet/dun-bradstreet, general-motors-company/general-motors, trans-union/transunion share a legal key) are about existing records and touch no listed company.
 
@@ -63,10 +72,8 @@ These new records look like a company already in the dataset, but the tie is onl
 | `facebook` | Facebook | `meta` (Meta Platforms) | `meta` has no registry row; the alias "Facebook" came from research. Its one tier A source, the FTC's GoodRx complaint (2023), says only "Facebook" and never "Meta" or "Facebook, Inc.", so it doesn't tie the brand to the record |
 | `foursquare` | Foursquare | `foursquare-labs` | Registry DBA columns are empty; the alias came from research; no tier A source on the record (registries and journalism only) |
 | `openx` | OpenX | `openx-technologies` | Registry DBA column is empty; the alias came from research; no tier A source on the record (CA registry and a senator's letter only) |
-| `eyeota-2` | Eyeota | `eyeota`, `eyeota-pte` | Brand only |
 | `freewheel` | FreeWheel; Beeswax/FreeWheel | `freewheel-media` (FreeWheel Media Inc) | Brand only |
 | `medianet` | Media.net | `medianet-advertising-fz` | Brand only |
-| `nielsen` | Nielsen; The Nielsen Marketing Cloud | `nielsen-marketing-cloud`, `the-nielsen`, `exelate` | Brand, nielsen.com |
 | `outbrain` | Outbrain; Outbrain Direct Response (ODR) by Teads | `teads-holding` | outbrain.com |
 | `swoop` | Swoop | `swoopcom` (Swoop.com Inc) | Brand only |
 | `valassis` | Valassis | `valassis-communications`, `valassis-communications-inc-an-rrd` | Brand only |
@@ -84,14 +91,10 @@ Two pairs across the lists have different websites, so they stay two records eac
 
 `ad-network` follows the brief for every new record. Most are ad-tech firms. A few are platforms or publishers that run ad businesses and appear in the WebChoices tool: eBay, LinkedIn, Pinterest, Twitter, Microsoft, Yahoo, Facebook. No existing record had its `kind` changed, the pinned ones included.
 
-## Dead archived copies found (not fixed here)
+## Archived copies refreshed in aed5136
 
-`sources.json` (from the `sec` family) gives these archived copies, and the Wayback Machine has neither (CDX search on 2026-10-24 finds no capture of article/279 or article/328):
-- `sec-publicis-urd-2025-note3` cites https://web.archive.org/web/20261019051839/…/article/279/
-- `sec-publicis-urd-2025-note36` cites https://web.archive.org/web/20261019052021/…/article/328/
-
-Fresh captures exist:
+`sec-publicis-urd-2025-note3` and `sec-publicis-urd-2025-note36` once cited Wayback captures that were never saved (no capture of article/279 or article/328 existed). Commit aed5136 replaced them, in `staging/sec/sources.json` and `sources.json`, with fresh captures checked to hold the cited text:
 - https://web.archive.org/web/20261024073937/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/279/
 - https://web.archive.org/web/20261024074000/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/328/
 
-Correcting them belongs in `staging/sec/sources.json` and a rebuild.
+The Lotame pin quotes the first of these.

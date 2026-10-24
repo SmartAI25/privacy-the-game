@@ -176,6 +176,27 @@ describe('membership pins and sweep-less lists', () => {
   });
 });
 
+describe('staging is reproducible', () => {
+  it('restaging the committed tree reproduces staging/membership exactly', async () => {
+    const ds = join(root, 'research/data-brokers');
+    const lists = (await readdir(join(ds, 'staging/membership/lists'))).filter((f) => f.endsWith('.json')).sort()
+      .map((f) => JSON.parse(readFileSync(join(ds, 'staging/membership/lists', f), 'utf8')));
+    const brokers = (await readdir(join(ds, 'brokers'))).map((f) => JSON.parse(readFileSync(join(ds, 'brokers', f), 'utf8')));
+    const pins = JSON.parse(readFileSync(join(ds, 'build/id-map.json'), 'utf8')).membership;
+    const staged = stageMembers(lists, brokers, { pins });
+    const committed = (await readdir(join(ds, 'staging/membership/brokers'))).sort();
+    expect(staged.brokers.map((b) => `${b.id}.json`).sort()).toEqual(committed);
+    for (const b of staged.brokers) expect(J(b), b.id).toBe(readFileSync(join(ds, 'staging/membership/brokers', `${b.id}.json`), 'utf8'));
+    expect(J(staged.sweeps)).toBe(readFileSync(join(ds, 'build/sweeps.json'), 'utf8'));
+  });
+
+  it('a record sourced only by the lists is not an existing record for matching', () => {
+    const listOnly = broker('acme-ads', 'Acme Ads', { kind: ['ad-network'], sources: ['nai'] });
+    const staged = stageMembers([{ list: 'nai', source: 'nai', members: [{ name: 'Acme Ads' }] }], [listOnly]);
+    expect(staged.brokers[0]).toMatchObject({ id: 'acme-ads', kind: ['ad-network'], registries: {}, optOut: null });
+  });
+});
+
 describe('export sweeps', () => {
   async function fixture({ sweeps } = {}) {
     dir = await mkdtemp(join(tmpdir(), 'sweeps-export-'));

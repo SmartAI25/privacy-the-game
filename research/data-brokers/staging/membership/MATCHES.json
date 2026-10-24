@@ -90,6 +90,11 @@
     "matchedBy": "id"
   },
   {
+    "stagedId": "eyeota-pte",
+    "existingId": "eyeota-pte",
+    "matchedBy": "id"
+  },
+  {
     "stagedId": "google",
     "existingId": "google",
     "matchedBy": "id"
@@ -162,6 +167,11 @@
   {
     "stagedId": "nexxen",
     "existingId": "nexxen",
+    "matchedBy": "id"
+  },
+  {
+    "stagedId": "nielsen-marketing-cloud",
+    "existingId": "nielsen-marketing-cloud",
     "matchedBy": "id"
   },
   {

@@ -94,6 +94,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const { tmpdir } = await import('node:os');
   const stDir = join(datasetDir, 'staging', family);
   const rejected = [];
+  const warnings = [];
   const reject = (item, reason) => rejected.push({ item, reason });
 
   const existingBrokers = await readBrokers(join(datasetDir, 'brokers'));
@@ -150,7 +151,14 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
       // The same document re-staged with a new capture (an old one the Wayback Machine never saved):
       // staging is the truth for its archived copy and the day it was read.
       else if (sources[id].archived !== s.archived || sources[id].accessed !== s.accessed) {
-        mergedSources[id] = { ...sources[id], archived: s.archived, accessed: s.accessed };
+        const cur = sources[id];
+        // Never roll a capture back: a staged copy read before the existing one is a stale checkout.
+        if (s.accessed < cur.accessed) {
+          reject({ source: id, existing: { archived: cur.archived, accessed: cur.accessed }, staged: { archived: s.archived, accessed: s.accessed } }, `source ${id}: staged accessed ${s.accessed} is older than existing ${cur.accessed}; existing kept`);
+          continue;
+        }
+        mergedSources[id] = { ...cur, archived: s.archived, accessed: s.accessed };
+        warnings.push(`source ${id} refreshed: archived ${cur.archived} -> ${s.archived}; accessed ${cur.accessed} -> ${s.accessed}`);
         sourcesUpdated++;
       }
       continue;
@@ -170,7 +178,6 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     keyIds.set(k, [...(keyIds.get(k) ?? []), b.id]);
   }
   // Two existing records with the same legal key: a legal-name match can only go to the first one.
-  const warnings = [];
   for (const [k, ids] of keyIds) if (ids.length > 1) warnings.push(`legalKey "${k}" is shared by existing records ${ids.join(', ')}; a staged record matched by legal name goes to ${byKey.get(k)}`);
   const mapId = (id) => idMap[id] ?? id;
   const resolved = new Map(); // staged id -> canonical id

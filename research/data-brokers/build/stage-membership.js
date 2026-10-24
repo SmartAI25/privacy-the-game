@@ -24,8 +24,12 @@ const addUnique = (arr, x) => { if (!arr.includes(x)) arr.push(x); };
 // Only a list with a `sweep` emits one into sweeps.json; the others source records only.
 // Returns { brokers: staged records sorted by id, sweeps: { <sweep>: { name, source, members } }, matches }.
 export function stageMembers(lists, brokers, { pins = {} } = {}) {
+  // A record whose every source is one of these lists exists only because of an earlier membership merge, so it
+  // is not an existing record here: restaging the committed tree then gives the same staging as the first run.
+  const listSources = new Set(lists.map((l) => l.source));
+  const listOnly = (b) => Array.isArray(b.sources) && b.sources.length > 0 && b.sources.every((x) => listSources.has(typeof x === 'string' ? x : x?.id));
   // Same first-wins order as merge-staging.js, which reads brokers/ sorted by filename.
-  const existing = [...brokers].sort((a, b) => cmp(`${a.id}.json`, `${b.id}.json`));
+  const existing = brokers.filter((b) => !listOnly(b)).sort((a, b) => cmp(`${a.id}.json`, `${b.id}.json`));
   const existingIds = new Set(existing.map((b) => b.id));
   const byKey = new Map();
   for (const b of existing) { const k = legalKey(b.name); if (!byKey.has(k)) byKey.set(k, b.id); }

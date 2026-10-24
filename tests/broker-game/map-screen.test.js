@@ -233,10 +233,10 @@ describe('the map screen', () => {
 describe('the opening view', () => {
   it('opens zoomed in around the player\'s lit stars', () => {
     const l = brokerLighting(map, filedState(), T);
-    const v = initialView(map, layout, l, 2);
+    const v = initialView(map, framing, l, 2);
     expect(v.w).toBeLessThan(600);
     expect(v.h).toBeCloseTo(v.w * 2);
-    const pos = Object.fromEntries(layout.stars.map((s) => [s[0], s]));
+    const pos = Object.fromEntries(framing.stars.map((s) => [s[0], s]));
     for (const id of ['spokeo', 'whitepages']) {
       const [, x, y] = pos[id];
       expect(x).toBeGreaterThanOrEqual(v.x);
