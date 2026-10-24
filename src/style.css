@@ -652,4 +652,18 @@ img { image-rendering: pixelated; }
 .qq-signs[open] { padding-bottom: 12px; }
 .qq-badge { display: inline-block; font-size: 8px; letter-spacing: 1px; color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.15); }
 .qq-desc { margin-top: 6px; font-size: 12px; line-height: 1.5; color: rgba(237,239,243,0.6); }
+/* Surveys on a phone: one question, a chip per account (district.js). */
+.survey-ask { font-size: 14px; line-height: 1.5; color: var(--offwhite); margin-bottom: 10px; }
+.survey-chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.survey-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; font: inherit; font-size: 13px; color: rgba(237,239,243,0.6); background: rgba(255,255,255,0.02); border: 1px solid rgba(237,239,243,0.18); cursor: pointer; overflow-wrap: anywhere; text-align: left; }
+.survey-chip.is-on { color: var(--lime); background: rgba(198,255,0,0.08); border-color: rgba(198,255,0,0.45); }
+.survey-chip:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.survey-chip-mark { display: inline-block; min-width: 10px; font-weight: 700; }
+.survey-chip--soon { opacity: 0.55; cursor: default; }
+.survey-chip-soon { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; }
+/* Scout's district welcome: only its first sentence before MORE on a phone. */
+@media (max-width: 899px) { .intro-lead-more { display: none; } }
+@media (min-width: 900px) { .intro-lead-phone { display: none; } }
+/* A facility's title already names its building: the building's own label hides on a phone. */
+@media (max-width: 899px) { .facility-icon > div > div:last-child { display: none; } }
 /* trim pass: end */

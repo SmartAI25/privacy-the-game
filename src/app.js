@@ -1029,6 +1029,8 @@ app.addEventListener('click', async (e) => {
       setState(toggleAccount(state, id, enabled));
       track('account-toggled', { account: id, enabled });
       renderCurrentRoute();
+      // A survey chip (a button, on a phone) keeps focus across the redraw.
+      if (el.tagName === 'BUTTON') [...app.querySelectorAll(`button[data-action="toggle-account"][data-account="${CSS.escape(id)}"]`)].find((b) => b.offsetParent !== null)?.focus();
     }
   } else if (action === 'toggle-analytics') {
     if (isAnalyticsOff()) {

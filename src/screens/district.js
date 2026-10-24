@@ -15,6 +15,7 @@ import { twoFactorMethod } from '../utils/two-factor.js';
 import { renderPasswordProgress, renderCategoryAsk, renderCategoryQuiet } from '../components/password-progress.js';
 import { neededResets } from '../utils/bursts.js';
 import { checklistFor } from '../data/broker-checklists.js';
+import { splitWords } from '../components/deck.js';
 
 function renderDistrictIntro(state, districtId) {
   const dialogue = DISTRICT_DIALOGUE[districtId];
@@ -58,13 +59,19 @@ export function splitIntro(text) {
 const INTRO_TEXT = 'font-size: 13px; color: rgba(237,239,243,0.7); line-height: 1.7; font-style: italic;';
 const INTRO_LORE = 'font-size: 12px; color: rgba(237,239,243,0.5); line-height: 1.6; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,229,255,0.1);';
 
+// On a phone the lead stops at its first sentence: the rest of the lead opens with MORE,
+// first thing (.intro-lead-phone); from 900px the lead shows whole, as it always did.
 function introBody(dialogue) {
   const { lead, rest } = splitIntro(dialogue.intro);
   const lore = dialogue.introLore ? `<div style="${INTRO_LORE}">${dialogue.introLore}</div>` : '';
   if (!rest && !lore) return `<div style="${INTRO_TEXT}">${dialogue.intro}</div>`;
+  const [first, ...more] = splitWords(lead, 1);
+  const leadMore = more.join('').trim();
+  const summaryLead = leadMore ? `${first.trim()}<span class="intro-lead-more"> ${leadMore}</span>` : lead;
   return `
         <details class="intro-more">
-          <summary style="${INTRO_TEXT}">${lead} <span class="intro-more-toggle"></span></summary>
+          <summary style="${INTRO_TEXT}">${summaryLead} <span class="intro-more-toggle"></span></summary>
+          ${leadMore ? `<div class="intro-lead-phone" style="${INTRO_TEXT} margin-top: 8px;">${leadMore}</div>` : ''}
           ${rest ? `<div style="${INTRO_TEXT} margin-top: 8px;">${rest}</div>` : ''}
           ${lore}
         </details>`;
@@ -304,6 +311,24 @@ function renderMissionList(state, districtId, activeTab) {
   </div>`;
 }
 
+// The one question over a phone's chip grid: what each row asks, of all of them at once.
+export function surveyAsk(questionFn) {
+  return questionFn === haveAccount ? 'Which of these accounts do you have?' : questionFn('any of these');
+}
+
+// On a phone the accounts are chips under one question; each chip is a button, pressed when
+// the account is on, named with its own full question. From 900px, the rows as before.
+function surveyChips(state, districtAccounts, questionFn) {
+  const chips = districtAccounts.map(([id, account]) => {
+    if (!state.accounts[id]) {
+      return `<span class="survey-chip survey-chip--soon" aria-disabled="true">${esc(account.name)} <span class="survey-chip-soon">COMING SOON</span></span>`;
+    }
+    const on = !!state.accounts[id].enabled;
+    return `<button type="button" class="survey-chip${on ? ' is-on' : ''}" data-action="toggle-account" data-account="${id}" aria-pressed="${on}" aria-label="${esc(questionFn(account.name))}"><span class="survey-chip-mark" aria-hidden="true">${on ? '✓' : ''}</span>${esc(account.name)}</button>`;
+  }).join('');
+  return `<div class="phone-only survey-chips"><div class="survey-ask">${esc(surveyAsk(questionFn))}</div><div class="survey-chip-grid">${chips}</div></div><!-- /survey-chips -->`;
+}
+
 function renderSurvey(state, districtId, districtAccounts, allDisabled) {
   const district = DISTRICTS.find((d) => d.id === districtId);
   const questionFn = district?.surveyQuestion || haveAccount;
@@ -337,7 +362,8 @@ function renderSurvey(state, districtId, districtAccounts, allDisabled) {
   <div style="padding: 12px 24px 24px;">
     <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 14px;">INVENTORY SURVEY</div>
     ${allDisabled ? `<div class="panel" style="padding: 14px 16px; margin-bottom: 12px; font-family: var(--font-mono); font-size: 11px; line-height: 1.6; color: rgba(237,239,243,0.5);">All accounts for this district are disabled. Turn any of them back on to start recon.</div>` : ''}
-    ${rows}
+    <div class="desktop-only survey-rows">${rows}</div>
+    ${surveyChips(state, districtAccounts, questionFn)}
     ${district?.askPasswordManager ? renderPasswordManagerQuestion(state) : ''}
     ${customRows}
     <div class="panel" style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; margin-bottom: 8px; margin-top: 16px;">
@@ -474,7 +500,7 @@ function renderFacilitySection(state, facilityId, district) {
     ${connection ? `<div style="padding: 0 24px 6px; font-family: var(--font-mono); font-size: 10px; color: rgba(255,159,0,0.5); letter-spacing: 1px;">↳ ${esc(connection)}</div>` : ''}
     <div class="panel" style="margin: 0 16px; overflow: hidden;">
       <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(26,31,43,0.6); border-bottom: 1px solid rgba(0,229,255,0.1);">
-        ${renderBuilding(facilityId, buildingState, 40)}
+        <span class="facility-icon">${renderBuilding(facilityId, buildingState, 40)}</span>
         <div style="flex: 1; min-width: 0;">
           <div style="font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--offwhite); letter-spacing: 1px;">${esc(account.name)}</div>
           <div style="margin-top: 6px; height: 3px; background: rgba(255,255,255,0.06); overflow: hidden;">

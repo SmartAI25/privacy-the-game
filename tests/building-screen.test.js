@@ -384,7 +384,9 @@ describe('district balance: Scout’s welcome opens with its lead', () => {
   it('the district page shows the lead with MORE, the rest inside, DISMISS kept', () => {
     const html = renderDistrict(createInitialState(), 'master-keys', 'survey');
     expect(html).toContain('<details class="intro-more">');
-    expect(html).toMatch(/<summary[^>]*>Welcome to The Master Keys\. This is where it all starts — and I do mean all of it\. <span class="intro-more-toggle">/);
+    // The whole lead from 900px; on a phone only its first sentence (the rest of it opens first under MORE).
+    expect(html).toMatch(/<summary[^>]*>Welcome to The Master Keys\.<span class="intro-lead-more"> This is where it all starts — and I do mean all of it\.<\/span> <span class="intro-more-toggle">/);
+    expect(html).toMatch(/<div class="intro-lead-phone"[^>]*>This is where it all starts — and I do mean all of it\.<\/div>/);
     expect(html).toContain('Control these and you control the city.');
     expect(html).toContain('data-action="dismiss-intro"');
   });

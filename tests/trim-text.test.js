@@ -93,3 +93,56 @@ describe('Quick Quest: two slides of four tiles on a phone', () => {
     expect(TRIM_CSS).toMatch(/\.qq-go \{[^}]*min-height: 44px/);
   });
 });
+
+describe('surveys: one question and a grid of chips on a phone', async () => {
+  const { renderDistrict, surveyAsk } = await import('../src/screens/district.js');
+  const { ACCOUNTS } = await import('../src/data/accounts.js');
+  const { haveAccount } = await import('../src/data/districts.js');
+  const surveyed = DISTRICTS.filter((d) => d.type !== 'facility' && !d.hasGarage);
+
+  it('the one question says what each row asked', () => {
+    expect(surveyAsk(haveAccount)).toBe('Which of these accounts do you have?');
+    expect(surveyAsk((n) => `Do you use ${n}?`)).toBe('Do you use any of these?');
+    expect(surveyAsk((n) => `Have you registered for ${n}?`)).toBe('Have you registered for any of these?');
+  });
+
+  it('every account is a chip: a button, pressed when on, its full question as its name', () => {
+    for (const d of surveyed) {
+      const s = createInitialState();
+      const html = renderDistrict(s, d.id, 'survey');
+      const grid = html.match(/<div class="phone-only survey-chips">([\s\S]*?)<\/div><!-- \/survey-chips -->/)?.[1] ?? '';
+      expect(grid, d.id).not.toBe('');
+      expect(norm(grid)).toContain(surveyAsk(d.surveyQuestion || haveAccount));
+      const ids = Object.entries(ACCOUNTS).filter(([, a]) => a.district === d.id).map(([id]) => id);
+      for (const id of ids) {
+        const name = ACCOUNTS[id].name;
+        if (!s.accounts[id]) {
+          expect(grid, `${d.id}/${id}`).toMatch(new RegExp(`<span class="survey-chip survey-chip--soon"[^>]*>[^<]*${name.replace(/[()]/g, '\\$&')}`));
+          continue;
+        }
+        const chip = grid.match(new RegExp(`<button type="button" class="survey-chip[^"]*" data-action="toggle-account" data-account="${id}" aria-pressed="(true|false)" aria-label="([^"]*)">`));
+        expect(chip, `${d.id}/${id}`).toBeTruthy();
+        expect(chip[1]).toBe(String(!!s.accounts[id].enabled));
+        expect(decode(chip[2])).toBe((d.surveyQuestion || haveAccount)(name));
+      }
+      // Desktop keeps its rows.
+      expect(html).toContain('<div class="desktop-only survey-rows">');
+    }
+  });
+
+  it("Scout's welcome: on a phone only the first sentence shows before MORE; desktop keeps its lead", () => {
+    const html = renderDistrict(createInitialState(), 'vault', 'survey');
+    const summary = html.match(/<details class="intro-more">\s*<summary[^>]*>([\s\S]*?)<\/summary>/)[1];
+    expect(norm(summary.replace(/<span class="intro-lead-more">[\s\S]*?<\/span>/, ''))).toBe('Welcome to The Vault.');
+    expect(summary).toMatch(/<span class="intro-lead-more"> This is where it gets real/);
+    expect(html).toMatch(/<div class="intro-lead-phone"[^>]*>This is where it gets real/);
+    expect(CSS).toMatch(/@media \(max-width: 899px\)[^@]*\.intro-lead-more \{ display: none; \}/);
+    expect(CSS).toMatch(/@media \(min-width: 900px\)[^@]*\.intro-lead-phone \{ display: none; \}/);
+  });
+
+  it("a facility's title is not said twice on a phone: its building's own label hides there", () => {
+    const html = renderDistrict(createInitialState(), 'reclamation');
+    expect(html).toContain('<span class="facility-icon">');
+    expect(TRIM_CSS).toMatch(/@media \(max-width: 899px\) \{ \.facility-icon > div > div:last-child \{ display: none; \} \}/);
+  });
+});
