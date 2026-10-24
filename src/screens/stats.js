@@ -279,6 +279,7 @@ export function renderStats(state, view = {}) {
     <div class="panel" style="padding: 20px 24px; margin-top: 16px;">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 10px;">PLAY STATS</div>
       ${playStatsText()}
+      <div style="margin-bottom: 8px;"><a href="#/city-together" style="display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; color: #00E5FF; text-decoration: none;">What the game sends, and what it never does &rarr;</a></div>
       <button class="btn-secondary" data-action="toggle-analytics">${isAnalyticsOff() ? 'TURN SHARING ON' : 'TURN SHARING OFF'}</button>
       ${renderDeletionBlock(view.collective, { requireLoaded: true })}
       ${renderNotice(view.notice)}

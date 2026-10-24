@@ -371,6 +371,29 @@ img { image-rendering: pixelated; }
 }
 /* map key: end */
 
+/* city explainer: start */
+/* The Whole City: Scout's explainer, one fact a slide on a phone. The long list of what
+   is sent shows after WHAT THAT IS is opened (the text sits after the <details>, not in
+   it, so on desktop it flows in the paragraph); the 50-player rule is drawn as dots
+   (aria-hidden). From 900px the slides flow as one paragraph, the list shown, as it always did. */
+.explainer-more { margin-top: 8px; }
+.explainer-more > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; cursor: pointer; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.explainer-more > summary::-webkit-details-marker { display: none; }
+.explainer-more > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.explainer-more:not([open]) + .explainer-more-text { display: none; }
+.explainer-more[open] + .explainer-more-text { display: block; margin-top: 8px; }
+.k-dots { display: flex; flex-wrap: wrap; gap: 5px; max-width: 125px; margin-top: 12px; }
+.k-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 4px rgba(0,229,255,0.5); }
+@media (min-width: 900px) {
+  .deck.explainer-deck { display: inline; }
+  .explainer-deck .slide { display: inline; }
+  .explainer-more { display: none; }
+  .explainer-more:not([open]) + .explainer-more-text { display: inline; }
+  .explainer-more[open] + .explainer-more-text { display: inline; margin-top: 0; }
+  .k-dots { display: none; }
+}
+/* city explainer: end */
+
 /* stats: start */
 /* Your City: the three dials and four findings. From 900px, as they always were. */
 .stats-dials { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
