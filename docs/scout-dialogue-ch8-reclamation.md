@@ -326,7 +326,7 @@ The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation
 
 **`opened`** *(once, from the second map visit on)*
 
-> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
+> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry opt-out list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
 
 **`firstHub`** *(once, on a map visit where a hub has newly lit, or a later visit if another line showed then)*
 
@@ -342,7 +342,7 @@ The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation
 
 **`bigCheck`** *(once, on the first Big Check visit)*
 
-> This is the long tail: every broker on the map that none of your missions reaches. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.
+> This is the long tail: every broker on the map your opt-outs haven't reached yet. Where a mission covers one, it points you there. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.
 
 **`nudge`** *(while a filed mission has no recorded lines)*
 

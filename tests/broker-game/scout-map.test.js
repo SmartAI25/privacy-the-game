@@ -9,6 +9,7 @@ import { renderBigCheck } from '../../src/screens/big-check.js';
 import { starCard } from '../../src/components/star-card.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
 import { createInitialState, loadState, saveState } from '../../src/state.js';
+import { isPrivateBreadcrumb } from '../../src/utils/errorNoise.js';
 
 const map = JSON.parse(readFileSync('src/data/broker-map.json', 'utf8'));
 const layout = JSON.parse(readFileSync('src/data/broker-layout.json', 'utf8'));
@@ -48,13 +49,33 @@ describe("Scout's map lines: the copy", () => {
     expect(BROKER_MAP_DIALOGUE.firstVisit).toBe("There's a whole constellation of data brokers up there, trading in what drifted up out of the city. The lit stars are the ones your opt-outs reach. Tap one to see its name.");
   });
   it('the five new lines are the plan\'s copy, verbatim', () => {
-    expect(BROKER_MAP_DIALOGUE.opened).toBe('This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.');
+    expect(BROKER_MAP_DIALOGUE.opened).toBe('This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry opt-out list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.');
     expect(BROKER_MAP_DIALOGUE.firstHub).toBe("That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.");
     expect(BROKER_MAP_DIALOGUE.sweep).toBe("One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.");
     expect(BROKER_MAP_DIALOGUE.noOptOut).toBe("Some of them don't let you leave. When there's no opt-out, a complaint to a regulator still puts it on the record.");
-    expect(BROKER_MAP_DIALOGUE.bigCheck).toBe("This is the long tail: every broker on the map that none of your missions reaches. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.");
+    expect(BROKER_MAP_DIALOGUE.bigCheck).toBe("This is the long tail: every broker on the map your opt-outs haven't reached yet. Where a mission covers one, it points you there. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.");
   });
   it('the keys', () => expect(MAP_SCOUT_KEYS).toEqual(['opened', 'firstHub', 'sweep', 'noOptOut', 'bigCheck']));
+  // The opened line says every star is on a registry or an ad industry opt-out list, or tied to
+  // them by public documents. Each drawn star must have one of those, so the line can't silently
+  // become false on a data release.
+  it("every drawn star backs the opened line's claim", () => {
+    const byId = new Map(map.brokers.map((b) => [b.id, b]));
+    const linked = new Set(map.links.flatMap((k) => [k.from, k.to]));
+    const archived = (s) => typeof s?.archived === 'string' && s.archived.startsWith('https://web.archive.org/');
+    const why = (b) => {
+      if (Object.values(b.registries ?? {}).some((v) => v !== null && v !== '')) return 'registry';
+      if ((b.sources ?? []).some((s) => s?.kind === 'member-list')) return 'member-list';
+      if (linked.has(b.id)) return 'link';
+      if (typeof b.parent === 'string' && byId.has(b.parent)) return 'parent';
+      // A record whose own archived documents put it in the data trade (journalism, filings,
+      // its privacy page). See the Task 3 fix report: these need a copy ruling if not accepted.
+      if ((b.sources ?? []).some((s) => s?.kind !== 'member-list' && archived(s))) return 'documents';
+      return null;
+    };
+    const unbacked = layout.stars.map((s) => s[0]).filter((id) => !byId.has(id) || why(byId.get(id)) === null);
+    expect(unbacked).toEqual([]);
+  });
   it('every line is documented in the chapter 8 dialogue doc', () => {
     const doc = readFileSync('docs/scout-dialogue-ch8-reclamation.md', 'utf8');
     for (const l of Object.values(BROKER_MAP_DIALOGUE)) expect(doc).toContain(l);
@@ -240,6 +261,12 @@ describe('where the lines show', () => {
     expect(draw(createInitialState())).not.toContain('class="constellation-scout"');
   });
 
+  it('a long line never covers most of the sky: the text scrolls inside a capped box, × stays put', () => {
+    const h = draw(createInitialState(), { scoutLine: BROKER_MAP_DIALOGUE.opened });
+    expect(h).toMatch(/\.constellation-scout p\{[^}]*max-height:min\(9em,30svh\)[^}]*overflow-y:auto/);
+    expect(h).toMatch(/\.constellation-scout p\{[^}]*touch-action:pan-y/);
+  });
+
   it("the first visit shows Liz's line, never the opened line", () => {
     const h = draw(createInitialState(), { firstVisit: true, scoutLine: BROKER_MAP_DIALOGUE.opened });
     expect(h).toContain("There's a whole constellation");
@@ -266,7 +293,10 @@ describe('where the lines show', () => {
   it('the Big Check shows its line in a matching bubble on the first visit only', () => {
     const h = renderBigCheck(createInitialState(), { status: 'ready', data, today: T, scoutLine: BROKER_MAP_DIALOGUE.bigCheck });
     expect(h).toContain('This is the long tail');
-    expect(h).toContain('class="constellation-scout big-check-scout"');
+    expect(h).toContain('class="big-check-scout"');
+    expect(h).not.toContain('constellation-scout');
+    expect(h).toMatch(/\.big-check-scout\{[^}]*display:flex/);
+    expect(isPrivateBreadcrumb({ category: 'ui.click', message: 'div.big-check-scout > p' })).toBe(true);
     expect(h.indexOf('This is the long tail')).toBeLessThan(h.indexOf('data-big-check-filter'));
     expect(renderBigCheck(createInitialState(), { status: 'ready', data, today: T })).not.toContain('This is the long tail');
   });

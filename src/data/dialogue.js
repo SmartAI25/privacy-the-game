@@ -437,9 +437,9 @@ export const BROKER_MAP_DIALOGUE = {
   // Plan 3: each shows once per save (utils/broker-scout.js). opened is the first line from the
   // second visit on (the first visit has firstVisit); noOptOut is on the first no-opt-out card;
   // bigCheck is on the first Big Check visit.
-  opened: 'This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.',
+  opened: 'This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry opt-out list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.',
   firstHub: "That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.",
   sweep: "One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.",
   noOptOut: "Some of them don't let you leave. When there's no opt-out, a complaint to a regulator still puts it on the record.",
-  bigCheck: "This is the long tail: every broker on the map that none of your missions reaches. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.",
+  bigCheck: "This is the long tail: every broker on the map your opt-outs haven't reached yet. Where a mission covers one, it points you there. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.",
 };

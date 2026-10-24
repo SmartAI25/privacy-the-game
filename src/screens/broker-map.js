@@ -25,7 +25,8 @@ const STYLE = `<style>
 .broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}.broker-map .map-head .nw{display:inline-block}
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
 .constellation-scout{position:absolute;top:8px;left:8px;right:68px;display:flex;gap:8px;align-items:flex-start;padding:6px 4px 6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px;cursor:default}
-.constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite)}
+/* A long line scrolls inside its box (at most about seven lines), so it never covers most of the sky; the × stays beside it. */
+.constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite);max-height:min(9em,30svh);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.4) transparent}
 .constellation-scout>svg,.constellation-scout>img,.constellation-scout>div{flex-shrink:0}
 .constellation-scout-x{flex-shrink:0;width:44px;height:44px;margin:-6px 0 -6px 0;font-size:22px;color:var(--cyan);background:transparent;border:0;cursor:pointer}
 .constellation-scout-x:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}

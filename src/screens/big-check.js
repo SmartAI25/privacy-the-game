@@ -42,7 +42,7 @@ const STYLE = `<style>
 .big-check-mission-go a{display:inline-flex;align-items:center;min-height:44px;min-width:0}
 .big-check-ticked{font-size:12px;color:var(--lime)}
 .big-check-empty{font-size:13px;color:rgba(237,239,243,0.7)}
-.big-check-scout{display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;padding:6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
+.big-check-scout{display:flex;gap:8px;align-items:flex-start;box-sizing:border-box;margin:0 0 12px;padding:6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
 .big-check-scout p{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
 ${TICK_CSS}
 </style>`;
@@ -70,8 +70,8 @@ function groupHtml(g, map, byId, state) {
   return `<details><summary>${esc(g.label)} · <span data-big-check-count>${ticked}</span>/${g.rows.length}</summary><ul class="big-check-rows">${rows}</ul></details>`;
 }
 
-// Scout's first-visit line, in the same bubble as the map's.
-const scoutBubble = (line) => (line ? `<div class="constellation-scout big-check-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p></div>` : '');
+// Scout's first-visit line, in a bubble that looks like the map's (its own class: in the page's flow).
+const scoutBubble = (line) => (line ? `<div class="big-check-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p></div>` : '');
 
 function loadedView(state, { map }, today, query, scoutLine) {
   const lighting = brokerLighting(map, state, today);
