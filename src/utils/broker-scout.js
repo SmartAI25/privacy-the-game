@@ -12,20 +12,32 @@ const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const seen = (state, key) => isObj(state?.brokerMap) && isObj(state.brokerMap.scout) && state.brokerMap.scout[key] === 1;
 const said = (key) => ({ key, line: BROKER_MAP_DIALOGUE[key] });
 
-// The visit's line: the first unseen of opened, firstHub (a newly lit star is a hub) and sweep
-// (ten or more newly lit through DROP). app.js never asks on a first visit: Liz's firstVisit
-// line shows then, so opened is the first line from the second visit on.
-export function mapScoutLine(state, map, lighting, newlyLit) {
-  if (!seen(state, 'opened')) return said('opened');
+const scoutValue = (state, key) => (isObj(state?.brokerMap) && isObj(state.brokerMap.scout) ? state.brokerMap.scout[key] : undefined);
+
+// The map lines whose trigger fires on this visit and that aren't seen yet: firstHub (a newly lit
+// star is a hub) and sweep (ten or more newly lit through DROP). opened needs no trigger.
+export function mapScoutTriggers(state, map, lighting, newlyLit) {
   const fresh = newlyLit instanceof Set ? newlyLit : new Set(newlyLit ?? []);
   const brokers = Array.isArray(map?.brokers) ? map.brokers : [];
-  if (!seen(state, 'firstHub') && brokers.some((b) => b?.hub === true && fresh.has(b.id))) return said('firstHub');
+  const out = [];
+  if (!seen(state, 'firstHub') && brokers.some((b) => b?.hub === true && fresh.has(b.id))) out.push('firstHub');
   if (!seen(state, 'sweep')) {
     let n = 0;
     for (const id of fresh) if (Array.isArray(lighting?.stars?.[id]?.via) && lighting.stars[id].via.includes('drop')) n++;
-    if (n >= SWEEP_MIN) return said('sweep');
+    if (n >= SWEEP_MIN) out.push('sweep');
   }
-  return null;
+  return out;
+}
+
+// The visit's line: in MAP_SCOUT_KEYS order, the first unseen line that is triggered now or pending
+// (opened always qualifies until seen). One per visit; app.js marks the other triggered lines
+// pending (markScoutPending) and this one seen. app.js never asks on a first visit: Liz's
+// firstVisit line shows then, so opened is the first line from the second visit on.
+export function mapScoutLine(state, map, lighting, newlyLit) {
+  if (!seen(state, 'opened')) return said('opened');
+  const now = mapScoutTriggers(state, map, lighting, newlyLit);
+  const key = ['firstHub', 'sweep'].find((k) => !seen(state, k) && (now.includes(k) || scoutValue(state, k) === 0));
+  return key ? said(key) : null;
 }
 
 // The first card opened for a no-opt-out star.

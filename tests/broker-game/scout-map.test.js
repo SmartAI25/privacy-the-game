@@ -2,8 +2,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { BROKER_MAP_DIALOGUE } from '../../src/data/dialogue.js';
-import { MAP_SCOUT_KEYS, mapScoutLine, cardScoutLine, bigCheckScoutLine } from '../../src/utils/broker-scout.js';
-import { markScoutSeen, cleanBrokerState, markMapSeen } from '../../src/utils/broker-state.js';
+import { MAP_SCOUT_KEYS, mapScoutLine, mapScoutTriggers, cardScoutLine, bigCheckScoutLine } from '../../src/utils/broker-scout.js';
+import { markScoutSeen, markScoutPending, cleanBrokerState, markMapSeen } from '../../src/utils/broker-state.js';
 import { renderBrokerMap } from '../../src/screens/broker-map.js';
 import { renderBigCheck } from '../../src/screens/big-check.js';
 import { starCard } from '../../src/components/star-card.js';
@@ -112,6 +112,70 @@ describe('mapScoutLine', () => {
   });
 });
 
+// Ruling T3-b: a line whose trigger fires but isn't the one shown is pending (0) and shows later.
+describe('pending lines (ruling T3-b)', () => {
+  // What app.js does on a map visit: pick the line, mark the other triggered lines pending, mark the
+  // shown line seen, save, reload.
+  const visit = (state, m, l, fresh) => {
+    const got = mapScoutLine(state, m, l, fresh);
+    let next = markScoutPending(state, mapScoutTriggers(state, m, l, fresh).filter((k) => k !== got?.key));
+    if (got) next = markScoutSeen(next, got.key);
+    saveState(next);
+    return { got, state: loadState() };
+  };
+
+  it('triggers: firstHub for a newly lit hub, sweep for ten DROP stars; never opened', () => {
+    const s = createInitialState();
+    expect(mapScoutTriggers(s, sky, skyLighting, new Set(['hub', ...drops(10)]))).toEqual(['firstHub', 'sweep']);
+    expect(mapScoutTriggers(s, sky, skyLighting, new Set(drops(9)))).toEqual([]);
+    expect(mapScoutTriggers(seen(s, 'firstHub'), sky, skyLighting, new Set(['hub', ...drops(10)]))).toEqual(['sweep']);
+  });
+
+  it('a DROP-yes filing after opened is seen shows firstHub now and sweep on the next visit', () => {
+    let s = { ...seen(createInitialState(), 'opened'), caResident: 'yes', brokerFiled: { 'people_search-reclaim-stragglers': { lines: { drop: '2026-10-01' }, since: '2026-10-01' } } };
+    s = markMapSeen(s, []);
+    const l = brokerLighting(map, s, T);
+    const fresh = new Set(Object.keys(l.stars).filter((id) => ['lit', 'amber'].includes(l.stars[id].state)));
+    let v = visit(s, map, l, fresh);
+    expect(v.got.key).toBe('firstHub');
+    expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 1, sweep: 0 });
+    // The next visit: nothing newly lit, but sweep was pending.
+    v = visit(v.state, map, l, new Set());
+    expect(v.got).toEqual({ key: 'sweep', line: BROKER_MAP_DIALOGUE.sweep });
+    v = visit(v.state, map, l, new Set());
+    expect(v.got).toBeNull();
+    expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 1, sweep: 1 });
+  });
+
+  it('a pending line survives a JSON reload and still shows after opened', () => {
+    // Second visit: opened shows, the hub and sweep go pending.
+    let v = visit(seen(createInitialState()), sky, skyLighting, new Set(['hub', ...drops(12)]));
+    expect(v.got.key).toBe('opened');
+    expect(v.state.brokerMap.scout).toEqual({ opened: 1, firstHub: 0, sweep: 0 });
+    expect(JSON.parse(JSON.stringify(v.state)).brokerMap.scout.firstHub).toBe(0);
+    v = visit(v.state, sky, skyLighting, new Set());
+    expect(v.got.key).toBe('firstHub');
+    v = visit(v.state, sky, skyLighting, new Set());
+    expect(v.got.key).toBe('sweep');
+    expect(visit(v.state, sky, skyLighting, new Set(['hub', ...drops(12)])).got).toBeNull();
+  });
+
+  it('markScoutPending never un-sees a line, and ignores unknown keys', () => {
+    const s = seen(createInitialState(), 'sweep');
+    expect(markScoutPending(s, ['sweep'])).toBe(s);
+    expect(markScoutPending(s, ['nope', '__proto__'])).toBe(s);
+    expect(markScoutPending(s, []).brokerMap.scout).toEqual({ sweep: 1 });
+    expect(markScoutPending(s, ['firstHub']).brokerMap.scout).toEqual({ sweep: 1, firstHub: 0 });
+  });
+
+  it('cleanBrokerState keeps 0 and 1, drops anything else', () => {
+    const ok = { brokerMap: { scout: { opened: 1, sweep: 0 } } };
+    expect(cleanBrokerState(ok)).toBe(ok);
+    expect(cleanBrokerState({ brokerMap: { scout: { opened: 1, sweep: 2, firstHub: -0.5, noOptOut: '0', bigCheck: null, nope: 0 } } }))
+      .toEqual({ brokerMap: { scout: { opened: 1 } } });
+  });
+});
+
 describe('the event lines', () => {
   const l = brokerLighting(map, createInitialState(), T);
   it('noOptOut shows for a no-opt-out star until seen', () => {
@@ -145,7 +209,7 @@ describe('markScoutSeen and the save', () => {
   it('cleanBrokerState keeps a valid scout object and drops junk', () => {
     const ok = { brokerMap: { seenLit: ['a'], scout: { opened: 1, bigCheck: 1 } } };
     expect(cleanBrokerState(ok)).toBe(ok);
-    expect(cleanBrokerState({ brokerMap: { seenLit: ['a'], scout: { opened: 1, nope: 1, sweep: 'yes', firstHub: 0 } } }))
+    expect(cleanBrokerState({ brokerMap: { seenLit: ['a'], scout: { opened: 1, nope: 1, sweep: 'yes', firstHub: 3 } } }))
       .toEqual({ brokerMap: { seenLit: ['a'], scout: { opened: 1 } } });
     expect(cleanBrokerState({ brokerMap: { seenLit: ['a'], scout: ['opened'] } })).toEqual({ brokerMap: { seenLit: ['a'] } });
     expect(cleanBrokerState({ brokerMap: { scout: null } })).toEqual({ brokerMap: {} });
@@ -218,5 +282,10 @@ describe('app wiring (source checks)', () => {
   });
   it('the first visit never computes a map line (Liz\'s line shows instead)', () => {
     expect(src).toMatch(/mapFirstVisit \? null : mapScoutLine\(/);
+  });
+  it('lines triggered but not shown are marked pending with the seen mark', () => {
+    const after = src.slice(src.indexOf('function afterBrokerMapRender('), src.indexOf('function tapSky('));
+    expect(after).toMatch(/markScoutPending\(/);
+    expect(src).toMatch(/mapScoutTriggers\(/);
   });
 });

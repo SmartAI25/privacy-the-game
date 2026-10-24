@@ -29,8 +29,8 @@ import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-dat
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling, markMapSeen, markScoutSeen, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
-import { mapScoutLine, cardScoutLine, bigCheckScoutLine } from './utils/broker-scout.js';
+import { applyChecklistFiling, markMapSeen, markScoutSeen, markScoutPending, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
+import { mapScoutLine, mapScoutTriggers, cardScoutLine, bigCheckScoutLine } from './utils/broker-scout.js';
 import { brokerLighting } from './utils/broker-lighting.js';
 import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
@@ -86,6 +86,8 @@ let mapScoutDismissed = false;
 // the map's { key, line }, the card's { id, line } and the Big Check's line. Each is marked seen in
 // the save after the render that showed it, so a reload never repeats it.
 let mapScout = null;
+// This visit's triggered map lines that aren't the one shown: saved as pending (ruling T3-b).
+let mapScoutPending = [];
 let cardScout = null;
 let bigCheckScout = null;
 let editingResidency = false;
@@ -154,6 +156,7 @@ const screens = {
         mapFirstVisit = !Array.isArray(state.brokerMap?.seenLit);
         // The first visit has Liz's line; the one-time lines start from the second.
         mapScout = mapFirstVisit ? null : mapScoutLine(state, data.map, lighting, newlyLit);
+        mapScoutPending = mapScoutTriggers(state, data.map, lighting, newlyLit).filter((k) => k !== mapScout?.key);
       }
       if (!view && mapStage) view = initialView(data.map, data.layout, lighting, mapStage.h / mapStage.w);
     }
@@ -271,6 +274,7 @@ function startScreenVisit(route) {
     mapFirstVisit = false;
     mapScoutDismissed = false;
     mapScout = null;
+    mapScoutPending = [];
     cardScout = null;
     mapVisitPending = true;
   }
@@ -314,6 +318,8 @@ function afterBrokerMapRender(renderFn, params) {
     const data = brokerData();
     let seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
     // This draw showed the visit's one-time line (if any): it never shows on a later visit.
+    // The other lines this visit triggered wait for a later visit.
+    seen = markScoutPending(seen, mapScoutPending);
     if (mapScout) seen = markScoutSeen(seen, mapScout.key);
     setState(seen);
     mapVisitPending = false;

@@ -7,7 +7,8 @@ import { checklistFor, LEGACY_ALL_ANSWERS } from '../data/broker-checklists.js';
 
 export const RESIDENCY = ['yes', 'no', 'unsaid'];
 
-// Scout's one-time lines on the field map (broker-scout.js); brokerMap.scout[key] = 1 once shown.
+// Scout's one-time lines on the field map (broker-scout.js): brokerMap.scout[key] is 1 once shown,
+// 0 while pending (its trigger fired on a visit that showed another line; ruling T3-b).
 export const MAP_SCOUT_KEYS = Object.freeze(['opened', 'firstHub', 'sweep', 'noOptOut', 'bigCheck']);
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -78,7 +79,7 @@ export function cleanBrokerState(state) {
   return changed ? next : state;
 }
 
-// seenLit is a list of ids; scout keeps only known keys set to 1.
+// seenLit is a list of ids; scout keeps only known keys set to 0 (pending) or 1 (seen).
 function cleanBrokerMap(bm) {
   let out = bm;
   const set = (key, value) => {
@@ -94,7 +95,7 @@ function cleanBrokerMap(bm) {
     if (!isObj(bm.scout)) set('scout', undefined);
     else {
       const scout = {};
-      for (const k of MAP_SCOUT_KEYS) if (Object.hasOwn(bm.scout, k) && bm.scout[k] === 1) scout[k] = 1;
+      for (const k of MAP_SCOUT_KEYS) if (Object.hasOwn(bm.scout, k) && (bm.scout[k] === 0 || bm.scout[k] === 1)) scout[k] = bm.scout[k];
       if (Object.keys(scout).length !== Object.keys(bm.scout).length) set('scout', scout);
     }
   }
@@ -109,6 +110,19 @@ export function markScoutSeen(state, key) {
   const scout = isObj(prev.scout) ? prev.scout : {};
   if (scout[key] === 1) return state;
   return { ...state, brokerMap: { ...prev, scout: { ...scout, [key]: 1 } } };
+}
+
+// Lines whose trigger fired on a visit that showed another line: pending (0), so a later visit shows
+// them. A seen line stays seen; unknown keys are ignored.
+export function markScoutPending(state, keys) {
+  const todo = (Array.isArray(keys) ? keys : []).filter((k) => MAP_SCOUT_KEYS.includes(k));
+  const prev = isObj(state?.brokerMap) ? state.brokerMap : {};
+  const scout = isObj(prev.scout) ? prev.scout : {};
+  const add = todo.filter((k) => scout[k] !== 1 && scout[k] !== 0);
+  if (!add.length) return state;
+  const next = { ...scout };
+  for (const k of add) next[k] = 0;
+  return { ...state, brokerMap: { ...prev, scout: next } };
 }
 
 // The map's lit stars the player has already seen bloom. A save whose brokerMap isn't a plain
