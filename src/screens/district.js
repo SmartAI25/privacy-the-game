@@ -1,4 +1,4 @@
-import { DISTRICTS } from '../data/districts.js';
+import { DISTRICTS, haveAccount } from '../data/districts.js';
 import { ACCOUNTS } from '../data/accounts.js';
 import { getMissionsForDistrict, missionDistrict } from '../data/missions.js';
 import { calcDistrictProgress, getAccountPhaseGate, getBuildingState } from '../utils/calc.js';
@@ -306,7 +306,7 @@ function renderMissionList(state, districtId, activeTab) {
 
 function renderSurvey(state, districtId, districtAccounts, allDisabled) {
   const district = DISTRICTS.find((d) => d.id === districtId);
-  const questionFn = district?.surveyQuestion || ((name) => `Do you have a ${name} account?`);
+  const questionFn = district?.surveyQuestion || haveAccount;
 
   const rows = districtAccounts
     .map(([id, account]) => {

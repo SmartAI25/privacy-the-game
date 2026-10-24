@@ -22,20 +22,20 @@ export function ringChart({ fraction, color, glow, track, value, unit }) {
   const clamped = Math.min(1, Math.max(0, fraction));
   const offset = RING_CIRCUMFERENCE * (1 - clamped);
   return `
-  <div style="position: relative; width: ${RING_SIZE}px; height: ${RING_SIZE}px; margin: 0 auto 14px;">
-    <svg width="${RING_SIZE}" height="${RING_SIZE}" viewBox="0 0 ${RING_SIZE} ${RING_SIZE}" style="transform: rotate(-90deg);">
+  <div class="stat-ring" style="position: relative; width: 100%; max-width: ${RING_SIZE}px; aspect-ratio: 1 / 1; margin: 0 auto 14px;">
+    <svg width="100%" height="100%" viewBox="0 0 ${RING_SIZE} ${RING_SIZE}" style="display: block; transform: rotate(-90deg);">
       <circle cx="60" cy="60" r="${RING_RADIUS}" fill="none" stroke="${track}" stroke-width="8"/>
       <circle cx="60" cy="60" r="${RING_RADIUS}" fill="none" stroke="${color}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${RING_CIRCUMFERENCE}" stroke-dashoffset="${offset}" style="filter: drop-shadow(0 0 6px ${glow});"/>
     </svg>
     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-      <div style="font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: ${color}; text-shadow: 0 0 10px ${glow};">${value}${unit ? `<span style="font-size: 13px; color: rgba(237,239,243,0.35);">${unit}</span>` : ''}</div>
+      <div class="stat-ring-value" style="font-family: var(--font-mono); font-weight: 700; color: ${color}; text-shadow: 0 0 10px ${glow};">${value}${unit ? `<span style="font-size: 13px; color: rgba(237,239,243,0.35);">${unit}</span>` : ''}</div>
     </div>
   </div>`;
 }
 
 function statCard({ label, labelColor, border, content }) {
   return `
-  <div class="panel" style="flex: 1 1 240px; padding: 24px; text-align: center; border-color: ${border};">
+  <div class="panel stat-dial" style="border-color: ${border};">
     ${content}
     <div style="font-family: var(--font-display); font-size: 8px; font-weight: 600; color: ${labelColor}; letter-spacing: 2px;">${label}</div>
   </div>`;
@@ -62,7 +62,7 @@ function districtRow(state, district) {
 
 function findingCard({ label, value, color, tint }) {
   return `
-  <div class="panel" style="flex: 1 1 160px; text-align: center; padding: 16px 12px; border-color: ${tint};">
+  <div class="panel stat-finding" style="border-color: ${tint};">
     <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: ${color}; text-shadow: 0 0 8px ${tint};">${value}</div>
     <div style="font-family: var(--font-display); font-size: 8px; font-weight: 600; letter-spacing: 2px; color: rgba(237,239,243,0.4); margin-top: 6px;">${label}</div>
   </div>`;
@@ -222,7 +222,7 @@ export function renderStats(state, view = {}) {
     <a href="#/city-together" style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; color: #00E5FF; text-decoration: none;">THE WHOLE CITY →</a>
   </div>
   <div style="padding: 20px 24px 32px;">
-    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+    <div class="stats-dials">
       ${statCard({
         label: 'INTEGRITY',
         labelColor: 'rgba(198,255,0,0.5)',
@@ -254,8 +254,8 @@ export function renderStats(state, view = {}) {
         labelColor: 'rgba(255,159,0,0.5)',
         border: 'rgba(255,159,0,0.1)',
         content: `
-        <div style="height: ${RING_SIZE}px; margin: 0 auto 14px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <div style="font-family: var(--font-mono); font-size: 40px; font-weight: 700; color: #FF9F00; line-height: 1; text-shadow: 0 0 15px rgba(255,159,0,0.3);">${state.streak.current}d</div>
+        <div class="stat-streak" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="stat-streak-value" style="font-family: var(--font-mono); font-weight: 700; color: #FF9F00; line-height: 1; text-shadow: 0 0 15px rgba(255,159,0,0.3);">${state.streak.current}d</div>
           <div style="font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.35); margin-top: 6px; letter-spacing: 1px;">BEST ${state.streak.best}d</div>
         </div>`,
       })}
@@ -268,7 +268,7 @@ export function renderStats(state, view = {}) {
     </div>
     <div class="panel" style="padding: 20px 24px;">
       <div class="section-label" style="color: rgba(0,229,255,0.4); margin-bottom: 16px;">FINDINGS LOG</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+      <div class="stats-findings">
         ${findingCard({ label: 'ADDRESSES IN A BREACH', value: findings.breachesFound, color: '#FF2D9B', tint: 'rgba(255,45,155,0.1)' })}
         ${findingCard({ label: 'PASSWORDS RESET', value: findings.passwordsReset, color: '#00E5FF', tint: 'rgba(0,229,255,0.1)' })}
         ${findingCard({ label: '2FA ENABLED', value: findings.twoFactorEnabled, color: '#C6FF00', tint: 'rgba(198,255,0,0.1)' })}

@@ -89,7 +89,6 @@ function renderPlatformCard(state, platform) {
       ${renderBuilding(platform.id, bState, 48)}
       <div style="flex: 1;">
         <div style="font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--offwhite); letter-spacing: 1px;">${esc(platform.name)}</div>
-        <div style="font-size: 11px; color: rgba(237,239,243,0.4); margin-top: 3px;">Tell us about your history here to plan your review.</div>
       </div>
       <span data-action="edit-social-profile" data-platform="${platform.id}" style="cursor: pointer; font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #00E5FF; padding: 8px 16px; border: 1px solid rgba(0,229,255,0.3); background: rgba(0,229,255,0.08); box-shadow: 0 0 10px rgba(0,229,255,0.1);">SET UP</span>
     </div>
@@ -185,6 +184,7 @@ export function renderTimeline(state) {
           <div style="font-size: 13px; color: rgba(237,239,243,0.65); line-height: 1.6;">Tell us when you joined each platform and how active you were. We'll break your review into right-sized chunks — heavy years get their own missions, quiet years get grouped together. <strong style="color: var(--cyan);">No rushing.</strong></div>
         </div>
       ` : ''}
+      ${unconfigured > 0 ? `<div data-setup-note style="font-size: 11px; color: rgba(237,239,243,0.4); margin-bottom: 10px;">Tell us about your history here to plan your review.</div>` : ''}
       ${cards}
       <div id="social-form-container"></div>
     </div>

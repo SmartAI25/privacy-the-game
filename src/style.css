@@ -358,6 +358,43 @@ img { image-rendering: pixelated; }
   }
 }
 
+/* map key: start */
+/* The broker map's legend: behind a KEY tap on phones, shown open from 900px. */
+.map-key { margin: 14px 0 4px; }
+.map-key > summary { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
+.map-key > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.map-key[open] .map-legend { margin-top: 10px; }
+@media (min-width: 900px) {
+  @supports selector(::details-content) {
+    .map-key > summary { display: none; }
+    .map-key::details-content { content-visibility: visible; display: contents; }
+    .map-key .map-legend { margin-top: 0; }
+  }
+}
+/* map key: end */
+
+/* stats: start */
+/* Your City: the three dials and four findings. From 900px, as they always were. */
+.stats-dials { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.stat-dial { flex: 1 1 240px; padding: 24px; text-align: center; }
+.stat-ring-value { font-size: 26px; }
+.stat-streak { height: 120px; margin: 0 auto 14px; }
+.stat-streak-value { font-size: 40px; }
+.stats-findings { display: flex; flex-wrap: wrap; gap: 16px; }
+.stat-finding { flex: 1 1 160px; text-align: center; padding: 16px 12px; }
+@media (max-width: 899px) {
+  /* Three dials in one row, four findings in a 2x2 grid: the same words, drawn tighter. */
+  .stats-dials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stats-dials .stat-dial { padding: 12px 4px; min-width: 0; }
+  .stats-dials .stat-ring { margin-bottom: 8px; }
+  .stat-ring-value { font-size: 20px; }
+  .stat-streak { height: auto; aspect-ratio: 1 / 1; max-width: 120px; margin-bottom: 8px; }
+  .stat-streak-value { font-size: 28px; }
+  .stats-findings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .stats-findings .stat-finding { min-width: 0; padding: 12px 6px; overflow-wrap: anywhere; }
+}
+/* stats: end */
+
 /* deck: start */
 /* A slide deck for phones (src/components/deck.js): a scroll-snap row under 900px,
    ordinary stacked blocks at 900px and up. */

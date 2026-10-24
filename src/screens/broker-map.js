@@ -75,7 +75,9 @@ const STYLE = `<style>
 .residency-btn{min-height:44px;padding:0 16px}
 .map-left{list-style:none;margin:0;padding:0}
 .map-left li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
-.map-left .none{display:block;font-size:11px;color:rgba(237,239,243,0.45)}
+.map-whats-left .none{display:block;margin:0 0 4px;font-size:11px;color:rgba(237,239,243,0.45)}
+.map-whats-left .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0}
+.map-left .none-mark{margin-left:4px;color:rgba(237,239,243,0.45)}
 .map-left a{display:inline-flex;align-items:center;min-height:44px}
 .map-big-check{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:var(--cyan);text-decoration:none}
 .map-big-check:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
@@ -133,14 +135,19 @@ function nudgeBlock(pending) {
   return `<div class="map-panel map-nudge"><div>${esc(BROKER_MAP_DIALOGUE.nudge)}</div><ul style="margin: 6px 0 0; padding-left: 18px;">${links}</ul></div>`;
 }
 
+// The no-mission sentence is said once, above the list; each row it applies to carries a mark.
+const NO_MISSION = 'No mission covers this one yet: file with them, then tick it in the Big Check';
+const NONE_MARK = '<span class="none-mark" aria-hidden="true">*</span>';
+
 function leftBlock(rows) {
   const items = rows.map((r) => {
     const text = `${esc(r.name)} · reach ${r.reach}`;
     return r.mission
       ? `<li><a href="#/mission/${esc(r.mission)}/briefing">${text}</a></li>`
-      : `<li><a href="${BIG_CHECK_HASH}">${text}</a><span class="none">No mission covers this one yet: file with them, then tick it in the Big Check</span></li>`;
+      : `<li><a href="${BIG_CHECK_HASH}">${text}<span class="sr-only"> (no mission yet)</span>${NONE_MARK}</a></li>`;
   }).join('');
-  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`
+  const note = rows.some((r) => !r.mission) ? `<span class="none">${NONE_MARK} ${NO_MISSION}</span>` : '';
+  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div>${note}<ul class="map-left">${items}</ul></div>`
     + `<a class="map-big-check" href="${BIG_CHECK_HASH}">THE BIG CHECK →</a>`;
 }
 
@@ -211,7 +218,7 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
     + `<p class="constellation-pick" aria-live="polite">${selected ? esc(shortName(selected.name)) : ''}</p>`
     + starList(map, layout, lighting, selectedId, listOpen)
     + `</div>${card}</div>`
-    + `<ul class="map-legend">${LEGEND.filter(([, , needs]) => needs !== 'sweeps' || hasSweepMembers(map)).map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul>`
+    + `<details class="map-key"><summary>KEY</summary><ul class="map-legend">${LEGEND.filter(([, , needs]) => needs !== 'sweeps' || hasSweepMembers(map)).map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul></details>`
     + nudgeBlock(lighting.pending)
     + residencyBlock(state, editingResidency)
     + dropBlock(lighting.drop, state.caResident)

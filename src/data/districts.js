@@ -1,3 +1,9 @@
+// "Do you have an Outlook account?", "Do you have an Investment Account?": the right article, "account" once.
+export const haveAccount = (name) => {
+  const noun = /\baccount$/i.test(name) ? name : `${name} account`;
+  return `Do you have ${/^[aeiou]/i.test(noun) ? 'an' : 'a'} ${noun}?`;
+};
+
 export const DISTRICTS = [
   {
     id: 'master-keys',
@@ -6,7 +12,7 @@ export const DISTRICTS = [
     chapter: 1,
     description: 'Email & Identity Providers — the foundation everything else sits on',
     flavor: 'Secure this first or nothing else matters.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
     askPasswordManager: true,
   },
   {
@@ -16,7 +22,7 @@ export const DISTRICTS = [
     chapter: 2,
     description: 'Financial — banks, payment apps, investments',
     flavor: 'Your money lives here.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
   },
   {
     id: 'square',
@@ -43,7 +49,7 @@ export const DISTRICTS = [
     chapter: 5,
     description: 'Shopping & streaming',
     flavor: 'Lower stakes but real attack surface — stored payment methods, your address.',
-    surveyQuestion: (name) => `Do you have a ${name} account?`,
+    surveyQuestion: haveAccount,
   },
   {
     id: 'capitol',
