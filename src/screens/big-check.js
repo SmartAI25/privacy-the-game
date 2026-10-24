@@ -11,6 +11,7 @@ import { brokerLighting } from '../utils/broker-lighting.js';
 import { bigCheckGroups, filterBigCheck } from '../utils/big-check.js';
 import { MISSIONS } from '../data/missions.js';
 import { localDay } from '../state.js';
+import { deck, splitWords } from '../components/deck.js';
 
 const BACK = '<a class="back-link" href="#/reclamation/map">← THE MAP</a>';
 const NOTE = "Optional. It never counts toward your districts, your city lights or the city's totals.";
@@ -44,7 +45,8 @@ const STYLE = `<style>
 .big-check-empty{font-size:13px;color:rgba(237,239,243,0.7)}
 .big-check-head + .big-check-scout{margin-top:10px}
 .big-check-scout{display:flex;gap:8px;align-items:flex-start;box-sizing:border-box;margin:0 0 12px;padding:6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
-.big-check-scout p{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
+.big-check-scout p,.big-check-scout-text{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
+.big-check-scout-text .deck-controls{margin-top:6px}
 ${TICK_CSS}
 </style>`;
 
@@ -80,7 +82,10 @@ function groupHtml(g, map, byId, state) {
 }
 
 // Scout's first-visit line, in a bubble that looks like the map's (its own class: in the page's flow).
-const scoutBubble = (line) => (line ? `<div class="big-check-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p></div>` : '');
+// On a phone a long line is slides of at most 20 words (the group list fills the rest of the screen); from 900px they flow as one paragraph.
+const scoutBubble = (line) => (line
+  ? `<div class="big-check-scout" role="note">${smallScout('thinkingA', 28)}<div class="big-check-scout-text">${deck(splitWords(esc(line), 20).map((html) => ({ html })), { label: 'The long tail', className: 'deck--flow' })}</div></div>`
+  : '');
 
 function loadedView(state, { map }, today, query, scoutLine) {
   const lighting = brokerLighting(map, state, today);

@@ -146,3 +146,19 @@ describe('surveys: one question and a grid of chips on a phone', async () => {
     expect(TRIM_CSS).toMatch(/@media \(max-width: 899px\) \{ \.facility-icon > div > div:last-child \{ display: none; \} \}/);
   });
 });
+
+describe("the Big Check: Scout's first-visit line as two slides", async () => {
+  const { renderBigCheck } = await import('../src/screens/big-check.js');
+  const { BROKER_MAP_DIALOGUE } = await import('../src/data/dialogue.js');
+  const mini = JSON.parse(readFileSync(new URL('./fixtures/broker-map-mini.json', import.meta.url), 'utf8'));
+  const layout = JSON.parse(readFileSync(new URL('../src/data/broker-layout.json', import.meta.url), 'utf8'));
+  const html = renderBigCheck(createInitialState(), { status: 'ready', data: { map: mini, layout }, today: '2026-10-23', scoutLine: BROKER_MAP_DIALOGUE.bigCheck });
+  const slides = slidesOf(deckOf(html, 'The long tail'));
+
+  it('split at sentence ends, word for word, at most 20 words a slide', () => {
+    expect(slides.length).toBeGreaterThanOrEqual(2);
+    expect(decode(slides.map(norm).join(' '))).toBe(BROKER_MAP_DIALOGUE.bigCheck);
+    for (const s of slides) expect(countWords(s)).toBeLessThanOrEqual(20);
+    expect(html).toContain('class="deck deck--flow"');
+  });
+});
