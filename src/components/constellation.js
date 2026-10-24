@@ -105,13 +105,17 @@ function wrapLabel(text) {
   return best === -1 ? [text] : [text.slice(0, best), text.slice(best + 1)];
 }
 
-// Label geometry, shared with the tests: monospace glyphs ~0.6em wide, lines 1.1em apart.
-export const LABEL_CHAR_EM = 0.6;
+// Label geometry, shared with the tests: monospace glyphs ~0.6em wide (0.62 for slack in the
+// fallback fonts), plus the .5px letter-spacing per glyph (user units inside the SVG), plus room
+// for the outline stroke and rounding (LABEL_PAD_EM in all). Lines 1.1em apart.
+export const LABEL_CHAR_EM = 0.62;
+export const LABEL_TRACK = 0.5;
+export const LABEL_PAD_EM = 0.6;
 export const LABEL_LINE_EM = 1.1;
 
 // The box a label covers: anchor x `lx` ('start' | 'end' | 'middle'), vertical centre `cy`.
 export function labelBox(lines, fontSize, lx, anchor, cy) {
-  const w = Math.max(...lines.map((t) => t.length)) * fontSize * LABEL_CHAR_EM;
+  const w = Math.max(...lines.map((t) => t.length)) * (fontSize * LABEL_CHAR_EM + LABEL_TRACK) + fontSize * LABEL_PAD_EM;
   const h = lines.length * fontSize * LABEL_LINE_EM;
   const left = anchor === 'end' ? lx - w : anchor === 'middle' ? lx - w / 2 : lx;
   return { left, right: left + w, top: cy - h / 2, bottom: cy + h / 2 };
@@ -136,7 +140,9 @@ function starState(broker, lighting) {
   return 'dim';
 }
 
-export function constellationSvg({ map, layout, lighting, selectedId = null, newlyLit = new Set(), view = { x: 0, y: 0, w: 1000 }, px = null }) {
+// `controls`: { w, h } in CSS px, a block in the top-right corner of the drawn SVG (the zoom
+// buttons) that labels keep clear of. Needs `px`.
+export function constellationSvg({ map, layout, lighting, selectedId = null, newlyLit = new Set(), view = { x: 0, y: 0, w: 1000 }, px = null, controls = null }) {
   const vx = Number.isFinite(view?.x) ? view.x : 0;
   const vy = Number.isFinite(view?.y) ? view.y : 0;
   const vw = Number.isFinite(view?.w) && view.w > 0 ? view.w : 1000;
@@ -167,7 +173,8 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
     pos.set(id, st);
   });
 
-  // Newly lit stars bloom in waves, in id order.
+  // Newly lit stars bloom in waves, in id order. Only lit ones: an amber (re-check due) star is
+  // an old filing going stale, not new light, so it never blooms (by design).
   const blooming = [...(newlyLit instanceof Set ? newlyLit : new Set(newlyLit ?? []))]
     .filter((id) => pos.get(id)?.state === 'lit')
     .sort();
@@ -245,7 +252,10 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   const reach = (s) => (Number.isFinite(s.broker.reach) ? s.broker.reach : 0);
   wanted.sort((a, b) => (b.id === selId) - (a.id === selId) || reach(b) - reach(a) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const placed = [];
-  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh;
+  const ctl = scale && Number.isFinite(controls?.w) && Number.isFinite(controls?.h)
+    ? { left: vx + vw - controls.w / scale, right: vx + vw, top: vy, bottom: vy + controls.h / scale }
+    : null;
+  const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh && !(ctl && overlaps(b, ctl));
   for (const s of wanted) {
     const hub = s.broker.hub === true;
     const fontSize = hub ? labelSize : (scale ? STAR_LABEL_PX / scale : labelSize * (STAR_LABEL_PX / LABEL_PX));

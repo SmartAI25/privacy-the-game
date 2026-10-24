@@ -44,11 +44,17 @@ export function zoomViewBox(viewBox, factor, cx, cy, bounds = {}) {
   const nw = Math.min(maxW, Math.max(minW, w / f));
   const k = nw / w;
   const nh = h === null ? nw : h * k;
-  const clamp = (v, side) => (side >= size ? (size - side) / 2 : Math.min(size - side, Math.max(0, v)));
-  const out = { x: clamp(px - (px - x) * k, nw), y: clamp(py - (py - y) * k, nh), w: nw };
+  // padY: how far (as a share of the box's height) it may run past the map's top or bottom edge.
+  // The sky and the skyline draw out there, so a star near the rim can still sit mid-screen.
+  const padY = Number.isFinite(bounds.padY) ? bounds.padY : 0;
+  const clamp = (v, side, pad = 0) => (side >= size ? (size - side) / 2 : Math.min(size - side + side * pad, Math.max(-side * pad, v)));
+  const out = { x: clamp(px - (px - x) * k, nw), y: clamp(py - (py - y) * k, nh, padY), w: nw };
   if (h !== null) out.h = nh;
   return out;
 }
+
+// The map screen's view bounds: up to half a screen of sky past the top or bottom of the map.
+export const VIEW_BOUNDS = Object.freeze({ padY: 0.5 });
 
 // The same view drawn into a box `ratio` times as tall as it is wide: same centre, same width.
 export function withRatio(view, ratio) {
@@ -56,7 +62,7 @@ export function withRatio(view, ratio) {
   const w = Number.isFinite(view?.w) && view.w > 0 ? view.w : 1000;
   const cx = (Number.isFinite(view?.x) ? view.x : 0) + w / 2;
   const cy = (Number.isFinite(view?.y) ? view.y : 0) + (Number.isFinite(view?.h) ? view.h : w) / 2;
-  return zoomViewBox({ x: cx - w / 2, y: cy - (w * r) / 2, w, h: w * r }, 1, cx, cy);
+  return zoomViewBox({ x: cx - w / 2, y: cy - (w * r) / 2, w, h: w * r }, 1, cx, cy, VIEW_BOUNDS);
 }
 
 const isLit = (s) => s === 'lit' || s === 'amber';
@@ -78,32 +84,12 @@ const LIT_R = 180;
 export function initialView(map, layout, lighting, ratio = 1) {
   const r = Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
   const stars = (Array.isArray(layout?.stars) ? layout.stars : []).filter((s) => Array.isArray(s) && Number.isFinite(s[1]) && Number.isFinite(s[2]));
-  const lit = new Set(litIds(lighting));
-  const on = stars.filter((s) => lit.has(s[0]));
   let cx;
   let cy;
   let w;
-  const fit = (pts) => {
-    const xs = pts.map((s) => s[1]);
-    const ys = pts.map((s) => s[2]);
-    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-    const span = Math.max(x1 - x0, (y1 - y0) / r);
-    return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, span, w: Math.max(OPEN_MIN_W, span * 1.25 + 80) };
-  };
-  if (on.length) {
-    let f = fit(on);
-    // Spread across the sky: open on the tightest bunch of them instead (the most lit stars
-    // within LIT_R of one lit star, ties by id), still zoomed in. RESET and − show the rest.
-    if (f.w > OPEN_MAX_W) {
-      let best = null;
-      for (const c of on) {
-        const near = on.filter((s) => (s[1] - c[1]) ** 2 + (s[2] - c[2]) ** 2 <= LIT_R ** 2);
-        if (!best || near.length > best.length || (near.length === best.length && c[0] < best.c[0])) best = Object.assign(near, { c });
-      }
-      f = fit(best);
-    }
-    ({ cx, cy } = f);
-    w = Math.min(OPEN_MAX_W, f.w);
+  const bunch = litBunch(layout, lighting, r);
+  if (bunch) {
+    ({ cx, cy, w } = bunch);
   } else {
     const hubIds = new Set((Array.isArray(map?.brokers) ? map.brokers : []).filter((b) => b?.hub === true).map((b) => b.id));
     const reach = new Map((map?.brokers ?? []).map((b) => [b.id, Number.isFinite(b.reach) ? b.reach : 0]));
@@ -118,7 +104,47 @@ export function initialView(map, layout, lighting, ratio = 1) {
     w = OPEN_W;
   }
   w = Math.min(1000, w);
-  return zoomViewBox({ x: cx - w / 2, y: cy - (w * r) / 2, w, h: w * r }, 1, cx, cy);
+  return zoomViewBox({ x: cx - w / 2, y: cy - (w * r) / 2, w, h: w * r }, 1, cx, cy, VIEW_BOUNDS);
+}
+
+// The player's lit stars as one place to look: their bounding box (w 260–600 map units), or, when
+// they are spread across the sky, their tightest bunch (the most lit stars within LIT_R of one lit
+// star, ties by id). null with nothing lit.
+export function litBunch(layout, lighting, ratio = 1) {
+  const r = Number.isFinite(ratio) && ratio > 0 ? ratio : 1;
+  const lit = new Set(litIds(lighting));
+  const on = (Array.isArray(layout?.stars) ? layout.stars : []).filter((s) => Array.isArray(s) && lit.has(s[0]) && Number.isFinite(s[1]) && Number.isFinite(s[2]));
+  if (!on.length) return null;
+  const fit = (pts) => {
+    const xs = pts.map((s) => s[1]);
+    const ys = pts.map((s) => s[2]);
+    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+    const span = Math.max(x1 - x0, (y1 - y0) / r);
+    return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: Math.max(OPEN_MIN_W, span * 1.25 + 80) };
+  };
+  let f = fit(on);
+  if (f.w > OPEN_MAX_W) {
+    let best = null;
+    for (const c of on) {
+      const near = on.filter((s) => (s[1] - c[1]) ** 2 + (s[2] - c[2]) ** 2 <= LIT_R ** 2);
+      if (!best || near.length > best.length || (near.length === best.length && c[0] < best.c[0])) best = Object.assign(near, { c });
+    }
+    f = fit(best);
+  }
+  return { cx: f.cx, cy: f.cy, w: Math.min(OPEN_MAX_W, f.w) };
+}
+
+// The point +/− zoom about, so the player's stars stay in frame: the selected star if it is in
+// view, else the lit bunch's centre if that is in view, else null (the view's centre).
+export function zoomAnchor(view, layout, lighting, selectedId = null) {
+  const w = view.w;
+  const h = Number.isFinite(view.h) ? view.h : w;
+  const inside = (x, y) => x >= view.x && x <= view.x + w && y >= view.y && y <= view.y + h;
+  const sel = selectedId === null ? null : (layout?.stars ?? []).find((s) => s?.[0] === selectedId);
+  if (sel && inside(sel[1], sel[2])) return { x: sel[1], y: sel[2] };
+  const b = litBunch(layout, lighting, h / w);
+  if (b && inside(b.cx, b.cy)) return { x: b.cx, y: b.cy };
+  return null;
 }
 
 const kinds = (b) => (Array.isArray(b?.kind) ? b.kind : []);

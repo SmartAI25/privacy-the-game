@@ -29,7 +29,7 @@ import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
 import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
 import { brokerLighting } from './utils/broker-lighting.js';
-import { litIds, initialView, withRatio, zoomViewBox, nearestStar } from './utils/broker-view.js';
+import { litIds, initialView, withRatio, zoomViewBox, zoomAnchor, nearestStar, VIEW_BOUNDS } from './utils/broker-view.js';
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { checklistFor } from './data/broker-checklists.js';
@@ -200,6 +200,8 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     // The seal animation and Scout's line are in this render; remember they were seen
     // so a later re-render (a device add) does not replay them.
     const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
+    // The map re-draws on every zoom and tap: no screen fade on those (it flashes the sky).
+    app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
     if (watched) {
@@ -311,7 +313,12 @@ function mapAction(action, el) {
     if (!data) return;
     const dir = el.dataset.dir;
     if (dir === 'reset') view = initialView(data.map, data.layout, brokerLighting(data.map, state, localDay()), mapStage ? mapStage.h / mapStage.w : 1);
-    else view = zoomViewBox(mapViewNow(data), dir === 'in' ? 2 : 0.5);
+    else {
+      // About the selected star, else the lit bunch, else the centre: the player's stars stay in frame.
+      const v = mapViewNow(data);
+      const at = zoomAnchor(v, data.layout, brokerLighting(data.map, state, localDay()), selectedId);
+      view = zoomViewBox(v, dir === 'in' ? 2 : 0.5, at?.x, at?.y, VIEW_BOUNDS);
+    }
     renderCurrentRoute();
     app.querySelector(`[data-action="map-zoom"][data-dir="${dir === 'out' ? 'out' : dir === 'in' ? 'in' : 'reset'}"]`)?.focus();
   } else if (action === 'select-star') {
@@ -320,7 +327,7 @@ function mapAction(action, el) {
     selectedId = s[0];
     const v = mapViewNow(data);
     const h = v.h ?? v.w;
-    view = zoomViewBox({ ...v, x: s[1] - v.w / 2, y: s[2] - h / 2 }, 1, s[1], s[2]);
+    view = zoomViewBox({ ...v, x: s[1] - v.w / 2, y: s[2] - h / 2 }, 1, s[1], s[2], VIEW_BOUNDS);
     renderCurrentRoute();
     app.querySelector(`[data-action="select-star"][data-star="${Number(el.dataset.star)}"]`)?.focus();
   } else if (action === 'map-list') {

@@ -3,7 +3,7 @@
 // app.js memory and never reach the URL, an event or a breadcrumb: every control here carries a
 // class PRIVATE_UI (errorNoise.js) matches, and no broker id goes in an id, name or title.
 import { renderHud } from '../components/hud.js';
-import { renderScout } from '../components/scout.js';
+import { smallScout } from '../components/scout.js';
 import { constellationSvg, RECHECK_OPACITY } from '../components/constellation.js';
 import { brokerLighting, fieldCoverage, fieldHeader, isBuyer } from '../utils/broker-lighting.js';
 import { whatsLeft, initialView, shortName } from '../utils/broker-view.js';
@@ -17,10 +17,13 @@ const DROP_MISSION = 'people_search-reclaim-stragglers';
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const STYLE = `<style>
+#app.map-refresh>*{animation:none}
 .broker-map{padding:0 16px 24px;max-width:960px;margin:0 auto;box-sizing:border-box}
 .broker-map .back-link{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none}
 .broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
+.map-scout{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;padding:8px 10px;background:rgba(26,31,43,0.9);border:1px solid rgba(0,229,255,0.25)}
+.map-scout p{margin:0;font-size:12px;line-height:1.5;color:var(--offwhite)}
 .map-stage{position:relative;width:100%;height:calc(100svh - 150px);min-height:320px;border-radius:8px;overflow:hidden;background:#090B10}
 .map-stage>svg.constellation{width:100%;height:100%;border-radius:8px}
 .constellation-controls{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;gap:6px}
@@ -54,6 +57,9 @@ const LEGEND = [
   [swatch('<circle cx="9" cy="9" r="8" fill="#EDEFF3" opacity="0.25"/><circle cx="9" cy="9" r="3" fill="#3a4256"/>'), 'Opted out in this browser only'],
   [swatch('<rect x="5" y="5" width="8" height="8" fill="none" stroke="#8a93a6" stroke-width="1.4" transform="rotate(45 9 9)"/>'), 'Buyers'],
 ];
+
+// The zoom buttons' corner, in CSS px (44px buttons, 8px inset, gaps): labels keep clear of it.
+const CONTROLS = { w: 60, h: 160 };
 
 const RESIDENCY_LABEL = { yes: 'Yes', no: 'No', unsaid: 'Rather not say' };
 
@@ -132,12 +138,16 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
   const lighting = brokerLighting(map, state, today);
   const ratio = stage?.w > 0 && stage?.h > 0 ? stage.h / stage.w : 1;
   const v = view ?? initialView(map, layout, lighting, ratio);
-  const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null });
+  const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: CONTROLS });
   const selected = selectedId ? map.brokers.find((b) => b.id === selectedId) : null;
   const height = stage?.h > 0 ? ` style="height:${Math.round(stage.h)}px"` : '';
-  const scout = firstVisit ? `<div style="margin: 12px -16px 0;">${renderScout(esc(BROKER_MAP_DIALOGUE.firstVisit), { feeling: 'thinkingA' })}</div>` : '';
+  // Above the map, compact, so it reads on a 375×812 phone without scrolling.
+  const scout = firstVisit
+    ? `<div class="map-scout">${smallScout('thinkingA', 36)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p></div>`
+    : '';
   return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting))}</h1>`
     + '<p class="map-sub">estimated share of the field your opt-outs reach</p>'
+    + scout
     + '<div class="constellation-wrap">'
     + `<div class="map-stage"${height}>${svg}<div class="constellation-controls">`
     + '<button type="button" class="constellation-zoom" data-action="map-zoom" data-dir="in" aria-label="Zoom in">+</button>'
@@ -147,7 +157,6 @@ function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit,
     + `<p class="constellation-pick" aria-live="polite">${selected ? esc(shortName(selected.name)) : ''}</p>`
     + starList(map, layout, lighting, selectedId, listOpen)
     + '</div>'
-    + scout
     + `<ul class="map-legend">${LEGEND.map(([icon, label]) => `<li>${icon}${label}</li>`).join('')}</ul>`
     + nudgeBlock(lighting.pending)
     + residencyBlock(state, editingResidency)

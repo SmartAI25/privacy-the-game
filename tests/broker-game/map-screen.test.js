@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { renderBrokerMap } from '../../src/screens/broker-map.js';
 import { renderDistrict } from '../../src/screens/district.js';
-import { RECHECK_OPACITY } from '../../src/components/constellation.js';
+import { RECHECK_OPACITY, constellationSvg, labelBox, LABEL_LINE_EM } from '../../src/components/constellation.js';
 import { brokerLighting } from '../../src/utils/broker-lighting.js';
-import { whatsLeft, litIds, initialView, withRatio, zoomViewBox } from '../../src/utils/broker-view.js';
+import { whatsLeft, litIds, initialView, withRatio, zoomViewBox, zoomAnchor, litBunch, VIEW_BOUNDS } from '../../src/utils/broker-view.js';
 import { markMapSeen, newlyLitIds, cleanBrokerState, setResidency } from '../../src/utils/broker-state.js';
 import { BROKER_MAP_DIALOGUE } from '../../src/data/dialogue.js';
 import { isPrivateBreadcrumb } from '../../src/utils/errorNoise.js';
@@ -171,7 +171,7 @@ describe('the map screen', () => {
     const motion = css.indexOf('@media (prefers-reduced-motion: no-preference)');
     expect(motion).toBeGreaterThan(-1);
     for (const m of css.matchAll(/\.star--new[^{]*\{/g)) expect(m.index).toBeGreaterThan(motion);
-    expect(css.slice(0, motion)).not.toMatch(/animation\s*:/);
+    expect(css.slice(0, motion)).not.toMatch(/animation\s*:\s*(?!none)/);
   });
 
   it('a list view reaches every hub and lit star by keyboard', () => {
@@ -269,5 +269,96 @@ describe('the way in', () => {
       if (d.id === 'reclamation') continue;
       expect(renderDistrict(fresh(), d.id)).not.toContain('#/reclamation/map');
     }
+  });
+});
+
+// Label boxes read back from markup (as constellation.test.js does).
+function labelsOf(svg) {
+  const out = [];
+  for (const m of svg.matchAll(/<text class="(hub-label|star-label)" x="([^"]+)" y="([^"]+)" font-size="([^"]+)"[^>]*?(?: text-anchor="(\w+)")?>(.*?)<\/text>/g)) {
+    const [, cls, x, y, fs, anchor = 'start', inner] = m;
+    const f = Number(fs);
+    const lines = inner.includes('<tspan') ? [...inner.matchAll(/<tspan[^>]*>([^<]*)<\/tspan>/g)].map((t) => t[1]) : [inner];
+    const top = Number(y) - f * 0.85;
+    const cy = top + (lines.length * f * LABEL_LINE_EM) / 2;
+    out.push({ cls, text: lines.join(' '), box: labelBox(lines.map((t) => t.replace(/&amp;/g, '&')), f, Number(x), anchor, cy) });
+  }
+  return out;
+}
+
+describe('fix round 1: labels clear of the zoom buttons and the edges (ruling M5)', () => {
+  const lighting = brokerLighting(map, {}, T);
+  const PX = 328;
+  const STAGE_H = 628;
+  const CONTROLS = { w: 60, h: 160 };
+  const around = (id, w) => {
+    const s = layout.stars.find((x) => x[0] === id);
+    const h = (w * STAGE_H) / PX;
+    return zoomViewBox({ x: s[1] - w / 2, y: s[2] - h / 2, w, h }, 1, s[1], s[2], VIEW_BOUNDS);
+  };
+
+  it.each([[260], [130], [100]])('at w%i on Equifax no label sits under the buttons or past an edge', (w) => {
+    const v = around('equifax', w);
+    const svg = constellationSvg({ map, layout, lighting, view: v, px: PX, controls: CONTROLS });
+    const scale = PX / v.w;
+    const ctl = { left: v.x + v.w - CONTROLS.w / scale, top: v.y, bottom: v.y + CONTROLS.h / scale };
+    const labels = labelsOf(svg);
+    expect(labels.length).toBeGreaterThan(0);
+    for (const { box } of labels) {
+      expect(box.left).toBeGreaterThanOrEqual(v.x - 1e-6);
+      expect(box.right).toBeLessThanOrEqual(v.x + v.w + 1e-6);
+      expect(box.right <= ctl.left || box.top >= ctl.bottom).toBe(true);
+    }
+  });
+
+  it('the screen passes the button corner to the SVG', () => {
+    const v = around('equifax', 130);
+    const h = draw(fresh(), { view: v, stage: { w: PX, h: STAGE_H } });
+    const svg = h.slice(h.indexOf('<svg class="constellation"'), h.indexOf('</svg>') + 6);
+    expect(svg).toBe(constellationSvg({ map, layout, lighting, view: v, px: PX, controls: CONTROLS }));
+  });
+
+  it('the label width estimate counts letter-spacing and the outline', () => {
+    const b = labelBox(['IXI Corporation'], 10, 0, 'start', 0);
+    expect(b.right - b.left).toBeGreaterThanOrEqual(15 * (10 * 0.62 + 0.5));
+  });
+
+  it('amber stars never bloom (an old filing going stale is not new light)', () => {
+    const l = { stars: { spokeo: { state: 'amber', litOn: '2026-01-01', via: ['checklist'] } }, frozen: [], halo: [], pending: [], drop: 'off' };
+    const svg = constellationSvg({ map, layout, lighting: l, newlyLit: new Set(['spokeo']) });
+    expect(svg).toContain('star--amber');
+    expect(svg).not.toMatch(/class="[^"]*(star--new|glow--new)/);
+    expect(svg).not.toContain('class="burst"');
+  });
+});
+
+describe('fix round 1: framing', () => {
+  it('a lit bunch near the bottom rim opens centred on it (the view may run past the map)', () => {
+    const s = withLines(withLines(fresh(), WF, { whitepages: '2026-10-01' }), STRAG, { mylife: '2026-10-02' });
+    const l = brokerLighting(map, s, T);
+    const b = litBunch(layout, l, 2);
+    const v = initialView(map, layout, l, 2);
+    expect(v.y + v.h).toBeGreaterThan(1000);
+    expect(v.x + v.w / 2).toBeCloseTo(b.cx, 0);
+    expect(v.y + v.h / 2).toBeCloseTo(b.cy, 0);
+  });
+
+  it('+/- zoom about the selected star, else the lit bunch, else the centre', () => {
+    const l = brokerLighting(map, filedState(), T);
+    const v = { x: 400, y: 400, w: 500, h: 1000 };
+    const sp = layout.stars.find((x) => x[0] === 'spokeo');
+    expect(zoomAnchor(v, layout, l, 'spokeo')).toEqual({ x: sp[1], y: sp[2] });
+    const b = litBunch(layout, l, 2);
+    expect(zoomAnchor(v, layout, l, null)).toEqual({ x: b.cx, y: b.cy });
+    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, layout, l, 'spokeo')).toBeNull();
+    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, layout, brokerLighting(map, {}, T), null)).toBeNull();
+    // Zooming about the anchor keeps it at the same place on screen.
+    const z = zoomViewBox(v, 2, sp[1], sp[2], VIEW_BOUNDS);
+    expect((sp[1] - z.x) / z.w).toBeCloseTo((sp[1] - v.x) / v.w);
+  });
+
+  it("Scout's first-visit line sits above the map", () => {
+    const h = draw(fresh(), { firstVisit: true });
+    expect(h.indexOf("There's a whole constellation")).toBeLessThan(h.indexOf('<svg class="constellation"'));
   });
 });
