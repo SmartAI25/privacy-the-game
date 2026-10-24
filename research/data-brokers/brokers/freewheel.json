@@ -1,0 +1,22 @@
+{
+  "id": "freewheel",
+  "name": "FreeWheel",
+  "aliases": [
+    "Beeswax/FreeWheel"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

@@ -7,12 +7,13 @@ import { smallScout } from '../components/scout.js';
 import { constellationSvg, RECHECK_OPACITY } from '../components/constellation.js';
 import { brokerLighting, fieldCoverage, fieldHeader, isBuyer } from '../utils/broker-lighting.js';
 import { whatsLeft, initialView, shortName } from '../utils/broker-view.js';
-import { starCard } from '../components/star-card.js';
+import { starCard, TICK_CSS } from '../components/star-card.js';
 import { BROKER_MAP_DIALOGUE } from '../data/dialogue.js';
 import { MISSIONS } from '../data/missions.js';
 import { localDay } from '../state.js';
 
 const BACK = '<a class="back-link" href="#/district/reclamation">← THE RECLAMATION</a>';
+const BIG_CHECK_HASH = '#/reclamation/big-check';
 const DROP_MISSION = 'people_search-reclaim-stragglers';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -24,7 +25,8 @@ const STYLE = `<style>
 .broker-map .map-head{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--lime);letter-spacing:2px;margin:12px 0 2px;overflow-wrap:anywhere}.broker-map .map-head .nw{display:inline-block}
 .broker-map .map-sub{font-size:12px;color:rgba(237,239,243,0.55);margin:0 0 10px}
 .constellation-scout{position:absolute;top:8px;left:8px;right:68px;display:flex;gap:8px;align-items:flex-start;padding:6px 4px 6px 8px;background:rgba(9,11,16,0.86);border:1px solid rgba(0,229,255,0.3);border-radius:8px;cursor:default}
-.constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite)}
+/* A long line scrolls inside its box (at most about seven lines), so it never covers most of the sky; the × stays beside it. */
+.constellation-scout p{flex:1;min-width:0;margin:0;font-size:11px;line-height:1.4;color:var(--offwhite);max-height:min(9em,30svh);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.4) transparent}
 .constellation-scout>svg,.constellation-scout>img,.constellation-scout>div{flex-shrink:0}
 .constellation-scout-x{flex-shrink:0;width:44px;height:44px;margin:-6px 0 -6px 0;font-size:22px;color:var(--cyan);background:transparent;border:0;cursor:pointer}
 .constellation-scout-x:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
@@ -42,6 +44,8 @@ const STYLE = `<style>
 .star-card a{color:var(--cyan)}
 .star-card .star-card-go a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:#090B10;background:var(--cyan);border-radius:6px;text-decoration:none}
 .star-card-list{margin:0;padding-left:18px}
+.star-card-scout{display:flex;gap:8px;align-items:flex-start;margin:10px 0 4px;padding:6px 8px;background:rgba(9,11,16,0.6);border:1px solid rgba(0,229,255,0.3);border-radius:8px}
+.star-card-scout p{flex:1;min-width:0;margin:0;font-size:12px;line-height:1.4;color:var(--offwhite)}
 .star-card-list li{margin:3px 0}
 .star-card-claim{display:block;font-size:12px;color:rgba(237,239,243,0.7)}
 .star-card-src{display:block;font-size:11px}
@@ -72,6 +76,10 @@ const STYLE = `<style>
 .map-left{list-style:none;margin:0;padding:0}
 .map-left li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
 .map-left .none{display:block;font-size:11px;color:rgba(237,239,243,0.45)}
+.map-left a{display:inline-flex;align-items:center;min-height:44px}
+.map-big-check{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:1px;color:var(--cyan);text-decoration:none}
+.map-big-check:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+${TICK_CSS}
 </style>`;
 
 const swatch = (inner) => `<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">${inner}</svg>`;
@@ -128,9 +136,10 @@ function leftBlock(rows) {
     const text = `${esc(r.name)} · reach ${r.reach}`;
     return r.mission
       ? `<li><a href="#/mission/${esc(r.mission)}/briefing">${text}</a></li>`
-      : `<li>${text}<span class="none">No mission covers this one yet</span></li>`;
+      : `<li><a href="${BIG_CHECK_HASH}">${text}</a><span class="none">No mission covers this one yet: file with them, then tick it in the Big Check</span></li>`;
   }).join('');
-  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`;
+  return `<div class="map-panel map-whats-left"><div class="label">WHAT'S LEFT THAT MATTERS</div><ul class="map-left">${items}</ul></div>`
+    + `<a class="map-big-check" href="${BIG_CHECK_HASH}">THE BIG CHECK →</a>`;
 }
 
 const STATE_WORD = { lit: 'You filed', amber: 'Re-check due', dim: 'Not yet', 'no-opt-out': 'No opt-out exists' };
@@ -154,34 +163,39 @@ function starList(map, layout, lighting, selectedId, open) {
   return `${toggle}<ul class="constellation-stars">${items}</ul>`;
 }
 
+// The loading and error states, shared with the Big Check (it reads the same file).
+export function brokerDataStatusBlock(status) {
+  return status === 'error'
+    ? `<div class="constellation constellation--error" role="alert"><p>COULDN'T LOAD THE MAP</p><button type="button" class="btn" data-action="retry-broker-data">TRY AGAIN</button></div>`
+    : '<div class="constellation constellation--loading" role="status"><p>LOADING THE FIELD…</p></div>';
+}
+
+// scoutLine: this visit's one-time Scout line (broker-scout.js), shown in the first-visit note's
+// place; the first visit's own line wins. cardScoutLine goes in the open star's card.
 export function renderBrokerMap(state, {
   status = 'idle', data = null, today = localDay(), selectedId = null, view = null, newlyLit = new Set(),
-  stage = null, firstVisit = false, editingResidency = false, listOpen = false,
+  stage = null, firstVisit = false, scoutLine = null, cardScoutLine = null, editingResidency = false, listOpen = false,
 } = {}) {
-  let body;
-  if (status === 'error') {
-    body = `<div class="constellation constellation--error" role="alert"><p>COULDN'T LOAD THE MAP</p><button type="button" class="btn" data-action="retry-broker-data">TRY AGAIN</button></div>`;
-  } else if (status === 'ready' && data) {
-    body = loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen });
-  } else {
-    body = '<div class="constellation constellation--loading" role="status"><p>LOADING THE FIELD…</p></div>';
-  }
+  const body = status === 'ready' && data
+    ? loadedView(state, data, { today, selectedId, view, newlyLit, stage, firstVisit, scoutLine, cardScoutLine, editingResidency, listOpen })
+    : brokerDataStatusBlock(status);
   return `${renderHud(state)}${STYLE}<div class="screen broker-map">${BACK}${body}</div>`;
 }
 
-function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit, stage, firstVisit, editingResidency, listOpen }) {
+function loadedView(state, { map, layout }, { today, selectedId, view, newlyLit, stage, firstVisit, scoutLine, cardScoutLine, editingResidency, listOpen }) {
   const lighting = brokerLighting(map, state, today);
   const ratio = stage?.w > 0 && stage?.h > 0 ? stage.h / stage.w : 1;
   const v = view ?? initialView(map, layout, lighting, ratio);
   const svg = constellationSvg({ map, layout, lighting, selectedId, newlyLit, view: v, px: stage?.w ?? null, controls: controlsFor(stage) });
   const selected = selectedId ? map.brokers.find((b) => b.id === selectedId) : null;
   // The tapped star's card: below the map on a phone, beside it from 900px.
-  const card = selected ? starCard(map, lighting, selectedId, state) : '';
+  const card = selected ? starCard(map, lighting, selectedId, state, { scoutLine: cardScoutLine }) : '';
   const height = stage?.h > 0 ? ` style="height:${Math.round(stage.h)}px"` : '';
-  // Scout's first-visit line floats over the top of the sky (dismissable), so the map keeps the
-  // phone's height; it leaves the zoom buttons' corner clear.
-  const scout = firstVisit
-    ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(BROKER_MAP_DIALOGUE.firstVisit)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
+  // Scout's line (the first visit's, else this visit's one-time line) floats over the top of the
+  // sky (dismissable), so the map keeps the phone's height; it leaves the zoom buttons' corner clear.
+  const line = firstVisit ? BROKER_MAP_DIALOGUE.firstVisit : scoutLine;
+  const scout = line
+    ? `<div class="constellation-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(line)}</p><button type="button" class="constellation-scout-x" data-action="dismiss-scout" aria-label="Dismiss">×</button></div>`
     : '';
   // Each half keeps to one line, so a phone never breaks "HUBS LIT" from its count.
   return `<h1 class="map-head">${fieldHeader(fieldCoverage(map, lighting)).split(' · ').map((part) => `<span class="nw">${esc(part)}</span>`).join(' · ')}</h1>`

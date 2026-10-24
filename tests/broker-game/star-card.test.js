@@ -246,7 +246,7 @@ describe('starCard', () => {
     const lit = { ...l, frozen: ['equifax'], halo: ['equifax'] };
     const html = starCard(map, lit, 'equifax');
     expect(html).toContain("Your credit is frozen here. A freeze stops new credit in your name; it doesn't stop this company selling what it holds.");
-    expect(html).toContain('You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.');
+    expect(html).toContain('You opted out in this browser through the DAA WebChoices tool. That sets a cookie on this device; it deletes nothing.');
     expect(starCard(map, l, 'equifax')).not.toContain('frozen here');
   });
   it('an unknown id draws nothing', () => {
@@ -304,7 +304,7 @@ describe('the card on the map screen', () => {
     const spokeo = byId.get('spokeo');
     const screen = html.slice(html.indexOf('<div class="screen broker-map">')); // the HUD is shared
     for (const h of hrefs(screen)) {
-      const ok = /^#\/(district\/reclamation|reclamation\/map|mission\/[^/]+\/(briefing|recheck))$/.test(h) || allowedExternal(h, spokeo);
+      const ok = /^#\/(district\/reclamation|reclamation\/map|reclamation\/big-check|mission\/[^/]+\/(briefing|recheck))$/.test(h) || allowedExternal(h, spokeo);
       expect(ok, h).toBe(true);
     }
   });

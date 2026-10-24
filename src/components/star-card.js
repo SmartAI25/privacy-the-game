@@ -7,6 +7,8 @@
 // title attribute (Sentry selectors carry those); the card's class `star-card` is in PRIVATE_UI.
 import { shortName } from '../utils/broker-view.js';
 import { MISSIONS } from '../data/missions.js';
+import { tickable, litElsewhere } from '../utils/big-check.js';
+import { smallScout } from './scout.js';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ext = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
@@ -71,7 +73,7 @@ const archivedLinks = (sources) => (Array.isArray(sources) ? sources : [])
   .filter((s) => isObj(s) && typeof s.archived === 'string' && s.archived.startsWith('https://web.archive.org/'))
   .map((s) => ext(s.archived, 'archived ↗'));
 
-function optOutBlock(b) {
+export function optOutBlock(b) {
   const o = b.optOut;
   if (!isObj(o)) return `<p>We don't know an opt-out route for this one yet.</p>`;
   if (o.method === 'none') {
@@ -102,7 +104,7 @@ function optOutBlock(b) {
 
 // A holding company often takes no opt-outs itself; the companies a published link shows it owning
 // may. Their checker-confirmed pages, each named, when this record has no confirmed link of its own.
-function ownedRoutesBlock(map, b, byId) {
+export function ownedRoutesBlock(map, b, byId) {
   const o = b.optOut;
   if (isObj(o) && (o.method === 'none' || (o.status === 'verified' && parseUrl(o.url)))) return '';
   const seen = new Set();
@@ -153,12 +155,38 @@ function coverageBlock(b, state) {
   return `<div class="label">COVERED BY</div><ul class="star-card-list">${items}</ul>`;
 }
 
+// The tick's look, shared by the map's STYLE and the Big Check's: a 44px row, a 24px box. `.vh`
+// is visually hidden text a screen reader still reads (the tick's broker name).
+export const TICK_CSS = '.big-check-tick{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;color:var(--offwhite);cursor:pointer}.big-check-tick input{width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--lime);cursor:pointer}.big-check-tick input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.big-check-freeze{font-size:12px;color:rgba(237,239,243,0.75);margin:0 0 4px}.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0}';
+
+const FREEZE_NOTE = "A freeze isn't an opt-out: tick this only if you used their opt-out.";
+
+// The Big Check's tick: "I filed with them", for a broker no mission covers (or one ticked before
+// a mission covered it, so it can be unticked). The id rides in data-big-check (error-report
+// selectors leave data attributes out), never in an id or name; the broker's name is visually
+// hidden text in the label (text never reaches a selector), so each box has its own name.
+export function bigCheckTick(id, ticked, name = id, { frozen = false } = {}) {
+  const note = frozen ? `<p class="big-check-freeze">${esc(FREEZE_NOTE)}</p>` : '';
+  return `${note}<label class="big-check-tick"><input type="checkbox" data-big-check="${esc(id)}"${ticked ? ' checked' : ''}> I filed with them<span class="vh"> (${esc(name)})</span></label>`;
+}
+
+// A box is offered where the Big Check would list the broker: tickable and not lit by anything
+// else (litElsewhere, the Big Check's own rule). A box already ticked always shows, so it can be
+// unticked, even when a mission or another filing now covers the broker.
+function tickBlock(b, star, lighting) {
+  const ticked = Array.isArray(star?.via) && star.via.includes('big-check');
+  if (!ticked && (!tickable(b) || litElsewhere(star))) return '';
+  const frozen = Array.isArray(lighting?.frozen) && lighting.frozen.includes(b.id);
+  return `<div class="label">THE BIG CHECK</div>${bigCheckTick(b.id, ticked, shortName(b.name ?? b.id) || b.id, { frozen })}`;
+}
+
 const STATE_LINE = {
   lit: (s) => `You filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. Your opt-out reaches this one.`,
   amber: (s) => `Re-check due: you filed${s.litOn ? ` on ${esc(s.litOn)}` : ''}. People-search sites often list people again, so check it.`,
 };
 
-export function starCard(map, lighting, id, state = null) {
+// scoutLine: Scout's one-time no-opt-out line, in the card's flow (never over it) under the route.
+export function starCard(map, lighting, id, state = null, { scoutLine = null } = {}) {
   if (typeof id !== 'string') return '';
   const brokers = Array.isArray(map?.brokers) ? map.brokers.filter((b) => isObj(b) && typeof b.id === 'string') : [];
   const byId = new Map(brokers.map((b) => [b.id, b]));
@@ -174,7 +202,7 @@ export function starCard(map, lighting, id, state = null) {
   const frozen = Array.isArray(lighting?.frozen) && lighting.frozen.includes(id)
     ? `<p class="star-card-note">Your credit is frozen here. A freeze stops new credit in your name; it doesn't stop this company selling what it holds.</p>` : '';
   const halo = Array.isArray(lighting?.halo) && lighting.halo.includes(id)
-    ? '<p class="star-card-note">You opted out in this browser through the NAI or DAA tool. That sets a cookie on this device; it deletes nothing.</p>' : '';
+    ? '<p class="star-card-note">You opted out in this browser through the DAA WebChoices tool. That sets a cookie on this device; it deletes nothing.</p>' : '';
   return `<section class="star-card" tabindex="-1" role="dialog" aria-modal="false" aria-labelledby="star-card-title">`
     + '<div class="star-card-grab" aria-hidden="true"><span></span></div>'
     + `<h2 class="star-card-name" id="star-card-title">${esc(short)}</h2>`
@@ -182,10 +210,12 @@ export function starCard(map, lighting, id, state = null) {
     + (parent ? `<p class="star-card-parent">Part of ${esc(shortName(parent.name ?? parent.id))}</p>` : '')
     + stateLine + buyer + frozen + halo
     + `<div class="label">OPT-OUT ROUTE</div>${optOutBlock(b)}${ownedRoutesBlock(map, b, byId)}`
+    + (scoutLine ? `<div class="star-card-scout" role="note">${smallScout('thinkingA', 28)}<p>${esc(scoutLine)}</p></div>` : '')
     + (sells.length ? `<div class="label">WHAT ITS RECORDS SAY IT SELLS</div><ul class="star-card-list">${sells.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
     + linksBlock(map, id, byId)
     + sourcesBlock(b)
     + coverageBlock(b, state)
+    + tickBlock(b, star, lighting)
     + '<button type="button" class="star-card-close" data-action="close-star">CLOSE</button>'
     + '</section>';
 }

@@ -1,7 +1,9 @@
 {
   "id": "place-exchange",
   "name": "Place Exchange, Inc.",
-  "aliases": [],
+  "aliases": [
+    "Place Exchange"
+  ],
   "parent": null,
   "kind": [
     "location"
@@ -25,7 +27,8 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "registry-tx-2026-10-18"
+    "registry-tx-2026-10-18",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.placeexchange.com"
 }

@@ -2,7 +2,8 @@
   "id": "wunderkind",
   "name": "Wunderkind Corporation",
   "aliases": [
-    "Wunderkind"
+    "Wunderkind",
+    "Wunderkind (formerly BounceX)"
   ],
   "parent": null,
   "kind": [],
@@ -24,7 +25,9 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.wunderkind.co"
 }

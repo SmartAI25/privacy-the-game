@@ -1,0 +1,9 @@
+{
+  "id": "index-exchange",
+  "name": "Index Exchange",
+  "aliases": [],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

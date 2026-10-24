@@ -2,7 +2,8 @@
   "id": "predictive-pop",
   "name": "Predictive Pop, Inc.",
   "aliases": [
-    "Audigent"
+    "Audigent",
+    "AuDigent"
   ],
   "parent": "experian",
   "kind": [],
@@ -25,7 +26,9 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "sec-experian-annual-report-2026"
+    "sec-experian-annual-report-2026",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.audigent.com"
 }

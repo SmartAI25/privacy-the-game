@@ -1,0 +1,8 @@
+{
+  "id": "liveintent",
+  "name": "LiveIntent",
+  "aliases": [],
+  "sources": [
+    "mem-daa-webchoices-2026"
+  ]
+}

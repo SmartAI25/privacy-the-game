@@ -1,0 +1,22 @@
+{
+  "id": "amazon-ads",
+  "name": "Amazon Ads",
+  "aliases": [
+    "Amazon Ad System"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

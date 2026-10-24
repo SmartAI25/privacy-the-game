@@ -23,11 +23,14 @@ import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
+import { renderBigCheck } from './screens/big-check.js';
+import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling, markMapSeen, newlyLitIds, setResidency } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, markScoutSeen, markScoutPending, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
+import { mapScoutLine, mapScoutTriggers, cardScoutLine, bigCheckScoutLine } from './utils/broker-scout.js';
 import { brokerLighting } from './utils/broker-lighting.js';
 import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
@@ -79,6 +82,14 @@ let mapStage = null;
 let mapVisitPending = false;
 let mapFirstVisit = false;
 let mapScoutDismissed = false;
+// Scout's one-time lines (broker-scout.js), held for the visit (or the open card) that shows them:
+// the map's { key, line }, the card's { id, line } and the Big Check's line. Each is marked seen in
+// the save after the render that showed it, so a reload never repeats it.
+let mapScout = null;
+// This visit's triggered map lines that aren't the one shown: saved as pending (ruling T3-b).
+let mapScoutPending = [];
+let cardScout = null;
+let bigCheckScout = null;
 let editingResidency = false;
 let mapListOpen = false;
 // When the player last saw the city map before this visit (Scout waves after a while away).
@@ -143,13 +154,22 @@ const screens = {
       if (mapVisitPending) {
         newlyLit = newlyLitIds(state, litIds(lighting));
         mapFirstVisit = !Array.isArray(state.brokerMap?.seenLit);
+        // The first visit has Liz's line; the one-time lines start from the second.
+        mapScout = mapFirstVisit ? null : mapScoutLine(state, data.map, lighting, newlyLit);
+        mapScoutPending = mapScoutTriggers(state, data.map, lighting, newlyLit).filter((k) => k !== mapScout?.key);
       }
       if (!view && mapStage) view = initialView(data.map, data.layout, lighting, mapStage.h / mapStage.w);
     }
     return renderBrokerMap(state, {
       status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
       firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
+      scoutLine: mapScoutDismissed ? null : mapScout?.line ?? null,
+      cardScoutLine: cardScout && cardScout.id === selectedId ? cardScout.line : null,
     });
+  },
+  'big-check': () => {
+    if (brokerDataStatus() === 'idle') loadBrokerMapData();
+    return renderBigCheck(state, { status: brokerDataStatus(), data: brokerDataStatus() === 'ready' ? brokerData() : null, today: localDay(), scoutLine: bigCheckScout });
   },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
@@ -206,6 +226,11 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
+    // The Big Check's line is drawn once the data is in; then it's seen.
+    if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {
+      const seen = markScoutSeen(state, 'bigCheck');
+      if (seen !== state) setState(seen);
+    }
     if (watched) {
       const seen = markSealedSeen(state, route.params.id, watched ?? []);
       if (seen !== state) setState(seen);
@@ -248,8 +273,12 @@ function startScreenVisit(route) {
     mapListOpen = false;
     mapFirstVisit = false;
     mapScoutDismissed = false;
+    mapScout = null;
+    mapScoutPending = [];
+    cardScout = null;
     mapVisitPending = true;
   }
+  if (route.screen === 'big-check') bigCheckScout = bigCheckScoutLine(state);
   if (landingReaction) {
     const arriving = !landingReaction.landed && route.screen === 'district' && route.params.id === landingReaction.districtId;
     landingReaction = arriving ? { ...landingReaction, landed: true } : null;
@@ -287,7 +316,11 @@ function afterBrokerMapRender(renderFn, params) {
   sizeSheet();
   if (mapVisitPending && brokerDataStatus() === 'ready') {
     const data = brokerData();
-    const seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    let seen = markMapSeen(state, litIds(brokerLighting(data.map, state, localDay())));
+    // This draw showed the visit's one-time line (if any): it never shows on a later visit.
+    // The other lines this visit triggered wait for a later visit.
+    seen = markScoutPending(seen, mapScoutPending);
+    if (mapScout) seen = markScoutSeen(seen, mapScout.key);
     setState(seen);
     mapVisitPending = false;
     newlyLit = [];
@@ -329,7 +362,13 @@ function openCard(id, returnTo) {
   // Tapping a star is what Scout's first-visit note asks for; the note then gives the sky back.
   mapScoutDismissed = true;
   cardReturn = returnTo;
+  // The first no-opt-out card carries Scout's line (in the card's flow); seen once it's drawn.
+  const data = brokerData();
+  const line = data ? cardScoutLine(state, brokerLighting(data.map, state, localDay()), id) : null;
+  if (line) cardScout = { id, line };
+  else if (cardScout?.id !== id) cardScout = null;
   renderCurrentRoute();
+  if (line) setState(markScoutSeen(state, 'noOptOut'));
   keepSelectedInView();
   focusCard();
 }
@@ -338,6 +377,7 @@ function closeCard() {
   const back = cardReturn;
   selectedId = null;
   cardReturn = null;
+  cardScout = null;
   cardFocusPending = false;
   renderCurrentRoute();
   const el = (back && app.querySelector(back)) || app.querySelector('.map-stage');
@@ -571,6 +611,72 @@ function mapAction(action, el) {
     renderCurrentRoute();
     app.querySelector('[data-action="set-residency"]')?.focus();
   }
+}
+
+// A Big Check tick, on the Big Check or on a star's card. Saved in the game only: no track(), no
+// navigate(), nothing in the URL. The Big Check isn't re-drawn (its scroll and open groups stay);
+// its group count changes in place. The map re-draws (a REFRESH), so the star lights.
+function bigCheckChange(e) {
+  const box = e.target;
+  if (!(box instanceof HTMLInputElement) || box.type !== 'checkbox' || !box.matches('[data-big-check]')) return;
+  const id = box.dataset.bigCheck;
+  setState(setBigCheck(state, id, box.checked, localDay()));
+  const screen = parseRoute(location.hash).screen;
+  if (screen === 'big-check') {
+    // Recounted from the boxes: only rows without a mission count (a stale mission-row tick doesn't).
+    const details = box.closest('details');
+    const count = details?.querySelector('[data-big-check-count]');
+    if (count) count.textContent = String(details.querySelectorAll('.big-check-row:not(.big-check-row-mission) [data-big-check]:checked').length);
+  } else if (screen === 'broker-map') {
+    // The re-draw builds a new card: keep the sheet where it was, so the tapped box stays in view.
+    const scrollTop = app.querySelector('.star-card')?.scrollTop ?? 0;
+    renderCurrentRoute();
+    const card = app.querySelector('.star-card');
+    if (card) card.scrollTop = scrollTop;
+    card?.querySelector(`[data-big-check="${CSS.escape(id)}"]`)?.focus({ preventScroll: true });
+  }
+}
+
+// The Big Check's filter hides rows in place (nothing is re-drawn, nothing leaves the page). While
+// it holds a query, groups with a match open; clearing it puts each group back as it was. The work
+// runs in an animation frame, one pending at a time, so fast typing over ~950 rows lays out once
+// per frame; the frame reads the input's value then, so the last keystroke always wins.
+let filterFrame = 0;
+function bigCheckFilter(e) {
+  const input = e.target;
+  if (!(input instanceof HTMLInputElement) || !input.matches('[data-big-check-filter]')) return;
+  if (filterFrame) return;
+  filterFrame = requestAnimationFrame(() => {
+    filterFrame = 0;
+    if (input.isConnected) applyBigCheckFilter(input);
+  });
+}
+
+function applyBigCheckFilter(input) {
+  const screen = input.closest('.big-check');
+  if (!screen) return;
+  const query = input.value;
+  const active = query.trim() !== '';
+  let any = false;
+  for (const details of screen.querySelectorAll('details')) {
+    let shown = 0;
+    for (const row of details.querySelectorAll('.big-check-row')) {
+      const hit = nameMatches(row.querySelector('.big-check-name')?.textContent, query);
+      row.hidden = !hit;
+      if (hit) shown += 1;
+    }
+    details.hidden = shown === 0;
+    if (active) {
+      if (details.dataset.wasOpen === undefined) details.dataset.wasOpen = details.open ? '1' : '';
+      details.open = shown > 0;
+    } else if (details.dataset.wasOpen !== undefined) {
+      details.open = details.dataset.wasOpen === '1';
+      delete details.dataset.wasOpen;
+    }
+    if (shown) any = true;
+  }
+  const empty = screen.querySelector('.big-check-empty');
+  if (empty) empty.hidden = any;
 }
 
 const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'set-residency', 'change-residency']);
@@ -1233,6 +1339,8 @@ app.addEventListener('gesturestart', (e) => {
 
 app.addEventListener('change', refreshDebriefForm);
 app.addEventListener('input', refreshDebriefForm);
+app.addEventListener('change', bigCheckChange);
+app.addEventListener('input', bigCheckFilter);
 
 window.reclaimCity = {
   navigate,

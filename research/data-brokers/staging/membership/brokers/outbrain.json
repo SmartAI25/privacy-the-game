@@ -1,0 +1,22 @@
+{
+  "id": "outbrain",
+  "name": "Outbrain",
+  "aliases": [
+    "Outbrain Direct Response (ODR) by Teads"
+  ],
+  "parent": null,
+  "kind": [
+    "ad-network"
+  ],
+  "registries": {},
+  "sells": [],
+  "optOut": null,
+  "size": {
+    "known": false,
+    "signals": []
+  },
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

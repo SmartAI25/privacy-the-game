@@ -6,7 +6,8 @@
     "LoopMe Intelligent Marketplace",
     "LoopMe, Inc.",
     "LoopMe Ltd",
-    "LOOPME LTD"
+    "LOOPME LTD",
+    "LoopMe"
   ],
   "parent": null,
   "kind": [
@@ -32,7 +33,8 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "mem-nai-members-2026"
   ],
   "website": "https://loopme.com"
 }

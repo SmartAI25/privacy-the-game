@@ -1,7 +1,10 @@
 {
   "id": "kargo-global",
   "name": "Kargo Global LLC",
-  "aliases": [],
+  "aliases": [
+    "Kargo Global",
+    "Kargo"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -22,7 +25,9 @@
     "signals": []
   },
   "sources": [
-    "registry-ca-2026-10-18"
+    "registry-ca-2026-10-18",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.kargo.com"
 }

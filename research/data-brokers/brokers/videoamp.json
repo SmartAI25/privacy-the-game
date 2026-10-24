@@ -2,7 +2,8 @@
   "id": "videoamp",
   "name": "VideoAmp, Inc.",
   "aliases": [
-    "VIDEOAMP INC"
+    "VIDEOAMP INC",
+    "VideoAmp"
   ],
   "parent": null,
   "kind": [
@@ -29,7 +30,8 @@
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
     "registry-or-2026-10-18",
-    "registry-vt-2026-10-19"
+    "registry-vt-2026-10-19",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.videoamp.com"
 }

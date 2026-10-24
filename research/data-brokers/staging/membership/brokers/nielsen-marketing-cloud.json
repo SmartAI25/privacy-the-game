@@ -1,0 +1,11 @@
+{
+  "id": "nielsen-marketing-cloud",
+  "name": "The Nielsen Marketing Cloud",
+  "aliases": [
+    "Nielsen"
+  ],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

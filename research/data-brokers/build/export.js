@@ -73,7 +73,20 @@ export async function buildExport(dir) {
       }),
     }))
     .sort((a, b) => cmp(a.from, b.from) || cmp(a.to, b.to) || cmp(a.type, b.type));
-  return { formatVersion: FORMAT_VERSION, asOf, brokers, links };
+  // Sweeps (build/sweeps.json) are additive: a reader treats a missing `sweeps` as {}.
+  const sweepsCfg = await readOptional(join(dir, 'build', 'sweeps.json'), null);
+  const out = { formatVersion: FORMAT_VERSION, asOf, brokers, links };
+  if (sweepsCfg) out.sweeps = exportSweeps(sweepsCfg, sources);
+  return out;
+}
+
+export function exportSweeps(sweeps, sources) {
+  return Object.fromEntries(Object.keys(sweeps).sort().map((id) => {
+    const sw = sweeps[id];
+    const s = sources[sw.source];
+    if (!s) throw new Error(`sweep ${id}: unknown source "${sw.source}"`);
+    return [id, { name: sw.name, source: { url: s.url, archived: s.archived }, members: [...sw.members].sort() }];
+  }));
 }
 
 export const serialize = (data) => JSON.stringify(data) + '\n';

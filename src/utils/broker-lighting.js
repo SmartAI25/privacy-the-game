@@ -5,7 +5,7 @@
 // A line lights only the records it names (never a parent's). A `none`
 // opt-out star is never lit and sits outside the coverage denominator. Buyers
 // are never lit. DROP lights CA-registered brokers only for a California
-// resident. NAI/DAA give a "this browser only" halo, never a light. Freezes
+// resident. A sweep in map.sweeps (only DAA WebChoices: the NAI runs no one-shot opt-out) gives a "this browser only" halo, never a light. Freezes
 // give a ring, never a light. Re-check-due (amber) stars count in full.
 
 import { BROKER_CHECKLISTS, LEGACY_ALL_ANSWERS, FREEZE_RINGS } from '../data/broker-checklists.js';

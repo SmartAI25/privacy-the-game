@@ -60,7 +60,7 @@
 >
 > Acxiom — now rebranded as LiveRamp — has profiles on 2.5 billion consumers worldwide. That is not a metaphor for "a lot." That is the literal number they report to investors. Two and a half billion individual behavioral profiles maintained by a single company most people have never heard of.
 >
-> The good news: bulk opt-out tools exist. The NAI Consumer Opt-Out covers 100+ ad networks in one click. The DAA WebChoices tool does the same for interest-based ads. And Global Privacy Control — a browser signal supported by Firefox, Brave, and DuckDuckGo — tells every website you visit that you opt out of data sale and sharing. Under California law, businesses must honor it.
+> The good news: there is a bulk opt-out. DAA WebChoices tries to opt your browser out of interest-based ads from about a hundred participating companies in one run, by cookie, so a browser that blocks third-party cookies can make some of them fail. The NAI no longer has a one-click tool: its page points you to each member's own opt-out and to a Global Privacy Control extension. And Global Privacy Control — a browser signal supported by Firefox, Brave, and DuckDuckGo — tells every website you visit that you opt out of data sale and sharing. Under California law, businesses must honor it.
 
 ### Location Data Brokers
 
@@ -264,7 +264,7 @@
 
 **`progress_75_alt`**
 
-> 75% of The Reclamation complete. Look at what you've done. Credit frozen at five bureaus. Opted out of a dozen people-search sites. Filed requests with LexisNexis and Thomson Reuters. Blocked 100+ ad networks. Locked down your phone's location permissions. The data they have on you right now is the most they'll ever have. From here, it only gets smaller.
+> 75% of The Reclamation complete. Look at what you've done. Credit frozen at five bureaus. Opted out of a dozen people-search sites. Filed requests with LexisNexis and Thomson Reuters. Ran the DAA bulk opt-out. Locked down your phone's location permissions. The data they have on you right now is the most they'll ever have. From here, it only gets smaller.
 
 ### District Complete
 
@@ -313,3 +313,45 @@
 **`return_idle_check_2`**
 
 > Still here? The next broker on the list won't opt you out of selling your data if you don't ask. That's the whole system — default is "sell." You have to make it "don't." Let's make it "don't."
+
+---
+
+## 7. Field Map
+
+The Broker Constellation (`#/reclamation/map`) and the Big Check (`#/reclamation/big-check`). These live in `BROKER_MAP_DIALOGUE` in `src/data/dialogue.js`. They carry no digits, and they claim only what the map's records show. The one-time lines (`opened`, `sweep`, `firstHub`, `noOptOut`, `bigCheck`, in that order of precedence) each show once per save; the save remembers them in `brokerMap.scout` (1 seen, 0 waiting for a later visit). One line shows per map visit.
+
+**`firstVisit`** *(first map visit only; Liz's line)*
+
+> There's a whole constellation of data brokers up there, trading in what drifted up out of the city. The lit stars are the ones your opt-outs reach. Tap one to see its name.
+
+**`opened`** *(once, from the second map visit on)*
+
+> This is the whole field, as far as the public record goes. Every star is a company on a state data broker registry or an ad industry member list, or one that public documents tie to them. The big ones are big because of what the records show them owning, supplying or selling to, not because we guessed. The shapes on the rim are the buyers the contract records show paying for it. Dim means not yet. Lime means you filed.
+
+**`sweep`** *(once, on a map visit where DROP has newly lit ten or more stars, or a later visit if another line showed then; it comes before `firstHub`, so the DROP visit explains DROP)*
+
+> One request, a whole cluster lit. That's DROP: every broker registered in California has to process it.
+
+**`firstHub`** *(once, on a map visit where a hub has newly lit, or a later visit if another line showed then)*
+
+> That's a hub. A lot of the documented lines run through it, so it counts for more of the field than a small site does.
+
+**`noOptOut`** *(once, on the first card opened for a star with no opt-out)*
+
+> Some of them don't let you leave. When there's no opt-out, a complaint to a regulator still puts it on the record.
+
+**`bigCheck`** *(once, on the first Big Check visit)*
+
+> This is the long tail: every broker on the map your opt-outs haven't reached yet. Where a mission covers one, it points you there. It's optional, and it never counts toward your districts, your city lights or the city's totals. It's here for when you want to finish the job.
+
+**`nudge`** *(while a filed mission has no recorded lines)*
+
+> Tell Scout which ones you filed.
+
+**`dropNotResident`** *(DROP filed, not a California resident)*
+
+> DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.
+
+**`dropUnsaid`** *(DROP filed, residency not said)*
+
+> We only light DROP if you tell us you live in California.

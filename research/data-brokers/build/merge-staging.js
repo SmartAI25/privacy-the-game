@@ -1,6 +1,6 @@
 // Folds research/data-brokers/staging/<family>/ into the dataset.
 // Curation lives in build/ config, never in hand edits:
-//   id-map.json         { family: { stagedId: canonicalId } }, final (no name matching)
+//   id-map.json         { family: { stagedId: canonicalId | { id, reason } } }, final (no name matching)
 //   alias-blocklist.json { brokerId: [alias] }, removed after the merge
 //   alias-blocklist.json { brokerId: [{ alias, reason }] }
 //   link-overrides.json { drop: [{from,to,type,family?,reason}], unpublish: [...], reassign: [{from,to,type,newFrom,reason}],
@@ -94,6 +94,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const { tmpdir } = await import('node:os');
   const stDir = join(datasetDir, 'staging', family);
   const rejected = [];
+  const warnings = [];
   const reject = (item, reason) => rejected.push({ item, reason });
 
   const existingBrokers = await readBrokers(join(datasetDir, 'brokers'));
@@ -102,7 +103,13 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const cfg = (f, fb) => readJson(join(datasetDir, 'build', f), fb);
   const idMapAll = await cfg('id-map.json', {});
   if (Object.values(idMapAll).some((v) => typeof v === 'string')) throw new Error('id-map.json must be family-scoped: { "<family>": { stagedId: canonicalId } }');
-  const idMap = idMapAll[family] ?? {};
+  // An entry is a canonical id, or { id, reason } when the pin records why (the membership family's pins do).
+  const idMap = {};
+  for (const [k, v] of Object.entries(idMapAll[family] ?? {})) {
+    if (typeof v === 'string') idMap[k] = v;
+    else if (isObj(v) && isStr(v.id) && isStr(v.reason)) idMap[k] = v.id;
+    else throw new Error(`id-map.json ${family}.${k}: must be a record id or { id, reason }`);
+  }
   const aliasBlock = await cfg('alias-blocklist.json', {});
   const linkOv = await cfg('link-overrides.json', {});
   const recordOv = await cfg('record-overrides.json', {});
@@ -135,11 +142,25 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
   const usable = new Set(Object.keys(sources));
   const badSources = new Set();
   let sourcesAdded = 0;
+  let sourcesUpdated = 0;
   for (const [id, s] of Object.entries(stSources)) {
     const errs = validateSource(id, s);
     if (errs.length) { badSources.add(id); reject({ source: id }, `source ${id} rejected: ${errs.join('; ')}`); continue; }
     if (sources[id]) {
       if (sources[id].url !== s.url) { badSources.add(id); reject({ source: id }, `source ${id} rejected: id already used by a different url`); }
+      // The same document re-staged with a new capture (an old one the Wayback Machine never saved):
+      // staging is the truth for its archived copy and the day it was read.
+      else if (sources[id].archived !== s.archived || sources[id].accessed !== s.accessed) {
+        const cur = sources[id];
+        // Never roll a capture back: a staged copy read before the existing one is a stale checkout.
+        if (s.accessed < cur.accessed) {
+          reject({ source: id, existing: { archived: cur.archived, accessed: cur.accessed }, staged: { archived: s.archived, accessed: s.accessed } }, `source ${id}: staged accessed ${s.accessed} is older than existing ${cur.accessed}; existing kept`);
+          continue;
+        }
+        mergedSources[id] = { ...cur, archived: s.archived, accessed: s.accessed };
+        warnings.push(`source ${id} refreshed: archived ${cur.archived} -> ${s.archived}; accessed ${cur.accessed} -> ${s.accessed}`);
+        sourcesUpdated++;
+      }
       continue;
     }
     mergedSources[id] = s; usable.add(id); sourcesAdded++;
@@ -157,7 +178,6 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     keyIds.set(k, [...(keyIds.get(k) ?? []), b.id]);
   }
   // Two existing records with the same legal key: a legal-name match can only go to the first one.
-  const warnings = [];
   for (const [k, ids] of keyIds) if (ids.length > 1) warnings.push(`legalKey "${k}" is shared by existing records ${ids.join(', ')}; a staged record matched by legal name goes to ${byKey.get(k)}`);
   const mapId = (id) => idMap[id] ?? id;
   const resolved = new Map(); // staged id -> canonical id
@@ -398,7 +418,7 @@ export async function mergeStaging(datasetDir, family, { dryRun = false } = {}) 
     errors = (await validateDataset(scratch)).errors;
   } finally { await rm(scratch, { recursive: true, force: true }); }
 
-  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, rejected, matches: matchLog, warnings, errors, written: false };
+  const result = { added: added.size, updated: updated.size, linksAdded, linksUpdated, sourcesAdded, sourcesUpdated, rejected, matches: matchLog, warnings, errors, written: false };
   if (errors.length || dryRun) return result;
 
   await mkdir(join(datasetDir, 'brokers'), { recursive: true });
@@ -423,7 +443,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.exit(1);
   }
   for (const w of r.warnings) console.warn(`warning: ${w}`);
-  console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, rejected: r.rejected.length, warnings: r.warnings.length }));
+  console.log(JSON.stringify({ family, dryRun, added: r.added, updated: r.updated, linksAdded: r.linksAdded, linksUpdated: r.linksUpdated, sourcesAdded: r.sourcesAdded, sourcesUpdated: r.sourcesUpdated, rejected: r.rejected.length, warnings: r.warnings.length }));
   if (dryRun) { if (r.rejected.length) console.log(JSON.stringify(r.rejected, null, 2)); }
   else {
     const { writeFile, mkdir } = await import('node:fs/promises');

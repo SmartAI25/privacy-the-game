@@ -150,6 +150,36 @@ describe('mergeStaging', () => {
     expect(l.published).toBe(false);
   });
 
+  it('a re-staged source with the same url refreshes its archived copy and accessed date', async () => {
+    // Two Publicis captures cited since Phase 1 were never saved by the Wayback Machine; re-staging
+    // fresh ones must reach sources.json without a full rebuild (which would discard URL checks).
+    const fresh = 'https://web.archive.org/web/20261024073937/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: fresh, accessed: '2026-10-24' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.sourcesUpdated).toBe(1);
+    const out = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8'));
+    expect(out.reg).toMatchObject({ url: 'https://example.gov/doc', archived: fresh, accessed: '2026-10-24', kind: 'ftc-complaint' });
+  });
+
+  it('a refreshed source is logged as a warning, old to new archived and accessed', async () => {
+    const fresh = 'https://web.archive.org/web/20261024073937/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: fresh, accessed: '2026-10-24' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.warnings).toContain(`source reg refreshed: archived ${src().archived} -> ${fresh}; accessed 2026-10-18 -> 2026-10-24`);
+  });
+
+  it('a re-staged source read earlier than the existing one is rejected and the existing kept', async () => {
+    const old = 'https://web.archive.org/web/20250101000000/https://example.gov/doc';
+    await setup({ sources: { reg: src() }, staged: { sources: { reg: src({ archived: old, accessed: '2025-01-01' }) } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.sourcesUpdated).toBe(0);
+    expect(r.rejected.some((x) => /source reg: staged accessed 2025-01-01 is older than existing 2026-10-18; existing kept/.test(x.reason))).toBe(true);
+    const out = JSON.parse(await readFile(join(dir, 'sources.json'), 'utf8'));
+    expect(out.reg).toEqual(src());
+  });
+
   it('new broker without source is rejected', async () => {
     await setup({ staged: { brokers: [{ id: 'nu', name: 'Nu', kind: ['marketing'], sources: [] }] } });
     const r = await mergeStaging(dir, 'fam');
@@ -239,6 +269,19 @@ describe('mergeStaging', () => {
     expect(await readLinks()).toHaveLength(1);
     expect(r.rejected).toHaveLength(4);
     expect(r.rejected.some((x) => /self-link/.test(x.reason))).toBe(true);
+  });
+
+  it('id-map.json accepts { id, reason } entries', async () => {
+    await setup({ brokers: [broker('xad', 'xAd, Inc.')], staged: { brokers: [{ id: 'groundtruth', name: 'GroundTruth', sources: ['reg'] }] }, idMap: { groundtruth: { id: 'xad', reason: 'CA registry DBA' } } });
+    const r = await mergeStaging(dir, 'fam');
+    expect(r.errors).toEqual([]);
+    expect(r.matches).toEqual([{ stagedId: 'groundtruth', existingId: 'xad', matchedBy: 'id-map' }]);
+    expect((await readB('xad')).aliases).toContain('GroundTruth');
+  });
+
+  it('id-map.json rejects an entry without a reason', async () => {
+    await setup({ brokers: [broker('xad', 'xAd, Inc.')], idMap: { groundtruth: { id: 'xad' } } });
+    await expect(mergeStaging(dir, 'fam')).rejects.toThrow(/id, reason/);
   });
 
   it('id-map.json redirects staged ids and link endpoints', async () => {

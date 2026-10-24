@@ -29,7 +29,9 @@
   "sources": [
     "registry-ca-2026-10-18",
     "registry-tx-2026-10-18",
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.magnite.com"
 }

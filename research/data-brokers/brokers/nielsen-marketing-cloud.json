@@ -1,7 +1,10 @@
 {
   "id": "nielsen-marketing-cloud",
   "name": "Nielsen Marketing Cloud",
-  "aliases": [],
+  "aliases": [
+    "The Nielsen Marketing Cloud",
+    "Nielsen"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -17,7 +20,9 @@
     "signals": []
   },
   "sources": [
-    "registry-vt-2026-10-19"
+    "registry-vt-2026-10-19",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.nielsen.com/"
 }

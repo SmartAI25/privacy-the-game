@@ -11,6 +11,11 @@ export const REGISTRY_KEYS = Object.freeze(['CA', 'VT', 'TX', 'OR']);
 // SEC filings, statutory annual reports filed with non-US regulators, and US federal procurement records.
 // A published link must cite at least one source of one of these kinds.
 export const TIER_A_SOURCE_KINDS = Object.freeze(['sec-10k', 'sec-8k', 'sec-20f', 'sec-40f', 'annual-report', 'ftc-complaint', 'ftc-order', 'cfpb-order', 'court', 'procurement']);
+// An industry body's published list of member or participating companies (README "Sweeps"). It can source a
+// broker record and back a sweep, but never a link: membership says nothing about who owns, supplies or buys from whom.
+export const MEMBER_LIST_KIND = 'member-list';
+// Sweeps a broker mission's checklist can name (src/data/broker-checklists.js): one opt-out tool that covers many companies.
+export const SWEEP_IDS = Object.freeze(['nai', 'daa']);
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const isStr = (x) => typeof x === 'string' && x.trim() !== '';
@@ -99,7 +104,8 @@ export function validateBroker(b, { sourceIds = new Set() } = {}) {
   return errs;
 }
 
-// sourceKinds (optional Map id -> kind): when given, a published link must cite a TIER_A_SOURCE_KINDS source.
+// sourceKinds (optional Map id -> kind): when given, a published link must cite a TIER_A_SOURCE_KINDS source,
+// and no link, published or not, may cite a member-list source.
 export function validateLink(l, { brokerIds = new Set(), sourceIds = new Set(), sourceKinds } = {}) {
   if (!isObj(l)) return ['link: must be an object'];
   const p = `link ${l.from}->${l.to}`;
@@ -117,6 +123,31 @@ export function validateLink(l, { brokerIds = new Set(), sourceIds = new Set(), 
   if (l.published === true && sourceKinds && Array.isArray(l.sources) && !l.sources.some((s) => TIER_A_SOURCE_KINDS.includes(sourceKinds.get(s)))) {
     errs.push(`${p}: a published link must cite at least one tier-A source (${TIER_A_SOURCE_KINDS.join('|')})`);
   }
+  if (sourceKinds && Array.isArray(l.sources) && l.sources.some((s) => sourceKinds.get(s) === MEMBER_LIST_KIND)) {
+    errs.push(`${p}: a member-list source can't back a link`);
+  }
+  return errs;
+}
+
+// sweeps: build/sweeps.json, { <sweep id>: { name, source, members: [broker id] } }. sources: the sources.json object.
+export function validateSweeps(sweeps, { brokerIds = new Set(), sources = {} } = {}) {
+  if (!isObj(sweeps)) return ['sweeps: must be an object'];
+  const errs = [];
+  for (const [id, sw] of Object.entries(sweeps)) {
+    const p = `sweep ${id}`;
+    if (!SWEEP_IDS.includes(id)) errs.push(`${p}: unknown sweep id (expected ${SWEEP_IDS.join('|')})`);
+    if (!isObj(sw)) { errs.push(`${p}: must be an object`); continue; }
+    if (!isStr(sw.name)) errs.push(`${p}: name is required`);
+    if (!isStr(sw.source) || !Object.hasOwn(sources, sw.source)) errs.push(`${p}: source "${sw.source}" not in sources.json`);
+    else if (sources[sw.source]?.kind !== MEMBER_LIST_KIND) errs.push(`${p}: source "${sw.source}" must be a ${MEMBER_LIST_KIND} source, not ${sources[sw.source]?.kind}`);
+    if (!Array.isArray(sw.members)) { errs.push(`${p}: members must be an array`); continue; }
+    const seen = new Set();
+    for (const m of sw.members) {
+      if (seen.has(m)) errs.push(`${p}: duplicate member "${m}"`);
+      seen.add(m);
+      if (!brokerIds.has(m)) errs.push(`${p}: unknown member "${m}"`);
+    }
+  }
   return errs;
 }
 
@@ -130,7 +161,15 @@ async function readJson(path, errors, fallback) {
   }
 }
 
-// Reads only brokers/*.json, links.json and sources.json under `dir`; staging/ is never touched.
+// A missing file is null; an unreadable or invalid one is an error.
+async function readOptionalJson(path, errors) {
+  const { readFile } = await import('node:fs/promises');
+  let text;
+  try { text = await readFile(path, 'utf8'); } catch (e) { if (e.code === 'ENOENT') return null; errors.push(`${path}: ${e.message}`); return null; }
+  try { return JSON.parse(text); } catch (e) { errors.push(`${path}: ${e.message}`); return null; }
+}
+
+// Reads only brokers/*.json, links.json, sources.json and (if present) build/sweeps.json under `dir`; staging/ is never touched.
 export async function validateDataset(dir) {
   const { readdir } = await import('node:fs/promises');
   const { join } = await import('node:path');
@@ -171,6 +210,9 @@ export async function validateDataset(dir) {
     if (linkKeys.has(k)) errors.push(`link ${l?.from}->${l?.to}: duplicate (from, to, type) ${k}`);
     linkKeys.add(k);
   }
+
+  const sweeps = await readOptionalJson(join(dir, 'build', 'sweeps.json'), errors);
+  if (sweeps !== null) errors.push(...validateSweeps(sweeps, { brokerIds, sources: isObj(sources) ? sources : {} }));
 
   return {
     errors,

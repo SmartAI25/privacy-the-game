@@ -14,6 +14,13 @@ import { createInitialState } from '../../src/state.js';
 const map = JSON.parse(readFileSync('src/data/broker-map.json', 'utf8'));
 const layout = JSON.parse(readFileSync('src/data/broker-layout.json', 'utf8'));
 const data = { map, layout };
+// The framing tests pin the people-search stars they light where Plan 2's layout put them: every data rebuild re-spaces
+// the outer ring, and these tests are about how the view frames lit stars, not about where the stars land.
+const PLAN2_POS = {
+  spokeo: [876.4, 716.1], whitepages: [643.5, 915.9], beenverified: [674.5, 154.6], mylife: [527.6, 927.7], nuwber: [234.9, 173.5],
+  'beenverified-llc-and-its-subsidiaries-and-affiliates': [559.5, 871.2], // the BeenVerified line lights this record too
+};
+const framing = { ...layout, stars: layout.stars.map((s) => (PLAN2_POS[s[0]] ? [s[0], ...PLAN2_POS[s[0]], s[3]] : s)) };
 const T = '2026-10-19';
 const WF = 'people_search-fortify-web-forms';
 const STRAG = 'people_search-reclaim-stragglers';
@@ -50,10 +57,14 @@ describe('the map screen', () => {
   });
 
   it('the browser-only legend row shows only when a sweep has members', () => {
-    expect(html).not.toContain('Opted out in this browser only');
-    expect(hasSweepMembers(map)).toBe(false);
+    // The real map carries the DAA WebChoices sweep, so the row shows; a map without sweeps hides it.
+    expect(hasSweepMembers(map)).toBe(true);
+    expect(html).toContain('Opted out in this browser only');
+    const { sweeps: _sweeps, ...bare } = map;
+    expect(hasSweepMembers(bare)).toBe(false);
+    expect(draw(fresh(), { data: { map: bare, layout } })).not.toContain('Opted out in this browser only');
     expect(hasSweepMembers({ sweeps: { nai: { members: [] } } })).toBe(false);
-    const withSweep = { ...map, sweeps: { nai: { members: [map.brokers[0].id] } } };
+    const withSweep = { ...bare, sweeps: { nai: { members: [map.brokers[0].id] } } };
     expect(hasSweepMembers(withSweep)).toBe(true);
     expect(draw(fresh(), { data: { map: withSweep, layout } })).toContain('Opted out in this browser only');
   });
@@ -222,10 +233,10 @@ describe('the map screen', () => {
 describe('the opening view', () => {
   it('opens zoomed in around the player\'s lit stars', () => {
     const l = brokerLighting(map, filedState(), T);
-    const v = initialView(map, layout, l, 2);
+    const v = initialView(map, framing, l, 2);
     expect(v.w).toBeLessThan(600);
     expect(v.h).toBeCloseTo(v.w * 2);
-    const pos = Object.fromEntries(layout.stars.map((s) => [s[0], s]));
+    const pos = Object.fromEntries(framing.stars.map((s) => [s[0], s]));
     for (const id of ['spokeo', 'whitepages']) {
       const [, x, y] = pos[id];
       expect(x).toBeGreaterThanOrEqual(v.x);
@@ -238,9 +249,9 @@ describe('the opening view', () => {
   it('lit stars spread across the sky open on their tightest bunch, still zoomed in', () => {
     const lines = { spokeo: '2026-10-01', whitepages: '2026-10-01', beenverified: '2026-10-01' };
     const s = withLines(withLines(fresh(), WF, lines), STRAG, { mylife: '2026-10-02', nuwber: '2026-10-02' });
-    const v = initialView(map, layout, brokerLighting(map, s, T), 2);
+    const v = initialView(map, framing, brokerLighting(map, s, T), 2);
     expect(v.w).toBeLessThanOrEqual(600);
-    const pos = Object.fromEntries(layout.stars.map((x) => [x[0], x]));
+    const pos = Object.fromEntries(framing.stars.map((x) => [x[0], x]));
     const shown = ['whitepages', 'mylife'].filter((id) => pos[id][1] >= v.x && pos[id][1] <= v.x + v.w && pos[id][2] >= v.y && pos[id][2] <= v.y + v.h);
     expect(shown).toEqual(['whitepages', 'mylife']);
   });
@@ -348,8 +359,8 @@ describe('fix round 1: framing', () => {
   it('a lit bunch near the bottom rim opens centred on it (the view may run past the map)', () => {
     const s = withLines(withLines(fresh(), WF, { whitepages: '2026-10-01' }), STRAG, { mylife: '2026-10-02' });
     const l = brokerLighting(map, s, T);
-    const b = litBunch(layout, l, 2);
-    const v = initialView(map, layout, l, 2);
+    const b = litBunch(framing, l, 2);
+    const v = initialView(map, framing, l, 2);
     expect(v.y + v.h).toBeGreaterThan(1000);
     expect(v.x + v.w / 2).toBeCloseTo(b.cx, 0);
     expect(v.y + v.h / 2).toBeCloseTo(b.cy, 0);
@@ -358,12 +369,12 @@ describe('fix round 1: framing', () => {
   it('+/- zoom about the selected star, else the lit bunch, else the centre', () => {
     const l = brokerLighting(map, filedState(), T);
     const v = { x: 400, y: 400, w: 500, h: 1000 };
-    const sp = layout.stars.find((x) => x[0] === 'spokeo');
-    expect(zoomAnchor(v, layout, l, 'spokeo')).toEqual({ x: sp[1], y: sp[2] });
-    const b = litBunch(layout, l, 2);
-    expect(zoomAnchor(v, layout, l, null)).toEqual({ x: b.cx, y: b.cy });
-    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, layout, l, 'spokeo')).toBeNull();
-    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, layout, brokerLighting(map, {}, T), null)).toBeNull();
+    const sp = framing.stars.find((x) => x[0] === 'spokeo');
+    expect(zoomAnchor(v, framing, l, 'spokeo')).toEqual({ x: sp[1], y: sp[2] });
+    const b = litBunch(framing, l, 2);
+    expect(zoomAnchor(v, framing, l, null)).toEqual({ x: b.cx, y: b.cy });
+    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, framing, l, 'spokeo')).toBeNull();
+    expect(zoomAnchor({ x: 0, y: 0, w: 200, h: 400 }, framing, brokerLighting(map, {}, T), null)).toBeNull();
     // Zooming about the anchor keeps it at the same place on screen.
     const z = zoomViewBox(v, 2, sp[1], sp[2], VIEW_BOUNDS);
     expect((sp[1] - z.x) / z.w).toBeCloseTo((sp[1] - v.x) / v.w);
@@ -388,11 +399,11 @@ describe('fix round 1: framing', () => {
     expect(h).toMatch(/@media \(max-width:359\.98px\)\{\.constellation-controls\{top:auto;bottom:8px;flex-direction:row\}/);
   });
 
-  it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 63%', () => {
+  it('the header reads <1% (escaped) when something is lit but the share floors to 0; DROP-yes stays 59%', () => {
     const h = draw(withLines(fresh(), WF, { spokeo: '2026-10-01' }));
     expect(head(h)).toBe('FIELD COVERED: &lt;1% · HUBS LIT 0/12');
     const drop = draw(setResidency(withLines(fresh(), STRAG, { drop: '2026-10-01' }), 'yes'));
-    expect(head(drop)).toBe('FIELD COVERED: 63% · HUBS LIT 6/12');
+    expect(head(drop)).toBe('FIELD COVERED: 59% · HUBS LIT 6/12');
   });
 
   it('DROP with "rather not say" has its own line', () => {

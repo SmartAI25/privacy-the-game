@@ -221,7 +221,16 @@ describe('broker lighting', () => {
     expect(stateOf(l, 'criteo')).toBe('dim');
     expect(litIds(l)).toEqual([]);
     expect(light({ brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T, daa: T }) }).halo).toEqual(['criteo']);
-    expect(brokerLighting(realMap, { brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T }) }, T).halo).toEqual([]);
+  });
+
+  it('on the real map, ticking nai lights and haloes nothing; daa haloes the WebChoices list', () => {
+    const nai = brokerLighting(realMap, { brokerFiled: filed('ad_trackers-fortify-bulk', { nai: T }) }, T);
+    expect(realMap.sweeps.nai).toBeUndefined();
+    expect(nai.halo).toEqual([]);
+    expect(litIds(nai)).toEqual([]);
+    const daa = brokerLighting(realMap, { brokerFiled: filed('ad_trackers-fortify-bulk', { daa: T }) }, T);
+    expect(daa.halo).toEqual([...realMap.sweeps.daa.members].sort());
+    expect(litIds(daa)).toEqual([]);
   });
 
   it('a Big Check tick lights that broker', () => {

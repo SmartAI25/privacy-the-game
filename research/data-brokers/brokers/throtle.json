@@ -1,7 +1,9 @@
 {
   "id": "throtle",
   "name": "THROTLE INC",
-  "aliases": [],
+  "aliases": [
+    "Throtle"
+  ],
   "parent": null,
   "kind": [],
   "registries": {
@@ -22,6 +24,8 @@
     "signals": []
   },
   "sources": [
-    "registry-or-2026-10-18"
+    "registry-or-2026-10-18",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ]
 }

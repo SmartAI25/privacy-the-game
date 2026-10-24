@@ -276,7 +276,9 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
   // buyer's diamond r√2). Only marks in view matter.
   const markBox = (s) => {
     const m = s.state === 'no-opt-out' ? s.r + 2 : s.state === 'buyer' ? s.r * 1.42 : s.r;
-    return { id: s.id, left: s.x - m, right: s.x + m, top: s.y - m, bottom: s.y + m };
+    // `bright`: a mark no label may cover even in a fallback (the player's own stars, and hubs).
+    const bright = s.state === 'lit' || s.state === 'amber' || s.broker.hub === true;
+    return { id: s.id, bright, left: s.x - m, right: s.x + m, top: s.y - m, bottom: s.y + m };
   };
   const marksInView = stars.filter((s) => s.x >= vx - 40 && s.x <= vx + vw + 40 && s.y >= vy - 40 && s.y <= vy + vh + 40).map(markBox);
   const fits = (b) => b.left >= vx && b.right <= vx + vw && b.top >= vy && b.bottom <= vy + vh && !(ctl && overlaps(b, ctl));
@@ -297,14 +299,15 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
       { lx: s.x + s.r, anchor: 'start', cy: s.y + s.r + gap + h / 2 },
       { lx: s.x - s.r, anchor: 'end', cy: s.y + s.r + gap + h / 2 },
     ];
+    // avoidMarks: 'all' marks, only 'bright' ones, or 'none'.
     const clear = (o, avoidMarks, padEm = LABEL_CLEAR_EM) => {
       const b = labelBox(lines, fontSize, o.lx, o.anchor, o.cy);
       const pad = fontSize * padEm;
       const padded = { left: b.left - pad, right: b.right + pad, top: b.top - pad, bottom: b.bottom + pad };
       return fits(b) && !placed.some((q) => overlaps(padded, q.box))
-        && !(avoidMarks && marksInView.some((m) => m.id !== s.id && overlaps(b, m)));
+        && !marksInView.some((m) => m.id !== s.id && avoidMarks !== 'none' && (avoidMarks === 'all' || m.bright) && overlaps(b, m));
     };
-    let pick = options.find((o) => clear(o, true));
+    let pick = options.find((o) => clear(o, 'all'));
     // A hub always keeps a name: when every side touches a star or crowds a name, take one that
     // only clears the other labels, then one lifted clear, then tightly.
     // A hub's name may also sit one clearance further above or below its star.
@@ -315,13 +318,16 @@ export function constellationSvg({ map, layout, lighting, selectedId = null, new
     ];
     // The player's own stars are what they came to see: they get the hub's fallback too.
     if (!pick && (hub || mine(s))) {
-      pick = options.find((o) => clear(o, false)) ?? lifted.find((o) => clear(o, false))
-        ?? options.find((o) => clear(o, false, LABEL_TIGHT_EM));
+      // A hub's name may sit over any dot (with DROP lit, hundreds of stars surround it); one of
+      // the player's own stars may cover dim dots but never another of theirs.
+      const marks = hub ? 'none' : 'bright';
+      pick = options.find((o) => clear(o, marks)) ?? lifted.find((o) => clear(o, marks))
+        ?? options.find((o) => clear(o, marks, LABEL_TIGHT_EM));
     }
     if (!pick && s.id === selId) pick = options.find((o) => fits(labelBox(lines, fontSize, o.lx, o.anchor, o.cy))) ?? options[0];
     if (!pick) continue;
     const cls = hub ? 'hub-label' : 'star-label';
-    const fill = s.state === 'lit' ? LIME : hub ? PALE : BUYER;
+    const fill = s.state === 'lit' ? LIME : s.state === 'amber' ? AMBER : hub ? PALE : BUYER;
     placed.push({ s, box: labelBox(lines, fontSize, pick.lx, pick.anchor, pick.cy), markup: labelMarkup({ cls, fill, fontSize, lines, ...pick }) });
   }
   placed.sort((a, b) => a.s.index - b.s.index);

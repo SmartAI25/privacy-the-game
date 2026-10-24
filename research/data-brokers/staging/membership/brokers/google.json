@@ -1,0 +1,11 @@
+{
+  "id": "google",
+  "name": "Google Inc.",
+  "aliases": [
+    "Google"
+  ],
+  "sources": [
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
+  ]
+}

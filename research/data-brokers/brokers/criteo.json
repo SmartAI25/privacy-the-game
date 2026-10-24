@@ -27,7 +27,9 @@
   },
   "sources": [
     "registry-ca-2026-10-18",
-    "enf-ftc-goodrx-complaint-2023"
+    "enf-ftc-goodrx-complaint-2023",
+    "mem-daa-webchoices-2026",
+    "mem-nai-members-2026"
   ],
   "website": "https://www.criteo.com"
 }

@@ -1,0 +1,314 @@
+{
+  "list": "nai",
+  "note": "No sweep: since at least 2026-10-24 the NAI runs no one-shot opt-out (thenai.org/how-to-opt-out/ offers a GPC Chrome extension, links to each member's own opt-out, and the DAA tools). The list sources records only.",
+  "source": "mem-nai-members-2026",
+  "sourceRecord": {
+    "url": "https://thenai.org/about-the-nai-2/members/",
+    "archived": "https://web.archive.org/web/20261024071604/https://thenai.org/about-the-nai-2/members/",
+    "kind": "member-list",
+    "title": "Network Advertising Initiative (NAI): NAI Members, the NAI's directory of its member companies",
+    "accessed": "2026-10-24"
+  },
+  "members": [
+    {
+      "name": "33Across",
+      "website": "http://www.33across.com/"
+    },
+    {
+      "name": "Accretive Media",
+      "website": "https://accretiveads.com"
+    },
+    {
+      "name": "Adform",
+      "website": "https://www.adform.com"
+    },
+    {
+      "name": "Adobe",
+      "website": "https://www.adobe.com/advertising-cloud.html"
+    },
+    {
+      "name": "AlikeAudience",
+      "website": "https://alikeaudience.com/"
+    },
+    {
+      "name": "Alliant",
+      "website": "https://alliantdata.com/"
+    },
+    {
+      "name": "Amazon Ads",
+      "website": "https://advertising.amazon.com"
+    },
+    {
+      "name": "Arity",
+      "website": "https://www.arity.com"
+    },
+    {
+      "name": "Attain",
+      "website": "https://www.attainoutcomes.com"
+    },
+    {
+      "name": "Audiencerate",
+      "website": "https://www.audiencerate.com/"
+    },
+    {
+      "name": "AuDigent",
+      "website": "https://audigent.com/"
+    },
+    {
+      "name": "Azira",
+      "website": "https://azira.com"
+    },
+    {
+      "name": "Beeswax/FreeWheel",
+      "website": "https://www.freewheel.com"
+    },
+    {
+      "name": "Branch",
+      "website": "https://branch.io/"
+    },
+    {
+      "name": "Cadent",
+      "website": "https://cadent.tv"
+    },
+    {
+      "name": "Catalina",
+      "website": "http://www.catalina.com/"
+    },
+    {
+      "name": "Clickagy",
+      "website": "https://www.clickagy.com"
+    },
+    {
+      "name": "Criteo",
+      "website": "https://www.criteo.com"
+    },
+    {
+      "name": "Cuebiq",
+      "website": "http://www.cuebiq.com/"
+    },
+    {
+      "name": "Datonics",
+      "website": "http://www.datonics.com"
+    },
+    {
+      "name": "DeepIntent",
+      "website": "https://www.deepintent.com"
+    },
+    {
+      "name": "Definitive Healthcare",
+      "website": "https://www.definitivehc.com"
+    },
+    {
+      "name": "Digital Envoy/Outlogic",
+      "website": "https://outlogic.io"
+    },
+    {
+      "name": "Epsilon",
+      "website": "http://www.lotame.com"
+    },
+    {
+      "name": "Eyeota",
+      "website": "http://www.eyeota.com"
+    },
+    {
+      "name": "Foursquare",
+      "website": "https://www.foursquare.com"
+    },
+    {
+      "name": "Google",
+      "website": "https://www.google.com"
+    },
+    {
+      "name": "GumGum",
+      "website": "http://www.gumgum.com"
+    },
+    {
+      "name": "HealthLink Dimensions",
+      "website": "https://healthlinkdimensions.com"
+    },
+    {
+      "name": "illuma",
+      "website": "https://weareilluma.com"
+    },
+    {
+      "name": "illumin",
+      "website": "https://illumin.com"
+    },
+    {
+      "name": "Index Exchange",
+      "website": "http://www.indexexchange.com"
+    },
+    {
+      "name": "InMarket",
+      "website": "https://inmarket.com/"
+    },
+    {
+      "name": "Innovid",
+      "website": "http://www.innovid.com"
+    },
+    {
+      "name": "IntentKey",
+      "website": "https://intentkey.com"
+    },
+    {
+      "name": "Kargo",
+      "website": "http://www.kargo.com"
+    },
+    {
+      "name": "Life360 Ads Featuring Nativo",
+      "website": "https://ads.life360.com"
+    },
+    {
+      "name": "LoopMe",
+      "website": "https://loopme.com"
+    },
+    {
+      "name": "Magnite",
+      "website": "https://www.magnite.com"
+    },
+    {
+      "name": "Media.net",
+      "website": "http://www.media.net/"
+    },
+    {
+      "name": "Microsoft Advertising",
+      "website": "http://www.microsoftadvertising.com/"
+    },
+    {
+      "name": "MiQ",
+      "website": "http://wearemiq.com"
+    },
+    {
+      "name": "Mountain",
+      "website": "http://mountain.com"
+    },
+    {
+      "name": "NextRoll",
+      "website": "https://www.nextroll.com"
+    },
+    {
+      "name": "Nexxen",
+      "website": "https://www.nexxen.com"
+    },
+    {
+      "name": "Nielsen",
+      "website": "https://www.nielsen.com"
+    },
+    {
+      "name": "Optimal",
+      "website": "https://www.winwithoptimal.com"
+    },
+    {
+      "name": "OptimizeRx",
+      "website": "https://www.optimizerx.com"
+    },
+    {
+      "name": "Outbrain Direct Response (ODR) by Teads",
+      "website": "http://www.outbrain.com/"
+    },
+    {
+      "name": "Perform Media",
+      "website": "https://performmedia.com"
+    },
+    {
+      "name": "Perion",
+      "website": "https://perion.com"
+    },
+    {
+      "name": "Phreesia",
+      "website": "https://www.phreesia.com"
+    },
+    {
+      "name": "Place Exchange",
+      "website": "https://www.placeexchange.com/"
+    },
+    {
+      "name": "PubMatic",
+      "website": "http://www.pubmatic.com"
+    },
+    {
+      "name": "PulsePoint",
+      "website": "https://www.pulsepoint.com/"
+    },
+    {
+      "name": "PurpleLab",
+      "website": "https://purplelab.com"
+    },
+    {
+      "name": "Quantcast",
+      "website": "http://www.quantcast.com/"
+    },
+    {
+      "name": "RTB House",
+      "website": "https://www.rtbhouse.com"
+    },
+    {
+      "name": "Samba.TV",
+      "website": "https://samba.tv/"
+    },
+    {
+      "name": "ShareThis",
+      "website": "http://www.sharethis.com"
+    },
+    {
+      "name": "Simpli.fi",
+      "website": "http://www.simpli.fi/"
+    },
+    {
+      "name": "Sonobi",
+      "website": "https://sonobi.com/"
+    },
+    {
+      "name": "Swoop",
+      "website": "https://www.swoop.com/"
+    },
+    {
+      "name": "Taboola",
+      "website": "http://www.taboola.com"
+    },
+    {
+      "name": "Tapad",
+      "website": "http://www.tapad.com/"
+    },
+    {
+      "name": "The Trade Desk",
+      "website": "http://www.thetradedesk.com"
+    },
+    {
+      "name": "Throtle",
+      "website": "http://throtle.io/"
+    },
+    {
+      "name": "TripleLift",
+      "website": "https://triplelift.com"
+    },
+    {
+      "name": "Unacast",
+      "website": "https://www.unacast.com"
+    },
+    {
+      "name": "Veeva Crossix",
+      "website": "https://www.veeva.com"
+    },
+    {
+      "name": "Viant",
+      "website": "http://www.viantinc.com/"
+    },
+    {
+      "name": "VideoAmp",
+      "website": "https://videoamp.com"
+    },
+    {
+      "name": "Wunderkind",
+      "website": "https://www.wunderkind.co/"
+    },
+    {
+      "name": "Yahoo",
+      "website": "https://yahooinc.com/"
+    },
+    {
+      "name": "Yieldmo",
+      "website": "https://yieldmo.com/"
+    }
+  ]
+}

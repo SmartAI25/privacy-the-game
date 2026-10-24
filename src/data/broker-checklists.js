@@ -6,6 +6,9 @@
 
 const DROP_HINT = 'California residents only. It lights the map only if you tell the map you live in California.';
 const COOKIE_HINT = 'Sets an opt-out cookie in this browser on this device. It deletes nothing.';
+// The NAI runs no one-shot opt-out any more (thenai.org/how-to-opt-out/, archived 2026-10-24), so the map has no
+// `nai` sweep and this line lights and haloes nothing. Its id stays `nai` so saved dates keep their meaning.
+const NAI_HINT = 'The NAI no longer opts you out in one go: it sends you to each member, or adds a Global Privacy Control signal in Chrome. It lights nothing on the map.';
 
 const b = (id, label, ...brokers) => Object.freeze({ id, label, brokers });
 const site = (id, label, notLit) => Object.freeze({ id, label, notLit: [notLit] });
@@ -66,7 +69,7 @@ export const BROKER_CHECKLISTS = Object.freeze({
     b('sift', 'Sift', 'sift'),
   ),
   'ad_trackers-fortify-bulk': lines(
-    sweep('nai', 'NAI opt-out tool', 'nai', COOKIE_HINT),
+    sweep('nai', 'NAI: GPC extension or member links', 'nai', NAI_HINT),
     sweep('daa', 'DAA WebChoices', 'daa', COOKIE_HINT),
   ),
   'ad_trackers-reclaim-individual': lines(
