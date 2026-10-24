@@ -22,6 +22,8 @@ import { renderCityMap } from './screens/city-map.js';
 import { renderDistrict } from './screens/district.js';
 import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
+import { renderBrokerMap } from './screens/broker-map.js';
+import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
@@ -63,6 +65,10 @@ let resetAnywayMission = null;
 // The last route drawn, and the building #/saints was opened from (memory only).
 let lastRoute = null;
 let saintsFrom = null;
+// The broker map's view state (memory only, never in the URL).
+let selectedId = null;
+let view = null;
+let newlyLit = [];
 // When the player last saw the city map before this visit (Scout waves after a while away).
 let cityArrival;
 // The first-2FA hug was on screen this visit; it counts as seen once they leave.
@@ -72,6 +78,10 @@ let leavingBriefing = false;
 // Scout's reaction to the report just filed, shown on the district the player
 // lands on: { districtId, reaction, landed }. Kept for that one visit.
 let landingReaction = null;
+
+function loadBrokerMapData() {
+  loadBrokerData().then(() => renderCurrentRoute(), () => renderCurrentRoute());
+}
 
 function setNotice(text, hash = location.hash) {
   notice = { hash, text };
@@ -111,6 +121,10 @@ const screens = {
   }),
   building: ({ id }) => renderBuildingInterior(state, id),
   saints: () => renderSaints(state, { from: saintsFrom }),
+  'broker-map': () => {
+    if (brokerDataStatus() === 'idle') loadBrokerMapData();
+    return renderBrokerMap(state, { status: brokerDataStatus(), data: brokerData(), selectedId, view, newlyLit });
+  },
   briefing: ({ id }) => renderBriefing(state, id, { resetAnyway: resetAnywayMission === id }),
   debrief: ({ id }) => renderDebrief(state, id),
   recheck: ({ id }) => renderDebrief(state, id, { recheck: true }),
@@ -502,6 +516,9 @@ app.addEventListener('click', async (e) => {
     setTimeout(() => renderCurrentRoute(), 0);
   } else if (action === 'submit-debrief') {
     submitDebrief(el.dataset.mission);
+  } else if (action === 'retry-broker-data') {
+    loadBrokerMapData();
+    renderCurrentRoute();
   } else if (action === 'submit-recheck') {
     submitRecheck(el.dataset.mission);
   } else if (action === 'password-not-needed') {

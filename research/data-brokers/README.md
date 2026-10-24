@@ -214,7 +214,8 @@ Reading these numbers:
 { "formatVersion": 1, "asOf": "2026-10-19",
   "brokers": [ { "id": "…", "name": "…", "parent": null, "kind": [], "registries": {}, "sells": [],
                  "optOut": { "method": "web-form", "url": "…", "status": "verified", "verifiedAt": "2026-10-19" },
-                 "missions": [], "reach": 1, "hub": false } ],
+                 "missions": [], "reach": 1, "hub": false,
+                 "sources": [ { "url": "…", "archived": "https://web.archive.org/…", "kind": "filing" } ] } ],
   "links": [ { "from": "…", "to": "…", "type": "owns", "tier": "A", "claim": "…",
                "sources": [ { "url": "…", "archived": "https://web.archive.org/…" } ] } ] }
 ```
@@ -232,9 +233,10 @@ Reading these numbers:
 | `brokers[].optOut.alternates` | Other documented routes. Their URLs are not checked yet. |
 | `brokers[].missions` | Reclaim City missions that file with this broker; `[]` when none. |
 | `brokers[].reach`, `hub` | Reach and hub status (see "Reach and hubs"). |
+| `brokers[].sources` | The record's sources whose `kind` is not `registry`, as `url`, `archived` and `kind`, sorted by `url`; `[]` when none. Added without changing `formatVersion`, since readers that ignore it are unaffected. |
 | `links` | Published links only, sorted by `from`, `to`, `type`. Each source is given as its `url` and `archived` copy. |
 
-Not in the export: `aliases`, `website`, `size`, `sources` on broker records, and every unpublished link. Use the dataset files for those.
+Not in the export: `aliases`, `website`, `size`, registry-kind `sources` on broker records, and every unpublished link. Use the dataset files for those.
 
 ## How to rebuild
 
