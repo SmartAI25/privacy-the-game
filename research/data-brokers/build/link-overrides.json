@@ -255,6 +255,14 @@
       "claim": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\" under product or service code R612, \"SUPPORT- ADMINISTRATIVE: INFORMATION RETRIEVAL\".",
       "replaces": "USAspending.gov records Department of the Air Force award FA701417P3000 to LEXISNEXIS RISK SOLUTIONS INC (period of performance 2016-12-29 to 2021-01-08, FY2017–FY2021; $46,000.00 obligated), described in the award record as \"LEXISNEXIS ACCURINT\".",
       "reason": "procurement fact-check (R28): quotes only what the archived API capture 20261019075837 contains, the award description and PSC base code R612 (information retrieval); the PSC is what shows data access"
+    },
+    {
+      "from": "us-dcsa",
+      "to": "west-publishing",
+      "type": "buys",
+      "claim": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0058 to WEST PUBLISHING CORPORATION (period of performance 2023-08-01 to 2027-07-31; $528,177.36 obligated as of 2026-10-24), described in the award record as \"CLEAR PRO PART NUMBER 41447595 ISD\".",
+      "replaces": "USAspending.gov records Defense Counterintelligence and Security Agency award HS002123F0058 to WEST PUBLISHING CORPORATION (period of performance 2023-08-01 to 2026-07-31, FY2023–FY2026; $495,050.76 obligated), described in the award record as \"CLEAR PRO PART NUMBER 41447595 ISD\".",
+      "reason": "re-capture 2026-10-24 (web.archive.org/web/20261024084732): the award was extended and added to since 2026-10-19 — total_obligation 528177.36, end_date 2027-07-31 (last_modified 2026-07-20); the claim now dates its figures"
     }
   ]
 }
