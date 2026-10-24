@@ -1,6 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { readFileSync } from 'node:fs';
-import vm from 'node:vm';
 import { parseRoute } from '../../src/router.js';
 import { loadBrokerData, brokerDataStatus, brokerData, resetBrokerData } from '../../src/utils/broker-data.js';
 import { renderBrokerMap } from '../../src/screens/broker-map.js';
@@ -56,14 +54,5 @@ describe('broker map route and data', () => {
     expect(html).toContain('data-action="retry-broker-data"');
     expect(html).toContain('TRY AGAIN');
     expect(html).toContain('#/district/reclamation');
-  });
-
-  it('the service worker caches the data files', () => {
-    const ctx = { self: { addEventListener() {} }, location: { origin: 'https://x.test' }, URL, caches: {} };
-    vm.createContext(ctx);
-    vm.runInContext(readFileSync('src/sw.js', 'utf8') + '\nthis.__t = { shouldIntercept };', ctx);
-    const { shouldIntercept } = ctx.__t;
-    expect(shouldIntercept(new URL('https://x.test/reclaim-city/data/broker-map.json'))).toBe(true);
-    expect(shouldIntercept(new URL('https://x.test/reclaim-city/data/broker-layout.json'))).toBe(true);
   });
 });

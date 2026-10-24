@@ -76,7 +76,7 @@ export async function buildExport(dir) {
   return { formatVersion: FORMAT_VERSION, asOf, brokers, links };
 }
 
-export const serialize = (data) => JSON.stringify(data, null, 2) + '\n';
+export const serialize = (data) => JSON.stringify(data) + '\n';
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');

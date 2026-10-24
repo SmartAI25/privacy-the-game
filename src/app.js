@@ -373,7 +373,8 @@ function keepSelectedInView() {
 function sizeSheet() {
   const card = app.querySelector('.star-card');
   const stage = app.querySelector('.map-stage');
-  if (!card || !stage || !isPhone()) return;
+  if (!card || !stage) return;
+  if (!isPhone()) { card.style.maxHeight = ''; return; }
   const r = stage.getBoundingClientRect();
   const visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
   card.style.maxHeight = `${Math.round(Math.max(200, Math.min(window.innerHeight * 0.6, visible * 0.6)))}px`;
@@ -1148,8 +1149,11 @@ app.addEventListener('keydown', (e) => {
     return;
   }
   if (e.key === 'Escape' && selectedId && app.querySelector('.star-card')) {
-    const close = app.querySelector('[data-action="close-star"]');
-    if (close) { e.preventDefault(); close.click(); return; }
+    // Straight to closeCard: a click on CLOSE could be swallowed by a tap's click window.
+    e.preventDefault();
+    swallowClickUntil = 0;
+    closeCard();
+    return;
   }
   const el = keyActivationTarget(e);
   if (!el || !app.contains(el)) return;
@@ -1199,6 +1203,8 @@ document.addEventListener('click', (e) => {
   const refocus = cardFocusPending;
   cardFocusPending = false;
   if (late) return;
+  // A deliberate CLOSE right after a tap is never eaten.
+  if (e.target?.closest?.('[data-action="close-star"]')) return;
   e.preventDefault();
   e.stopPropagation();
   if (refocus) app.querySelector('.star-card')?.focus({ preventScroll: true });
@@ -1241,6 +1247,8 @@ window.addEventListener('resize', () => {
     const size = { w: window.innerWidth, h: window.innerHeight };
     const big = size.w !== lastSize.w || Math.abs(size.h - lastSize.h) > 120;
     lastSize = size;
+    // Leaving phone width: the sheet's inline height cap must not follow the card to the side layout.
+    if (!isPhone()) app.querySelector('.star-card')?.style.removeProperty('max-height');
     if (big && parseRoute(location.hash).screen === 'broker-map') renderCurrentRoute();
   }, 150);
 });
