@@ -18,7 +18,7 @@ When you cite a specific link, also cite the source document it rests on (its `u
 
 | | Count |
 |---|---|
-| Broker records | 973 |
+| Broker records | 972 |
 | Links (all tiers) | 158 |
 | Published links (tier A) | 106 |
 | Sources | 174 |
@@ -42,7 +42,7 @@ Published links by source family:
 
 The other 52 links are kept but not published: 10 tier B, 27 tier C, and 15 tier A links that review held back because the source's wording did not support publishing the claim (for example, a procurement award that reads as a software licence, a filing that says reports "combine information from" bureaus rather than that one buys from another, or a complaint that describes what a contract permitted rather than what the companies did). See "Evidence tiers" below.
 
-Of the 973 broker records, 806 come from the state registries, 97 were added by research (parent companies, subsidiaries named in filings, and government buyers), and 70 come only from the two industry member lists (see "Sweeps"). 93 records appear in at least one published link; most registered brokers have no documented link yet.
+Of the 972 broker records, 806 come from the state registries, 97 were added by research (parent companies, subsidiaries named in filings, and government buyers), and 69 come only from the two industry member lists (see "Sweeps"). 93 records appear in at least one published link; most registered brokers have no documented link yet.
 
 The count includes a few near-duplicates caused by typos in the registries themselves, such as `west-publising` beside `west-publishing` and `melissa-data-corporatoin` beside `melissa-data`. They are kept as separate records until research confirms they are the same company.
 
@@ -122,7 +122,7 @@ The game reads a derived file, `src/data/broker-map.json`, which holds only publ
 | `registries` | `{ "CA": "2026", "VT": …, "TX": …, "OR": … }`: the snapshot year a registry listed it in. |
 | `website` | Primary website, where a registry gives one. |
 | `sells` | What a source says it sells, in short phrases. |
-| `optOut` | How to opt out, or `null` if no route is known (229 records, 70 of them added from a member list). See below. |
+| `optOut` | How to opt out, or `null` if no route is known (228 records, 69 of them added from a member list). See below. |
 | `size` | `{ known, signals: [{ kind, value, source }] }`. `known: false` has no signals. |
 | `missions` | Reclaim City missions that file with this broker (game use only). |
 | `sources` | Ids in `sources.json` behind anything on the record. |
@@ -187,8 +187,8 @@ A sweep is one opt-out tool, run by an industry body, that covers many companies
 
 - **What a sweep claims.** Only that the company is on that tool's list on that date. It says nothing about what the company holds, whether the opt-out reaches all of it, or how long it lasts. WebChoices opt-outs are browser cookies: they cover one browser and are lost when its cookies are cleared, which is why the game marks these stars "browser only".
 - **The DAA list is the tool's, not the DAA's directory.** The DAA's "participating companies" page (youradchoices.com/participating) is a partial list that also names brand advertisers (car makers, banks, drug companies) the tool does not opt you out of. The tool's page is a JavaScript application behind a bot check and archives as a blank page, so, as with procurement, the `archived` copy is the JSON file the page loads, and the `url` is the tool.
-- **Matching.** A listed company joins an existing record when their legal names match under the rule in "Merging companies". The lists mostly give brand names, so "Criteo" matches "Criteo Corp." but "Facebook" does not match "Meta Platforms". A listing is also pinned onto an existing record in `build/id-map.json` (family `membership`, each pin with a `reason`) only when there is a documented tie: a state registry row lists that record with the list's brand as its DBA (for example xAd, Inc. d/b/a GroundTruth), or the list names the company the same way on the same website as a listing that matched (Kargo and Kargo Global, at kargo.com). Two listings of one company on the same website (Adobe and Adobe Marketing Cloud) become one record the same way. Liz's rule (2026-10-19): a new record only for a listed company the registries don't already list.
-- **New records.** Every other listing becomes a new record with `kind: ["ad-network"]`, no registries, `optOut: null`, unknown size and the list as its only source (70 records). Some share only a brand, an alias from research, or a website with a record already here (for example `facebook` beside `meta`, `experian-2` beside `experian`); they stay separate until a source ties the legal names. `staging/membership/NOTES.md` lists them for curators.
+- **Matching.** A listed company joins an existing record when their legal names match under the rule in "Merging companies". The lists mostly give brand names, so "Criteo" matches "Criteo Corp." but "Facebook" does not match "Meta Platforms". A listing is also pinned onto an existing record in `build/id-map.json` (family `membership`, each pin with a `reason`) only when there is a documented tie: a state registry row lists that record with the list's brand as its DBA (for example xAd, Inc. d/b/a GroundTruth); a tier A source already on the record names the brand as that same company or as its former legal name, quoted in the pin (Publicis's 2025 Universal Registration Document calls Lotame Solutions, Inc. "Lotame"); or the list names the company the same way on the same website as a listing that matched (Kargo and Kargo Global, at kargo.com). Two listings of one company on the same website (Adobe and Adobe Marketing Cloud) become one record the same way. Liz's rule (2026-10-19): a new record only for a listed company the registries don't already list.
+- **New records.** Every other listing becomes a new record with `kind: ["ad-network"]`, no registries, `optOut: null`, unknown size and the list as its only source (69 records). Some share only a brand, an alias from research or journalism, or a website with a record already here (for example `facebook` beside `meta`, `experian-2` beside `experian`); they stay separate until a source ties the legal names. `staging/membership/NOTES.md` lists them for curators.
 - **Membership never backs a link,** and `member-list` is not a tier A source kind.
 
 The two lists reach 127 records, 47 of them on both. `build/sweeps.json` holds each sweep's `name`, `source` and sorted `members` (broker ids). The validator checks it: each sweep id is `nai` or `daa`, its source is a `member-list` source, and every member is a record, listed once.

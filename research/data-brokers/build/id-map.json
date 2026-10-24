@@ -97,6 +97,10 @@
     "viant-specific-media-vindico": {
       "id": "viant",
       "reason": "\"Viant (Specific Media/Vindico) (DAA)\" and \"Viant (NAI)\" are one company on the same website: the NAI member directory (mem-nai-members-2026) gives http://www.viantinc.com/ and the DAA participants file (archived https://web.archive.org/web/20261024073003/https://cms-cache.aboutads.info/cms-participants.json) gives https://www.viantinc.com/."
+    },
+    "lotame": {
+      "id": "lotame-solutions",
+      "reason": "Tier-A source on the record: Publicis Groupe 2025 Universal Registration Document, Note 3 (sec-publicis-urd-2025-note3; re-archived https://web.archive.org/web/20261024073937/https://publicis-groupe.publispeak.com/2025-universal-registration-document/article/279/) says \"in April 2025, 100% of Lotame Solutions, Inc., an independent specialist in data and digital identity solutions\" and then names that company \"Lotame\" in its acquisitions table (\"Cash consideration Lotame 122\"). The DAA list names the company \"Lotame\"."
     }
   }
 }
