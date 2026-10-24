@@ -24,6 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
+import { initDecks, deckPositions } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -224,8 +225,11 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     const watched = hasInteriorScreen(route) ? newlySealed(state, route.params.id) : null;
     // The map re-draws on every zoom and tap: no screen fade on those (it flashes the sky).
     app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
+    // A re-draw (an action, data arriving) keeps each slide deck on its slide; arriving starts at slide 1.
+    const decksBefore = tracksPageview(cause) ? null : deckPositions(app);
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
+    initDecks(app, decksBefore);
     // The Big Check's line is drawn once the data is in; then it's seen.
     if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {
       const seen = markScoutSeen(state, 'bigCheck');

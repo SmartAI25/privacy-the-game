@@ -346,3 +346,62 @@ img { image-rendering: pixelated; }
 .intro-more-toggle { font-family: var(--font-display); font-style: normal; font-size: 8px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); border: 1px solid rgba(0,229,255,0.35); padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
 .intro-more-toggle::before { content: 'MORE ▾'; }
 .intro-more[open] .intro-more-toggle::before { content: 'LESS ▴'; }
+
+/* deck: start */
+/* A slide deck for phones (src/components/deck.js): a scroll-snap row under 900px,
+   ordinary stacked blocks at 900px and up. */
+.deck { scroll-behavior: smooth; }
+.slide:focus, .slide-heading:focus { outline: none; }
+.slide:focus-visible, .slide-heading:focus-visible { outline: 1px dashed rgba(0, 229, 255, 0.6); outline-offset: 2px; }
+.slide-heading { font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--cyan); margin: 0 0 10px; overflow-wrap: anywhere; }
+.deck-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.deck-btn {
+  min-height: 44px;
+  min-width: 76px;
+  padding: 0 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  cursor: pointer;
+}
+.deck-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.deck-btn:disabled { color: rgba(237, 239, 243, 0.3); background: transparent; border-color: rgba(237, 239, 243, 0.15); cursor: default; }
+.deck-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; flex: 1 1 auto; min-width: 0; }
+.deck-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(237, 239, 243, 0.25); transition: background 0.2s, box-shadow 0.2s; }
+.deck-dot.is-current { background: var(--cyan); box-shadow: var(--glow-cyan); }
+.deck-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: rgba(237, 239, 243, 0.55); flex: 0 0 auto; }
+@media (max-width: 899px) {
+  .deck {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    align-items: flex-start;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    max-height: calc(100vh - 160px);
+    max-height: calc(100svh - 160px);
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+}
+@media (min-width: 900px) {
+  .deck { display: block; }
+  .slide { display: block; }
+  .deck-controls { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck { scroll-behavior: auto; }
+  .deck-dot { transition: none; }
+}
+/* deck: end */
