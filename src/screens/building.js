@@ -147,20 +147,56 @@ function roof(ctx, rows) {
       <div class="dim interior-note">The antennas fade as your last check gets older. A fresh sweep lights them back up.</div>`);
 }
 
+// The desk table's last column: whether a judge signs off. Only what the slip
+// itself says, in its own words; a slip that doesn't say gets a dash.
+const JUDGE = [
+  [/search warrant,? signed by a judge/, 'For content: yes'],
+  [/emergency request needs no judge/, 'Emergency: no'],
+  [/National Security Letters: subscriber records with no judge/, 'For a National Security Letter: no'],
+  [/No warrant is needed for each one/, 'No warrant per target'],
+  [/not a judge/, 'No'],
+  [/without a US court/, 'No US court'],
+  [/Subject lines[^.]*approved by a Swiss judge/, 'For subject lines: a Swiss judge'],
+];
+
+export function judgeCell(lane) {
+  const said = JUDGE.filter(([re]) => re.test(lane.gets)).map(([, text]) => text);
+  return said.length ? said.join(' · ') : '—';
+}
+
+function slipBody(lane) {
+  return `${lane.actorNote ? `<div class="dim slip-note">${esc(lane.actorNote)}</div>` : ''}
+        <div class="slip-gets">${esc(lane.gets)}</div>
+        ${sourceLinks(lane.sources)}`;
+}
+
+// On a phone the slips are one table: who asks, with what, and whether a judge
+// signs; each row's full slip opens under it. At 900px and up, the slips as before.
+function deskTable(accountId, lanes) {
+  const rows = lanes.map((lane) => `
+        <tbody data-desk-row="${esc(lane.id)}">
+          <tr><th scope="row" class="desk-cell desk-who">${esc(lane.actor)}</th><td class="desk-cell desk-tool">${esc(lane.tool)}</td><td class="desk-cell desk-judge">${esc(judgeCell(lane))}</td></tr>
+          <tr><td colspan="3" class="desk-more-cell"><details class="desk-more" data-fold="desk-${esc(accountId)}-${esc(lane.id)}"><summary>The full slip</summary>${slipBody(lane)}</details></td></tr>
+        </tbody>`).join('');
+  return `
+      <table class="desk-table">
+        <thead><tr><th scope="col">Who asks</th><th scope="col">With what</th><th scope="col">Judge needed?</th></tr></thead>${rows}
+      </table>`;
+}
+
 function desk(ctx, interior) {
   const slips = interior.desk.map((lane) => `
       <div class="slip" data-lane="${esc(lane.id)}">
         <div class="slip-stamp">${esc(lane.tool)}</div>
         <div class="slip-who">${esc(lane.actor)}</div>
-        ${lane.actorNote ? `<div class="dim slip-note">${esc(lane.actorNote)}</div>` : ''}
-        <div class="slip-gets">${esc(lane.gets)}</div>
-        ${sourceLinks(lane.sources)}
+        ${slipBody(lane)}
       </div>`).join('');
   // A desk with one lane (Signal's) is a single sticky note, not a stack of slips.
-  const note = interior.desk.length === 1 ? ' desk--note' : '';
+  const single = interior.desk.length === 1;
   return floor(ctx, 'desk', `▣ Records desk · ${esc(interior.company)}’s`, `
       <div class="dim interior-note">${esc(interior.deskIntro)}</div>
-      <div class="desk${note}">${slips}</div>`);
+      ${single ? '' : deskTable(ctx.accountId, interior.desk)}
+      <div class="desk${single ? ' desk--note' : ' desk--tabled'}">${slips}</div>`);
 }
 
 // Where SEAL IT (or START) goes: { href, recheck }, or null for no button.
@@ -202,9 +238,18 @@ function entry(state, accountId, e, sealing) {
   } else {
     status = `<div class="dim">Not checked yet.</div>${e.fix ? `<div class="entry-fix">${esc(e.fix)}</div>` : ''}${target ? `<a class="interior-btn interior-btn--quiet" href="${target.href}">${target.recheck ? 'RE-CHECK' : 'START'}</a>` : ''}`;
   }
+  // On a phone, one line (lock, where, who) that opens to the rest; at 900px and
+  // up the line hides and the entry shows in full, as before (style.css).
+  const actors = String(e.actor).split(' · ');
+  const first = actors[0].split(/\s+/).length > 6 ? `${actors[0].split(/[,(]/)[0].trim()}…` : actors[0];
+  const who = `${first}${actors.length > 1 ? ` +${actors.length - 1}` : ''}`;
+  const label = STATE_LABEL[s.state] ?? 'Not checked yet';
+  const icon = ICON[s.state] ?? '?';
   return `
       <div class="entry entry--${s.state}${sealing.has(e.id) ? ' entry--sealing' : ''}" data-entry="${esc(e.id)}" data-state="${s.state}">
-        <div class="entry-lock" role="img" aria-label="${STATE_LABEL[s.state] ?? 'Not checked yet'}">${ICON[s.state] ?? '?'}</div>
+        <details class="entry-fold" data-fold="entry-${esc(accountId)}-${esc(e.id)}"><summary class="entry-line"><span class="entry-lock entry-lock--line" role="img" aria-label="${label}">${icon}</span><span class="entry-line-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</span><span class="entry-line-who">${esc(who)}</span></summary>
+        <div class="entry-card">
+        <div class="entry-lock" role="img" aria-label="${label}">${icon}</div>
         <div class="entry-text">
           <div class="entry-where">${esc(METAPHOR[e.metaphor] ?? e.metaphor)}</div>
           <div class="entry-actors">${actorLines(e.actor)}</div>
@@ -213,6 +258,7 @@ function entry(state, accountId, e, sealing) {
           ${status}
           ${sourceLinks(e.sources)}
         </div>
+        </div></details>
       </div><!-- /entry -->`;
 }
 

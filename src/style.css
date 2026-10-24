@@ -275,7 +275,8 @@ img { image-rendering: pixelated; }
 .desk--note .interior-sources summary, .desk--note .interior-sources a { color: #1A1F2B; }
 @media (prefers-reduced-motion: reduce) { .desk--note .slip { transform: none; } }
 
-.entry { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; margin-top: 12px; align-items: start; }
+.entry { margin-top: 12px; }
+.entry-card { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; }
 .entry-lock { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 1px solid currentColor; }
 .entry--sealed .entry-lock { color: var(--lime); }
 .entry--open .entry-lock { color: var(--amber); }
@@ -424,6 +425,27 @@ img { image-rendering: pixelated; }
 .deck-progress { flex: 1 1 auto; min-width: 0; height: 3px; background: rgba(237, 239, 243, 0.15); overflow: hidden; }
 .deck-progress-fill { display: block; height: 100%; background: var(--cyan); box-shadow: var(--glow-cyan); transition: width 0.2s ease; }
 .deck-count { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; color: rgba(237, 239, 243, 0.55); flex: 0 0 auto; }
+/* Named dots (the saints): a row of their own above BACK / NEXT, each a button with the name. */
+.deck-controls--named { flex-wrap: wrap; }
+.deck-dots--named { order: -1; flex: 1 1 100%; gap: 2px; }
+.deck-dot--named {
+  width: auto;
+  height: auto;
+  min-width: 34px;
+  min-height: 44px;
+  padding: 0 2px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgba(237, 239, 243, 0.2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: rgba(237, 239, 243, 0.55);
+  cursor: pointer;
+}
+.deck-dot--named.is-current { background: transparent; box-shadow: none; color: var(--cyan); border-bottom-color: var(--cyan); }
+.deck-dot--named:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 @media (max-width: 899px) {
   .deck {
     display: flex;
@@ -520,3 +542,53 @@ img { image-rendering: pixelated; }
   }
 }
 /* briefing deck: end */
+
+/* interiors slides: start */
+/* Saints and building interiors on a phone (src/screens/saints.js, building.js): a saint
+   per slide with the story folded, the records desk as one table, each ground-floor entry
+   one line that opens. At 900px and up: the slips, entries and stories as they were. */
+.saint-story > summary, .desk-more > summary, .entry-fold > summary { cursor: pointer; list-style: none; }
+.saint-story > summary::-webkit-details-marker, .desk-more > summary::-webkit-details-marker, .entry-fold > summary::-webkit-details-marker { display: none; }
+.saint-story > summary, .desk-more > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--cyan);
+}
+.saint-story > summary::before, .desk-more > summary::before { content: '▸ '; white-space: pre; }
+.saint-story[open] > summary::before, .desk-more[open] > summary::before { content: '▾ '; }
+.desk-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; line-height: 1.4; table-layout: fixed; }
+.desk-table thead th { text-align: left; padding: 4px 4px 6px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #9FB6FF; vertical-align: bottom; }
+.desk-table tbody { border-top: 1px dashed rgba(159,182,255,0.4); }
+.desk-cell { padding: 8px 4px 0; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.desk-who { color: #9FB6FF; font-weight: 700; }
+.desk-tool { color: rgba(237,239,243,0.8); }
+.desk-judge { color: var(--amber); }
+.desk-more-cell { padding: 0 4px 4px; }
+.desk-more .slip-note, .desk-more .slip-gets { margin-bottom: 4px; }
+.entry-line { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.entry-line::after { content: '▸'; margin-left: auto; color: rgba(237,239,243,0.45); }
+.entry-fold[open] > .entry-line::after { content: '▾'; }
+.entry-lock--line { flex: 0 0 auto; width: 28px; height: 28px; font-size: 13px; }
+.entry-line-where { flex: 0 0 auto; font-family: var(--font-display); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,239,243,0.55); }
+.entry-line-who { min-width: 0; color: #fff; font-weight: 700; overflow-wrap: anywhere; }
+@media (max-width: 899px) {
+  .desk--tabled { display: none; }
+  /* The open entry: the line already shows the lock and where. */
+  .entry-fold .entry-card { display: block; padding: 2px 0 4px 38px; }
+  .entry-fold .entry-card > .entry-lock, .entry-fold .entry-where { display: none; }
+}
+@media (min-width: 900px) {
+  .desk-table { display: none; }
+  .entry-lock--line { display: none; }
+  /* The stories and entries show in full, as they always did. */
+  @supports selector(::details-content) {
+    .saint-story > summary, .entry-fold > summary { display: none; }
+    .saint-story::details-content, .entry-fold::details-content { content-visibility: visible; display: contents; }
+  }
+}
+/* interiors slides: end */

@@ -24,7 +24,7 @@ import { renderBuildingInterior } from './screens/building.js';
 import { renderSaints } from './screens/saints.js';
 import { renderBrokerMap } from './screens/broker-map.js';
 import { renderBigCheck } from './screens/big-check.js';
-import { initDecks, deckPositions } from './components/deck.js';
+import { initDecks, deckPositions, openFolds, restoreFolds } from './components/deck.js';
 import { nameMatches } from './utils/big-check.js';
 import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-data.js';
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
@@ -227,8 +227,11 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
     app.classList.toggle('map-refresh', route.screen === 'broker-map' && !tracksPageview(cause));
     // A re-draw (an action, data arriving) keeps each slide deck on its slide; arriving starts at slide 1.
     const decksBefore = tracksPageview(cause) ? null : deckPositions(app);
+    // So does every fold the player opened (a saint's story, a full slip, an entry).
+    const foldsBefore = tracksPageview(cause) ? null : openFolds(app);
     app.innerHTML = renderFn(route.params);
     if (route.screen === 'broker-map') afterBrokerMapRender(renderFn, route.params);
+    restoreFolds(app, foldsBefore);
     initDecks(app, decksBefore);
     // The Big Check's line is drawn once the data is in; then it's seen.
     if (route.screen === 'big-check' && bigCheckScout && brokerDataStatus() === 'ready') {

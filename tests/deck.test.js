@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex, progressWidth, deckHeight, focusAfter } from '../src/components/deck.js';
+import { splitWords, deck, initDecks, countWords, slideIndex, deckStep, controlState, stepTarget, resolveIndex, progressWidth, deckHeight, focusAfter, openFolds, restoreFolds } from '../src/components/deck.js';
 import { MISSIONS } from '../src/data/missions.js';
 
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
@@ -408,5 +408,86 @@ describe('initDecks', () => {
     } finally {
       globalThis.ResizeObserver = RO;
     }
+  });
+});
+
+describe('named dots (the saints)', () => {
+  it('names: each dot is a button labelled with its name, even past 8, the first one current', () => {
+    const names = Array.from({ length: 9 }, (_, i) => `Saint Person ${String.fromCharCode(65 + i)}lpha`);
+    const html = deck(names.map((n) => ({ html: `<h2>${n}</h2>` })), { label: 'Saints', names });
+    expect(html).not.toContain('deck-progress');
+    const dots = [...html.matchAll(/<button type="button" class="deck-dot[^"]*" data-deck-to="(\d)" aria-label="([^"]*)"( aria-current="true")?>/g)];
+    expect(dots.map((m) => m[2])).toEqual(names);
+    expect(dots.map((m) => +m[1])).toEqual([...names.keys()]);
+    expect(dots.filter((m) => m[3]).length).toBe(1);
+    expect(dots[0][3]).toBeTruthy();
+    // The dots are on their own row, readable: not aria-hidden.
+    expect(html).toMatch(/<span class="deck-dots deck-dots--named">/);
+    expect(html).toContain('deck-controls deck-controls--named');
+    // The visible mark: initials, without "Saint".
+    expect(html).toContain('<span aria-hidden="true">PA</span>');
+  });
+
+  it('a named dot moves the deck to its slide and keeps focus on the dot', () => {
+    const fake = (extra = {}) => {
+      const on = {};
+      const attrs = {};
+      return {
+        on, attrs, dataset: {}, disabled: false, textContent: '', style: { scrollBehavior: '' }, focused: 0,
+        classList: { toggle() {} }, setAttribute: (k, v) => { attrs[k] = v; }, removeAttribute: (k) => { delete attrs[k]; }, hasAttribute: () => true,
+        focus() { this.focused++; }, getAttribute: () => 'Saints',
+        addEventListener: (type, fn) => { on[type] = fn; },
+        querySelector: () => null, querySelectorAll: () => [], ...extra,
+      };
+    };
+    const dots = [0, 1, 2, 3].map((i) => fake({ dataset: { deckTo: String(i) } }));
+    const prev = fake(); const next = fake(); const count = fake();
+    const controls = fake({
+      hasAttribute: (a) => a === 'data-deck-controls',
+      querySelector: (s) => ({ '[data-deck-prev]': prev, '[data-deck-next]': next, '[aria-live]': count }[s] || null),
+      querySelectorAll: (s) => (s === '.deck-dot' ? dots : []),
+    });
+    const scrolls = [];
+    const d = fake({
+      scrollLeft: 0, clientWidth: 390, scrollWidth: 1560, nextElementSibling: controls,
+      querySelectorAll: (s) => (s === ':scope > .slide' ? [fake(), fake(), fake(), fake()] : []),
+      scrollTo(o) { scrolls.push(o.left); },
+    });
+    initDecks({ querySelectorAll: (s) => (s === '[data-deck]' ? [d] : []) });
+    expect(dots[0].attrs['aria-current']).toBe('true');
+    dots[2].on.click();
+    expect(scrolls).toEqual([780]);
+    expect(count.textContent).toBe('3 of 4');
+    expect(dots[2].attrs['aria-current']).toBe('true');
+    expect(dots[0].attrs['aria-current']).toBeUndefined();
+    expect(dots[2].focused).toBe(1);
+  });
+
+  it('named dots CSS: their own row, 44px tall targets, no nowrap', () => {
+    const css = readFileSync(new URL('../src/style.css', import.meta.url), 'utf8');
+    const block = css.slice(css.indexOf('/* deck: start */'), css.indexOf('/* deck: end */'));
+    expect(block).toMatch(/\.deck-controls--named\s*\{[^}]*flex-wrap: wrap/);
+    expect(block).toMatch(/\.deck-dots--named\s*\{[^}]*flex: 1 1 100%/);
+    expect(block).toMatch(/\.deck-dot--named\s*\{[^}]*min-height: 44px/);
+    expect(block).not.toMatch(/white-space:\s*nowrap/);
+  });
+});
+
+describe('folds kept across a redraw', () => {
+  it('openFolds lists the open [data-fold] keys; restoreFolds reopens them', () => {
+    const det = (key, open) => ({ open, getAttribute: (a) => (a === 'data-fold' ? key : null) });
+    const before = { querySelectorAll: (s) => (s === 'details[data-fold]' ? [det('a', true), det('b', false), det('c', true)] : []) };
+    const kept = openFolds(before);
+    expect([...kept]).toEqual(['a', 'c']);
+    const after = [det('a', false), det('b', false), det('c', false), det('d', false)];
+    restoreFolds({ querySelectorAll: (s) => (s === 'details[data-fold]' ? after : []) }, kept);
+    expect(after.map((x) => x.open)).toEqual([true, false, true, false]);
+    expect(() => restoreFolds(null, kept)).not.toThrow();
+    expect([...openFolds(null)]).toEqual([]);
+  });
+
+  it('app.js keeps folds open across a redraw', () => {
+    const app = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
+    expect(app).toMatch(/openFolds\(app\)[\s\S]*app\.innerHTML = renderFn[\s\S]*restoreFolds\(app,/);
   });
 });

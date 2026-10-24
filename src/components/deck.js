@@ -107,7 +107,14 @@ export function progressWidth(index, count) {
   return `${((index + 1) / count) * 100}%`;
 }
 
-export function deck(slides, { label, className = '' } = {}) {
+// The visible mark on a named dot: initials, without a "Saint" in front.
+export function initials(name) {
+  return String(name ?? '').replace(/^Saint\s+/, '').split(/\s+/).filter(Boolean).map((w) => w[0].toUpperCase()).join('').slice(0, 3);
+}
+
+// names: one per slide. Each dot is then a button labelled with its name (a screen reader
+// hears the name; a tap goes there), on its own row, even past DOTS_MAX.
+export function deck(slides, { label, className = '', names = null } = {}) {
   const list = (slides || []).filter(Boolean);
   if (list.length === 0) return '';
   // One slide needs no deck: its content, as it is.
@@ -117,13 +124,18 @@ export function deck(slides, { label, className = '' } = {}) {
   const sections = list
     .map((s, i) => `<section class="${attr(['slide', s.className].filter(Boolean).join(' '))}" aria-roledescription="slide" aria-label="${i + 1} of ${m}" tabindex="-1">${headingHtml(s.heading)}${s.html}</section>`)
     .join('');
-  const dots = list.map((_, i) => `<span class="deck-dot${i === 0 ? ' is-current' : ''}"></span>`).join('');
+  const named = Array.isArray(names) && names.length === m;
+  const dots = named
+    ? list.map((_, i) => `<button type="button" class="deck-dot deck-dot--named${i === 0 ? ' is-current' : ''}" data-deck-to="${i}" aria-label="${attr(names[i])}"${i === 0 ? ' aria-current="true"' : ''}><span aria-hidden="true">${attr(initials(names[i]))}</span></button>`).join('')
+    : list.map((_, i) => `<span class="deck-dot${i === 0 ? ' is-current' : ''}"></span>`).join('');
   // Past DOTS_MAX slides the dots wrap; a thin bar says the same thing in one line.
-  const progress = m > DOTS_MAX
-    ? `<span class="deck-progress" aria-hidden="true"><span class="deck-progress-fill" style="width: ${progressWidth(0, m)}"></span></span>`
-    : `<span class="deck-dots" aria-hidden="true">${dots}</span>`;
+  const progress = named
+    ? `<span class="deck-dots deck-dots--named">${dots}</span>`
+    : m > DOTS_MAX
+      ? `<span class="deck-progress" aria-hidden="true"><span class="deck-progress-fill" style="width: ${progressWidth(0, m)}"></span></span>`
+      : `<span class="deck-dots" aria-hidden="true">${dots}</span>`;
   return `<div class="${attr(cls)}" data-deck aria-roledescription="carousel" aria-label="${attr(label)}">${sections}</div>`
-    + '<div class="deck-controls" data-deck-controls>'
+    + `<div class="deck-controls${named ? ' deck-controls--named' : ''}" data-deck-controls>`
     + '<button type="button" class="deck-btn" data-deck-prev disabled>BACK</button>'
     + progress
     + `<span class="deck-count" aria-live="polite">1 of ${m}</span>`
@@ -248,7 +260,12 @@ export function initDecks(root, positions = null) {
       if (prev) prev.disabled = s.prevDisabled;
       if (next) next.disabled = s.nextDisabled;
       if (count) count.textContent = s.count;
-      dots.forEach((dot, k) => dot.classList.toggle('is-current', k === i));
+      dots.forEach((dot, k) => {
+        dot.classList.toggle('is-current', k === i);
+        if (dot.dataset?.deckTo == null) return;
+        if (k === i) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute?.('aria-current');
+      });
     };
     // The scroll is over (scrollend, or the fallback timer): the position is the truth again.
     const settle = () => {
@@ -257,9 +274,9 @@ export function initDecks(root, positions = null) {
       show(slideIndex(d.scrollLeft, d.clientWidth, n));
       fit();
     };
-    const go = (step, pressed = null) => {
-      const to = stepTarget(target, current, step, n);
-      if (to === (target ?? current)) return;
+    const go = (step, pressed = null) => goTo(stepTarget(target, current, step, n), pressed);
+    const goTo = (to, pressed = null) => {
+      if (!(to >= 0 && to < n) || to === (target ?? current)) return;
       target = to;
       clearTimeout(settleTimer);
       settleTimer = setTimeout(settle, 1000);
@@ -278,6 +295,9 @@ export function initDecks(root, positions = null) {
 
     prev?.addEventListener('click', () => go(-1, prev));
     next?.addEventListener('click', () => go(1, next));
+    for (const dot of dots) {
+      if (dot.dataset?.deckTo != null) dot.addEventListener('click', () => goTo(Number(dot.dataset.deckTo), dot));
+    }
     const onKey = (e) => {
       const step = deckStep(e.key);
       if (!step || e.altKey || e.ctrlKey || e.metaKey || typing(e.target) || !isRow()) return;
@@ -325,5 +345,24 @@ export function initDecks(root, positions = null) {
       });
       for (const s of slides) ro.observe(s);
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Folds: a <details data-fold="key"> the player opened stays open when the same
+// screen re-draws (lighting a candle, adding a device). Keys are unique per screen.
+
+export function openFolds(root) {
+  const out = new Set();
+  for (const d of root?.querySelectorAll?.('details[data-fold]') ?? []) {
+    if (d.open) out.add(d.getAttribute('data-fold'));
+  }
+  return out;
+}
+
+export function restoreFolds(root, keys) {
+  if (!keys?.size) return;
+  for (const d of root?.querySelectorAll?.('details[data-fold]') ?? []) {
+    if (keys.has(d.getAttribute('data-fold'))) d.open = true;
   }
 }
