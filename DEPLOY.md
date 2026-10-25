@@ -67,3 +67,17 @@ The marketing site at `multiversegames.ai` lists Reclaim City in the hero sectio
 ```bash
 ssh games "cd /opt/marketing-site && docker compose build && docker compose up -d"
 ```
+
+## Web cabinet mode (campus)
+
+campus.themultiverse.school opens Reclaim City in an iframe at `/reclaim-city/?cabinet=campus`
+(the query comes before the hash). Cabinet mode is on only when the page is framed AND that
+query is present (`src/utils/cabinet.js`). Then the game posts
+`{ type: 'mg:ready', v: 1, game: 'reclaim-city' }` to `https://campus.themultiverse.school`
+(never `*`) once it has booted, and hides the SUPPORT and Patreon asks. Nothing else changes, and
+nothing changes outside cabinet mode. There is no launch pass (free game, no accounts).
+
+Framing is allowed by play-portal's nginx, which sends
+`Content-Security-Policy: frame-ancestors 'self' https://campus.themultiverse.school` for
+`/reclaim-city/` only. Deploy the play-portal change with this one or campus's iframe is refused.
+A frame that blocks storage plays without saving.

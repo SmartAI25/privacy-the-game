@@ -4,6 +4,16 @@ import { migrateBrokenAnswers } from './utils/migrate-answers.js';
 import { cleanBrokerState } from './utils/broker-state.js';
 
 export const STATE_VERSION = 1;
+
+// A storage-blocked iframe throws on the bare `localStorage` read, which a
+// default parameter would do outside the try blocks below. Null = play without saving.
+function defaultStorage() {
+  try {
+    return localStorage;
+  } catch {
+    return null;
+  }
+}
 const STORAGE_KEY = 'reclaim-city-state';
 
 const DEFAULT_ACCOUNTS = Object.fromEntries(
@@ -24,7 +34,8 @@ export function createInitialState() {
   };
 }
 
-export function loadState(storage = localStorage) {
+export function loadState(storage = defaultStorage()) {
+  if (!storage) return createInitialState();
   try {
     const raw = storage.getItem(STORAGE_KEY);
     if (!raw) return createInitialState();
@@ -53,7 +64,8 @@ export function loadState(storage = localStorage) {
   }
 }
 
-export function hasSavedState(storage = localStorage) {
+export function hasSavedState(storage = defaultStorage()) {
+  if (!storage) return false;
   try {
     const raw = storage.getItem(STORAGE_KEY);
     if (!raw) return false;
@@ -63,7 +75,8 @@ export function hasSavedState(storage = localStorage) {
   }
 }
 
-export function saveState(state, storage = localStorage) {
+export function saveState(state, storage = defaultStorage()) {
+  if (!storage) return;
   try {
     storage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (error) {

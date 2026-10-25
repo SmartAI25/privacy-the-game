@@ -16,7 +16,7 @@
   <!-- The portal caches .css for 7 days but never index.html, so the version
        query makes each release fetch its own stylesheet. Kept equal to
        package.json's version by tests/css-cache-bust.test.js. -->
-  <link rel="stylesheet" href="style.css?v=7.1.0">
+  <link rel="stylesheet" href="style.css?v=7.2.0">
   <script src="https://browser.sentry-cdn.com/7.119.0/bundle.min.js" integrity="sha384-N/+t7zuoySxu9rbUlySpn5qv9w/rBT0D7HE35N2dXNy/1W68iV8i6hc13TPJnKOB" crossorigin="anonymous"></script>
   <!-- Reclaim City's own Umami property. Players can turn sharing off on the
        Your City screen; then the script is never loaded (utils/analytics-pref.js).
@@ -29,9 +29,12 @@
   <div id="app"></div>
   <script type="module" src="app.js"></script>
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(function() {});
-    }
+    // A storage-blocked frame can throw on navigator.serviceWorker itself.
+    try {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(function() {});
+      }
+    } catch (e) {}
   </script>
 </body>
 </html>
