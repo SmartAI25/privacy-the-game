@@ -171,7 +171,7 @@ export const RECLAMATION_MISSIONS = [
     title: "Freeze Credit: Experian",
     briefing: "Experian is the second major credit bureau. Expect offers for paid products along the way. Stay focused: the freeze is free by law. Monitoring is their upsell -- it only tells you about fraud after it happens, while a freeze prevents it.",
     steps: [
-      { text: "Go to the Experian Security Freeze Center", url: "https://www.experian.com/freeze/center.html" },
+      { text: "Go to the Experian Security Freeze Center", url: "https://www.experian.com/help/credit-freeze/" },
       { text: "Click \"Add a Security Freeze\" -- you don't need any paid product for the freeze" },
       { text: "Create an Experian account or log in -- verify your identity with your SSN and personal info" },
       { text: "Confirm the freeze, and keep your account login (and any PIN they give you)" },
@@ -366,7 +366,7 @@ export const RECLAMATION_MISSIONS = [
       { text: 'Nuwber: the site didn’t answer when we checked (October 2026). If you find yourself there later, use its own removal link' },
       { text: 'ClustrMaps: the site didn’t answer when we checked (October 2026). If you find yourself there later, use its own opt-out link' },
       { text: "California residents only: submit one DROP request to the data brokers registered in California", url: "https://privacy.ca.gov/drop/" },
-      { text: "Google Results About You: Request removal of personal info from search results", url: "https://support.google.com/websearch/troubleshooter/9685456" },
+      { text: "Google Results About You: Request removal of personal info from search results", url: "https://support.google.com/websearch/contact/content_removal_form" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -390,7 +390,7 @@ export const RECLAMATION_MISSIONS = [
     title: "Extended Sweep: Background Check Sites",
     briefing: "These background-check and people-search sites commonly list people's names, addresses, and phone numbers. They're smaller than Spokeo or WhitePages but still serve that up to anyone who searches. Look yourself up on each one first; most have their own opt-out page.",
     steps: [
-      { text: "SmartBackgroundChecks: Submit opt-out", url: "https://www.smartbackgroundchecks.com/optout" },
+      { text: "SmartBackgroundChecks: Submit opt-out", url: "https://www.smartbackgroundchecks.com/remove" },
       { text: 'AdvancedBackgroundChecks: use the removal link on its site' },
       { text: 'AdvancedPeopleSearch: its domain is parked now, so there’s nothing left to remove there' },
       { text: 'PrivateEye: it now passes searches on to partner sites and has no removal form of its own (checked October 2026). Nothing to submit there' },
@@ -415,7 +415,7 @@ export const RECLAMATION_MISSIONS = [
     briefing: "Phone-lookup and people-finder sites that aggregate public records. PeopleWhiz runs a whole network of mirror sites (Peoplewhizr, Peoplewiz, Peoplewizard, etc.) — one opt-out covers them all. SpyDialer, Anywho, and QuickPeopleTrace each need their own removal.",
     steps: [
       { text: 'PeopleWhiz (covers all Peoplewiz* mirrors): use the opt-out link on its site' },
-      { text: "SpyDialer: Submit opt-out", url: "https://www.spydialer.com/optout.aspx" },
+      { text: "SpyDialer: Submit opt-out", url: "https://www.spydialer.com/consumers/" },
       { text: 'Anywho: its opt-out link now leads to Spokeo’s opt-out form', url: 'https://www.anywho.com/optout' },
       { text: 'QuickPeopleTrace: use the opt-out link on its site' },
       { text: 'Usatrace: use the opt-out link on its site' },
@@ -489,7 +489,7 @@ export const RECLAMATION_MISSIONS = [
     title: "Opt Out: LexisNexis",
     briefing: "LexisNexis is one of the two largest enterprise data aggregators. They sell your data to law enforcement, insurance companies, landlords, and background check services. Your CLUE report -- your insurance claims history -- lives here. Opting out involves submitting a form and verifying your identity.",
     steps: [
-      { text: "Go to the LexisNexis Consumer Opt-Out page", url: "https://optout.lexisnexis.com/" },
+      { text: "Go to the LexisNexis Consumer Opt-Out page", url: "https://consumer.risk.lexisnexis.com/opt" },
       { text: "Select \"Consumer Opt Out\" and fill in your personal information" },
       { text: "They may ask for identity verification -- have your ID ready" },
       { text: "Submit the request -- processing takes several weeks" },
@@ -636,7 +636,7 @@ export const RECLAMATION_MISSIONS = [
     steps: [
       { text: 'Google: open My Ad Center and turn off Personalized ads', url: 'https://myadcenter.google.com/home' },
       { text: "Meta: Go to Ad Preferences → Ad Settings, limit data use for ads", url: "https://www.facebook.com/adpreferences/ad_settings" },
-      { text: "Apple: Review App Tracking Transparency settings", url: "https://support.apple.com/en-us/HT212025" },
+      { text: "Apple: Review App Tracking Transparency settings", url: "https://support.apple.com/en-us/102420" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {
@@ -660,7 +660,7 @@ export const RECLAMATION_MISSIONS = [
       { text: "Opt out of Acxiom -- one of the oldest and largest consumer data brokers", url: "https://www.acxiom.com/opt-out/" },
       { text: 'Oracle Data Cloud / BlueKai: Oracle shut down its advertising business in 2024, so there’s no opt-out left to file' },
       { text: "Opt out of Lotame (cross-device audience data): its privacy-choices page links the request form", url: "https://www.lotame.com/privacy/information-privacy-choices-services/" },
-      { text: "Opt out of Epsilon (its email lists were breached in 2011)", url: "https://www.epsilon.com/us/consumer-information" },
+      { text: "Opt out of Epsilon (its email lists were breached in 2011)", url: "https://legal.epsilon.com/us/consumer-information" },
     ],
     debriefQs: OPTOUT_DEBRIEF,
     scoutDialog: {

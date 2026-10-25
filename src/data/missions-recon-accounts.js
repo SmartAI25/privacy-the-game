@@ -282,7 +282,7 @@ export const RECON_ACCOUNT_MISSIONS = [
     steps: [
       { text: 'Sign in to your insurer’s site or app (not a patient portal). Open claims or Explanation of Benefits (EOBs) for the last 12 months.' },
       { text: 'Look for visits, prescriptions or equipment you never got.' },
-      { text: 'Search your insurer and your main hospital or clinic on the HHS breach portal.', url: 'https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf' },
+      { text: 'Search your insurer and your main hospital or clinic on the HHS breach portal.', url: 'https://ocrportal.hhs.gov/ocr/breach/breach_frontpage.jsf' },
       pmStep('your insurer or patient portal'),
     ],
     debriefQs: [
