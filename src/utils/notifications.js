@@ -1,6 +1,15 @@
 const LAST_VISIT_KEY = 'reclaim_last_visit';
 const NOTIF_ASKED_KEY = 'reclaim_notif_asked';
 
+// A storage-blocked iframe throws on any localStorage access.
+function store(op, key, value) {
+  try {
+    return op === 'get' ? localStorage.getItem(key) : localStorage.setItem(key, value);
+  } catch {
+    return null;
+  }
+}
+
 function notificationsSupported() {
   return 'Notification' in window && 'serviceWorker' in navigator;
 }
@@ -8,13 +17,13 @@ function notificationsSupported() {
 export function shouldAskPermission(state) {
   if (!notificationsSupported()) return false;
   if (Notification.permission !== 'default') return false;
-  if (localStorage.getItem(NOTIF_ASKED_KEY)) return false;
+  if (store('get', NOTIF_ASKED_KEY)) return false;
   const completedCount = Object.values(state.missions).filter((m) => m.status === 'completed').length;
   return completedCount >= 1;
 }
 
 export function markAsked() {
-  localStorage.setItem(NOTIF_ASKED_KEY, '1');
+  store('set', NOTIF_ASKED_KEY, '1');
 }
 
 export async function requestPermission() {
@@ -29,8 +38,8 @@ export function checkStreakReminder(state) {
   if (Notification.permission !== 'granted') return;
 
   const now = Date.now();
-  const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY) || '0', 10);
-  localStorage.setItem(LAST_VISIT_KEY, String(now));
+  const lastVisit = parseInt(store('get', LAST_VISIT_KEY) || '0', 10);
+  store('set', LAST_VISIT_KEY, String(now));
 
   if (!lastVisit) return;
 

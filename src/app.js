@@ -50,6 +50,7 @@ import { renderGarage, renderAddForm } from './screens/garage.js';
 import { renderTimeline, renderSocialForm, renderEraQuestions, getEras } from './screens/timeline.js';
 import { CAR_MANUFACTURERS } from './data/accounts-freeway.js';
 import { initErrorTracking, captureError } from './utils/errors.js';
+import { announceReady } from './utils/cabinet.js';
 import { newScreenVisit, feelingDuration } from './components/scout.js';
 import { noteFirstTwoFactor, twoFactorHugDue, markTwoFactorHugSeen } from './utils/scout-feelings.js';
 import { briefingScout } from './screens/briefing.js';
@@ -1409,3 +1410,5 @@ document.fonts?.addEventListener?.('loadingdone', () => {
 
 initRouter(render);
 checkStreakReminder(state);
+// Web cabinet: tell campus the game has booted (no-op outside cabinet mode).
+announceReady();
