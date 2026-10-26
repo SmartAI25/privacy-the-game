@@ -673,7 +673,7 @@ export const VAULT_CAPITOL_MISSIONS = [
     title: 'Verify Tax Records: IRS',
     briefing: 'Log into your IRS account and check the address on file, your tax records and transcripts, and any notices. The classic tax fraud move is filing a return in your name to take the refund; a return or notice you don’t recognize is the warning sign.',
     steps: [
-      { text: 'Log into your IRS account', url: 'https://www.irs.gov/payments/your-online-account' },
+      { text: 'Log into your IRS account', url: 'https://www.irs.gov/payments/online-account-for-individuals' },
       { text: 'Check your address -- is it current?' },
       { text: 'Look at your recent returns and notices: anything filed or sent that you don’t recognize?' },
       { text: `View your tax transcript -- any filings you didn't make?` },

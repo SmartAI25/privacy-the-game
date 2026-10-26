@@ -169,7 +169,7 @@ export const TRAIL_MISSIONS = [
       { text: "CVS ExtraCare: sign in at CVS.com and review its privacy choices to opt out of sharing for marketing", url: "https://www.cvs.com/account/compliance/do-not-sell" },
       { text: 'Kroger (and subsidiaries -- Ralphs, Fred Meyer, Harris Teeter, etc.): in your kroger.com account, review communication preferences. For a data deletion request, use the rights section of its privacy policy.', url: 'https://www.kroger.com/i/privacy-policy' },
       { text: 'Target Circle: sign in to target.com → Account and review its privacy and advertising settings.', url: 'https://www.target.com/account' },
-      { text: "Starbucks: Open the Starbucks app > Account > Privacy Settings. Or visit starbucks.com privacy page.", url: "https://www.starbucks.com/terms/privacy-policy/" },
+      { text: "Starbucks: Open the Starbucks app > Account > Privacy Settings. Or visit starbucks.com privacy page.", url: "https://www.starbucks.com/terms/privacy-notice" },
       { text: "For any loyalty program not listed: look for a link called \"Do Not Sell or Share My Personal Information\", \"Your Privacy Choices\" or \"Your California Privacy Choices\" (California's rules allow any of those labels)." },
     ],
     debriefQs: TRAIL_DEBRIEF,
@@ -245,7 +245,7 @@ export const TRAIL_MISSIONS = [
     steps: [
       { text: 'Search your email for \'Affirm,\' \'Klarna,\' \'Afterpay,\' \'Zip,\' \'Sezzle,\' \'PayPal Pay Later.\' Each result is a BNPL account that exists in your name.' },
       { text: 'For each one found: log in and check for outstanding balances. Pay off and close any you don\'t actively use.' },
-      { text: 'Affirm: sign in and find the option to close your account (Affirm’s help pages say where)', url: 'https://www.affirm.com/account' },
+      { text: ‘Affirm: sign in and find the option to close your account (Affirm’s help pages say where)’, url: ‘https://www.affirm.com/u/loans’ },
       { text: 'Klarna: sign in to manage your account and your data', url: 'https://app.klarna.com/settings' },
       { text: 'Afterpay, Zip and the rest: find the close-account option in the app or on its help page' },
       { text: 'If you want your data gone too, ask each company to delete it under its privacy policy' },
