@@ -37,6 +37,7 @@ import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, near
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
+import { STUDIO_URL } from './components/hud.js';
 import { checklistFor } from './data/broker-checklists.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
 import { renderStats } from './screens/stats.js';
@@ -200,6 +201,7 @@ function renderWelcome() {
     <p style="max-width: 440px; font-size: 15px; line-height: 1.7; color: rgba(237,239,243,0.65); margin-top: 32px;">Secure your accounts, opt out of data brokers, and learn to spot scams &mdash; one mission at a time. Every action you take is real.</p>
     <div data-action="begin-game" class="btn-primary" style="margin-top: 40px; display: inline-block;">PLAY &mdash; IT'S FREE</div>
     <div style="font-family: var(--font-mono); font-size: 10px; color: rgba(237,239,243,0.35); margin-top: 16px; letter-spacing: 1px;">NO ACCOUNT NEEDED &middot; YOUR DATA STAYS IN YOUR BROWSER</div>
+    <a href="${STUDIO_URL}welcome" target="_blank" rel="noopener" data-studio-link="welcome" style="font-family: var(--font-mono); font-size: 10px; color: rgba(198,255,0,0.6); margin-top: 40px; letter-spacing: 2px; text-decoration: none;">A MULTIVERSE GAMES GAME &middot; MORE FREE GAMES&nbsp;&#8599;</a>
   </div>`;
 }
 
@@ -943,6 +945,11 @@ app.addEventListener('click', async (e) => {
     // Pointer presses are handled on pointerup (tap vs drag) and their clicks swallowed; a click
     // with no press before it (an older browser, a synthetic click) still selects.
     tapSky(sky, e.clientX, e.clientY);
+    return;
+  }
+  const studio = e.target.closest?.('a[data-studio-link]');
+  if (studio && app.contains(studio)) {
+    track('studio-link', { from: studio.dataset.studioLink });
     return;
   }
   const el = e.target.closest('[data-action]');

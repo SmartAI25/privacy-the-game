@@ -1,6 +1,9 @@
 import { calcIntegrity, calcExposure } from '../utils/calc.js';
 import { isCabinetMode } from '../utils/cabinet.js';
 
+// Link home to the studio. The utm tags let the studio site count visits from the game.
+export const STUDIO_URL = 'https://multiversegames.ai/?utm_source=reclaim-city&utm_medium=game&utm_content=';
+
 export function renderHud(state) {
   const integrity = calcIntegrity(state);
   const exposure = calcExposure(state);
@@ -15,6 +18,7 @@ export function renderHud(state) {
     <div>
       <div style="font-family: var(--font-display); font-size: 16px; font-weight: 800; color: var(--cyan); letter-spacing: 3px; text-shadow: 0 0 20px rgba(0,229,255,0.4), 0 0 40px rgba(0,229,255,0.15);">RECLAIM CITY</div>
       <div style="font-family: var(--font-mono); font-size: 8px; color: rgba(0,229,255,0.4); letter-spacing: 2px; margin-top: 1px;">TAKE BACK YOUR DATA</div>
+      <a href="${STUDIO_URL}hud" target="_blank" rel="noopener" data-studio-link="hud" style="display: inline-block; font-family: var(--font-mono); font-size: 7px; color: rgba(198,255,0,0.55); letter-spacing: 2px; margin-top: 3px; text-decoration: none;">BY MULTIVERSE GAMES&nbsp;&#8599;</a>
     </div>
     <div style="display: flex; gap: 12px; align-items: center;">
       <div class="hud-stat hud-stat--lime">
