@@ -27,6 +27,23 @@ relative / build-tool paths (`webpack://…`), and `blob:` from our own origin.
 Network-layer noise rules (server-side tier-2/tier-3 suppression and each app's
 message filters) are unchanged and complementary.
 
+## In-app browser and wallet bridges (by message)
+
+In-app browsers and wallets run their code in our page, so the frames carry our
+page URL and the rule above keeps them. `isInjectedScriptNoise` drops an event
+when **every** exception's message names a foreign global or bridge that no
+file in `src/` uses: `window._META` / `IABInnerFrame` (Instagram, Facebook),
+`window.webkit.messageHandlers`, `Script message handler is unavailable`,
+`WKErrorDomain`, `WKWebView API client did not respond` (iOS WebViews),
+`Java object is gone` / `Java exception was raised during method invocation`
+(Android WebViews), `__firefox__` (Firefox iOS), `window.ethereum`, `MetaMask`,
+`Invalid call to runtime.sendMessage()` (extensions), and Sentry's report of a
+script-dispatched `CustomEvent('unhandledrejection')`. A test fails if any
+file in `src/` other than the filter starts naming one of them.
+
+The game's own `unhandledrejection` listener (`errors.js`) skips untrusted
+events and non-Error reasons: Sentry's GlobalHandlers already files those once.
+
 ## Tests
 
 ```

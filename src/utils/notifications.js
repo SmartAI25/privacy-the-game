@@ -46,7 +46,7 @@ export function checkStreakReminder(state) {
   const hoursSince = (now - lastVisit) / (1000 * 60 * 60);
   if (hoursSince < 20) return;
 
-  const streak = state.streak?.days || 0;
+  const streak = state.streak?.current || 0;
   const completedCount = Object.values(state.missions).filter((m) => m.status === 'completed').length;
   const totalMissions = Object.keys(state.missions).length;
 

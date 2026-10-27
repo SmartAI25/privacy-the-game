@@ -52,6 +52,15 @@ export function loadState(storage = defaultStorage()) {
       captureError(new Error('loadState: save had no accounts object'), { operation: 'loadState', repaired: 'accounts' });
       parsed.accounts = {};
     }
+    // The HUD, Stats and updateStreak all read state.streak.current, so a save
+    // with no streak object loaded and then every screen drew "Something
+    // broke" (GlitchTip #440, after the accounts repair above on the same
+    // save). A missing streak holds nothing to keep: start it at zero, keep the
+    // rest of the save, and report the repair. A streak that is there is kept as it is.
+    if (parsed.streak === null || typeof parsed.streak !== 'object' || Array.isArray(parsed.streak)) {
+      captureError(new Error('loadState: save had no streak object'), { operation: 'loadState', repaired: 'streak' });
+      parsed.streak = { current: 0, best: 0, lastDate: null };
+    }
     for (const [id, a] of Object.entries(DEFAULT_ACCOUNTS)) {
       if (!parsed.accounts[id]) {
         parsed.accounts[id] = { enabled: true, name: a.name, district: a.district };

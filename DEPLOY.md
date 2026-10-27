@@ -50,7 +50,7 @@ Everything in `src/` is deployed. The server serves static files — no build st
 ## Analytics and error tracking
 
 - **Umami:** Shared with Multiverse Games (`analytics.multiversegames.ai`, website ID `38d680a7-28d1-42fd-9fd5-a66702675b88`)
-- **GlitchTip:** `errors.multiversegames.ai` project 2 (same DSN as MVEE)
+- **GlitchTip:** `errors.multiversegames.ai` project 15 `reclaim-city` (its own project since v7.3.1; before that it shared MVEE's project 2). The browser client (`src/utils/errors.js`) and the collective job (`collective/job/install.sh` default `job.env`) both use the project 15 DSN.
 
 ## Symlink
 

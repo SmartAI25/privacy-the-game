@@ -163,8 +163,8 @@ class GlitchTipTest(unittest.TestCase):
         self.assertIn("boom", body["message"])
 
     def test_auth_header_from_dsn(self):
-        url, header = run.glitchtip_endpoint("https://abc123@errors.multiversegames.ai/2")
-        self.assertEqual(url, "https://errors.multiversegames.ai/api/2/store/")
+        url, header = run.glitchtip_endpoint("https://abc123@errors.multiversegames.ai/15")
+        self.assertEqual(url, "https://errors.multiversegames.ai/api/15/store/")
         self.assertIn("sentry_key=abc123", header)
 
 
