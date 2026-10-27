@@ -104,3 +104,50 @@ export function isPrivateBreadcrumb(b) {
 export function scrubBreadcrumb(b) {
   return isPrivateBreadcrumb(b) ? null : b;
 }
+
+// Injected-script noise by message. In-app browsers (Instagram/Facebook's
+// _META bridge, iOS WKWebView message handlers, Android's Java bridge, Firefox
+// iOS's __firefox__) and wallet extensions run their code in our page's
+// context, so the frame guard above sees our page URL as the filename and
+// keeps the event. These globals and bridge errors never come from Reclaim
+// City's code (no file in src/ names them), so an event whose every exception
+// matches one is dropped. Each pattern names a specific foreign global or
+// bridge, never a shape our own errors could take.
+const INJECTED_NOISE = [
+  /\bwindow\._META\b|\bIABInnerFrame\b/,
+  /\bwindow\.webkit\.messageHandlers\b/,
+  /\b__firefox__\b/,
+  /\bwindow\.ethereum\b/,
+  /\bMetaMask\b/,
+  /\bJava object is gone\b/,
+  /\bJava exception was raised during method invocation\b/,
+  /\bScript message handler is unavailable\b/,
+  /\bWKErrorDomain\b/,
+  /\bWKWebView API client did not respond\b/,
+  /\bInvalid call to runtime\.sendMessage\(\)/,
+  // A script dispatched `new CustomEvent('unhandledrejection')` (isTrusted
+  // false, no reason): Sentry reports the event object itself. The game never
+  // dispatches one; real rejections arrive as PromiseRejectionEvent.
+  /^Event `CustomEvent` \(type=unhandledrejection\) captured as promise rejection$/,
+];
+
+function exceptionText(v) {
+  return `${(v && v.type) || ''}: ${(v && v.value) || ''}`;
+}
+
+// True iff every exception in the event is known injected-script noise (its
+// message names a foreign global or bridge above). Events with no exception
+// are checked by their message alone. Anything else is kept: extension frames
+// mixed with ours stay reportable (eventHasOnlyThirdPartyFrames handles stacks
+// that are extension-only).
+export function isInjectedScriptNoise(event) {
+  const values = event && event.exception && Array.isArray(event.exception.values) ? event.exception.values : null;
+  if (!values || values.length === 0) {
+    const msg = event && typeof event.message === 'string' ? event.message : '';
+    return Boolean(msg) && INJECTED_NOISE.some((re) => re.test(msg));
+  }
+  return values.every((v) => {
+    const value = String((v && v.value) || '');
+    return INJECTED_NOISE.some((re) => re.test(value) || re.test(exceptionText(v)));
+  });
+}

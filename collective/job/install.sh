@@ -10,7 +10,7 @@ DEST=/opt/reclaim-city-collective
 ssh "$HOST" "mkdir -p $DEST/job $DEST/public $DEST/geo"
 rsync -az --delete --exclude tests/ --exclude __pycache__/ --exclude systemd/ "$SRC/" "$HOST:$DEST/job/"
 rsync -az "$SRC/../README.md" "$HOST:$DEST/README.md"
-ssh "$HOST" "test -f $DEST/job.env || echo 'GLITCHTIP_DSN=https://23700b2a5cf74033b50abee4f4a43851@errors.multiversegames.ai/2' > $DEST/job.env; chmod 600 $DEST/job.env"
+ssh "$HOST" "test -f $DEST/job.env || echo 'GLITCHTIP_DSN=https://ba6fd2bcdb8f47f3bc15613b5ef4e419@errors.multiversegames.ai/15' > $DEST/job.env; chmod 600 $DEST/job.env"
 scp "$SRC"/systemd/rc-collective-job.{service,timer} "$HOST:/etc/systemd/system/"
 ssh "$HOST" "systemctl daemon-reload"
 echo "Installed. First run: ssh $HOST systemctl start rc-collective-job.service && journalctl -u rc-collective-job -n 20"

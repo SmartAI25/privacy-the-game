@@ -76,7 +76,7 @@ describe('loadState / saveState', () => {
 
   it('reports the repaired accounts instead of hiding it, and leaves a healthy save unreported', () => {
     const err = vi.spyOn(console, 'error').mockImplementation(() => {});
-    store['reclaim-city-state'] = JSON.stringify({ version: STATE_VERSION, accounts: null, missions: {} });
+    store['reclaim-city-state'] = JSON.stringify({ version: STATE_VERSION, accounts: null, missions: {}, streak: { current: 2, best: 3, lastDate: null } });
     const state = loadState(mockStorage);
     expect(state.accounts.gmail).toEqual({ enabled: true, name: 'Gmail', district: 'master-keys' });
     expect(err).toHaveBeenCalledTimes(1);
@@ -85,6 +85,38 @@ describe('loadState / saveState', () => {
     err.mockClear();
     saveState(createInitialState(), mockStorage);
     loadState(mockStorage);
+    expect(err).not.toHaveBeenCalled();
+    err.mockRestore();
+  });
+
+  it('repairs a save with no streak object instead of breaking every screen (GlitchTip #440)', async () => {
+    // The 10/24 save had neither accounts nor streak: the accounts repair ran,
+    // then renderHud read state.streak.current and every screen drew "Something broke".
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    store['reclaim-city-state'] = JSON.stringify({
+      version: STATE_VERSION,
+      missions: { 'gmail-recon-breach': { status: 'completed' } },
+      vehicles: [{ id: 'car' }],
+    });
+    const state = loadState(mockStorage);
+    expect(state.streak).toEqual({ current: 0, best: 0, lastDate: null });
+    // Nothing else in the save is dropped.
+    expect(state.missions['gmail-recon-breach'].status).toBe('completed');
+    expect(state.vehicles).toEqual([{ id: 'car' }]);
+    const messages = err.mock.calls.map((c) => String(c[0].message));
+    expect(messages).toContain('loadState: save had no streak object');
+    const { renderHud } = await import('../src/components/hud.js');
+    expect(() => renderHud(state)).not.toThrow();
+    expect(() => updateStreak(state)).not.toThrow();
+    err.mockRestore();
+  });
+
+  it('keeps a streak that is there, and does not report it', () => {
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const saved = createInitialState();
+    saved.streak = { current: 5, best: 9, lastDate: '2026-10-20' };
+    saveState(saved, mockStorage);
+    expect(loadState(mockStorage).streak).toEqual({ current: 5, best: 9, lastDate: '2026-10-20' });
     expect(err).not.toHaveBeenCalled();
     err.mockRestore();
   });

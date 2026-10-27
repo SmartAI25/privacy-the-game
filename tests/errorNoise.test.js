@@ -122,3 +122,103 @@ describe('private breadcrumbs (interiors, saints)', () => {
     expect(src).toMatch(/return scrubEventUrls\(event\)/);
   });
 });
+
+// Fixtures are the type/value pairs GlitchTip filed for Reclaim City (project 2,
+// Sep–Oct 2026). In-app browsers run these in our page, so the frame guard
+// sees /reclaim-city/ as the filename and cannot drop them.
+const exc = (type, value, frames = ['/reclaim-city/']) => ({
+  exception: { values: [{ type, value, stacktrace: { frames: frames.map((filename) => ({ filename })) } }] },
+});
+
+describe('isInjectedScriptNoise', () => {
+  it('drops in-app browser, wallet and WebView bridge noise', async () => {
+    const { isInjectedScriptNoise } = await import('../src/utils/errorNoise.js');
+    const noise = [
+      exc('TypeError', "undefined is not an object (evaluating 'window._META.IABInnerFrame')"),
+      exc('TypeError', "undefined is not an object (evaluating 'window.webkit.messageHandlers')"),
+      exc('TypeError', "undefined is not an object (evaluating 'window.__firefox__.reader')"),
+      exc('ReferenceError', "Can't find variable: __firefox__"),
+      exc('TypeError', "undefined is not an object (evaluating 'window.ethereum.selectedAddress = undefined')"),
+      exc('Error', 'Error invoking postMessage: Java object is gone', ['iabjs://navigation_performance_logger_android']),
+      exc('Error', 'Error invoking postMessage: Java exception was raised during method invocation'),
+      exc('Error', 'Script message handler is unavailable', []),
+      exc('Error', 'Error snippet: Error Domain=WKErrorDomain Code=12 "JavaScript execution targeted an invalid frame"', []),
+      exc('Error', 'WKWebView API client did not respond to this postMessage', []),
+      exc('i', 'Failed to connect to MetaMask', ['chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/scripts/inpage.js']),
+      exc('Error', 'Invalid call to runtime.sendMessage(). Tab not found.', []),
+      exc('CustomEvent', 'Event `CustomEvent` (type=unhandledrejection) captured as promise rejection', []),
+      { message: "TypeError: undefined is not an object (evaluating 'window._META.IABInnerFrame')" },
+    ];
+    for (const e of noise) expect(isInjectedScriptNoise(e), JSON.stringify(e)).toBe(true);
+  });
+
+  it("keeps Reclaim City's own errors, including every real one GlitchTip filed", async () => {
+    const { isInjectedScriptNoise } = await import('../src/utils/errorNoise.js');
+    const real = [
+      exc('TypeError', "Cannot read properties of undefined (reading 'current')", ['/components/hud.js']),
+      exc('Error', 'loadState: save had no accounts object', ['/state.js']),
+      exc('Error', 'loadState: save had no streak object', ['/state.js']),
+      exc('TypeError', "Cannot read properties of undefined (reading 'gmail')", ['/reclaim-city/state.js']),
+      exc('ReferenceError', 'ALL_MISSIONS is not defined', ['/data/missions.js']),
+      exc('ReferenceError', 'structuredClone is not defined', ['/reclaim-city/state.js']),
+      exc('SecurityError', 'The operation is insecure.', ['/reclaim-city/state.js']),
+      exc('TypeError', 'Failed to fetch', ['/router.js']),
+      exc('UnhandledRejection', 'Non-Error promise rejection captured with value: undefined', []),
+      exc('Error', 'toBlob failed', ['/reclaim-city/utils/milestone-card.js']),
+      // Our cabinet handshake uses postMessage; a failure there is ours.
+      exc('Error', "Failed to execute 'postMessage' on 'Window': Invalid target origin", ['/reclaim-city/utils/cabinet.js']),
+      { message: 'rc-collective nightly job failed: boom' },
+      {},
+    ];
+    for (const e of real) expect(isInjectedScriptNoise(e), JSON.stringify(e)).toBe(false);
+  });
+
+  it('keeps an event when any one of its exceptions is ours', async () => {
+    const { isInjectedScriptNoise } = await import('../src/utils/errorNoise.js');
+    const mixed = {
+      exception: {
+        values: [
+          { type: 'TypeError', value: "undefined is not an object (evaluating 'window.webkit.messageHandlers')" },
+          { type: 'TypeError', value: "Cannot read properties of undefined (reading 'current')" },
+        ],
+      },
+    };
+    expect(isInjectedScriptNoise(mixed)).toBe(false);
+  });
+
+  it('no file in src/ names the globals the filter treats as foreign', async () => {
+    const { readdirSync, readFileSync, statSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const walk = (d) => readdirSync(d).flatMap((f) => {
+      const p = join(d, f);
+      return statSync(p).isDirectory() ? walk(p) : /\.(js|html)$/.test(f) ? [p] : [];
+    });
+    const foreign = /_META|IABInnerFrame|messageHandlers|__firefox__|window\.ethereum|MetaMask|WKErrorDomain|runtime\.sendMessage/;
+    // The filter itself and its wiring in errors.js name them on purpose.
+    const filterFiles = [join('src', 'utils', 'errorNoise.js'), join('src', 'utils', 'errors.js')];
+    const hits = walk('src').filter((p) => !filterFiles.includes(p) && foreign.test(readFileSync(p, 'utf8')));
+    expect(hits).toEqual([]);
+  });
+
+  it('errors.js drops it in beforeSend', async () => {
+    const { readFileSync } = await import('node:fs');
+    const src = readFileSync('src/utils/errors.js', 'utf8');
+    expect(src).toMatch(/if \(isInjectedScriptNoise\(event\)\) return null;/);
+  });
+});
+
+describe('shouldReportRejection (our unhandledrejection listener)', () => {
+  it('skips script-dispatched and non-Error rejections that Sentry already reports', async () => {
+    const { shouldReportRejection } = await import('../src/utils/errors.js');
+    // GlitchTip #103: a CustomEvent('unhandledrejection'), isTrusted false, no reason.
+    expect(shouldReportRejection({ type: 'unhandledrejection', isTrusted: false, detail: null })).toBe(false);
+    // #442/#103 pair: a real rejection with reason undefined (Sentry's handler files it once).
+    expect(shouldReportRejection({ isTrusted: true, reason: undefined })).toBe(false);
+    expect(shouldReportRejection({ isTrusted: true, reason: { error: {}, isError: true } })).toBe(false);
+    expect(shouldReportRejection(null)).toBe(false);
+  });
+  it('reports a real rejection whose reason is an Error', async () => {
+    const { shouldReportRejection } = await import('../src/utils/errors.js');
+    expect(shouldReportRejection({ isTrusted: true, reason: new TypeError('Failed to fetch') })).toBe(true);
+  });
+});
