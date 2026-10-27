@@ -272,7 +272,17 @@
     "https://support.signal.org/hc/en-us/articles/360007320551": "curl 403 (bot wall); browser 200 (2026-10-20): Linked Devices – Signal Support (redirects to …/360007320551-Linked-Devices)",
     "https://signal.org/blog/cellebrite-vulnerabilities/": "curl 200 (2026-10-20)",
     "https://www.eff.org/wp/digital-privacy-us-border-2017": "curl 200 (2026-10-20)",
-    "https://support.signal.org/hc/en-us/articles/360007320771": "curl 403 (bot wall); browser 200 (2026-10-20): Set and manage disappearing messages – Signal Support"
+    "https://support.signal.org/hc/en-us/articles/360007320771": "curl 403 (bot wall); browser 200 (2026-10-20): Set and manage disappearing messages – Signal Support",
+    "https://ocrportal.hhs.gov/ocr/breach/breach_frontpage.jsf": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://www.experian.com/help/credit-freeze/": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://support.google.com/websearch/contact/content_removal_form": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://www.smartbackgroundchecks.com/remove": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://www.spydialer.com/consumers/": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://consumer.risk.lexisnexis.com/opt": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://support.apple.com/en-us/102420": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://legal.epsilon.com/us/consumer-information": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://www.starbucks.com/terms/privacy-notice": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)",
+    "https://www.affirm.com/u/loans": "curl 200 with a browser user agent, 2026-10-27 (URL updated in 06e7c2d)"
   },
   "dns": {
     "checked": "2026-10-08",

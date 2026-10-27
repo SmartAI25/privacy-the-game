@@ -245,7 +245,7 @@ export const TRAIL_MISSIONS = [
     steps: [
       { text: 'Search your email for \'Affirm,\' \'Klarna,\' \'Afterpay,\' \'Zip,\' \'Sezzle,\' \'PayPal Pay Later.\' Each result is a BNPL account that exists in your name.' },
       { text: 'For each one found: log in and check for outstanding balances. Pay off and close any you don\'t actively use.' },
-      { text: ‘Affirm: sign in and find the option to close your account (Affirm’s help pages say where)’, url: ‘https://www.affirm.com/u/loans’ },
+      { text: 'Affirm: sign in and find the option to close your account (Affirm’s help pages say where)', url: 'https://www.affirm.com/u/loans' },
       { text: 'Klarna: sign in to manage your account and your data', url: 'https://app.klarna.com/settings' },
       { text: 'Afterpay, Zip and the rest: find the close-account option in the app or on its help page' },
       { text: 'If you want your data gone too, ask each company to delete it under its privacy policy' },
