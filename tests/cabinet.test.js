@@ -61,7 +61,7 @@ describe('real-money asks', () => {
   it('HUD shows SUPPORT and Patreon outside cabinet mode', () => {
     vi.stubGlobal('window', fakeWindow({ framed: false }));
     const html = renderHud(hudState);
-    expect(html).toContain('SUPPORT $20+');
+    expect(html).toContain('>SUPPORT<');
     expect(html).toContain('buy.stripe.com');
     expect(html).toContain('patreon.com');
   });
