@@ -38,6 +38,7 @@ import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZo
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
 import { STUDIO_URL } from './components/hud.js';
+import { mountClassAd } from './components/class-ad.js';
 import { checklistFor } from './data/broker-checklists.js';
 import { renderDebrief, debriefReaction } from './screens/debrief.js';
 import { renderStats } from './screens/stats.js';
@@ -1416,6 +1417,7 @@ document.fonts?.addEventListener?.('loadingdone', () => {
 });
 
 initRouter(render);
+mountClassAd();
 checkStreakReminder(state);
 // Web cabinet: tell campus the game has booted (no-op outside cabinet mode).
 announceReady();
