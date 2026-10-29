@@ -428,6 +428,17 @@ export const INTERIOR_LINES = {
 };
 
 // The Broker Constellation (#/reclamation/map). Plan 3 adds the rest of Scout's lines.
+// The sky ladder and the government satellites (spec 2026-10-29).
+export const SKY_LADDER_DIALOGUE = {
+  quiz: 'Before we start: where do you live? It changes which tools work for you.',
+  quizWhyGuess: 'That guess comes from your internet connection, and VPNs and phone networks can put you in the wrong place. Nothing is saved until you answer.',
+  quizGuessOff: "You've turned sharing off, so we haven't looked. Tap to guess from your internet connection, or just pick.",
+  firstRung: 'Start with the big ones. Each of these covers a whole patch of sky at once.',
+  dropElsewhere: "DROP only works for people who live in California. I'm showing you anyway, so you can see what one good law does.",
+  firstCut: "You've opted out of a broker they buy from. Brokers often keep selling to government even after an opt-out, but it's one less file out there with your name on it.",
+  satellites: "They're up there buying. You can't opt out of them, only out of the brokers they buy from, and many brokers keep selling to government anyway. Still: every file you pull is one less to sell.",
+};
+
 export const BROKER_MAP_DIALOGUE = {
   nudge: 'Tell Scout which ones you filed.',
   dropNotResident: "DROP is only for California residents, so it doesn't light anything for you. Your other opt-outs still do.",

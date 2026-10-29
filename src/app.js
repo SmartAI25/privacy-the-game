@@ -30,10 +30,13 @@ import { loadBrokerData, brokerDataStatus, brokerData } from './utils/broker-dat
 import { addDevice, removeDevice, newlySealed, markSealedSeen, setFloorOpen, lightCandle } from './utils/interior-state.js';
 import { pageviewUrl, errorContext } from './utils/pageview-url.js';
 import { renderBriefing } from './screens/briefing.js';
-import { applyChecklistFiling, markMapSeen, markScoutSeen, markScoutPending, newlyLitIds, setResidency, setBigCheck } from './utils/broker-state.js';
+import { applyChecklistFiling, markMapSeen, markScoutSeen, markScoutPending, newlyLitIds, setBigCheck, setHome, homeOf, setPrescreen } from './utils/broker-state.js';
+import { guessFromWhoami } from './components/location-quiz.js';
 import { mapScoutLine, mapScoutTriggers, cardScoutLine, bigCheckScoutLine } from './utils/broker-scout.js';
 import { brokerLighting } from './utils/broker-lighting.js';
-import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, VIEW_BOUNDS } from './utils/broker-view.js';
+import { litIds, initialView, withRatio, zoomViewBox, zoomView, zoomAnchor, nearestStarId, fitView, satelliteView, VIEW_BOUNDS } from './utils/broker-view.js';
+import { ladder } from './utils/sky-ladder.js';
+import { SATELLITE_IDS, satelliteBand } from './utils/satellites.js';
 import { isTap, isWidest, keepStarInView, panView, pinchView, wheelView, wheelZooms, TAP_MAX_PX } from './utils/map-gestures.js';
 import { HIT_PX } from './components/constellation.js';
 import { checklistTicksFor } from './components/broker-checklist.js';
@@ -101,6 +104,11 @@ let cardScout = null;
 let bigCheckScout = null;
 let editingResidency = false;
 let mapListOpen = false;
+// The sky ladder: the open rung (a list index) and whether the phone's sheet is pulled up. Memory only.
+let selectedRung = null;
+let ladderOpen = false;
+// The open government satellite's index (SATELLITES), or null. Memory only.
+let selectedSat = null;
 // When the player last saw the city map before this visit (Scout waves after a while away).
 let cityArrival;
 // The first-2FA hug was on screen this visit; it counts as seen once they leave.
@@ -134,6 +142,11 @@ function loadCollective() {
     collectiveView = r.ok ? { status: 'ready', data: r.data } : { status: 'error' };
     renderCurrentRoute();
   });
+}
+
+// Looking the player up without asking: never once they've turned sharing off or gone ghost.
+function guessAllowed() {
+  return !isAnalyticsOff() && !hasGoneGhost();
 }
 
 function loadWhoami() {
@@ -172,6 +185,8 @@ const screens = {
     return renderBrokerMap(state, {
       status: brokerDataStatus(), data, selectedId, view, newlyLit, stage: mapStage,
       firstVisit: mapFirstVisit && !mapScoutDismissed, editingResidency, listOpen: mapListOpen,
+      quiz: { guess: guessFromWhoami(whoamiView), guessAllowed: guessAllowed(), guessStatus: whoamiView.status },
+      rung: selectedRung, ladderOpen, selectedSat,
       scoutLine: mapScoutDismissed ? null : mapScout?.line ?? null,
       cardScoutLine: cardScout && cardScout.id === selectedId ? cardScout.line : null,
     });
@@ -221,6 +236,8 @@ function render(route, cause = RENDER_CAUSE.REFRESH) {
   // Your City needs the published file's date to tell a pending deletion from one that went through.
   if ((getGhostInfo()?.early || getOptedOutAt()) && shouldAutoLoad(route.screen, collectiveView.status, ['stats'])) loadCollective();
   if (route.screen === 'ghost' && whoamiView.status === 'idle') loadWhoami();
+  // The sky's quiz starts from a guess, only for players who haven't turned sharing off or gone ghost.
+  if (route.screen === 'broker-map' && whoamiView.status === 'idle' && homeOf(state) === null && guessAllowed()) loadWhoami();
   // A screen visit is what a pageview counts: arriving, not a re-draw.
   if (tracksPageview(cause)) startScreenVisit(route);
   try {
@@ -291,6 +308,9 @@ function startScreenVisit(route) {
     newlyLit = [];
     editingResidency = false;
     mapListOpen = false;
+    selectedRung = null;
+    ladderOpen = false;
+    selectedSat = null;
     mapFirstVisit = false;
     mapScoutDismissed = false;
     mapScout = null;
@@ -352,17 +372,58 @@ function afterBrokerMapRender(renderFn, params) {
 
 // A tap on the sky selects the nearest star within a 44px target (24 css px) and opens its card.
 // A miss closes an open card; with no card open, a miss at the widest view zooms in on that point.
+// The layout without the 12 agencies' old star positions (they're drawn as satellites), indices kept.
+let skyLayoutCache = null;
+function skyLayout(layout) {
+  if (skyLayoutCache?.from !== layout) skyLayoutCache = { from: layout, value: { ...layout, stars: layout.stars.map((s) => (SATELLITE_IDS.has(s?.[0]) ? null : s)) } };
+  return skyLayoutCache.value;
+}
+
+// The satellite under a tap (map units; u = map units per CSS px, as the drawing scales them), or null.
+function satelliteAt(x, y, maxDist, u) {
+  let best = null;
+  let bestD = maxDist * maxDist;
+  for (const s of satelliteBand(1000, u)) {
+    const d = (s.x - x) ** 2 + (s.y + 4 * u - y) ** 2;
+    if (d <= bestD) { best = s.index; bestD = d; }
+  }
+  return best;
+}
+
+function openSat(index, returnTo) {
+  selectedSat = index;
+  selectedId = null;
+  selectedRung = null;
+  ladderOpen = false;
+  mapScoutDismissed = true;
+  cardReturn = returnTo;
+  renderCurrentRoute();
+  focusCard();
+}
+
 function tapSky(svg, clientX, clientY) {
   const data = brokerData();
   const ctm = svg.getScreenCTM?.();
   if (!data || !ctm || !ctm.a) return;
   const p = new DOMPoint(clientX, clientY).matrixTransform(ctm.inverse());
-  const id = nearestStarId(data.layout, p.x, p.y, (HIT_PX + 2) / ctm.a);
+  // Whichever is nearer, a satellite or a drawn star (the band sits just above the field's top stars).
+  const reach = (HIT_PX + 2) / ctm.a;
+  const sat = satelliteAt(p.x, p.y, reach, 1 / ctm.a);
+  const id = nearestStarId(skyLayout(data.layout), p.x, p.y, reach);
+  if (sat !== null) {
+    const s = satelliteBand(1000, 1 / ctm.a)[sat];
+    const st = id ? data.layout.stars.find((x) => x?.[0] === id) : null;
+    const satD = (s.x - p.x) ** 2 + (s.y + 4 / ctm.a - p.y) ** 2;
+    if (!st || satD < (st[1] - p.x) ** 2 + (st[2] - p.y) ** 2) {
+      openSat(sat, '.map-stage');
+      return;
+    }
+  }
   if (id) {
     openCard(id, selectedId ? cardReturn : '.map-stage');
     return;
   }
-  if (selectedId) {
+  if (selectedId || selectedSat !== null) {
     closeCard();
     return;
   }
@@ -382,6 +443,10 @@ const isPhone = () => !window.matchMedia?.('(min-width: 900px)').matches;
 
 function openCard(id, returnTo) {
   selectedId = id;
+  // One sheet at a time: a star's card replaces the ladder or a satellite's card.
+  selectedRung = null;
+  ladderOpen = false;
+  selectedSat = null;
   // Tapping a star is what Scout's first-visit note asks for; the note then gives the sky back.
   mapScoutDismissed = true;
   cardReturn = returnTo;
@@ -399,6 +464,7 @@ function openCard(id, returnTo) {
 function closeCard() {
   const back = cardReturn;
   selectedId = null;
+  selectedSat = null;
   cardReturn = null;
   cardScout = null;
   cardFocusPending = false;
@@ -624,15 +690,23 @@ function mapAction(action, el) {
     mapListOpen = !mapListOpen;
     renderCurrentRoute();
     app.querySelector('[data-action="map-list"]')?.focus();
-  } else if (action === 'set-residency') {
-    setState(setResidency(state, el.dataset.value));
-    editingResidency = false;
+  } else if (QUIZ_ACTIONS.has(action)) {
+    quizAction(action, el);
+  } else if (LADDER_ACTIONS.has(action)) {
+    ladderAction(action, el, data);
+  } else if (action === 'select-sat') {
+    const index = Number(el.dataset.sat);
+    if (Number.isInteger(index) && satelliteBand()[index]) openSat(index, `[data-action="select-sat"][data-sat="${index}"]`);
+  } else if (action === 'close-sat') {
+    const back = cardReturn;
+    selectedSat = null;
+    cardReturn = null;
     renderCurrentRoute();
-    app.querySelector('[data-action="change-residency"]')?.focus();
-  } else if (action === 'change-residency') {
-    editingResidency = true;
+    ((back && app.querySelector(back)) || app.querySelector('.map-stage'))?.focus({ preventScroll: true });
+  } else if (action === 'map-sats') {
+    view = satelliteView(mapStage ? mapStage.h / mapStage.w : 1);
     renderCurrentRoute();
-    app.querySelector('[data-action="set-residency"]')?.focus();
+    app.querySelector('[data-action="map-sats"]')?.focus();
   }
 }
 
@@ -702,7 +776,79 @@ function applyBigCheckFilter(input) {
   if (empty) empty.hidden = any;
 }
 
-const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'set-residency', 'change-residency']);
+// The location quiz: saved in the game only (setHome). No track(), nothing in the URL.
+const QUIZ_ACTIONS = new Set(['quiz-yes', 'quiz-pick', 'quiz-outside', 'quiz-unsaid', 'quiz-guess', 'change-home']);
+function quizAction(action, el) {
+  let value = null;
+  if (action === 'quiz-yes') value = el.dataset.value;
+  else if (action === 'quiz-pick') value = el.closest('.residency')?.querySelector('.residency-select')?.value || null;
+  else if (action === 'quiz-outside') value = 'outside-us';
+  else if (action === 'quiz-unsaid') value = 'unsaid';
+  if (action === 'quiz-guess') {
+    loadWhoami();
+    return;
+  }
+  if (action === 'change-home') {
+    editingResidency = true;
+    // The quiz is drawn in the side panel, where an open card would hide it: close the card.
+    selectedId = null;
+    selectedSat = null;
+    cardScout = null;
+    cardReturn = null;
+    // The quiz moves to the top of the ladder: on a phone, pull the sheet up to show it.
+    ladderOpen = true;
+    selectedRung = null;
+    renderCurrentRoute();
+    app.querySelector('.residency-select')?.focus();
+    return;
+  }
+  if (!value) {
+    app.querySelector('.residency-select')?.focus();
+    return;
+  }
+  setState(setHome(state, value));
+  editingResidency = false;
+  renderCurrentRoute();
+  app.querySelector('[data-action="change-home"]')?.focus();
+}
+
+// The sky ladder: selecting a rung previews its stars (the camera fits them). Memory only, except
+// I DID THIS on OptOutPrescreen, which saves the day in the game. No track(), nothing in the URL.
+const LADDER_ACTIONS = new Set(['select-rung', 'close-rung', 'ladder-toggle', 'prescreen-did', 'prescreen-undo']);
+function ladderAction(action, el, data) {
+  if (action === 'select-rung') {
+    const index = Number(el.dataset.rung);
+    const rungs = data ? ladder(data.map, state, brokerLighting(data.map, state, localDay())) : [];
+    if (!rungs[index]) return;
+    selectedRung = index;
+    selectedId = null;
+    cardReturn = `[data-action="select-rung"][data-rung="${index}"]`;
+    view = fitView(data.layout, rungs[index].starIds, mapStage ? mapStage.h / mapStage.w : 1);
+    renderCurrentRoute();
+    // On a phone the sheet covers the bottom of the screen: bring the sky up so the preview shows.
+    if (isPhone()) app.querySelector('.map-stage')?.scrollIntoView({ block: 'start' });
+    app.querySelector('.sky-rung-card')?.focus({ preventScroll: true });
+  } else if (action === 'close-rung') {
+    const back = cardReturn;
+    selectedRung = null;
+    cardReturn = null;
+    renderCurrentRoute();
+    ((back && app.querySelector(back)) || app.querySelector('.sky-ladder-bar'))?.focus({ preventScroll: true });
+  } else if (action === 'ladder-toggle') {
+    if (selectedRung !== null) {
+      selectedRung = null;
+      ladderOpen = true;
+    } else ladderOpen = !ladderOpen;
+    renderCurrentRoute();
+    app.querySelector('.sky-ladder-bar')?.focus({ preventScroll: true });
+  } else if (action === 'prescreen-did' || action === 'prescreen-undo') {
+    setState(setPrescreen(state, action === 'prescreen-did' ? localDay() : null));
+    renderCurrentRoute();
+    app.querySelector('[data-action="prescreen-did"],[data-action="prescreen-undo"]')?.focus({ preventScroll: true });
+  }
+}
+
+const MAP_ACTIONS = new Set(['map-zoom', 'select-star', 'close-star', 'map-list', 'dismiss-scout', 'select-sat', 'close-sat', 'map-sats', ...QUIZ_ACTIONS, ...LADDER_ACTIONS]);
 
 function renderCurrentRoute(cause = RENDER_CAUSE.REFRESH) {
   render(parseRoute(location.hash), cause);
@@ -1306,7 +1452,12 @@ app.addEventListener('keydown', (e) => {
     if (btn) { e.preventDefault(); btn.click(); }
     return;
   }
-  if (e.key === 'Escape' && selectedId && app.querySelector('.star-card')) {
+  if (e.key === 'Escape' && selectedRung !== null && app.querySelector('.sky-rung-card')) {
+    e.preventDefault();
+    app.querySelector('[data-action="close-rung"]')?.click();
+    return;
+  }
+  if (e.key === 'Escape' && (selectedId || selectedSat !== null) && app.querySelector('.star-card')) {
     // Straight to closeCard: a click on CLOSE could be swallowed by a tap's click window.
     e.preventDefault();
     swallowClickUntil = 0;
