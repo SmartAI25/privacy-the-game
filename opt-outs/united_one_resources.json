@@ -1,0 +1,12 @@
+{
+  "company_name": "United One Resources, Inc.",
+  "category": "Data Broker / Background Check",
+  "website": "https://www.unitedoneresources.com",
+  "opt_out_route": {
+    "method": "privacy_policy_request",
+    "url": "https://www.unitedoneresources.com/privacy-policy",
+    "email": "compliance@unitedoneresources.com",
+    "notes": "Direct written opt-out request via compliance email or mail in accordance with state consumer privacy rights."
+  },
+  "verified_at": "2026-10-30"
+}
